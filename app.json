@@ -22,6 +22,9 @@
       "predictiveBackGestureEnabled": false,
       "package": "com.anonymous.SevenHabits"
     },
+    "androidStatusBar": {
+      "hidden": true
+    },
     "web": {
       "output": "static",
       "favicon": "./assets/images/favicon.png"
