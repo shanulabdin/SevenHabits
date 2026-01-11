@@ -1,3 +1,4 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { Tabs } from "expo-router";
 
 export default function TabLayout() {
@@ -5,30 +6,47 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarStyle: { 
-          backgroundColor: "#151515", 
+        tabBarStyle: {
+          backgroundColor: "#151515",
           borderTopWidth: 0,
           width: '100%',
           height: 90,
           paddingBottom: 10,
           paddingTop: 10,
         },
-        tabBarIconStyle: { 
-          marginTop: 5,
-          
+        tabBarShowLabel: false,
 
-        },
-        tabBarLabelStyle: { 
-          fontSize: 14, 
-          marginBottom: 5 
+        tabBarIconStyle: {
+          marginTop: 5,
+          fontSize: 40,
         },
         tabBarActiveTintColor: "#FF6D1F",
         tabBarInactiveTintColor: "#F5E7C6",
       }}
     >
-      <Tabs.Screen name="index" options={{ title: "Home" }} />
-      <Tabs.Screen name="days" options={{ title: "Weekly" }} />
-      <Tabs.Screen name="grid" options={{ title: "Overall" }} />
+      <Tabs.Screen name="index" options={{
+        tabBarIcon: ({ color, size }) => (
+          <Ionicons name="home" size={size} color={color} />
+        ),
+      }} />
+      <Tabs.Screen name="tasks" options={{
+        title: "Tasks",
+        tabBarIcon: ({ color, size }) => (
+          <Ionicons name="checkbox" size={size} color={color} />
+        ),
+      }} />
+      <Tabs.Screen name="days" options={{
+        title: "Weekly",
+        tabBarIcon: ({ color, size }) => (
+          <Ionicons name="pie-chart" size={size} color={color} />
+        ),
+      }} />
+      <Tabs.Screen name="grid" options={{
+        title: "Overall",
+        tabBarIcon: ({ color, size }) => (
+          <Ionicons name="grid" size={size} color={color} />
+        ),
+      }} />
     </Tabs>
   );
 }
