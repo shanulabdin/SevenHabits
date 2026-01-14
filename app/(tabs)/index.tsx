@@ -1,7 +1,7 @@
 import CreateHabit from '@/components/CreateHabit';
 import HabitCard from '@/components/HabitCard';
 import { useState } from 'react';
-import { ScrollView, View } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 
 export type Habit = { id: string; title: string; checked: boolean };
 
@@ -36,19 +36,25 @@ export default function Index() {
   }
 
   return (
-    <View
-      className="flex-1 items-center bg-colors-dark p-4 pt-20 w-full"
+    <KeyboardAvoidingView
+      style={{ flex: 1, backgroundColor: "#151515" }}
+      behavior={Platform.OS === "android" ? "padding" : "height"}
     >
-      <ScrollView
-        contentContainerClassName="pb-[400px]">
-        {
-          habits.map(habit => (
-            <HabitCard key={habit.id} title={habit.title} checked={habit.checked} markComplete={() => toggleHabit(habit.id)} />
-          ))
-        }
+      <View
+        className="flex-1 items-center bg-colors-dark p-4 pt-20 w-full"
+      >
+        <ScrollView
+          contentContainerClassName="pb-[400px]">
+          {
+            habits.map(habit => (
+              <HabitCard key={habit.id} title={habit.title} checked={habit.checked} markComplete={() => toggleHabit(habit.id)} />
+            ))
+          }
 
-        <CreateHabit newHabitTitle={newHabitTitle} setNewHabitTitle={setNewHabitTitle} createHabit={createHabit} />
-      </ScrollView>
-    </View>
+          <CreateHabit newHabitTitle={newHabitTitle} setNewHabitTitle={setNewHabitTitle} createHabit={createHabit} />
+        </ScrollView>
+      </View>
+    </KeyboardAvoidingView>
+
   );
 }
