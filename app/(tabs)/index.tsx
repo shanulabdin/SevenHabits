@@ -3,6 +3,8 @@ import HabitCard from '@/components/HabitCard';
 import { useState } from 'react';
 import { ScrollView, View } from "react-native";
 
+export type Habit = { id: string; title: string; checked: boolean };
+
 export default function Index() {
   const [habits, setHabits] = useState([
     { id: '1', title: 'Drink Water', checked: false },
@@ -21,6 +23,17 @@ export default function Index() {
     );
   }
 
+  function createHabit(title: string) {
+    if (newHabitTitle.trim() === '') return;
+    const newHabit = {
+      id: Date.now().toString(),
+      title: title,
+      checked: false,
+    };
+    setHabits(prev => ([...prev, newHabit]));
+    setNewHabitTitle('');
+  }
+
   const [newHabitTitle, setNewHabitTitle] = useState('');
 
   return (
@@ -34,7 +47,7 @@ export default function Index() {
           ))
         }
 
-        <CreateHabit key={habits.length + 1 + ''} habits={habits} setHabits={setHabits} newHabitTitle={newHabitTitle} setNewHabitTitle={setNewHabitTitle}  />
+        <CreateHabit newHabitTitle={newHabitTitle} setNewHabitTitle={setNewHabitTitle} createHabit={createHabit} />
       </ScrollView>
     </View>
   );

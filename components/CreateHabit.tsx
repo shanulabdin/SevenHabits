@@ -3,17 +3,17 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { Pressable, TextInput, View } from 'react-native';
 
 type CreateHabitProps = {
-  habits: { id: string; title: string; checked: boolean }[];
-  setHabits: React.Dispatch<React.SetStateAction<{ id: string; title: string; checked: boolean }[]>>;
   setNewHabitTitle: React.Dispatch<React.SetStateAction<string>>;
   newHabitTitle: string;
+  createHabit: (title: string) => void;
 };
 
-export default function CreateHabit({ habits, setHabits, newHabitTitle, setNewHabitTitle }: CreateHabitProps) {
+export default function CreateHabit({ newHabitTitle, setNewHabitTitle, createHabit }: CreateHabitProps) {
   return (
     <View className="w-full flex-row items-center justify-between bg-colors-background rounded-xl p-2 ">
       <TextInput
         className="
+            flex-1
             placeholder:text-colors-orange
             text-colors-orange
             italic
@@ -26,14 +26,7 @@ export default function CreateHabit({ habits, setHabits, newHabitTitle, setNewHa
       />
       <Pressable
         onPress={() => {
-          if (newHabitTitle.trim() === '') return;
-          const newHabit = {
-            id: habits.length + 1 + '',
-            title: newHabitTitle,
-            checked: false,
-          };
-          setHabits(prev => ([...prev, newHabit]));
-          setNewHabitTitle('');
+          createHabit(newHabitTitle);
         }}
       >
         <Ionicons
