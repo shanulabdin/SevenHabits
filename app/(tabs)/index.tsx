@@ -22,6 +22,8 @@ export default function Index() {
     );
   }
 
+  const [newHabitTitle, setNewHabitTitle] = useState('');
+
   return (
     <View
       className="flex-1 items-center bg-colors-dark p-4 pt-20 w-full"
@@ -36,14 +38,25 @@ export default function Index() {
         <TextInput
           className="
             placeholder:text-colors-orange
+            text-colors-orange
             italic
             font-normal 
             text-2xl 
           "
           placeholder="Create Habit"
+          onChangeText={setNewHabitTitle}
+          value={newHabitTitle}
         />
         <Pressable
           onPress={() => {
+            if (newHabitTitle.trim() === '') return;
+            const newHabit = {
+              id: habits.length + 1 + '',
+              title: newHabitTitle,
+              checked: false,
+            };
+            setHabits(prev => ([...prev, newHabit]));
+            setNewHabitTitle('');
           }}
         >
           <Ionicons
