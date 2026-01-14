@@ -6,10 +6,10 @@ import { Pressable, Text, View } from "react-native";
 type HabitCardProps = {
   title: string;
   checked: boolean;
-  onToggle: () => void;
+  markComplete: () => void;
 };
 
-export default function HabitCard({ title, checked, onToggle }: HabitCardProps) {
+export default function HabitCard({ title, checked, markComplete }: HabitCardProps) {
   return (
     <View className="
         flex-row 
@@ -21,10 +21,15 @@ export default function HabitCard({ title, checked, onToggle }: HabitCardProps) 
         items-center
         justify-between
       ">
-      <Text className="text-colors-light font-normal text-2xl">{title}</Text>
+      <Text className={`
+        text-colors-light 
+        font-normal 
+        text-2xl 
+        ${checked ? 'line-through opacity-50' : ''} 
+      `}>{title}</Text>
       <Pressable
         onPress={() => {
-          onToggle();
+          markComplete();
         }}
       >
         <Ionicons name={checked ? "checkbox" : "square-outline"} size={26} color={colors.light} />

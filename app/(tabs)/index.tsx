@@ -27,7 +27,7 @@ export default function Index() {
     >
       {
         habits.map(habit => (
-          <HabitCard key={habit.id} title={habit.title} checked={habit.checked} onToggle={() => toggleHabit(habit.id)} />
+          <HabitCard key={habit.id} title={habit.title} checked={habit.checked} markComplete={() => toggleHabit(habit.id)} />
         ))
       }
     </View>
