@@ -10,14 +10,12 @@ export default function HabitCard() {
     <View className="
         flex-row 
         mt-8 
-        space-x-4 
         bg-colors-background 
-        w-[100%] 
+        w-full
         p-4 
         rounded-xl
         items-center
         justify-between
-        space-between
       ">
       <Text className="text-colors-light font-normal text-2xl">Code</Text>
       <Pressable
