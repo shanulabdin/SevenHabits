@@ -8,7 +8,7 @@ export default function HabitCard({ title }: { title: string; }) {
   return (
     <View className="
         flex-row 
-        mt-8 
+        mb-4 
         bg-colors-background 
         w-full
         p-4 
