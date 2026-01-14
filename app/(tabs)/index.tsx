@@ -24,7 +24,6 @@ export default function Index() {
   }
 
   const [newHabitTitle, setNewHabitTitle] = useState('');
-
   function createHabit(title: string) {
     if (title.trim() === '') return;
     const newHabit = {
@@ -36,6 +35,10 @@ export default function Index() {
     setNewHabitTitle('');
   }
 
+  function deleteHabit(id: string) {
+    setHabits(prev => prev.filter(habit => habit.id !== id));
+  }
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1, backgroundColor: "#151515" }}
@@ -45,12 +48,13 @@ export default function Index() {
         className="flex-1 items-center bg-colors-dark p-4 pt-20 w-full"
       >
         <ScrollView
-          contentContainerClassName="pb-[400px]">
+          contentContainerClassName="pb-[350px]">
 
           <View className="w-full bg-colors-orange rounded-xl flex-row justify-between items-center px-4 py-2">
             <Text className="text-colors-dark font-bold text-3xl">Friday</Text>
             <Text className="text-colors-dark font-bold text-xl">1-14-2026</Text>
           </View>
+
           {
             habits.map(habit => (
               <HabitCard key={habit.id} title={habit.title} checked={habit.checked}
@@ -65,7 +69,7 @@ export default function Index() {
                     },
                     {
                       text: "Delete",
-                      onPress: () => console.log("Delete Pressed")
+                      onPress: () => deleteHabit(habit.id)
                     }
                   ],
                   { cancelable: true })} 
