@@ -39,7 +39,8 @@ export default function Index() {
     <View
       className="flex-1 items-center bg-colors-dark p-4 pt-20 w-full"
     >
-      <ScrollView>
+      <ScrollView
+        contentContainerClassName="pb-[400px]">
         {
           habits.map(habit => (
             <HabitCard key={habit.id} title={habit.title} checked={habit.checked} markComplete={() => toggleHabit(habit.id)} />

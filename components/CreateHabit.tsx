@@ -23,16 +23,18 @@ export default function CreateHabit({ newHabitTitle, setNewHabitTitle, createHab
         placeholder="Create Habit"
         onChangeText={setNewHabitTitle}
         value={newHabitTitle}
+        returnKeyType="done"
+        onSubmitEditing={() => createHabit(newHabitTitle)}
       />
       <Pressable
-        className="w-16 items-end pr-0.8"
+        className="w-16 items-end pr-1"
         onPress={() => {
           createHabit(newHabitTitle);
         }}
       >
         <Ionicons
           name="add"
-          size={36}
+          size={32}
           color={colors.orange}
           className=""
         />
