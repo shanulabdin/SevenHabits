@@ -13,8 +13,9 @@ export default function HabitCard({ title, checked, markComplete }: HabitCardPro
   return (
     <View className="
         flex-row 
-        mb-4 
         bg-colors-background 
+        border-b-[1px]
+        border-b-colors-light/20 
         w-full
         p-4 
         rounded-xl

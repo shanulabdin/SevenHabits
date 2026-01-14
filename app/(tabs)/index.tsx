@@ -1,7 +1,8 @@
 import CreateHabit from '@/components/CreateHabit';
 import HabitCard from '@/components/HabitCard';
 import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, Text, View } from "react-native";
+
 
 export type Habit = { id: string; title: string; checked: boolean };
 
@@ -45,6 +46,11 @@ export default function Index() {
       >
         <ScrollView
           contentContainerClassName="pb-[400px]">
+
+            <View className="w-full bg-colors-orange rounded-xl flex-row justify-between items-center px-4 py-2">
+              <Text className="text-colors-dark font-bold text-3xl">Friday</Text>
+              <Text className="text-colors-dark font-bold text-xl">1-14-2026</Text>
+            </View>
           {
             habits.map(habit => (
               <HabitCard key={habit.id} title={habit.title} checked={habit.checked} markComplete={() => toggleHabit(habit.id)} />

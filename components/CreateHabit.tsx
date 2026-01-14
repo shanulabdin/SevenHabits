@@ -36,7 +36,6 @@ export default function CreateHabit({ newHabitTitle, setNewHabitTitle, createHab
           name="add"
           size={32}
           color={colors.orange}
-          className=""
         />
       </Pressable>
     </View>
