@@ -44,22 +44,30 @@ export default function Index() {
   const [selectedHabitId, setSelectedHabitId] = useState<string | null>(null);
   function longPressHabit(id: string) {
     return () => {
-      setIsModalVisible(true);
       setSelectedHabitId(id);
+      setIsModalVisible(true);
     };
   }
 
+  function editHabit(id: string, newTitle: string) {
+    setHabits(prev => prev.map(habit =>
+      habit.id === id ? { ...habit, title: newTitle } : habit)
+    );
+    setIsModalVisible(false);
+  }
+
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: "#151515" }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+    <KeyboardAvoidingView 
+      behavior={Platform.OS === 'ios' ? 'height' : 'padding'}
+      className="flex-1 bg-colors-dark">
       <View
         className="flex-1 items-center bg-colors-dark p-4 pt-20 w-full"
       >
         <ScrollView
-          contentContainerClassName="pb-[350px]">
-
+          contentContainerStyle={{ paddingBottom: 350 }}
+          keyboardShouldPersistTaps="handled"
+          style={{ backgroundColor: "#151515" }}
+        >
           <View className="w-full bg-colors-orange rounded-xl flex-row justify-between items-center px-4 py-2">
             <Text className="text-colors-dark font-bold text-3xl">Friday</Text>
             <Text className="text-colors-dark font-bold text-xl">1-14-2026</Text>
@@ -86,7 +94,10 @@ export default function Index() {
               className="bg-colors-background rounded-xl w-64"
               onPress={(e) => e.stopPropagation()}
             >
-              <Pressable onPress={() => { }}>
+              <Pressable onPress={() => { 
+                if (!selectedHabitId) return;
+                editHabit(selectedHabitId!, 'Edited Habit');
+              }}>
                 <Text className="text-colors-light border-b-[1px] border-b-colors-light/20 p-4 text-xl">Edit</Text>
               </Pressable>
 

@@ -27,7 +27,7 @@ export default function CreateHabit({ newHabitTitle, setNewHabitTitle, createHab
         onSubmitEditing={() => createHabit(newHabitTitle)}
       />
       <Pressable
-        className="w-16 items-end pr-1"
+        className="w-16 h-14 justify-center items-end pr-1"
         onPress={() => {
           createHabit(newHabitTitle);
         }}
