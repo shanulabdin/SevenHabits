@@ -6,7 +6,7 @@ import { ScrollView, View } from "react-native";
 export type Habit = { id: string; title: string; checked: boolean };
 
 export default function Index() {
-  const [habits, setHabits] = useState([
+  const [habits, setHabits] = useState<Habit[]>([
     { id: '1', title: 'Drink Water', checked: false },
     { id: '2', title: 'Exercise', checked: true },
     { id: '3', title: 'Read a Book', checked: true },
@@ -18,23 +18,22 @@ export default function Index() {
 
   function toggleHabit(id: string) {
     setHabits(prev => prev.map(habit =>
-      habit.id === id ? { ...habit, checked: !habit.checked } : habit
-    )
+      habit.id === id ? { ...habit, checked: !habit.checked } : habit)
     );
   }
 
+  const [newHabitTitle, setNewHabitTitle] = useState('');
+
   function createHabit(title: string) {
-    if (newHabitTitle.trim() === '') return;
+    if (title.trim() === '') return;
     const newHabit = {
       id: Date.now().toString(),
-      title: title,
+      title: title.trim(),
       checked: false,
     };
     setHabits(prev => ([...prev, newHabit]));
     setNewHabitTitle('');
   }
-
-  const [newHabitTitle, setNewHabitTitle] = useState('');
 
   return (
     <View

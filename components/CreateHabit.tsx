@@ -25,6 +25,7 @@ export default function CreateHabit({ newHabitTitle, setNewHabitTitle, createHab
         value={newHabitTitle}
       />
       <Pressable
+        className="w-16 items-end pr-0.8"
         onPress={() => {
           createHabit(newHabitTitle);
         }}
