@@ -3,8 +3,12 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 
+type HabitCardProps = {
+  title: string;
+  checked: boolean;
+};
 
-export default function HabitCard({ title }: { title: string; }) {
+export default function HabitCard({ title, checked }: HabitCardProps) {
   return (
     <View className="
         flex-row 
@@ -21,7 +25,7 @@ export default function HabitCard({ title }: { title: string; }) {
         onPress={() => {
         }}
       >
-        <Ionicons name={"square-outline"} size={26} color={colors.light} />
+        <Ionicons name={checked ? "checkbox" : "square-outline"} size={26} color={colors.light} />
       </Pressable>
     </View>
   );

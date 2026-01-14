@@ -3,9 +3,12 @@ import { View } from "react-native";
 
 const habits = [
   { id: '1', title: 'Drink Water', checked: false },
-  { id: '2', title: 'Exercise', checked: false },
-  { id: '3', title: 'Read a Book', checked: false },
-  { id: '4', title: 'Meditate', checked: false },
+  { id: '2', title: 'Exercise', checked: true },
+  { id: '3', title: 'Read a Book', checked: true },
+  { id: '4', title: 'Meditate', checked: true },
+  { id: '5', title: 'Sleep Early', checked: false },
+  { id: '6', title: 'Practice Gratitude', checked: true },
+  { id: '7', title: 'Learn a New Skill', checked: false },
 ];
 
 export default function Index() {
@@ -16,7 +19,7 @@ export default function Index() {
     >
       {
         habits.map(habit => (
-          <HabitCard key={habit.id} title={habit.title} />
+          <HabitCard key={habit.id} title={habit.title} checked={habit.checked} />
         ))
       }
     </View>
