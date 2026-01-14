@@ -19,24 +19,24 @@ export default function TabLayout() {
         tabBarInactiveTintColor: "#F5E7C6",
       }}
     >
-      <Tabs.Screen name="index" options={{
+      <Tabs.Screen name="Index" options={{
         tabBarIcon: ({ color, size, focused }) => (
           <Ionicons name="home" size={focused ? size + 3 : size} color={color} />
         ),
       }} />
-      <Tabs.Screen name="tasks" options={{
+      <Tabs.Screen name="Tasks" options={{
         title: "Tasks",
         tabBarIcon: ({ color, size, focused }) => (
           <Ionicons name="checkbox" size={focused ? size + 3 : size} color={color} />
         ),
       }} />
-      <Tabs.Screen name="days" options={{
+      <Tabs.Screen name="Days" options={{
         title: "Weekly",
         tabBarIcon: ({ color, size, focused }) => (
           <Ionicons name="pie-chart" size={focused ? size + 3 : size} color={color} />
         ),
       }} />
-      <Tabs.Screen name="grid" options={{
+      <Tabs.Screen name="Grid" options={{
         title: "Overall",
         tabBarIcon: ({ color, size, focused }) => (
           <Ionicons name="grid" size={focused ? size + 3 : size} color={color} />

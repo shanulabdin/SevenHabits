@@ -1,11 +1,10 @@
 import { colors } from "@/constants/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import React, { useState } from "react";
+import React from "react";
 import { Pressable, Text, View } from "react-native";
 
-export default function HabitCard() {
-  const [isChecked, setIsChecked] = useState(false);
 
+export default function HabitCard({ title }: { title: string; }) {
   return (
     <View className="
         flex-row 
@@ -17,13 +16,12 @@ export default function HabitCard() {
         items-center
         justify-between
       ">
-      <Text className="text-colors-light font-normal text-2xl">Code</Text>
+      <Text className="text-colors-light font-normal text-2xl">{title}</Text>
       <Pressable
         onPress={() => {
-          setIsChecked(!isChecked);
         }}
       >
-        <Ionicons name={isChecked ? "checkbox" : "square-outline"} size={26} color={colors.light} />
+        <Ionicons name={"square-outline"} size={26} color={colors.light} />
       </Pressable>
     </View>
   );
