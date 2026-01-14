@@ -1,17 +1,18 @@
 import { colors } from "@/constants/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text } from "react-native";
 
 type HabitCardProps = {
   title: string;
   checked: boolean;
   markComplete: () => void;
+  onLongPress: () => void;
 };
 
-export default function HabitCard({ title, checked, markComplete }: HabitCardProps) {
+export default function HabitCard({ title, checked, markComplete, onLongPress }: HabitCardProps) {
   return (
-    <View className="
+    <Pressable className="
         flex-row 
         bg-colors-background 
         border-b-[1px]
@@ -21,7 +22,9 @@ export default function HabitCard({ title, checked, markComplete }: HabitCardPro
         rounded-xl
         items-center
         justify-between
-      ">
+      "
+        onLongPress={onLongPress}
+      >
       <Text className={`
         text-colors-light 
         font-normal 
@@ -35,6 +38,6 @@ export default function HabitCard({ title, checked, markComplete }: HabitCardPro
       >
         <Ionicons name={checked ? "checkbox" : "square-outline"} size={26} color={colors.light} />
       </Pressable>
-    </View>
+    </Pressable>
   );
 }
