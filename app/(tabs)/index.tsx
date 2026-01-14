@@ -1,7 +1,8 @@
 import HabitCard from '@/components/HabitCard';
+import { colors } from '@/constants/colors';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from 'react';
-import { View } from "react-native";
-
+import { Pressable, TextInput, View } from "react-native";
 
 export default function Index() {
   const [habits, setHabits] = useState([
@@ -16,20 +17,43 @@ export default function Index() {
 
   function toggleHabit(id: string) {
     setHabits(prev => prev.map(habit =>
-        habit.id === id ? { ...habit, checked: !habit.checked } : habit
-      )
+      habit.id === id ? { ...habit, checked: !habit.checked } : habit
+    )
     );
   }
 
   return (
     <View
-      className="flex-1 items-center bg-colors-dark p-4 pt-20 "
+      className="flex-1 items-center bg-colors-dark p-4 pt-20 w-full"
     >
       {
         habits.map(habit => (
           <HabitCard key={habit.id} title={habit.title} checked={habit.checked} markComplete={() => toggleHabit(habit.id)} />
         ))
       }
+
+      <View className="w-full flex-row items-center justify-between bg-colors-background rounded-xl p-2 ">
+        <TextInput
+          className="
+            placeholder:text-colors-orange
+            italic
+            font-normal 
+            text-2xl 
+          "
+          placeholder="Create Habit"
+        />
+        <Pressable
+          onPress={() => {
+          }}
+        >
+          <Ionicons
+            name="add"
+            size={36}
+            color={colors.orange}
+            className=""
+          />
+        </Pressable>
+      </View>
     </View>
   );
 }
