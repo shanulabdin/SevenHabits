@@ -2,7 +2,7 @@ import HabitCard from '@/components/HabitCard';
 import { colors } from '@/constants/colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from 'react';
-import { Pressable, TextInput, View } from "react-native";
+import { Pressable, ScrollView, TextInput, View } from "react-native";
 
 export default function Index() {
   const [habits, setHabits] = useState([
@@ -28,45 +28,47 @@ export default function Index() {
     <View
       className="flex-1 items-center bg-colors-dark p-4 pt-20 w-full"
     >
-      {
-        habits.map(habit => (
-          <HabitCard key={habit.id} title={habit.title} checked={habit.checked} markComplete={() => toggleHabit(habit.id)} />
-        ))
-      }
+      <ScrollView>
+        {
+          habits.map(habit => (
+            <HabitCard key={habit.id} title={habit.title} checked={habit.checked} markComplete={() => toggleHabit(habit.id)} />
+          ))
+        }
 
-      <View className="w-full flex-row items-center justify-between bg-colors-background rounded-xl p-2 ">
-        <TextInput
-          className="
+        <View className="w-full flex-row items-center justify-between bg-colors-background rounded-xl p-2 ">
+          <TextInput
+            className="
             placeholder:text-colors-orange
             text-colors-orange
             italic
             font-normal 
             text-2xl 
           "
-          placeholder="Create Habit"
-          onChangeText={setNewHabitTitle}
-          value={newHabitTitle}
-        />
-        <Pressable
-          onPress={() => {
-            if (newHabitTitle.trim() === '') return;
-            const newHabit = {
-              id: habits.length + 1 + '',
-              title: newHabitTitle,
-              checked: false,
-            };
-            setHabits(prev => ([...prev, newHabit]));
-            setNewHabitTitle('');
-          }}
-        >
-          <Ionicons
-            name="add"
-            size={36}
-            color={colors.orange}
-            className=""
+            placeholder="Create Habit"
+            onChangeText={setNewHabitTitle}
+            value={newHabitTitle}
           />
-        </Pressable>
-      </View>
+          <Pressable
+            onPress={() => {
+              if (newHabitTitle.trim() === '') return;
+              const newHabit = {
+                id: habits.length + 1 + '',
+                title: newHabitTitle,
+                checked: false,
+              };
+              setHabits(prev => ([...prev, newHabit]));
+              setNewHabitTitle('');
+            }}
+          >
+            <Ionicons
+              name="add"
+              size={36}
+              color={colors.orange}
+              className=""
+            />
+          </Pressable>
+        </View>
+      </ScrollView>
     </View>
   );
 }
