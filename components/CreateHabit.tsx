@@ -14,12 +14,12 @@ export default function CreateHabit({ newHabitTitle, setNewHabitTitle, createHab
       <TextInput
         className="
             flex-1
-            placeholder:text-colors-orange
-            text-colors-orange
             italic
             font-normal 
             text-2xl 
+            text-colors-orange
           "
+        placeholderTextColor={colors.orange}
         placeholder="Create Habit"
         onChangeText={setNewHabitTitle}
         value={newHabitTitle}
