@@ -29,6 +29,7 @@ export default function HabitCard({ title, checked, markComplete, onLongPress }:
         text-colors-light 
         font-normal 
         text-2xl 
+        max-w-[80%]
         ${checked ? 'line-through opacity-50' : ''} 
       `}>{title}</Text>
       <Pressable

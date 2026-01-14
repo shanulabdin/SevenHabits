@@ -25,6 +25,7 @@ export default function CreateHabit({ newHabitTitle, setNewHabitTitle, createHab
         value={newHabitTitle}
         returnKeyType="done"
         onSubmitEditing={() => createHabit(newHabitTitle)}
+        maxLength={30}
       />
       <Pressable
         className="w-16 h-14 justify-center items-end pr-1"
