@@ -1,7 +1,7 @@
 import CreateHabit from '@/components/CreateHabit';
 import HabitCard from '@/components/HabitCard';
 import { useState } from 'react';
-import { Alert, KeyboardAvoidingView, Platform, ScrollView, Text, View } from "react-native";
+import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, View } from "react-native";
 
 
 export type Habit = { id: string; title: string; checked: boolean };
@@ -37,12 +37,22 @@ export default function Index() {
 
   function deleteHabit(id: string) {
     setHabits(prev => prev.filter(habit => habit.id !== id));
+    setIsModalVisible(false);
+  }
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedHabitId, setSelectedHabitId] = useState<string | null>(null);
+  function longPressHabit(id: string) {
+    return () => {
+      setIsModalVisible(true);
+      setSelectedHabitId(id);
+    };
   }
 
   return (
     <KeyboardAvoidingView
       style={{ flex: 1, backgroundColor: "#151515" }}
-      behavior={Platform.OS === "android" ? "padding" : "height"}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <View
         className="flex-1 items-center bg-colors-dark p-4 pt-20 w-full"
@@ -59,26 +69,37 @@ export default function Index() {
             habits.map(habit => (
               <HabitCard key={habit.id} title={habit.title} checked={habit.checked}
                 markComplete={() => toggleHabit(habit.id)}
-                onLongPress={() => Alert.alert(
-                  `Delete ${habit.title}?`,
-                  "This action is irreversible",
-                  [
-                    {
-                      text: "Cancel",
-                      onPress: () => console.log("Cancel Pressed"),
-                    },
-                    {
-                      text: "Delete",
-                      onPress: () => deleteHabit(habit.id)
-                    }
-                  ],
-                  { cancelable: true })} 
-                />
+                onLongPress={longPressHabit(habit.id)}
+              />
             ))
           }
 
           <CreateHabit newHabitTitle={newHabitTitle} setNewHabitTitle={setNewHabitTitle} createHabit={createHabit} />
         </ScrollView>
+
+        <Modal visible={isModalVisible} transparent animationType="fade">
+          <Pressable
+            className="flex-1 bg-black/50 items-center justify-center"
+            onPress={() => setIsModalVisible(false)}
+          >
+            <Pressable
+              className="bg-colors-background rounded-xl w-64"
+              onPress={(e) => e.stopPropagation()}
+            >
+              <Pressable onPress={() => { }}>
+                <Text className="text-colors-light border-b-[1px] border-b-colors-light/20 p-4 text-xl">Edit</Text>
+              </Pressable>
+
+              <Pressable onPress={() => {
+                if (!selectedHabitId) return;
+                deleteHabit(selectedHabitId!);
+              }}>
+                <Text className="text-colors-orange text-xl p-4">Delete</Text>
+              </Pressable>
+            </Pressable>
+          </Pressable>
+        </Modal>
+
       </View>
     </KeyboardAvoidingView>
 
