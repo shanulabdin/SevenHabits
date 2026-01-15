@@ -11,7 +11,7 @@ type CreateHabitProps = {
 
 export default function CreateHabit({ newHabitTitle, setNewHabitTitle, createHabit, onFocusInput }: CreateHabitProps) {
   return (
-    <View className="w-full flex-row items-center justify-between bg-colors-background rounded-xl p-2 " >
+    <View className="w-full flex-row items-center justify-between bg-colors-background rounded-xl py-2 px-3" >
       <TextInput
         className="
           flex-1
@@ -30,7 +30,7 @@ export default function CreateHabit({ newHabitTitle, setNewHabitTitle, createHab
       />
       <Pressable
         hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
-        className="w-16 h-14 justify-center items-end pr-1"
+        className="justify-center items-end pr-1"
         onPress={() => {
           createHabit(newHabitTitle);
         }}
