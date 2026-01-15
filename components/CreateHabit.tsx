@@ -29,6 +29,7 @@ export default function CreateHabit({ newHabitTitle, setNewHabitTitle, createHab
         onFocus={onFocusInput}
       />
       <Pressable
+        hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
         className="w-16 h-14 justify-center items-end pr-1"
         onPress={() => {
           createHabit(newHabitTitle);

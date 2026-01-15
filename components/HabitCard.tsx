@@ -33,6 +33,7 @@ export default function HabitCard({ title, checked, markComplete, onLongPress }:
         ${checked ? 'line-through opacity-50' : ''} 
       `}>{title}</Text>
       <Pressable
+        hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
         onPress={() => {
           markComplete();
         }}
