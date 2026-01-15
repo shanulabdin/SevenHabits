@@ -56,13 +56,16 @@ export default function Index() {
     const habit = habits.find(habit => habit.id === id);
     if (!habit) return;
 
-    setEditingHabitId(id);
-    setEditingHabitTitle(habit.title);
     setIsModalVisible(false);
+    
+    setTimeout(() => {
+      setEditingHabitId(habit.id);
+      setEditingHabitTitle(habit.title);
+    }, 50);
   }
 
   function saveEditingHabit(id: string) {
-    if(editingHabitTitle.trim() === '') {
+    if (editingHabitTitle.trim() === '') {
       setEditingHabitId(null);
       return;
     }
