@@ -1,8 +1,7 @@
 import CreateHabit from '@/components/CreateHabit';
 import HabitCard from '@/components/HabitCard';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
-
 
 export type Habit = { id: string; title: string; checked: boolean };
 
@@ -22,6 +21,8 @@ export default function Index() {
 
   const [editingHabitId, setEditingHabitId] = useState<string | null>(null);
   const [editingHabitTitle, setEditingHabitTitle] = useState<string>('');
+
+  const scrollRef = useRef<ScrollView>(null)
 
   function toggleHabit(id: string) {
     setHabits(prev => prev.map(habit =>
@@ -79,7 +80,7 @@ export default function Index() {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'height' : 'padding'}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       className="flex-1 bg-colors-dark">
       <View
         className="flex-1 items-center bg-colors-dark p-4 pt-20 w-full"
@@ -88,6 +89,7 @@ export default function Index() {
           contentContainerStyle={{ paddingBottom: 350 }}
           keyboardShouldPersistTaps="handled"
           style={{ backgroundColor: "#151515" }}
+          ref={scrollRef}
         >
           <View className="w-full bg-colors-orange rounded-xl flex-row justify-between items-center px-4 py-2">
             <Text className="text-colors-dark font-bold text-3xl">Friday</Text>
@@ -101,7 +103,15 @@ export default function Index() {
               if (isEditing) {
                 return (
                   <View key={habit.id}
-                    className="w-full bg-colors-background rounded-xl px-3 py-1 border-b-[1px] border-b-colors-light/20">
+                    className="w-full bg-colors-background rounded-xl px-3 py-1 border-b-[1px] border-b-colors-light/20"
+                    onLayout={(e) => {
+                      const y = e.nativeEvent.layout.y;
+                      scrollRef.current?.scrollTo({
+                        y: Math.max(0, y - 80),
+                        animated: true,
+                        })
+                    }}
+                    >
                     <TextInput
                       value={editingHabitTitle}
                       onChangeText={setEditingHabitTitle}

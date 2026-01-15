@@ -10,7 +10,7 @@ type CreateHabitProps = {
 
 export default function CreateHabit({ newHabitTitle, setNewHabitTitle, createHabit }: CreateHabitProps) {
   return (
-    <View className="w-full flex-row items-center justify-between bg-colors-background rounded-xl p-2 ">
+    <View className="w-full flex-row items-center justify-between bg-colors-background rounded-xl p-2 " >
       <TextInput
         className="
             flex-1
