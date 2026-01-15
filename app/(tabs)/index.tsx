@@ -16,6 +16,11 @@ export default function Index() {
     { id: '6', title: 'Practice Gratitude', checked: true },
     { id: '7', title: 'Learn a New Skill', checked: false },
   ]);
+  const [newHabitTitle, setNewHabitTitle] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedHabitId, setSelectedHabitId] = useState<string | null>(null);
+
+  
 
   function toggleHabit(id: string) {
     setHabits(prev => prev.map(habit =>
@@ -23,7 +28,6 @@ export default function Index() {
     );
   }
 
-  const [newHabitTitle, setNewHabitTitle] = useState('');
   function createHabit(title: string) {
     if (title.trim() === '') return;
     const newHabit = {
@@ -40,8 +44,6 @@ export default function Index() {
     setIsModalVisible(false);
   }
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedHabitId, setSelectedHabitId] = useState<string | null>(null);
   function longPressHabit(id: string) {
     return () => {
       setSelectedHabitId(id);
@@ -49,12 +51,6 @@ export default function Index() {
     };
   }
 
-  function editHabit(id: string, newTitle: string) {
-    setHabits(prev => prev.map(habit =>
-      habit.id === id ? { ...habit, title: newTitle } : habit)
-    );
-    setIsModalVisible(false);
-  }
 
   return (
     <KeyboardAvoidingView 
@@ -96,7 +92,8 @@ export default function Index() {
             >
               <Pressable onPress={() => { 
                 if (!selectedHabitId) return;
-                editHabit(selectedHabitId!, 'Edited Habit');
+                // Edit the habit
+                setIsModalVisible(false);
               }}>
                 <Text className="text-colors-light border-b-[1px] border-b-colors-light/20 p-4 text-xl">Edit</Text>
               </Pressable>
