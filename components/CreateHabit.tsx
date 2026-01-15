@@ -13,13 +13,11 @@ export default function CreateHabit({ newHabitTitle, setNewHabitTitle, createHab
   return (
     <View className="w-full flex-row items-center justify-between bg-colors-background rounded-xl p-2 " >
       <TextInput
-        className="
-            flex-1
-            italic
-            font-normal 
-            text-2xl 
-            text-colors-orange
-          "
+        className={`
+          flex-1
+          font-normal
+          text-2xl
+        `}
         placeholderTextColor={colors.orange}
         placeholder="Create Habit"
         onChangeText={setNewHabitTitle}
