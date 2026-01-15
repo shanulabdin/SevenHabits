@@ -44,6 +44,7 @@ export default function Index() {
   function deleteHabit(id: string) {
     setHabits(prev => prev.filter(habit => habit.id !== id));
     setIsModalVisible(false);
+    setSelectedHabitId(null);
   }
 
   function longPressHabit(id: string) {
@@ -58,7 +59,7 @@ export default function Index() {
     if (!habit) return;
 
     setIsModalVisible(false);
-    
+
     setTimeout(() => {
       setEditingHabitId(habit.id);
       setEditingHabitTitle(habit.title);
@@ -68,6 +69,7 @@ export default function Index() {
   function saveEditingHabit(id: string) {
     if (editingHabitTitle.trim() === '') {
       setEditingHabitId(null);
+      setEditingHabitTitle('');
       return;
     }
 
@@ -109,17 +111,18 @@ export default function Index() {
                       scrollRef.current?.scrollTo({
                         y: Math.max(0, y - 80),
                         animated: true,
-                        })
+                      })
                     }}
-                    >
+                  >
                     <TextInput
                       value={editingHabitTitle}
                       onChangeText={setEditingHabitTitle}
                       autoFocus
                       returnKeyType='done'
+                      maxLength={30}
                       onSubmitEditing={() => saveEditingHabit(habit.id)}
+                      onBlur={() => saveEditingHabit(habit.id)}
                       className="text-colors-light font-normal text-2xl max-w-[80%]"
-
                     />
                   </View>
                 );
@@ -134,7 +137,7 @@ export default function Index() {
             })
           }
 
-          <CreateHabit newHabitTitle={newHabitTitle} setNewHabitTitle={setNewHabitTitle} createHabit={createHabit} onFocusInput={() => scrollRef.current?.scrollToEnd({animated: true})} />
+          <CreateHabit newHabitTitle={newHabitTitle} setNewHabitTitle={setNewHabitTitle} createHabit={createHabit} onFocusInput={() => scrollRef.current?.scrollToEnd({ animated: true })} />
         </ScrollView>
 
         <Modal visible={isModalVisible} transparent animationType="fade">
@@ -144,7 +147,10 @@ export default function Index() {
           >
             <Pressable
               className="bg-colors-background rounded-xl w-64"
-              onPress={(e) => e.stopPropagation()}
+              onPress={() => {
+                setIsModalVisible(false);
+                setSelectedHabitId(null);
+              }}
             >
               <Pressable onPress={() => {
                 if (!selectedHabitId) return;
