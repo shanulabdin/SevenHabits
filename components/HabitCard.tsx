@@ -23,6 +23,7 @@ export default function HabitCard({ title, checked, markComplete, onLongPress }:
         items-center
         justify-between
       "
+
         onLongPress={onLongPress}
       >
       <Text className={`

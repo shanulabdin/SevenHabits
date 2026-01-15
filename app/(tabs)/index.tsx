@@ -45,6 +45,7 @@ export default function Index() {
     setHabits(prev => prev.filter(habit => habit.id !== id));
     setIsModalVisible(false);
     setSelectedHabitId(null);
+
   }
 
   function longPressHabit(id: string) {
