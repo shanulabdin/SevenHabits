@@ -134,7 +134,7 @@ export default function Index() {
             })
           }
 
-          <CreateHabit newHabitTitle={newHabitTitle} setNewHabitTitle={setNewHabitTitle} createHabit={createHabit} />
+          <CreateHabit newHabitTitle={newHabitTitle} setNewHabitTitle={setNewHabitTitle} createHabit={createHabit} onFocusInput={() => scrollRef.current?.scrollToEnd({animated: true})} />
         </ScrollView>
 
         <Modal visible={isModalVisible} transparent animationType="fade">

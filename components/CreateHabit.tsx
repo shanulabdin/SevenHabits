@@ -6,9 +6,10 @@ type CreateHabitProps = {
   setNewHabitTitle: React.Dispatch<React.SetStateAction<string>>;
   newHabitTitle: string;
   createHabit: (title: string) => void;
+  onFocusInput: () => void;
 };
 
-export default function CreateHabit({ newHabitTitle, setNewHabitTitle, createHabit }: CreateHabitProps) {
+export default function CreateHabit({ newHabitTitle, setNewHabitTitle, createHabit, onFocusInput }: CreateHabitProps) {
   return (
     <View className="w-full flex-row items-center justify-between bg-colors-background rounded-xl p-2 " >
       <TextInput
@@ -26,6 +27,7 @@ export default function CreateHabit({ newHabitTitle, setNewHabitTitle, createHab
         returnKeyType="done"
         onSubmitEditing={() => createHabit(newHabitTitle)}
         maxLength={30}
+        onFocus={onFocusInput}
       />
       <Pressable
         className="w-16 h-14 justify-center items-end pr-1"
