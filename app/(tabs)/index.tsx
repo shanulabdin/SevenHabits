@@ -1,7 +1,7 @@
 import CreateHabit from '@/components/CreateHabit';
 import HabitCard from '@/components/HabitCard';
 import { useState } from 'react';
-import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, View } from "react-native";
+import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 
 
 export type Habit = { id: string; title: string; checked: boolean };
@@ -20,7 +20,8 @@ export default function Index() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedHabitId, setSelectedHabitId] = useState<string | null>(null);
 
-  
+  const [editingHabitId, setEditingHabitId] = useState<string | null>(null);
+  const [editingHabitTitle, setEditingHabitTitle] = useState<string>('');
 
   function toggleHabit(id: string) {
     setHabits(prev => prev.map(habit =>
@@ -51,9 +52,30 @@ export default function Index() {
     };
   }
 
+  function startEditingHabit(id: string) {
+    const habit = habits.find(habit => habit.id === id);
+    if (!habit) return;
+
+    setEditingHabitId(id);
+    setEditingHabitTitle(habit.title);
+    setIsModalVisible(false);
+  }
+
+  function saveEditingHabit(id: string) {
+    if(editingHabitTitle.trim() === '') {
+      setEditingHabitId(null);
+      return;
+    }
+
+    setHabits(prev => prev.map(h =>
+      h.id === id ? { ...h, title: editingHabitTitle.trim() } : h
+    ));
+    setEditingHabitId(null);
+    setEditingHabitTitle('');
+  }
 
   return (
-    <KeyboardAvoidingView 
+    <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'height' : 'padding'}
       className="flex-1 bg-colors-dark">
       <View
@@ -70,12 +92,33 @@ export default function Index() {
           </View>
 
           {
-            habits.map(habit => (
-              <HabitCard key={habit.id} title={habit.title} checked={habit.checked}
-                markComplete={() => toggleHabit(habit.id)}
-                onLongPress={longPressHabit(habit.id)}
-              />
-            ))
+            habits.map(habit => {
+              const isEditing = editingHabitId === habit.id;
+
+              if (isEditing) {
+                return (
+                  <View key={habit.id}
+                    className="w-full bg-colors-background rounded-xl px-3 py-1 border-b-[1px] border-b-colors-light/20">
+                    <TextInput
+                      value={editingHabitTitle}
+                      onChangeText={setEditingHabitTitle}
+                      autoFocus
+                      returnKeyType='done'
+                      onSubmitEditing={() => saveEditingHabit(habit.id)}
+                      className="text-colors-light font-normal text-2xl max-w-[80%]"
+
+                    />
+                  </View>
+                );
+              }
+
+              return (
+                <HabitCard key={habit.id} title={habit.title} checked={habit.checked}
+                  markComplete={() => toggleHabit(habit.id)}
+                  onLongPress={longPressHabit(habit.id)}
+                />
+              );
+            })
           }
 
           <CreateHabit newHabitTitle={newHabitTitle} setNewHabitTitle={setNewHabitTitle} createHabit={createHabit} />
@@ -90,10 +133,10 @@ export default function Index() {
               className="bg-colors-background rounded-xl w-64"
               onPress={(e) => e.stopPropagation()}
             >
-              <Pressable onPress={() => { 
+              <Pressable onPress={() => {
                 if (!selectedHabitId) return;
                 // Edit the habit
-                setIsModalVisible(false);
+                startEditingHabit(selectedHabitId);
               }}>
                 <Text className="text-colors-light border-b-[1px] border-b-colors-light/20 p-4 text-xl">Edit</Text>
               </Pressable>
