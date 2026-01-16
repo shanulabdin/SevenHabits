@@ -19,7 +19,7 @@ export default function TabLayout() {
         tabBarInactiveTintColor: "#F5E7C6",
       }}
     >
-      <Tabs.Screen name="Index" options={{
+      <Tabs.Screen name="index" options={{
         tabBarIcon: ({ color, size, focused }) => (
           <Ionicons name="home" size={focused ? size + 3 : size} color={color} />
         ),

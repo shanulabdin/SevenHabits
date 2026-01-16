@@ -3,6 +3,7 @@ import HabitCard from '@/components/HabitCard';
 import { useRef, useState } from 'react';
 import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 
+
 export type Habit = { id: string; title: string; checked: boolean };
 
 export default function Index() {
@@ -93,6 +94,8 @@ export default function Index() {
           keyboardShouldPersistTaps="handled"
           style={{ backgroundColor: "#151515" }}
           ref={scrollRef}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
         >
           <View className="w-full bg-colors-orange rounded-xl flex-row justify-between items-center px-4 py-2">
             <Text className="text-colors-dark font-bold text-3xl">Friday</Text>
