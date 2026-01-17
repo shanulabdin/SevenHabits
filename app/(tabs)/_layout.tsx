@@ -32,8 +32,8 @@ export default function TabLayout() {
       }} />
       <Tabs.Screen name="AddHabit" options={{
         title: "Weekly",
-        tabBarIcon: ({ color, size, focused }) => (
-          <Ionicons name="pie-chart" size={focused ? size + 3 : size} color={color} />
+        tabBarIcon: ({ size, focused }) => (
+          <Ionicons name="add-outline" className={`${focused ? 'bg-colors-orange' : 'bg-colors-light'} rounded color-transparent`} size={focused ? size + 3 : size}  />
         ),
       }} />
       <Tabs.Screen name="Settings" options={{
