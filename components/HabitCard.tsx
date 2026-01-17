@@ -39,6 +39,7 @@ export default function HabitCard({ title, checked, markComplete, onLongPress }:
         font-semibold 
         text-xl 
         text-center
+        max-w-[60%]
       `}>{title}</Text>
 
 

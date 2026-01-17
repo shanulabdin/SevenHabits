@@ -17,7 +17,7 @@ export default function Index() {
     { id: '6', title: 'Practice Gratitude', checked: true },
     { id: '7', title: 'Learn a New Skill', checked: false },
   ]);
-  
+
   // const [newHabitTitle, setNewHabitTitle] = useState('');
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -31,7 +31,7 @@ export default function Index() {
   const { newHabit } = useLocalSearchParams<{ newHabit?: string }>();
 
   useEffect(() => {
-    if(newHabit){
+    if (newHabit) {
       createHabit(newHabit);
     }
   }, [newHabit]);
@@ -116,28 +116,42 @@ export default function Index() {
 
               if (isEditing) {
                 return (
-                  <View key={habit.id}
-                    className="w-full bg-colors-background rounded-xl mb-10"
+                  <View
+                    key={habit.id}
+                    className="
+                      w-full
+                      bg-colors-background
+                      rounded-tr-2xl
+                      rounded-bl-2xl
+                      mb-4
+                      justify-center
+                    "
                     onLayout={(e) => {
                       const y = e.nativeEvent.layout.y;
-                      scrollRef.current?.scrollTo({
-                        y: Math.max(0, y - 80),
-                        animated: true,
-                      })
+                      scrollRef.current?.scrollTo({ y: Math.max(0, y - 80), animated: true });
                     }}
                   >
-                    <TextInput
-                      value={editingHabitTitle}
-                      onChangeText={setEditingHabitTitle}
-                      autoFocus
-                      returnKeyType='done'
-                      maxLength={24}
-                      onSubmitEditing={() => saveEditingHabit(habit.id)}
-                      onBlur={() => saveEditingHabit(habit.id)}
-                      style={{fontFamily: "Poppins_600SemiBold"}}
-                      className="text-colors-text font-normal text-xl text-center ml-6"
-                    />
+                  <TextInput
+                    value={editingHabitTitle}
+                    onChangeText={setEditingHabitTitle}
+                    autoFocus
+                    returnKeyType="done"
+                    maxLength={24}
+                    onSubmitEditing={() => saveEditingHabit(habit.id)}
+                    onBlur={() => saveEditingHabit(habit.id)}
+                    style={{
+                      fontFamily: "Poppins_600SemiBold",
+                      height: 48,
+                      lineHeight: 24,
+                      paddingVertical: 0,        // important
+                      includeFontPadding: false, // Android: removes extra top/bottom padding
+                      textAlignVertical: "center", // Android: centers text vertically
+                    }}
+                    className="text-colors-orange text-xl text-center px-6"
+                  />
+
                   </View>
+
                 );
               }
 

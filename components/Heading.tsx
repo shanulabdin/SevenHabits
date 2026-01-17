@@ -22,7 +22,7 @@ export default function Heading({ title, iconTitle, icon }: HeadingProps) {
       mb-10"
     >
       <Text className="text-colors-text font-bold text-2xl">{title}</Text>
-      <View className="flex-row">
+      <View className="flex-row justify-center items-center">
         <Text className="text-colors-text mr-2 font-semibold">{iconTitle}</Text>
         <Ionicons name={icon} size={26} color={colors.text}></Ionicons>
       </View>
