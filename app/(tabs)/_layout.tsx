@@ -24,12 +24,6 @@ export default function TabLayout() {
           <Ionicons name="home" size={focused ? size + 3 : size} color={color} />
         ),
       }} />
-      <Tabs.Screen name="Tasks" options={{
-        title: "Tasks",
-        tabBarIcon: ({ color, size, focused }) => (
-          <Ionicons name="checkbox" size={focused ? size + 3 : size} color={color} />
-        ),
-      }} />
       <Tabs.Screen name="AddHabit" options={{
         title: "Weekly",
         tabBarIcon: ({ size, focused }) => (

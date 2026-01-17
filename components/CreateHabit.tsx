@@ -16,7 +16,7 @@ export default function CreateHabit({ newHabitTitle, setNewHabitTitle, createHab
           flex-1
           font-normal
           text-2xl
-          text-colors-light
+          text-colors-text
         "
         placeholderTextColor={colors.orange}
         placeholder="Create Habit"

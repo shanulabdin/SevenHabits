@@ -15,7 +15,9 @@ export default function Index() {
     { id: '6', title: 'Practice Gratitude', checked: true },
     { id: '7', title: 'Learn a New Skill', checked: false },
   ]);
-  const [newHabitTitle, setNewHabitTitle] = useState('');
+  
+  // const [newHabitTitle, setNewHabitTitle] = useState('');
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedHabitId, setSelectedHabitId] = useState<string | null>(null);
 
@@ -38,7 +40,9 @@ export default function Index() {
       checked: false,
     };
     setHabits(prev => ([...prev, newHabit]));
-    setNewHabitTitle('');
+
+
+    // setNewHabitTitle('');
   }
 
   function deleteHabit(id: string) {
@@ -169,9 +173,7 @@ export default function Index() {
             </Pressable>
           </Pressable>
         </Modal>
-
       </View>
     </KeyboardAvoidingView>
-
   );
 }
