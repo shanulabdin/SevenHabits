@@ -117,7 +117,7 @@ export default function Index() {
               if (isEditing) {
                 return (
                   <View key={habit.id}
-                    className="w-full bg-colors-background rounded-xl px-3 py-1 border-b-[1px] border-b-colors-light/20"
+                    className="w-full bg-colors-background rounded-xl mb-10"
                     onLayout={(e) => {
                       const y = e.nativeEvent.layout.y;
                       scrollRef.current?.scrollTo({
@@ -134,7 +134,8 @@ export default function Index() {
                       maxLength={30}
                       onSubmitEditing={() => saveEditingHabit(habit.id)}
                       onBlur={() => saveEditingHabit(habit.id)}
-                      className="text-colors-light font-normal text-2xl max-w-[80%]"
+                      style={{fontFamily: "Poppins_600SemiBold"}}
+                      className="text-colors-text font-normal text-xl text-center ml-6"
                     />
                   </View>
                 );
@@ -168,7 +169,7 @@ export default function Index() {
                 // Edit the habit
                 startEditingHabit(selectedHabitId);
               }}>
-                <Text className="text-colors-light border-b-[1px] border-b-colors-light/20 p-4 text-xl">Edit</Text>
+                <Text className="text-colors-text border-b-[1px] border-b-colors-light/20 p-4 text-xl">Edit</Text>
               </Pressable>
 
               <Pressable onPress={() => {
