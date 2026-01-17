@@ -30,13 +30,13 @@ export default function TabLayout() {
           <Ionicons name="checkbox" size={focused ? size + 3 : size} color={color} />
         ),
       }} />
-      <Tabs.Screen name="Days" options={{
+      <Tabs.Screen name="AddHabit" options={{
         title: "Weekly",
         tabBarIcon: ({ color, size, focused }) => (
           <Ionicons name="pie-chart" size={focused ? size + 3 : size} color={color} />
         ),
       }} />
-      <Tabs.Screen name="Grid" options={{
+      <Tabs.Screen name="Settings" options={{
         title: "Overall",
         tabBarIcon: ({ color, size, focused }) => (
           <Ionicons name="grid" size={focused ? size + 3 : size} color={color} />
