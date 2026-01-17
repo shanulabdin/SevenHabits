@@ -33,14 +33,17 @@ export default function HabitCard({ title, checked, markComplete, onLongPress }:
         max-w-[80%]
         ${checked ? 'line-through opacity-50' : ''} 
       `}>{title}</Text>
+
       <Pressable
-        hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
-        onPress={() => {
-          markComplete();
-        }}
+        onPress={markComplete}
+        hitSlop={12}
+
+        className={`w-10 h-10 rounded-full items-center justify-center ${checked ? "bg-colors-orange" : "bg-colors-orange/30"
+          }`}
       >
-        <Ionicons name={checked ? "checkbox" : "square-outline"} size={26} color={colors.light} />
+        <Ionicons name="checkmark-sharp" size={28} color={colors.dark} />
       </Pressable>
+      
     </Pressable>
   );
 }
