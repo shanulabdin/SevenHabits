@@ -1,8 +1,8 @@
 import CreateHabit from '@/components/CreateHabit';
 import HabitCard from '@/components/HabitCard';
+import Heading from '@/components/Heading';
 import { useRef, useState } from 'react';
 import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
-
 
 export type Habit = { id: string; title: string; checked: boolean };
 
@@ -87,7 +87,7 @@ export default function Index() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       className="flex-1 bg-colors-dark">
       <View
-        className="flex-1 items-center bg-colors-dark p-4 pt-20 w-full"
+        className="flex-1 items-center bg-colors-dark p-2 pt-20 w-full"
       >
         <ScrollView
           contentContainerStyle={{ paddingBottom: 350 }}
@@ -97,10 +97,8 @@ export default function Index() {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
-          <View className="w-full bg-colors-orange rounded-xl flex-row justify-between items-center px-4 py-2">
-            <Text className="text-colors-dark font-bold text-3xl">Friday</Text>
-            <Text className="text-colors-dark font-bold text-xl">1-14-2026</Text>
-          </View>
+
+          <Heading />
 
           {
             habits.map(habit => {
