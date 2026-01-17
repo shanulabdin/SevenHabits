@@ -27,7 +27,7 @@ export default function HabitCard({ title, checked, markComplete, onLongPress }:
 
       onLongPress={onLongPress}
     >
-      <View className="flex-row items-baseline min-w-[48px]">
+      <View className={`flex-row items-baseline min-w-[48px] ${checked ? "" : "opacity-30"}`}>
         <Text style={{fontFamily: "Poppins_600SemiBold"}} className={`
         text-colors-text text-sm
         `}>130</Text>
