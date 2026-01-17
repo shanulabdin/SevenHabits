@@ -5,7 +5,7 @@ import { View } from "react-native";
 export default function Tasks({ newHabitTitle, setNewHabitTitle, createHabit }: CreateHabitProps) {
   return (
     <View className="flex-1 items-center bg-colors-dark p-3 pt-20 w-full">
-      <Heading />
+      <Heading title="Add Habit" iconTitle="Save" icon="checkmark" />
       <CreateHabit newHabitTitle={newHabitTitle} setNewHabitTitle={setNewHabitTitle} createHabit={createHabit}/>
     </View>
   );

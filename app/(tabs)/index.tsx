@@ -97,7 +97,7 @@ export default function Index() {
           showsVerticalScrollIndicator={false}
         >
 
-          <Heading />
+          <Heading title="Today, 17 Jan" iconTitle="78%" icon="pie-chart" />
 
           {
             habits.map(habit => {
