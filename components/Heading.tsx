@@ -7,7 +7,7 @@ export default function Heading() {
     <View className="w-full bg-colors-background rounded-xl flex-row justify-between items-center p-4 mb-10">
       <Text className="text-colors-text font-bold text-2xl">Today, 17 Jan</Text>
       <View className="flex-row">
-        <Text className="text-colors-text mr-2">78%</Text>
+        <Text className="text-colors-text mr-2 font-semibold">78%</Text>
         <Ionicons name="pie-chart" size={26} color={colors.text}></Ionicons>
       </View>
     </View>

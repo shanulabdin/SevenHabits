@@ -1,4 +1,3 @@
-import CreateHabit from '@/components/CreateHabit';
 import HabitCard from '@/components/HabitCard';
 import Heading from '@/components/Heading';
 import { useRef, useState } from 'react';
@@ -87,7 +86,7 @@ export default function Index() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       className="flex-1 bg-colors-dark">
       <View
-        className="flex-1 items-center bg-colors-dark p-2 pt-20 w-full"
+        className="flex-1 items-center bg-colors-dark p-3 pt-20 w-full"
       >
         <ScrollView
           contentContainerStyle={{ paddingBottom: 350 }}
@@ -139,7 +138,6 @@ export default function Index() {
             })
           }
 
-          <CreateHabit newHabitTitle={newHabitTitle} setNewHabitTitle={setNewHabitTitle} createHabit={createHabit} onFocusInput={() => scrollRef.current?.scrollToEnd({ animated: true })} />
         </ScrollView>
 
         <Modal visible={isModalVisible} transparent animationType="fade">
