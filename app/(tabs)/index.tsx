@@ -1,7 +1,9 @@
 import HabitCard from '@/components/HabitCard';
 import Heading from '@/components/Heading';
-import { useRef, useState } from 'react';
+import { useLocalSearchParams } from 'expo-router';
+import { useEffect, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
+
 
 export type Habit = { id: string; title: string; checked: boolean };
 
@@ -26,6 +28,14 @@ export default function Index() {
 
   const scrollRef = useRef<ScrollView>(null)
 
+  const { newHabit } = useLocalSearchParams<{ newHabit?: string }>();
+
+  useEffect(() => {
+    if(newHabit){
+      createHabit(newHabit);
+    }
+  }, [newHabit]);
+
   function toggleHabit(id: string) {
     setHabits(prev => prev.map(habit =>
       habit.id === id ? { ...habit, checked: !habit.checked } : habit)
@@ -40,9 +50,6 @@ export default function Index() {
       checked: false,
     };
     setHabits(prev => ([...prev, newHabit]));
-
-
-    // setNewHabitTitle('');
   }
 
   function deleteHabit(id: string) {

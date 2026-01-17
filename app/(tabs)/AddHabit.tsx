@@ -11,7 +11,8 @@ export default function AddHabit() {
     const title = newHabitTitle.trim();
     if(!title) return;
     
-    router.back();
+    router.push({ pathname: "/", params: { newHabit: title } });
+    setNewHabitTitle('');
   }
 
   return (
@@ -20,7 +21,7 @@ export default function AddHabit() {
       <CreateHabit 
         newHabitTitle={newHabitTitle} 
         setNewHabitTitle={setNewHabitTitle} 
-        createHabit={() => {}}/>
+        createHabit={() => submit()}/>
     </View>
   );
 }
