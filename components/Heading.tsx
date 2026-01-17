@@ -10,7 +10,17 @@ type HeadingProps = {
 
 export default function Heading({ title, iconTitle, icon }: HeadingProps) {
   return (
-    <View className="w-full bg-colors-background rounded-xl flex-row justify-between items-center p-4 mb-10">
+    <View className="
+      w-full 
+      bg-colors-background 
+      rounded-tr-2xl
+      rounded-bl-2xl
+      flex-row 
+      justify-between 
+      items-center 
+      p-4 
+      mb-10"
+    >
       <Text className="text-colors-text font-bold text-2xl">{title}</Text>
       <View className="flex-row">
         <Text className="text-colors-text mr-2 font-semibold">{iconTitle}</Text>

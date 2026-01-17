@@ -10,12 +10,18 @@ export type CreateHabitProps = {
 
 export default function CreateHabit({ newHabitTitle, setNewHabitTitle, createHabit }: CreateHabitProps) {
   return (
-    <View className="w-full flex-row items-center justify-between bg-colors-background rounded-xl py-2 px-3" >
+    <View className="
+        w-full 
+        flex-row 
+        bg-colors-background 
+        rounded-tr-2xl
+        rounded-bl-2xl
+        justify-between 
+        px-4 py-1
+
+      " >
       <TextInput
         className="
-          flex-1
-          font-normal
-          text-2xl
           text-colors-text
         "
         placeholderTextColor={colors.orange}
@@ -24,18 +30,19 @@ export default function CreateHabit({ newHabitTitle, setNewHabitTitle, createHab
         value={newHabitTitle}
         returnKeyType="done"
         onSubmitEditing={() => createHabit(newHabitTitle)}
-        maxLength={30}
+        maxLength={24}
+        style={{fontFamily: "Poppins_600SemiBold"}}
       />
       <Pressable
         hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
-        className="justify-center items-end pr-1"
+        className="justify-center items-end"
         onPress={() => {
           createHabit(newHabitTitle);
         }}
       >
         <Ionicons
           name="add"
-          size={32}
+          size={26}
           color={colors.orange}
         />
       </Pressable>

@@ -131,7 +131,7 @@ export default function Index() {
                       onChangeText={setEditingHabitTitle}
                       autoFocus
                       returnKeyType='done'
-                      maxLength={30}
+                      maxLength={24}
                       onSubmitEditing={() => saveEditingHabit(habit.id)}
                       onBlur={() => saveEditingHabit(habit.id)}
                       style={{fontFamily: "Poppins_600SemiBold"}}
