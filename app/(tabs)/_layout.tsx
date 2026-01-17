@@ -39,7 +39,7 @@ export default function TabLayout() {
       <Tabs.Screen name="Settings" options={{
         title: "Overall",
         tabBarIcon: ({ color, size, focused }) => (
-          <Ionicons name="grid" size={focused ? size + 3 : size} color={color} />
+          <Ionicons name="settings" size={focused ? size + 3 : size} color={color} />
         ),
       }} />
     </Tabs>
