@@ -7,12 +7,12 @@ import { View } from "react-native";
 export default function AddHabit() {
   const [newHabitTitle, setNewHabitTitle] = useState("");
 
-  function submit(){
-    const title = newHabitTitle.trim();
-    if(!title) return;
-    
-    router.push({ pathname: "/", params: { newHabit: title } });
-    setNewHabitTitle('');
+  function submit(title: string) {
+    const trimmed = title.trim();
+    if (!trimmed) return;
+
+    router.push({ pathname: "/", params: { newHabit: trimmed } });
+    setNewHabitTitle("");
   }
 
   return (
@@ -21,7 +21,8 @@ export default function AddHabit() {
       <CreateHabit 
         newHabitTitle={newHabitTitle} 
         setNewHabitTitle={setNewHabitTitle} 
-        createHabit={() => submit()}/>
+        createHabit={submit}
+      />
     </View>
   );
 }
