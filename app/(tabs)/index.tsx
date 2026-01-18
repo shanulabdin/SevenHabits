@@ -124,6 +124,7 @@ export default function Index() {
                       rounded-tr-2xl
                       rounded-bl-2xl
                       mb-4
+                      h-30
                       justify-center
                     "
                     onLayout={(e) => {
@@ -131,24 +132,25 @@ export default function Index() {
                       scrollRef.current?.scrollTo({ y: Math.max(0, y - 80), animated: true });
                     }}
                   >
-                  <TextInput
-                    value={editingHabitTitle}
-                    onChangeText={setEditingHabitTitle}
-                    autoFocus
-                    returnKeyType="done"
-                    maxLength={24}
-                    onSubmitEditing={() => saveEditingHabit(habit.id)}
-                    onBlur={() => saveEditingHabit(habit.id)}
-                    style={{
-                      fontFamily: "Poppins_600SemiBold",
-                      height: 48,
-                      lineHeight: 24,
-                      paddingVertical: 0,        // important
-                      includeFontPadding: false, // Android: removes extra top/bottom padding
-                      textAlignVertical: "center", // Android: centers text vertically
-                    }}
-                    className="text-colors-orange text-xl text-center px-6"
-                  />
+                    <TextInput
+                      value={editingHabitTitle}
+                      onChangeText={setEditingHabitTitle}
+                      autoFocus
+                      returnKeyType="done"
+                      maxLength={24}
+                      onSubmitEditing={() => saveEditingHabit(habit.id)}
+                      onBlur={() => saveEditingHabit(habit.id)}
+                      style={{
+                        fontFamily: "Poppins_600SemiBold",
+                        height: 48,
+                        lineHeight: 24,
+                        paddingVertical: 0,        // important
+                        includeFontPadding: false, // Android: removes extra top/bottom padding
+                        textAlignVertical: "center", // Android: centers text vertically
+                        marginLeft: 4,
+                      }}
+                      className="<text-colors-ora></text-colors-ora> text-xl text-center px-6"
+                    />
 
                   </View>
 

@@ -1,3 +1,4 @@
+import { colors } from '@/constants/colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Tabs } from "expo-router";
 
@@ -15,8 +16,8 @@ export default function TabLayout() {
           marginTop: -23,
         },
         tabBarShowLabel: false,
-        tabBarActiveTintColor: "#FF6D1F",
-        tabBarInactiveTintColor: "#F5E7C6",
+        tabBarActiveTintColor: colors.orange,
+        tabBarInactiveTintColor: colors.text,
       }}
     >
       <Tabs.Screen name="index" options={{
@@ -27,7 +28,7 @@ export default function TabLayout() {
       <Tabs.Screen name="AddHabit" options={{
         title: "Weekly",
         tabBarIcon: ({ size, focused }) => (
-          <Ionicons name="add-outline" className={`${focused ? 'bg-colors-orange' : 'bg-colors-light'} rounded color-transparent`} size={focused ? size + 3 : size}  />
+          <Ionicons name="add-outline" className={`${focused ? 'bg-colors-orange' : 'bg-colors-text'} rounded color-transparent`} size={focused ? size + 3 : size}  />
         ),
       }} />
       <Tabs.Screen name="Settings" options={{
