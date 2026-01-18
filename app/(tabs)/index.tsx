@@ -4,7 +4,6 @@ import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 
-
 export type Habit = { id: string; title: string; checked: boolean };
 
 export default function Index() {

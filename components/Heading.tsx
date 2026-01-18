@@ -1,14 +1,15 @@
 import { colors } from "@/constants/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 type HeadingProps = {
   title: string,
   iconTitle: string,
   icon: keyof typeof Ionicons.glyphMap;
+  onIconPress?: () => void;
 }
 
-export default function Heading({ title, iconTitle, icon }: HeadingProps) {
+export default function Heading({ title, iconTitle, icon, onIconPress }: HeadingProps) {
   return (
     <View className="
       w-full 
@@ -22,10 +23,18 @@ export default function Heading({ title, iconTitle, icon }: HeadingProps) {
       mb-10"
     >
       <Text className="text-colors-text font-bold text-2xl">{title}</Text>
-      <View className="flex-row justify-center items-center">
-        <Text className="text-colors-text mr-2 font-semibold">{iconTitle}</Text>
-        <Ionicons name={icon} size={26} color={colors.text}></Ionicons>
-      </View>
+      
+      {(icon || iconTitle) && (
+        <Pressable
+          disabled={!onIconPress}
+          onPress={onIconPress}
+          hitSlop={12}
+          className="flex-row items-center"
+        >
+          {!!iconTitle && <Text className="text-colors-text mr-2 font-semibold">{iconTitle}</Text>}
+          {!!icon && <Ionicons name={icon} size={26} color={colors.text} />}
+        </Pressable>
+      )}
     </View>
   );
 }
