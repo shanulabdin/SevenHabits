@@ -167,13 +167,13 @@ export default function Index() {
 
         </ScrollView>
 
-        <Modal visible={isModalVisible} transparent animationType="fade">
+        <Modal visible={isModalVisible} transparent animationType="fade" className=''>
           <Pressable
             className="flex-1 bg-black/50 items-center justify-center"
             onPress={() => setIsModalVisible(false)}
           >
             <Pressable
-              className="bg-colors-background rounded-xl w-64"
+              className="bg-colors-background rounded-xl w-64 border-black border-[1px]"
               onPress={() => {
                 setIsModalVisible(false);
                 setSelectedHabitId(null);
@@ -184,7 +184,7 @@ export default function Index() {
                 // Edit the habit
                 startEditingHabit(selectedHabitId);
               }}>
-                <Text className="text-colors-text border-b-[1px] border-b-colors-light/20 p-4 text-xl">Edit</Text>
+                <Text className="text-colors-text  border-b-[1px] border-b-black p-4 text-xl">Edit</Text>
               </Pressable>
 
               <Pressable onPress={() => {

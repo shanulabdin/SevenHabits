@@ -15,7 +15,6 @@ export default function HabitCard({ title, checked, markComplete, onLongPress }:
     <Pressable className="
         flex-row 
         bg-colors-background 
-        border-b-[1px]
         w-full
         p-4 
         rounded-tr-2xl
@@ -23,6 +22,8 @@ export default function HabitCard({ title, checked, markComplete, onLongPress }:
         items-center
         justify-between
         mb-3
+        border-[1px]
+        border-black
       "
 
       onLongPress={onLongPress}
