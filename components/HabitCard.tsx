@@ -40,6 +40,7 @@ export default function HabitCard({ title, checked, markComplete, onLongPress }:
         text-xl 
         text-center
         max-w-[60%]
+        ${checked ? "line-through text-colors-text/50" : ""}
       `}>{title}</Text>
 
 
@@ -47,7 +48,7 @@ export default function HabitCard({ title, checked, markComplete, onLongPress }:
         onPress={markComplete}
         hitSlop={12}
 
-        className={`w-8 h-8 rounded-full items-center justify-center ${checked ? "bg-colors-orange" : "bg-colors-orange/30"
+        className={`w-8 h-8 rounded-full items-center justify-center ${checked ? "bg-colors-orange" : "bg-colors-orange/20"
           }`}
       >
         <Ionicons name="checkmark-sharp" size={20} color={colors.dark} />
