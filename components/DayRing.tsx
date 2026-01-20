@@ -24,7 +24,7 @@ export default function DayRing({ dayNumber, dayLabel, percent, selected, onPres
   return (
     <Pressable className="items-center" onPress={onPress}>
       <View
-        className={`relative ${selected ? "opacity-100" : "opacity-70"}`}
+        className={`relative ${selected ? "opacity-100" : "opacity-60"}`}
         style={{ width: size, height: size }}
       >
         <Svg width={size} height={size}>
@@ -67,7 +67,7 @@ export default function DayRing({ dayNumber, dayLabel, percent, selected, onPres
       {/* Weekday label */}
       <Text
         style={{ fontFamily: "Poppins_600SemiBold" }}
-        className="text-colors-text/80 text-xs mt-1"
+        className={` text-xs mt-1 ${selected ? "text-colors-orange" : "text-colors-text/80"}`}
       >
         {dayLabel}
       </Text>
