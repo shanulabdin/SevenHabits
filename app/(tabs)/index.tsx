@@ -20,13 +20,6 @@ const STORAGE_KEY = "@sevenhabits/habits_v1";
 
 export default function Index() {
   const todayKey = getDateKey();
-  function addDays(dateKey: string, offset: number) {
-    const [y, m, d] = dateKey.split("-").map(Number);
-    const dt = new Date(y, m - 1, d); // local safe
-    dt.setDate(dt.getDate() + offset);
-    return getDateKey(dt);
-  }
-
 
   // Streaks ---|
   function dateKeyToDate(dateKey: string) {
