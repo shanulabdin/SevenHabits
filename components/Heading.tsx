@@ -20,9 +20,7 @@ export default function Heading({ title, iconTitle, icon, onIconPress }: Heading
       justify-between 
       items-center 
       p-4 
-      mb-10
       border-black border-[1px]"
-      
     >
       <Text className="text-colors-text font-bold text-2xl">{title}</Text>
       

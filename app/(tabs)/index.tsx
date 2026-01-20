@@ -186,16 +186,16 @@ export default function Index() {
             icon="pie-chart"
           />
 
-<View className="flex-row justify-between w-full px-1 mt-4">
-  {weekStats.map(d => (
-    <DayRing
-      key={d.key}
-      dayNumber={d.dayNumber}
-      dayLabel={d.dayLabel}
-      percent={d.percent}
-    />
-  ))}
-</View>
+          <View className="flex-row justify-between w-full px-1 mt-4 mb-4">
+            {weekStats.map(d => (
+              <DayRing
+                key={d.key}
+                dayNumber={d.dayNumber}
+                dayLabel={d.dayLabel}
+                percent={d.percent}
+              />
+            ))}
+          </View>
 
 
           {
