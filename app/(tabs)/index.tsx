@@ -80,12 +80,14 @@ export default function Index() {
   const headingTitle = selectedDateKey === todayKey ? `Today, ${selectedLabel}` : `${selectedLabel}`;
 
   const [habits, setHabits] = useState<Habit[]>([
-    { id: '1', title: 'Drink Water', history: { [todayKey]: false } },
-    // { id: '2', title: 'Exercise', history: { [todayKey]: true, [yesterdayKey]: true } },
-    { id: '3', title: 'Read a Book', history: { [todayKey]: true } },
-    { id: '4', title: 'Meditate', history: { [todayKey]: true } },
+    { id: '1', title: 'Code', history: { [todayKey]: false } },
+    { id: '2', title: 'Workout', history: { [todayKey]: false } },
+    { id: '3', title: 'Read 1 Page', history: { [todayKey]: false } },
+    { id: '4', title: 'Meditate', history: { [todayKey]: false } },
     { id: '5', title: 'Sleep Early', history: { [todayKey]: false } },
   ]);
+
+  // Async Storage --|
   useEffect(() => {
     (async () => {
       try {
@@ -141,6 +143,17 @@ export default function Index() {
       }
     })();
   }, [habits]);
+
+  async function resetAllData() {
+    try {
+      await AsyncStorage.removeItem(STORAGE_KEY);
+      setHabits([]); // or setHabits(defaultHabits)
+    } catch (e) {
+      console.log("Failed to reset storage:", e);
+    }
+  }
+  // Async Storage --|
+
 
   const totalCount = habits.length;
 
@@ -386,6 +399,12 @@ export default function Index() {
               );
             })
           }
+          <Pressable
+            onPress={resetAllData}
+            className="self-end mb-3 px-3 py-2 rounded-lg bg-colors-background border border-black"
+          >
+            <Text className="text-colors-orange">Reset Data</Text>
+          </Pressable>
 
         </ScrollView>
 
