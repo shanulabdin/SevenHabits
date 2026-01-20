@@ -1,3 +1,4 @@
+import DayRing from '@/components/DayRing';
 import HabitCard from '@/components/HabitCard';
 import Heading from '@/components/Heading';
 import { useLocalSearchParams } from 'expo-router';
@@ -44,32 +45,35 @@ export default function Index() {
   const percent = totalCount === 0 ? 0 : Math.round((doneCount / totalCount) * 100);
 
   function getLastNDays(n: number) {
-    const days: string[] = [];
-
+    const days: Date[] = [];
     for (let i = n - 1; i >= 0; i--) {
       const d = new Date();
       d.setDate(d.getDate() - i);
-      days.push(d.toISOString().split("T")[0]);
+      days.push(d);
     }
-
     return days;
   }
-  const last7Days = getLastNDays(7);
 
-  function getDayCompletionPercent(dateKey: string) {
-    if (habits.length === 0) return 0;
+  function getPercentForDate(dateKey: string) {
+    const total = habits.length;
+    if (total === 0) return 0;
 
-    const completed = habits.reduce((sum, habit) => {
-      return sum + (habit.history[dateKey] === true ? 1 : 0);
-    }, 0);
-
-    return Math.round((completed / habits.length) * 100);
+    const done = habits.reduce((sum, h) => sum + (h.history?.[dateKey] === true ? 1 : 0), 0);
+    return Math.round((done / total) * 100);
   }
 
-  const weekStats = last7Days.map(dateKey => ({
-    dateKey,
-    percent: getDayCompletionPercent(dateKey),
-  }));
+  const last7 = getLastNDays(7);
+
+  const weekStats = last7.map(d => {
+    const dateKey = getDateKey(d);
+    return {
+      key: dateKey,
+      dayNumber: d.getDate().toString(), // "11"
+      dayLabel: d.toLocaleDateString(undefined, { weekday: "short" }), // "Sun"
+      percent: getPercentForDate(dateKey),
+    };
+  });
+
 
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -182,30 +186,17 @@ export default function Index() {
             icon="pie-chart"
           />
 
-          <View className="
-          mb-6 
-          gap-2
+<View className="flex-row justify-between w-full px-1 mt-4">
+  {weekStats.map(d => (
+    <DayRing
+      key={d.key}
+      dayNumber={d.dayNumber}
+      dayLabel={d.dayLabel}
+      percent={d.percent}
+    />
+  ))}
+</View>
 
-          ">
-            {weekStats.map(day => (
-              <View
-                key={day.dateKey}
-                className="flex-row justify-between px-4 py-2 bg-colors-background
-          rounded-tr-2xl
-          rounded-bl-2xl
-          border-black
-          border-[1px]"
-              >
-                <Text className="text-colors-text">
-                  {new Date(day.dateKey).toLocaleDateString(undefined, { weekday: "short" })}
-                </Text>
-
-                <Text className="text-colors-text font-semibold">
-                  {day.percent}%
-                </Text>
-              </View>
-            ))}
-          </View>
 
           {
             habits.map(habit => {
