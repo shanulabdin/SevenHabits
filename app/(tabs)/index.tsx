@@ -8,7 +8,10 @@ import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, Tex
 
 
 function getDateKey(d = new Date()) {
-  return d.toISOString().split("T")[0]; // "2026-01-20"
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
 }
 
 export type Habit = {
@@ -22,12 +25,41 @@ const STORAGE_KEY = "@sevenhabits/habits_v1";
 export default function Index() {
   const todayKey = getDateKey();
   function addDays(dateKey: string, offset: number) {
-    const d = new Date(dateKey);
-    d.setDate(d.getDate() + offset);
+    const [y, m, d] = dateKey.split("-").map(Number);
+    const dt = new Date(y, m - 1, d); // local safe
+    dt.setDate(dt.getDate() + offset);
+    return getDateKey(dt);
+  }
+
+
+  // Streaks ---|
+  function dateKeyToDate(dateKey: string) {
+    // dateKey is "YYYY-MM-DD"
+    const [y, m, d] = dateKey.split("-").map(Number);
+    return new Date(y, m - 1, d); // local date (safe for day math)
+  }
+
+  function addDaysToKey(dateKey: string, deltaDays: number) {
+    const d = dateKeyToDate(dateKey);
+    d.setDate(d.getDate() + deltaDays);
     return getDateKey(d);
   }
 
-  const yesterdayKey = addDays(getDateKey(), -2);
+  function getHabitStreak(habit: Habit, upToDateKey: string) {
+    let streak = 0;
+    let cursor = upToDateKey;
+
+    while (habit.history[cursor] === true) {
+      streak += 1;
+      cursor = addDaysToKey(cursor, -1); // go one day back
+    }
+
+    return streak;
+  }
+
+  // Streaks ---|
+
+  // const yesterdayKey = addDays(getDateKey(), -2);
   const [selectedDateKey, setSelectedDateKey] = useState(todayKey);
 
   const selectedLabel = new Date(selectedDateKey).toLocaleDateString(undefined, {
@@ -39,7 +71,7 @@ export default function Index() {
 
   const [habits, setHabits] = useState<Habit[]>([
     { id: '1', title: 'Drink Water', history: { [todayKey]: false } },
-    { id: '2', title: 'Exercise', history: { [todayKey]: true, [yesterdayKey]: true } },
+    // { id: '2', title: 'Exercise', history: { [todayKey]: true, [yesterdayKey]: true } },
     { id: '3', title: 'Read a Book', history: { [todayKey]: true } },
     { id: '4', title: 'Meditate', history: { [todayKey]: true } },
     { id: '5', title: 'Sleep Early', history: { [todayKey]: false } },
@@ -330,12 +362,14 @@ export default function Index() {
               }
 
               const checkedSelectedDay = habit.history[selectedDateKey] === true;
+              const streak = getHabitStreak(habit, selectedDateKey);
 
               return (
                 <HabitCard
                   key={habit.id}
                   title={habit.title}
                   checked={checkedSelectedDay}
+                  streak={streak}
                   markComplete={() => toggleHabit(habit.id)}
                   onLongPress={longPressHabit(habit.id)}
                 />

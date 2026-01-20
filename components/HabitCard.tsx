@@ -6,11 +6,12 @@ import { Pressable, Text, View } from "react-native";
 type HabitCardProps = {
   title: string;
   checked: boolean;
+  streak: number;
   markComplete: () => void;
   onLongPress: () => void;
 };
 
-export default function HabitCard({ title, checked, markComplete, onLongPress }: HabitCardProps) {
+export default function HabitCard({ title, checked, markComplete, onLongPress, streak }: HabitCardProps) {
   return (
     <Pressable
       className="
@@ -47,7 +48,7 @@ export default function HabitCard({ title, checked, markComplete, onLongPress }:
             style={{ fontFamily: "Poppins_600SemiBold" }}
             className="text-colors-text text-xs"
           >
-            130
+            {streak}
           </Text>
           <Ionicons
             name="flame"
