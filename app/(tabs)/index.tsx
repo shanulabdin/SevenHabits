@@ -14,11 +14,10 @@ const todayLabel = new Date().toLocaleDateString(undefined, {
 });
 
 
-export type Habit = { 
-  id: string; 
-  title: string; 
+export type Habit = {
+  id: string;
+  title: string;
   history: Record<string, boolean>;
-
 };
 
 export default function Index() {
@@ -42,7 +41,36 @@ export default function Index() {
     return sum + (doneToday ? 1 : 0);
   }, 0)
 
-  const percent = totalCount === 0 ? 0 : Math.round((doneCount / totalCount) * 100)
+  const percent = totalCount === 0 ? 0 : Math.round((doneCount / totalCount) * 100);
+
+  function getLastNDays(n: number) {
+    const days: string[] = [];
+
+    for (let i = n - 1; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      days.push(d.toISOString().split("T")[0]);
+    }
+
+    return days;
+  }
+  const last7Days = getLastNDays(7);
+
+  function getDayCompletionPercent(dateKey: string) {
+    if (habits.length === 0) return 0;
+
+    const completed = habits.reduce((sum, habit) => {
+      return sum + (habit.history[dateKey] === true ? 1 : 0);
+    }, 0);
+
+    return Math.round((completed / habits.length) * 100);
+  }
+
+  const weekStats = last7Days.map(dateKey => ({
+    dateKey,
+    percent: getDayCompletionPercent(dateKey),
+  }));
+
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedHabitId, setSelectedHabitId] = useState<string | null>(null);
@@ -91,7 +119,6 @@ export default function Index() {
 
     setHabits(prev => [...prev, newHabit]);
   }
-
 
   function deleteHabit(id: string) {
     setHabits(prev => prev.filter(habit => habit.id !== id));
@@ -149,11 +176,36 @@ export default function Index() {
           showsVerticalScrollIndicator={false}
         >
 
-          <Heading 
-            title={`Today, ${todayLabel}`} 
+          <Heading
+            title={`Today, ${todayLabel}`}
             iconTitle={`${percent}%`}
-            icon="pie-chart" 
+            icon="pie-chart"
           />
+
+          <View className="
+          mb-6 
+          gap-2
+
+          ">
+            {weekStats.map(day => (
+              <View
+                key={day.dateKey}
+                className="flex-row justify-between px-4 py-2 bg-colors-background
+          rounded-tr-2xl
+          rounded-bl-2xl
+          border-black
+          border-[1px]"
+              >
+                <Text className="text-colors-text">
+                  {new Date(day.dateKey).toLocaleDateString(undefined, { weekday: "short" })}
+                </Text>
+
+                <Text className="text-colors-text font-semibold">
+                  {day.percent}%
+                </Text>
+              </View>
+            ))}
+          </View>
 
           {
             habits.map(habit => {
