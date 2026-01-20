@@ -12,7 +12,8 @@ type HabitCardProps = {
 
 export default function HabitCard({ title, checked, markComplete, onLongPress }: HabitCardProps) {
   return (
-    <Pressable className="
+    <Pressable
+      className="
         flex-row 
         bg-colors-background 
         w-full
@@ -25,38 +26,53 @@ export default function HabitCard({ title, checked, markComplete, onLongPress }:
         border-[1px]
         border-black
       "
-
       onLongPress={onLongPress}
     >
-      <View className={`flex-row items-baseline min-w-[48px] ${checked ? "" : "opacity-30"}`}>
-        <Text style={{fontFamily: "Poppins_600SemiBold"}} className={`
-        text-colors-text text-sm
-        `}>130</Text>
-        <Ionicons name="flame" color={colors.orange} size={20} style={{transform : [{translateY: 1}]}}></Ionicons>
+      {/* LEFT SIDE: Title + Streak */}
+      <View className="flex-row items-center gap-4 max-w-[75%]">
+        <Text
+          style={{ fontFamily: "Poppins_600SemiBold" }}
+          className={`
+            text-colors-text 
+            text-xl 
+            ${checked ? "line-through text-colors-text/50" : ""}
+          `}
+          numberOfLines={1}
+        >
+          {title}
+        </Text>
+
+        <View className={`flex-row items-baseline opacity-80`}>
+          <Text
+            style={{ fontFamily: "Poppins_600SemiBold" }}
+            className="text-colors-text text-xs"
+          >
+            130
+          </Text>
+          <Ionicons
+            name="flame"
+            color={colors.orange}
+            size={18}
+            style={{ transform: [{ translateY: 1 }] }}
+          />
+        </View>
       </View>
 
-      <Text style={{fontFamily: "Poppins_600SemiBold"}} className={`
-        text-colors-text 
-        font-semibold 
-        text-xl 
-        text-center
-        max-w-[60%]
-        ${checked ? "line-through text-colors-text/50" : ""}
-      `}>{title}</Text>
-
-
+      {/* RIGHT SIDE: Checkbox */}
       <Pressable
         onPress={markComplete}
         hitSlop={12}
-
-        className={`w-8 h-8 rounded-full items-center justify-center border-[2px] border-colors-orange ${checked ? "bg-colors-orange" : ""
-          }`}
+        className={`
+          w-8 h-8 rounded-full 
+          items-center justify-center 
+          border-[2px] border-colors-orange
+          ${checked ? "bg-colors-orange" : ""}
+        `}
       >
         {checked && (
           <Ionicons name="checkmark-sharp" size={23} color={colors.dark} />
         )}
       </Pressable>
-
     </Pressable>
   );
 }
