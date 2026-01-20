@@ -197,6 +197,21 @@ export default function Index() {
     });
   }, [habits]);
 
+  // Weekly overall percentage --|
+  const weekDateKeys = weekStats.map(d => d.dateKey);
+  const weeklyTotalPossible = habits.length * weekDateKeys.length;
+
+  const weeklyDoneCount = habits.reduce((sum, habit) => {
+    const doneInWeek = weekDateKeys.reduce((daySum, dateKey) => {
+      return daySum + (habit.history[dateKey] === true ? 1 : 0);
+    }, 0);
+
+    return sum + doneInWeek;
+  }, 0);
+
+  const weeklyPercent =
+    weeklyTotalPossible === 0 ? 0 : Math.round((weeklyDoneCount / weeklyTotalPossible) * 100);
+  // Weekly overall percentage --|
 
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -320,7 +335,7 @@ export default function Index() {
 
           <Heading
             title={headingTitle}
-            iconTitle={`${percent}%`}
+            iconTitle={`${weeklyPercent}%`}
             icon="pie-chart"
           />
 
