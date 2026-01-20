@@ -8,8 +8,8 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 
 // Utils
-import { addDaysToKey, getDateKey, getLastNDays } from '@/utils/date';
-
+import { getDateKey, getLastNDays } from '@/utils/date';
+import { getHabitStreakWithGrace } from '@/utils/streaks';
 
 const STORAGE_KEY = "@sevenhabits/habits_v1";
 
@@ -19,29 +19,7 @@ export default function Index() {
   // Streaks ---|
 
 
-  function getHabitStreak(habit: Habit, upToDateKey: string) {
-    let streak = 0;
-    let cursor = upToDateKey;
 
-    while (habit.history[cursor] === true) {
-      streak += 1;
-      cursor = addDaysToKey(cursor, -1); // go one day back
-    }
-
-    return streak;
-  }
-
-  function getHabitStreakWithGrace(habit: Habit, dateKey: string, todayKey: string) {
-    // If we're looking at TODAY, and the habit is not done yet,
-    // show streak as of YESTERDAY (grace until the day ends).
-    if (dateKey === todayKey && habit.history[todayKey] !== true) {
-      const yesterdayKey = addDaysToKey(todayKey, -1);
-      return getHabitStreak(habit, yesterdayKey);
-    }
-
-    // Otherwise: normal strict streak up to the selected day
-    return getHabitStreak(habit, dateKey);
-  }
   // Streaks ---|
 
   const [selectedDateKey, setSelectedDateKey] = useState(todayKey);
