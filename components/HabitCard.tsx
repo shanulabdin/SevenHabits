@@ -49,11 +49,12 @@ export default function HabitCard({ title, checked, markComplete, onLongPress }:
         onPress={markComplete}
         hitSlop={12}
 
-        className={`w-8 h-8 rounded-full items-center justify-center`}
-        >
-        {/* ${checked ? "bg-colors-orange" : ""} */}
-
-        <Ionicons name={`${checked ? "ellipse" : "ellipse-outline"}`} size={28} color={colors.orange} />
+        className={`w-8 h-8 rounded-full items-center justify-center border-[2px] border-colors-orange ${checked ? "bg-colors-orange" : ""
+          }`}
+      >
+        {checked && (
+          <Ionicons name="checkmark-sharp" size={23} color={colors.dark} />
+        )}
       </Pressable>
 
     </Pressable>
