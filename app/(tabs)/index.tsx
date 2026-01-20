@@ -9,11 +9,6 @@ function getDateKey(d = new Date()) {
   return d.toISOString().split("T")[0]; // "2026-01-20"
 }
 
-const todayLabel = new Date().toLocaleDateString(undefined, {
-  day: "2-digit",
-  month: "short",
-});
-
 
 export type Habit = {
   id: string;
@@ -24,6 +19,14 @@ export type Habit = {
 export default function Index() {
 
   const todayKey = getDateKey();
+  const [selectedDateKey, setSelectedDateKey] = useState(todayKey);
+
+  const selectedLabel = new Date(selectedDateKey).toLocaleDateString(undefined, {
+    day: "2-digit",
+    month: "short",
+  });
+
+  const headingTitle = selectedDateKey === todayKey ? `Today, ${selectedLabel}` : `${selectedLabel}`;
 
   const [habits, setHabits] = useState<Habit[]>([
     { id: '1', title: 'Drink Water', history: { [todayKey]: false } },
@@ -38,8 +41,8 @@ export default function Index() {
   const totalCount = habits.length;
 
   const doneCount = habits.reduce((sum, habit) => {
-    const doneToday = habit.history[todayKey] === true;
-    return sum + (doneToday ? 1 : 0);
+    const doneSelectedDay = habit.history[selectedDateKey] === true;
+    return sum + (doneSelectedDay ? 1 : 0);
   }, 0)
 
   const percent = totalCount === 0 ? 0 : Math.round((doneCount / totalCount) * 100);
@@ -69,6 +72,7 @@ export default function Index() {
       const dateKey = getDateKey(d);
       return {
         key: dateKey,
+        dateKey,
         dayNumber: d.getDate().toString(),
         dayLabel: d.toLocaleDateString(undefined, { weekday: "short" }),
         percent: getPercentForDate(dateKey),
@@ -114,13 +118,13 @@ export default function Index() {
       prev.map(habit => {
         if (habit.id !== id) return habit;
 
-        const current = habit.history[todayKey] === true;
+        const current = habit.history[selectedDateKey] === true;
 
         return {
           ...habit,
           history: {
             ...habit.history,
-            [todayKey]: !current,
+            [selectedDateKey]: !current,
           },
         };
       })
@@ -134,7 +138,7 @@ export default function Index() {
       id: Date.now().toString(),
       title: title.trim(),
       history: {
-        [todayKey]: false,
+        [selectedDateKey]: false,
       },
     };
 
@@ -197,8 +201,9 @@ export default function Index() {
           showsVerticalScrollIndicator={false}
         >
 
+
           <Heading
-            title={`Today, ${todayLabel}`}
+            title={headingTitle}
             iconTitle={`${percent}%`}
             icon="pie-chart"
           />
@@ -210,9 +215,12 @@ export default function Index() {
                 dayNumber={d.dayNumber}
                 dayLabel={d.dayLabel}
                 percent={d.percent}
+                selected={d.dateKey === selectedDateKey}
+                onPress={() => setSelectedDateKey(d.dateKey)}
               />
             ))}
           </View>
+
 
           {
             habits.map(habit => {
@@ -253,7 +261,7 @@ export default function Index() {
                         textAlignVertical: "center", // Android: centers text vertically
                         marginLeft: 4,
                       }}
-                      className="text-colors-text text-xl text-center px-6"
+                      className="text-colors-o text-xl text-center px-6"
                     />
 
                   </View>
@@ -261,13 +269,13 @@ export default function Index() {
                 );
               }
 
-              const checkedToday = habit.history[todayKey] === true;
+              const checkedSelectedDay = habit.history[selectedDateKey] === true;
 
               return (
                 <HabitCard
                   key={habit.id}
                   title={habit.title}
-                  checked={checkedToday}
+                  checked={checkedSelectedDay}
                   markComplete={() => toggleHabit(habit.id)}
                   onLongPress={longPressHabit(habit.id)}
                 />
@@ -287,7 +295,7 @@ export default function Index() {
 
           >
             <Pressable
-              className="bg-colors-background rounded-xl w-64 border-black border-[1px]"
+              className="bg-colors-background rounded-xl w-64 border-o border-[1px]"
               onPress={() => {
                 setIsModalVisible(false);
                 setSelectedHabitId(null);
@@ -298,7 +306,7 @@ export default function Index() {
                 // Edit the habit
                 startEditingHabit(selectedHabitId);
               }}>
-                <Text className="text-colors-text  border-b-[1px] border-b-black p-4 text-xl">Edit</Text>
+                <Text className="text-colors-text  border-b-[1px] border-b-o p-4 text-xl">Edit</Text>
               </Pressable>
 
               <Pressable onPress={() => {

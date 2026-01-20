@@ -1,14 +1,16 @@
 import { colors } from "@/constants/colors";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 
 type DayRingProps = {
   dayNumber: string;   // "11"
   dayLabel: string;    // "Sun"
   percent: number;     // 0-100
+  selected?: boolean;
+  onPress?: () => void;
 };
 
-export default function DayRing({ dayNumber, dayLabel, percent }: DayRingProps) {
+export default function DayRing({ dayNumber, dayLabel, percent, selected, onPress }: DayRingProps) {
   const size = 50;          // ring outer size
   const strokeWidth = 5;
   const r = (size - strokeWidth) / 2;
@@ -20,8 +22,11 @@ export default function DayRing({ dayNumber, dayLabel, percent }: DayRingProps) 
   const dashOffset = circumference * (1 - clamped / 100);
 
   return (
-    <View className="items-center">
-      <View className="relative" style={{ width: size, height: size }}>
+    <Pressable className="items-center" onPress={onPress}>
+      <View
+        className={`relative ${selected ? "opacity-100" : "opacity-70"}`}
+        style={{ width: size, height: size }}
+      >
         <Svg width={size} height={size}>
           {/* Track (gray ring) */}
           <Circle
@@ -66,6 +71,6 @@ export default function DayRing({ dayNumber, dayLabel, percent }: DayRingProps) 
       >
         {dayLabel}
       </Text>
-    </View>
+    </Pressable>
   );
 }
