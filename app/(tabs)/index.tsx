@@ -4,20 +4,31 @@ import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 
-export type Habit = { id: string; title: string; checked: boolean };
+function getDateKey(d = new Date()) {
+  return d.toISOString().split("T")[0]; // "2026-01-20"
+}
+
+export type Habit = { 
+  id: string; 
+  title: string; 
+  history: Record<string, boolean>;
+
+};
 
 export default function Index() {
+
+  const todayKey = getDateKey();
+
   const [habits, setHabits] = useState<Habit[]>([
-    { id: '1', title: 'Drink Water', checked: false },
-    { id: '2', title: 'Exercise', checked: true },
-    { id: '3', title: 'Read a Book', checked: true },
-    { id: '4', title: 'Meditate', checked: true },
-    { id: '5', title: 'Sleep Early', checked: false },
-    { id: '6', title: 'Practice Gratitude', checked: true },
-    { id: '7', title: 'Learn a New Skill', checked: false },
+    { id: '1', title: 'Drink Water', history: { [todayKey]: false } },
+    { id: '2', title: 'Exercise', history: { [todayKey]: true } },
+    { id: '3', title: 'Read a Book', history: { [todayKey]: true } },
+    { id: '4', title: 'Meditate', history: { [todayKey]: true } },
+    { id: '5', title: 'Sleep Early', history: { [todayKey]: false } },
+    { id: '6', title: 'Practice Gratitude', history: { [todayKey]: true } },
+    { id: '7', title: 'Learn a New Skill', history: { [todayKey]: false } },
   ]);
 
-  // const [newHabitTitle, setNewHabitTitle] = useState('');
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedHabitId, setSelectedHabitId] = useState<string | null>(null);
@@ -36,20 +47,37 @@ export default function Index() {
   }, [newHabit]);
 
   function toggleHabit(id: string) {
-    setHabits(prev => prev.map(habit =>
-      habit.id === id ? { ...habit, checked: !habit.checked } : habit)
+    setHabits(prev =>
+      prev.map(habit => {
+        if (habit.id !== id) return habit;
+
+        const current = habit.history[todayKey] === true;
+
+        return {
+          ...habit,
+          history: {
+            ...habit.history,
+            [todayKey]: !current,
+          },
+        };
+      })
     );
   }
 
   function createHabit(title: string) {
     if (title.trim() === '') return;
-    const newHabit = {
+
+    const newHabit: Habit = {
       id: Date.now().toString(),
       title: title.trim(),
-      checked: false,
+      history: {
+        [todayKey]: false,
+      },
     };
-    setHabits(prev => ([...prev, newHabit]));
+
+    setHabits(prev => [...prev, newHabit]);
   }
+
 
   function deleteHabit(id: string) {
     setHabits(prev => prev.filter(habit => habit.id !== id));
@@ -156,8 +184,13 @@ export default function Index() {
                 );
               }
 
+              const checkedToday = habit.history[todayKey] === true;
+              
               return (
-                <HabitCard key={habit.id} title={habit.title} checked={habit.checked}
+                <HabitCard
+                  key={habit.id}
+                  title={habit.title}
+                  checked={checkedToday}
                   markComplete={() => toggleHabit(habit.id)}
                   onLongPress={longPressHabit(habit.id)}
                 />
