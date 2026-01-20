@@ -1,6 +1,7 @@
 import DayRing from '@/components/DayRing';
 import HabitCard from '@/components/HabitCard';
 import Heading from '@/components/Heading';
+import { Habit } from '@/types/habit';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -14,11 +15,6 @@ function getDateKey(d = new Date()) {
   return `${y}-${m}-${day}`;
 }
 
-export type Habit = {
-  id: string;
-  title: string;
-  history: Record<string, boolean>;
-};
 
 const STORAGE_KEY = "@sevenhabits/habits_v1";
 
