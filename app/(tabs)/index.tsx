@@ -2,7 +2,7 @@ import DayRing from '@/components/DayRing';
 import HabitCard from '@/components/HabitCard';
 import Heading from '@/components/Heading';
 import { useLocalSearchParams } from 'expo-router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 
 function getDateKey(d = new Date()) {
@@ -62,17 +62,19 @@ export default function Index() {
     return Math.round((done / total) * 100);
   }
 
-  const last7 = getLastNDays(7);
+  const weekStats = useMemo(() => {
+    const last7 = getLastNDays(7);
 
-  const weekStats = last7.map(d => {
-    const dateKey = getDateKey(d);
-    return {
-      key: dateKey,
-      dayNumber: d.getDate().toString(), // "11"
-      dayLabel: d.toLocaleDateString(undefined, { weekday: "short" }), // "Sun"
-      percent: getPercentForDate(dateKey),
-    };
-  });
+    return last7.map(d => {
+      const dateKey = getDateKey(d);
+      return {
+        key: dateKey,
+        dayNumber: d.getDate().toString(),
+        dayLabel: d.toLocaleDateString(undefined, { weekday: "short" }),
+        percent: getPercentForDate(dateKey),
+      };
+    });
+  }, [habits]);
 
 
 
@@ -91,6 +93,21 @@ export default function Index() {
       createHabit(newHabit);
     }
   }, [newHabit]);
+
+  useEffect(() => {
+    setHabits(prev =>
+      prev.map(h => {
+        if (h.history[todayKey] !== undefined) return h;
+        return {
+          ...h,
+          history: {
+            ...h.history,
+            [todayKey]: false,
+          },
+        };
+      })
+    );
+  }, [todayKey]);
 
   function toggleHabit(id: string) {
     setHabits(prev =>
@@ -263,7 +280,11 @@ export default function Index() {
         <Modal visible={isModalVisible} transparent animationType="fade" className=''>
           <Pressable
             className="flex-1 bg-black/50 items-center justify-center"
-            onPress={() => setIsModalVisible(false)}
+            onPress={() => {
+              setIsModalVisible(false);
+              setSelectedHabitId(null);
+            }}
+
           >
             <Pressable
               className="bg-colors-background rounded-xl w-64 border-black border-[1px]"
