@@ -9,6 +9,7 @@ import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, Tex
 
 // Utils
 import { getDateKey, getLastNDays } from '@/utils/date';
+import { getPercentForDate, getWeeklyPercent } from '@/utils/stats';
 import { getHabitStreakWithGrace } from '@/utils/streaks';
 
 const STORAGE_KEY = "@sevenhabits/habits_v1";
@@ -109,13 +110,7 @@ export default function Index() {
 
 
 
-  function getPercentForDate(dateKey: string) {
-    const total = habits.length;
-    if (total === 0) return 0;
 
-    const done = habits.reduce((sum, h) => sum + (h.history?.[dateKey] === true ? 1 : 0), 0);
-    return Math.round((done / total) * 100);
-  }
 
   const weekStats = useMemo(() => {
     const last7 = getLastNDays(7);
@@ -127,25 +122,16 @@ export default function Index() {
         dateKey,
         dayNumber: d.getDate().toString(),
         dayLabel: d.toLocaleDateString(undefined, { weekday: "short" }),
-        percent: getPercentForDate(dateKey),
+        percent: getPercentForDate(habits, dateKey),
       };
     });
   }, [habits]);
 
   // Weekly overall percentage --|
   const weekDateKeys = weekStats.map(d => d.dateKey);
-  const weeklyTotalPossible = habits.length * weekDateKeys.length;
+  const weeklyPercent = getWeeklyPercent(habits, weekDateKeys);
 
-  const weeklyDoneCount = habits.reduce((sum, habit) => {
-    const doneInWeek = weekDateKeys.reduce((daySum, dateKey) => {
-      return daySum + (habit.history[dateKey] === true ? 1 : 0);
-    }, 0);
-
-    return sum + doneInWeek;
-  }, 0);
-
-  const weeklyPercent =
-    weeklyTotalPossible === 0 ? 0 : Math.round((weeklyDoneCount / weeklyTotalPossible) * 100);
+  
   // Weekly overall percentage --|
 
 
