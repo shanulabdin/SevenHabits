@@ -155,15 +155,6 @@ export default function Index() {
   // Async Storage --|
 
 
-  const totalCount = habits.length;
-
-  const doneCount = habits.reduce((sum, habit) => {
-    const doneSelectedDay = habit.history[selectedDateKey] === true;
-    return sum + (doneSelectedDay ? 1 : 0);
-  }, 0)
-
-  const percent = totalCount === 0 ? 0 : Math.round((doneCount / totalCount) * 100);
-
   function getLastNDays(n: number) {
     const days: Date[] = [];
     for (let i = n - 1; i >= 0; i--) {
