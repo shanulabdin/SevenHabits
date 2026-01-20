@@ -33,7 +33,9 @@ export default function CreateHabit({ newHabitTitle, setNewHabitTitle, createHab
         rounded-tr-2xl
         rounded-bl-2xl
         justify-between 
+        mt-4
         px-4 py-1
+      border-black border-[1px]
       " >
       <TextInput
         ref={inputRef}

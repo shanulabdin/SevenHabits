@@ -20,10 +20,6 @@ export type Habit = {
 const STORAGE_KEY = "@sevenhabits/habits_v1";
 
 export default function Index() {
-
-
-
-
   const todayKey = getDateKey();
   function addDays(dateKey: string, offset: number) {
     const d = new Date(dateKey);
@@ -35,7 +31,7 @@ export default function Index() {
   const [selectedDateKey, setSelectedDateKey] = useState(todayKey);
 
   const selectedLabel = new Date(selectedDateKey).toLocaleDateString(undefined, {
-    day: "2-digit",
+    day: "numeric",
     month: "short",
   });
 
@@ -84,7 +80,8 @@ export default function Index() {
 
             return null;
           })
-          .filter(Boolean);
+          .filter((h): h is Habit => h !== null);
+
 
         if (cleaned.length) setHabits(cleaned);
       } catch (e) {
@@ -266,7 +263,6 @@ export default function Index() {
           showsVerticalScrollIndicator={false}
         >
 
-
           <Heading
             title={headingTitle}
             iconTitle={`${percent}%`}
@@ -285,7 +281,6 @@ export default function Index() {
               />
             ))}
           </View>
-
 
           {
             habits.map(habit => {

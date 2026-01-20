@@ -21,7 +21,13 @@ export default function AddHabit() {
   }
 
   return (
-    <View className="flex-1 items-center bg-colors-dark p-3 pt-20 w-full ">
+    <View className="
+      flex-1 
+      items-center 
+      bg-colors-dark 
+      p-3 pt-20 
+      w-full 
+    ">
       <Heading
         title="Add Habit"
         iconTitle="Save"
