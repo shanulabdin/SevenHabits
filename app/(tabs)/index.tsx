@@ -197,7 +197,6 @@ export default function Index() {
             ))}
           </View>
 
-
           {
             habits.map(habit => {
               const isEditing = editingHabitId === habit.id;

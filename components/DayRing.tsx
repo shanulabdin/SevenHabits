@@ -9,8 +9,8 @@ type DayRingProps = {
 };
 
 export default function DayRing({ dayNumber, dayLabel, percent }: DayRingProps) {
-  const size = 54;          // ring outer size
-  const strokeWidth = 6;
+  const size = 50;          // ring outer size
+  const strokeWidth = 5;
   const r = (size - strokeWidth) / 2;
   const cx = size / 2;
   const cy = size / 2;
