@@ -8,6 +8,12 @@ function getDateKey(d = new Date()) {
   return d.toISOString().split("T")[0]; // "2026-01-20"
 }
 
+const todayLabel = new Date().toLocaleDateString(undefined, {
+  day: "2-digit",
+  month: "short",
+});
+
+
 export type Habit = { 
   id: string; 
   title: string; 
@@ -135,7 +141,7 @@ export default function Index() {
           showsVerticalScrollIndicator={false}
         >
 
-          <Heading title="Today, 17 Jan" iconTitle="78%" icon="pie-chart" />
+          <Heading title={`Today, ${todayLabel}`} iconTitle="78%" icon="pie-chart" />
 
           {
             habits.map(habit => {
@@ -185,7 +191,7 @@ export default function Index() {
               }
 
               const checkedToday = habit.history[todayKey] === true;
-              
+
               return (
                 <HabitCard
                   key={habit.id}
