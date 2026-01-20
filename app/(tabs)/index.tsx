@@ -57,9 +57,19 @@ export default function Index() {
     return streak;
   }
 
+  function getHabitStreakWithGrace(habit: Habit, dateKey: string, todayKey: string) {
+    // If we're looking at TODAY, and the habit is not done yet,
+    // show streak as of YESTERDAY (grace until the day ends).
+    if (dateKey === todayKey && habit.history[todayKey] !== true) {
+      const yesterdayKey = addDaysToKey(todayKey, -1);
+      return getHabitStreak(habit, yesterdayKey);
+    }
+
+    // Otherwise: normal strict streak up to the selected day
+    return getHabitStreak(habit, dateKey);
+  }
   // Streaks ---|
 
-  // const yesterdayKey = addDays(getDateKey(), -2);
   const [selectedDateKey, setSelectedDateKey] = useState(todayKey);
 
   const selectedLabel = new Date(selectedDateKey).toLocaleDateString(undefined, {
@@ -362,7 +372,7 @@ export default function Index() {
               }
 
               const checkedSelectedDay = habit.history[selectedDateKey] === true;
-              const streak = getHabitStreak(habit, selectedDateKey);
+              const streak = getHabitStreakWithGrace(habit, selectedDateKey, todayKey);
 
               return (
                 <HabitCard
