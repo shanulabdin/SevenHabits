@@ -35,6 +35,14 @@ export default function Index() {
     { id: '7', title: 'Learn a New Skill', history: { [todayKey]: false } },
   ]);
 
+  const totalCount = habits.length;
+
+  const doneCount = habits.reduce((sum, habit) => {
+    const doneToday = habit.history[todayKey] === true;
+    return sum + (doneToday ? 1 : 0);
+  }, 0)
+
+  const percent = totalCount === 0 ? 0 : Math.round((doneCount / totalCount) * 100)
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedHabitId, setSelectedHabitId] = useState<string | null>(null);
@@ -141,7 +149,11 @@ export default function Index() {
           showsVerticalScrollIndicator={false}
         >
 
-          <Heading title={`Today, ${todayLabel}`} iconTitle="78%" icon="pie-chart" />
+          <Heading 
+            title={`Today, ${todayLabel}`} 
+            iconTitle={`${percent}%`}
+            icon="pie-chart" 
+          />
 
           {
             habits.map(habit => {
