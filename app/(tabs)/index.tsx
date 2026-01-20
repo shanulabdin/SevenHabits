@@ -15,23 +15,16 @@ import { getHabitStreakWithGrace } from '@/utils/streaks';
 const STORAGE_KEY = "@sevenhabits/habits_v1";
 
 export default function Index() {
+  // Heading date
   const todayKey = getDateKey();
-
-  // Streaks ---|
-
-
-
-  // Streaks ---|
-
   const [selectedDateKey, setSelectedDateKey] = useState(todayKey);
-
   const selectedLabel = new Date(selectedDateKey).toLocaleDateString(undefined, {
     day: "numeric",
     month: "short",
   });
-
   const headingTitle = selectedDateKey === todayKey ? `Today, ${selectedLabel}` : `${selectedLabel}`;
 
+  // Setting habits
   const [habits, setHabits] = useState<Habit[]>([
     { id: '1', title: 'Code', history: { [todayKey]: false } },
     { id: '2', title: 'Workout', history: { [todayKey]: false } },
@@ -107,11 +100,7 @@ export default function Index() {
   }
   // Async Storage --|
 
-
-
-
-
-
+  // Weekly stats
   const weekStats = useMemo(() => {
     const last7 = getLastNDays(7);
 
@@ -130,11 +119,10 @@ export default function Index() {
   // Weekly overall percentage --|
   const weekDateKeys = weekStats.map(d => d.dateKey);
   const weeklyPercent = getWeeklyPercent(habits, weekDateKeys);
-
-  
   // Weekly overall percentage --|
 
 
+  // Other Hooks --|
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedHabitId, setSelectedHabitId] = useState<string | null>(null);
 
@@ -165,7 +153,9 @@ export default function Index() {
       })
     );
   }, [todayKey]);
+  // Other Hooks --|
 
+  // Basic Functions
   function toggleHabit(id: string) {
     setHabits(prev =>
       prev.map(habit => {
@@ -202,7 +192,6 @@ export default function Index() {
     setHabits(prev => prev.filter(habit => habit.id !== id));
     setIsModalVisible(false);
     setSelectedHabitId(null);
-
   }
 
   function longPressHabit(id: string) {
