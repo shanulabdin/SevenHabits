@@ -4,7 +4,7 @@ import Heading from '@/components/Heading';
 import { Habit } from '@/types/habit';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLocalSearchParams } from 'expo-router';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 
 // Utils
@@ -133,26 +133,8 @@ export default function Index() {
 
   const { newHabit } = useLocalSearchParams<{ newHabit?: string }>();
 
-  useEffect(() => {
-    if (newHabit) {
-      createHabit(newHabit);
-    }
-  }, [newHabit]);
 
-  useEffect(() => {
-    setHabits(prev =>
-      prev.map(h => {
-        if (h.history[todayKey] !== undefined) return h;
-        return {
-          ...h,
-          history: {
-            ...h.history,
-            [todayKey]: false,
-          },
-        };
-      })
-    );
-  }, [todayKey]);
+
   // Other Hooks --|
 
   // Basic Functions
@@ -174,7 +156,7 @@ export default function Index() {
     );
   }
 
-  function createHabit(title: string) {
+  const createHabit = useCallback((title: string) => {
     if (title.trim() === '') return;
 
     const newHabit: Habit = {
@@ -186,8 +168,29 @@ export default function Index() {
     };
 
     setHabits(prev => [...prev, newHabit]);
-  }
+  }, [selectedDateKey]);
 
+  useEffect(() => {
+    if (newHabit) {
+      createHabit(newHabit);
+    }
+  }, [newHabit, createHabit]);
+
+  useEffect(() => {
+    setHabits(prev =>
+      prev.map(h => {
+        if (h.history[todayKey] !== undefined) return h;
+        return {
+          ...h,
+          history: {
+            ...h.history,
+            [todayKey]: false,
+          },
+        };
+      })
+    );
+  }, [todayKey]);
+  
   function deleteHabit(id: string) {
     setHabits(prev => prev.filter(habit => habit.id !== id));
     setIsModalVisible(false);
