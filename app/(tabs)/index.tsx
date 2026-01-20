@@ -7,13 +7,8 @@ import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 
-
-function getDateKey(d = new Date()) {
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${y}-${m}-${day}`;
-}
+// Utils
+import { addDaysToKey, getDateKey, getLastNDays } from '@/utils/date';
 
 
 const STORAGE_KEY = "@sevenhabits/habits_v1";
@@ -22,17 +17,7 @@ export default function Index() {
   const todayKey = getDateKey();
 
   // Streaks ---|
-  function dateKeyToDate(dateKey: string) {
-    // dateKey is "YYYY-MM-DD"
-    const [y, m, d] = dateKey.split("-").map(Number);
-    return new Date(y, m - 1, d); // local date (safe for day math)
-  }
 
-  function addDaysToKey(dateKey: string, deltaDays: number) {
-    const d = dateKeyToDate(dateKey);
-    d.setDate(d.getDate() + deltaDays);
-    return getDateKey(d);
-  }
 
   function getHabitStreak(habit: Habit, upToDateKey: string) {
     let streak = 0;
@@ -144,15 +129,7 @@ export default function Index() {
   // Async Storage --|
 
 
-  function getLastNDays(n: number) {
-    const days: Date[] = [];
-    for (let i = n - 1; i >= 0; i--) {
-      const d = new Date();
-      d.setDate(d.getDate() - i);
-      days.push(d);
-    }
-    return days;
-  }
+
 
   function getPercentForDate(dateKey: string) {
     const total = habits.length;
