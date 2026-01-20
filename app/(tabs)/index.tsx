@@ -1,14 +1,15 @@
 import DayRing from '@/components/DayRing';
 import HabitCard from '@/components/HabitCard';
 import Heading from '@/components/Heading';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 
+
 function getDateKey(d = new Date()) {
   return d.toISOString().split("T")[0]; // "2026-01-20"
 }
-
 
 export type Habit = {
   id: string;
@@ -16,9 +17,21 @@ export type Habit = {
   history: Record<string, boolean>;
 };
 
+const STORAGE_KEY = "@sevenhabits/habits_v1";
+
 export default function Index() {
 
+
+
+
   const todayKey = getDateKey();
+  function addDays(dateKey: string, offset: number) {
+    const d = new Date(dateKey);
+    d.setDate(d.getDate() + offset);
+    return getDateKey(d);
+  }
+
+  const yesterdayKey = addDays(getDateKey(), -2);
   const [selectedDateKey, setSelectedDateKey] = useState(todayKey);
 
   const selectedLabel = new Date(selectedDateKey).toLocaleDateString(undefined, {
@@ -30,13 +43,65 @@ export default function Index() {
 
   const [habits, setHabits] = useState<Habit[]>([
     { id: '1', title: 'Drink Water', history: { [todayKey]: false } },
-    { id: '2', title: 'Exercise', history: { [todayKey]: true } },
+    { id: '2', title: 'Exercise', history: { [todayKey]: true, [yesterdayKey]: true } },
     { id: '3', title: 'Read a Book', history: { [todayKey]: true } },
     { id: '4', title: 'Meditate', history: { [todayKey]: true } },
     { id: '5', title: 'Sleep Early', history: { [todayKey]: false } },
-    { id: '6', title: 'Practice Gratitude', history: { [todayKey]: true } },
-    { id: '7', title: 'Learn a New Skill', history: { [todayKey]: false } },
   ]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const raw = await AsyncStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+
+        const parsed = JSON.parse(raw);
+
+        // Safety: ensure it's an array
+        if (!Array.isArray(parsed)) return;
+
+        // Optional migration / cleanup (handles old shapes gracefully)
+        const cleaned: Habit[] = parsed
+          .map((h: any) => {
+            if (!h?.id || !h?.title) return null;
+
+            // If old format exists (checked boolean), convert to history for today
+            if (!h.history && typeof h.checked === "boolean") {
+              return {
+                id: String(h.id),
+                title: String(h.title),
+                history: { [todayKey]: h.checked },
+              } satisfies Habit;
+            }
+
+            // Normal new format
+            if (h.history && typeof h.history === "object") {
+              return {
+                id: String(h.id),
+                title: String(h.title),
+                history: h.history as Record<string, boolean>,
+              } satisfies Habit;
+            }
+
+            return null;
+          })
+          .filter(Boolean);
+
+        if (cleaned.length) setHabits(cleaned);
+      } catch (e) {
+        console.log("Failed to load habits:", e);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    (async () => {
+      try {
+        await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(habits));
+      } catch (e) {
+        console.log("Failed to save habits:", e);
+      }
+    })();
+  }, [habits]);
 
   const totalCount = habits.length;
 
@@ -261,7 +326,7 @@ export default function Index() {
                         textAlignVertical: "center", // Android: centers text vertically
                         marginLeft: 4,
                       }}
-                      className="text-colors-o text-xl text-center px-6"
+                      className="text-colors-text text-xl text-center px-6"
                     />
 
                   </View>
