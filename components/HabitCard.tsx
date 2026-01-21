@@ -93,14 +93,14 @@ export default function HabitCard({
       {showGrid && (
         <View className={` 
         bg-colors-background        
-        p-5 
+        p-4
         rounded-bl-2xl
         border-[1px]
         border-black
         w-full
         items-center
       `}>
-          <ContributionGrid history={history} endDateKey={todayKey} weeks={17} />
+          <ContributionGrid history={history} endDateKey={todayKey} weeks={19} />
         </View>
       )}
     </View>

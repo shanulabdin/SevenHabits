@@ -31,8 +31,8 @@ function addDaysToKey(dateKey: string, deltaDays: number) {
 export default function ContributionGrid({
   history,
   endDateKey,
-  weeks = 14,
-  size = 18,
+  weeks = 20,
+  size = 16,
   gap = 3,
 }: Props) {
   const totalDays = weeks * 7;
