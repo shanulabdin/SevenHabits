@@ -76,30 +76,31 @@ export default function HabitCard({
         </View>
 
         {/* RIGHT SIDE: Checkbox */}
-          <Pressable
-            onPress={markComplete}
-            hitSlop={12}
-            className={`
+        <Pressable
+          onPress={markComplete}
+          hitSlop={12}
+          className={`
           w-8 h-8 rounded-full 
           items-center justify-center 
           border-[2px] border-colors-orange
           ${checked ? "bg-colors-orange" : ""}
         `}
-          >
-            {checked && (
-              <Ionicons name="checkmark-sharp" size={23} color={colors.dark} />
-            )}
-          </Pressable>
+        >
+          {checked && (
+            <Ionicons name="checkmark-sharp" size={23} color={colors.dark} />
+          )}
+        </Pressable>
       </Pressable>
 
       {showGrid && (
         <View className={` 
         bg-colors-background        
-        p-4 
+        p-5 
         rounded-bl-2xl
         border-[1px]
         border-black
         w-full
+        items-center
       `}>
           <ContributionGrid history={history} endDateKey={todayKey} weeks={17} />
         </View>
