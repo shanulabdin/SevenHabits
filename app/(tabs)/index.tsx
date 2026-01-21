@@ -4,7 +4,7 @@ import Heading from '@/components/Heading';
 import { Habit } from '@/types/habit';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLocalSearchParams } from 'expo-router';
-import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 
 // Utils
@@ -190,7 +190,7 @@ export default function Index() {
       })
     );
   }, [todayKey]);
-  
+
   function deleteHabit(id: string) {
     setHabits(prev => prev.filter(habit => habit.id !== id));
     setIsModalVisible(false);
@@ -321,9 +321,13 @@ export default function Index() {
                   title={habit.title}
                   checked={checkedSelectedDay}
                   streak={streak}
+                  // pending={pending}
+                  history={habit.history}   // ✅
+                  todayKey={todayKey}       // ✅
                   markComplete={() => toggleHabit(habit.id)}
                   onLongPress={longPressHabit(habit.id)}
                 />
+
               );
             })
           }
