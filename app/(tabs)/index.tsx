@@ -3,7 +3,7 @@ import HabitCard from '@/components/HabitCard';
 import Heading from '@/components/Heading';
 import { Habit } from '@/types/habit';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 
@@ -23,6 +23,8 @@ export default function Index() {
     month: "short",
   });
   const headingTitle = selectedDateKey === todayKey ? `Today, ${selectedLabel}` : `${selectedLabel}`;
+
+  const router = useRouter();
 
   // Setting habits
   const [habits, setHabits] = useState<Habit[]>([
@@ -267,6 +269,7 @@ export default function Index() {
             title={headingTitle}
             iconTitle={`${weeklyPercent}%`}
             icon="pie-chart"
+            onIconPress={() => router.push("/stats")}
           />
 
           <View className="flex-row justify-between w-full px-1 mt-4 mb-4">
