@@ -321,7 +321,7 @@ export default function Index() {
                         textAlignVertical: "center", // Android: centers text vertically
                         marginLeft: 4,
                       }}
-                      className="text-colors-text text-xl text-center px-6"
+                      className="text-colors-text text-xl text-start px-4"
                     />
 
                   </View>

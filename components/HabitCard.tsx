@@ -30,18 +30,19 @@ export default function HabitCard({
   return (
     <View className="mb-3 items-center">
       <Pressable
-        className="
+        className={`
         flex-row 
         bg-colors-background 
         w-full
         p-4 
         rounded-tr-2xl
-        rounded-bl-2xl
+        
         items-center
         justify-between
         border-[1px]
         border-black
-      "
+        ${showGrid ? "border-b-0 " : " rounded-bl-2xl"}
+      `}
         onLongPress={onLongPress}
       >
         {/* LEFT SIDE: Title + Streak */}
@@ -92,14 +93,14 @@ export default function HabitCard({
       </Pressable>
 
       {showGrid && (
-        <View className=" 
+        <View className={` 
         bg-colors-background        
         p-4 
-        rounded-tr-2xl
         rounded-bl-2xl
         border-[1px]
         border-black
-        ">
+        w-full
+      `}>
           <ContributionGrid history={history} endDateKey={todayKey} weeks={17} />
         </View>
       )}
