@@ -293,10 +293,11 @@ export default function Index() {
                     className="
                       w-full
                       bg-colors-background
+                      border-[1px]
                       rounded-tr-2xl
                       rounded-bl-2xl
-                      mb-4
-                      h-30
+                      bo
+                      mb-3
                       justify-center
                     "
                     onLayout={(e) => {
@@ -314,12 +315,10 @@ export default function Index() {
                       onBlur={() => saveEditingHabit(habit.id)}
                       style={{
                         fontFamily: "Poppins_600SemiBold",
-                        height: 48,
+                        height: 54,
                         lineHeight: 24,
-                        paddingVertical: 0,        // important
                         includeFontPadding: false, // Android: removes extra top/bottom padding
                         textAlignVertical: "center", // Android: centers text vertically
-                        marginLeft: 4,
                       }}
                       className="text-colors-text text-xl text-start px-4"
                     />
@@ -341,7 +340,6 @@ export default function Index() {
                   history={habit.history}   // ✅
                   todayKey={todayKey}       // ✅
                   showGrid={habit.showGrid ?? true}
-                  onToggleGrid={() => toggleHabit(habit.id)}
                   markComplete={() => toggleHabit(habit.id)}
                   onLongPress={longPressHabit(habit.id)}
                 />
@@ -358,7 +356,7 @@ export default function Index() {
 
         </ScrollView>
 
-        <Modal visible={isModalVisible} transparent animationType="fade" className=''>
+        <Modal visible={isModalVisible} transparent animationType="fade" className="border-r-0">
           <Pressable
             className="flex-1 bg-black/50 items-center justify-center"
             onPress={() => {
@@ -368,7 +366,7 @@ export default function Index() {
 
           >
             <Pressable
-              className="bg-colors-background rounded-xl w-64 border-o border-[1px]"
+              className="bg-colors-background rounded-tr-2xl rounded-bl-2xl w-64 border-black border-[1px]"
               onPress={() => {
                 setIsModalVisible(false);
                 setSelectedHabitId(null);
@@ -379,7 +377,7 @@ export default function Index() {
                 // Edit the habit
                 startEditingHabit(selectedHabitId);
               }}>
-                <Text className="text-colors-text  border-b-[1px] border-b-o p-4 text-xl">Edit</Text>
+                <Text className="text-colors-text  border-b-[1px] border-b-black p-4 text-xl">Edit</Text>
               </Pressable>
 
               <Pressable

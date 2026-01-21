@@ -11,7 +11,6 @@ type HabitCardProps = {
   history: Record<string, boolean>;
   todayKey: string;
   showGrid: boolean;
-  onToggleGrid: () => void;
   markComplete: () => void;
   onLongPress: () => void;
 };
@@ -23,7 +22,6 @@ export default function HabitCard({
   history,
   todayKey,
   showGrid,
-  onToggleGrid,
   markComplete,
   onLongPress,
 }: HabitCardProps) {
@@ -41,7 +39,7 @@ export default function HabitCard({
         justify-between
         border-[1px]
         border-black
-        ${showGrid ? "border-b-0 " : " rounded-bl-2xl"}
+        ${showGrid ? "border-b-0" : " rounded-bl-2xl"}
       `}
         onLongPress={onLongPress}
       >
