@@ -26,11 +26,11 @@ export default function Index() {
 
   // Setting habits
   const [habits, setHabits] = useState<Habit[]>([
-    { id: '1', title: 'Code', history: { [todayKey]: false } },
-    { id: '2', title: 'Workout', history: { [todayKey]: false } },
-    { id: '3', title: 'Read 1 Page', history: { [todayKey]: false } },
-    { id: '4', title: 'Meditate', history: { [todayKey]: false } },
-    { id: '5', title: 'Sleep Early', history: { [todayKey]: false } },
+    { id: '1', title: 'Code', history: { [todayKey]: false }, showGrid: true },
+    { id: '2', title: 'Workout', history: { [todayKey]: false }, showGrid: false },
+    { id: '3', title: 'Read 1 Page', history: { [todayKey]: false }, showGrid: true },
+    { id: '4', title: 'Meditate', history: { [todayKey]: false }, showGrid: false },
+    { id: '5', title: 'Sleep Early', history: { [todayKey]: false }, showGrid: false },
   ]);
 
   // Async Storage --|
@@ -65,6 +65,7 @@ export default function Index() {
                 id: String(h.id),
                 title: String(h.title),
                 history: h.history as Record<string, boolean>,
+                showGrid: typeof h.showGrid === "boolean" ? h.showGrid : true,
               } satisfies Habit;
             }
 
@@ -165,6 +166,7 @@ export default function Index() {
       history: {
         [selectedDateKey]: false,
       },
+      showGrid: false,
     };
 
     setHabits(prev => [...prev, newHabit]);
@@ -229,6 +231,21 @@ export default function Index() {
     setEditingHabitId(null);
     setEditingHabitTitle('');
   }
+
+  // Toggle Grid for habit
+  function toggleGridForHabit(id: string) {
+    setHabits(prev =>
+      prev.map(h =>
+        h.id === id ? { ...h, showGrid: !(h.showGrid ?? true) } : h
+      )
+    );
+  }
+
+  const selectedHabit = selectedHabitId
+    ? habits.find(h => h.id === selectedHabitId)
+    : null;
+
+  const gridLabel = selectedHabit?.showGrid ?? true ? "Hide Grid" : "Show Grid";
 
   return (
     <KeyboardAvoidingView
@@ -321,9 +338,10 @@ export default function Index() {
                   title={habit.title}
                   checked={checkedSelectedDay}
                   streak={streak}
-                  // pending={pending}
                   history={habit.history}   // ✅
                   todayKey={todayKey}       // ✅
+                  showGrid={habit.showGrid ?? true}
+                  onToggleGrid={() => toggleHabit(habit.id)}
                   markComplete={() => toggleHabit(habit.id)}
                   onLongPress={longPressHabit(habit.id)}
                 />
@@ -362,6 +380,19 @@ export default function Index() {
                 startEditingHabit(selectedHabitId);
               }}>
                 <Text className="text-colors-text  border-b-[1px] border-b-o p-4 text-xl">Edit</Text>
+              </Pressable>
+
+              <Pressable
+                onPress={() => {
+                  if (!selectedHabitId) return;
+                  toggleGridForHabit(selectedHabitId);
+                  setIsModalVisible(false);
+                  setSelectedHabitId(null);
+                }}
+              >
+                <Text className="text-colors-text border-b-[1px] border-b-black p-4 text-xl">
+                  {gridLabel}
+                </Text>
               </Pressable>
 
               <Pressable onPress={() => {

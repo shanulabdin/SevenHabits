@@ -10,6 +10,8 @@ type HabitCardProps = {
   streak: number;
   history: Record<string, boolean>;
   todayKey: string;
+  showGrid: boolean;
+  onToggleGrid: () => void;
   markComplete: () => void;
   onLongPress: () => void;
 };
@@ -18,9 +20,10 @@ export default function HabitCard({
   title,
   checked,
   streak,
-  // pending,
   history,
   todayKey,
+  showGrid,
+  onToggleGrid,
   markComplete,
   onLongPress,
 }: HabitCardProps) {
@@ -72,23 +75,24 @@ export default function HabitCard({
         </View>
 
         {/* RIGHT SIDE: Checkbox */}
-        <Pressable
-          onPress={markComplete}
-          hitSlop={12}
-          className={`
+          <Pressable
+            onPress={markComplete}
+            hitSlop={12}
+            className={`
           w-8 h-8 rounded-full 
           items-center justify-center 
           border-[2px] border-colors-orange
           ${checked ? "bg-colors-orange" : ""}
         `}
-        >
-          {checked && (
-            <Ionicons name="checkmark-sharp" size={23} color={colors.dark} />
-          )}
-        </Pressable>
-
+          >
+            {checked && (
+              <Ionicons name="checkmark-sharp" size={23} color={colors.dark} />
+            )}
+          </Pressable>
       </Pressable>
-      <View className=" 
+
+      {showGrid && (
+        <View className=" 
         bg-colors-background        
         p-4 
         rounded-tr-2xl
@@ -96,8 +100,9 @@ export default function HabitCard({
         border-[1px]
         border-black
         ">
-        <ContributionGrid history={history} endDateKey={todayKey} weeks={17} />
-      </View>
+          <ContributionGrid history={history} endDateKey={todayKey} weeks={17} />
+        </View>
+      )}
     </View>
   );
 }
