@@ -1,6 +1,6 @@
+import { colors } from "@/constants/colors";
 import React, { useMemo } from "react";
 import { View } from "react-native";
-// If you don't have types/habit.ts, then replace the import and just type history as Record<string, boolean>
 
 type Props = {
   history: Record<string, boolean>;
@@ -32,7 +32,7 @@ export default function ContributionGrid({
   history,
   endDateKey,
   weeks = 14,
-  size = 16,
+  size = 18,
   gap = 3,
 }: Props) {
   const totalDays = weeks * 7;
@@ -66,8 +66,10 @@ export default function ContributionGrid({
                 style={{
                   width: size,
                   height: size,
-                  borderRadius: 2,
-                  backgroundColor: done ? "#FF6A00" : "#1f1f1f", // orange / dark
+                  borderWidth: 1,
+                  borderColor: "black",
+                  borderRadius: 3,
+                  backgroundColor: done ? colors.orange : colors.dark,
                 }}
               />
             );

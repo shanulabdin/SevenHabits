@@ -25,7 +25,7 @@ export default function HabitCard({
   onLongPress,
 }: HabitCardProps) {
   return (
-    <View className="mb-3">
+    <View className="mb-3 items-center">
       <Pressable
         className="
         flex-row 
@@ -88,8 +88,15 @@ export default function HabitCard({
         </Pressable>
 
       </Pressable>
-      <View className="">
-        <ContributionGrid history={history} endDateKey={todayKey} weeks={14} />
+      <View className=" 
+        bg-colors-background        
+        p-4 
+        rounded-tr-2xl
+        rounded-bl-2xl
+        border-[1px]
+        border-black
+        ">
+        <ContributionGrid history={history} endDateKey={todayKey} weeks={17} />
       </View>
     </View>
   );
