@@ -55,12 +55,13 @@ export default function Stats() {
 
 
   return (
-    <View style={{
-      flex: 1,
-      backgroundColor: colors.dark,
-      padding: 12, paddingTop: 80,
-      width: "100%",
-    }} >
+    <View 
+      style={{
+        flex: 1,
+        backgroundColor: colors.dark,
+        padding: 12, paddingTop: 80,
+        width: "100%",
+      }} >
       <Heading
         title="Overall Stats"
         iconTitle="Back"
@@ -108,11 +109,38 @@ export default function Stats() {
       <View
         style={{
           width: 260,
+          alignSelf: "center",
+          justifyContent: "center",
+          alignItems: "flex-start",
+          marginTop: 20,
+          paddingVertical: 10,
+          paddingHorizontal: 20,
+          padding: 16,
+          borderBottomWidth: 0,
+        }}
+        className="
+          bg-colors-background
+          rounded-tr-3xl
+          border-black border-[1px]
+        "
+      >
+        <Text style={{
+          fontFamily: "Poppins_600SemiBold",
+          fontSize: 20,
+          fontWeight: "bold",
+          color: colors.text,
+        }} >
+          Hello
+        </Text>
+      </View>
+
+      <View
+        style={{
+          width: 260,
           aspectRatio: 1,          // ✅ height = width
           alignSelf: "center",
           justifyContent: "center",
           alignItems: "center",
-          marginTop: 40,
 
           // shadow
           // shadowColor: "black",
@@ -122,11 +150,10 @@ export default function Stats() {
 
         }}
         className="
-        bg-colors-background
-        rounded-tr-3xl
-        rounded-bl-3xl
-        border-black border-[1px]
-  "
+          bg-colors-background
+          rounded-bl-3xl
+          border-black border-[1px]
+          "
       >
         <DayRing
           dayNumber={`${overallPercentage}%`}   // center text
