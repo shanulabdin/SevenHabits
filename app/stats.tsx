@@ -5,6 +5,7 @@ import { useRouter } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 
+import DayRing from "@/components/DayRing";
 import type { Habit } from "@/types/habit";
 import { getDateKey, getLastNDays } from "@/utils/date";
 
@@ -33,7 +34,7 @@ export default function Stats() {
 
   const [selectedDays, setSelectedDays] = useState(10);
 
-  const overall100 = useMemo(() => {
+  const overallPercentage = useMemo(() => {
     if (!habits.length) return 0;
 
     const last100Days = getLastNDays(selectedDays);
@@ -104,10 +105,21 @@ export default function Stats() {
         ))}
       </View>
 
+      <View
+        className="p-4 mt-10"
+      >
 
-      <Text style={{ color: "white", fontSize: 22, marginTop: 16 }}>
-        Last {selectedDays} days overall: {overall100}%
-      </Text>
+        <DayRing
+          dayNumber={`${overallPercentage}%`}   // center text
+          dayLabel={``}  // label under ring
+          percent={overallPercentage}          // arc percent
+          size={200}
+          strokeWidth={20}
+          textSize={40}
+          selected
+          
+        />
+      </View>
 
     </View >
   );

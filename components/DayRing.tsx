@@ -8,11 +8,23 @@ type DayRingProps = {
   percent: number;     // 0-100
   selected?: boolean;
   onPress?: () => void;
+  size?: number;
+  strokeWidth?: number;
+  textSize?: number;
 };
 
-export default function DayRing({ dayNumber, dayLabel, percent, selected, onPress }: DayRingProps) {
-  const size = 50;          // ring outer size
-  const strokeWidth = 5;
+export default function DayRing({
+  dayNumber,
+  dayLabel,
+  percent,
+  selected,
+  onPress,
+  size = 50,
+  strokeWidth = 5,
+  textSize = 12
+
+}: DayRingProps) {
+
   const r = (size - strokeWidth) / 2;
   const cx = size / 2;
   const cy = size / 2;
@@ -56,7 +68,7 @@ export default function DayRing({ dayNumber, dayLabel, percent, selected, onPres
         {/* Center number */}
         <View className="absolute inset-0 items-center justify-center">
           <Text
-            style={{ fontFamily: "Poppins_600SemiBold" }}
+            style={{ fontFamily: "Poppins_600SemiBold", fontSize: textSize, lineHeight: textSize + 5 }}
             className="text-colors-text text-base"
           >
             {dayNumber}
@@ -66,8 +78,8 @@ export default function DayRing({ dayNumber, dayLabel, percent, selected, onPres
 
       {/* Weekday label */}
       <Text
-        style={{ fontFamily: "Poppins_600SemiBold" }}
-        className={` text-xs mt-1 ${selected ? "text-colors-orange" : "text-colors-text/80"}`}
+        style={{ fontFamily: "Poppins_600SemiBold", fontSize: textSize }}
+        className={`  mt-1 ${selected ? "text-colors-orange" : "text-colors-text/80"}`}
       >
         {dayLabel}
       </Text>
