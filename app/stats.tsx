@@ -53,9 +53,32 @@ export default function Stats() {
     return Math.round((totalDone / totalPossible) * 100);
   }, [habits, selectedDays]);
 
+  const perHabitStats = useMemo(() => {
+    const lastDays = getLastNDays(selectedDays);
+    const dateKeys = lastDays.map(d => getDateKey(d));
+
+    return habits.map(h => {
+      let done = 0;
+
+      for (const key of dateKeys) {
+        if (h.history?.[key] === true) done += 1;
+      }
+
+      const possible = dateKeys.length; // 1 habit per day
+      const percent = possible ? Math.round((done / possible) * 100) : 0;
+
+      return {
+        id: h.id,
+        title: h.title,
+        done,
+        possible,
+        percent,
+      };
+    });
+  }, [habits, selectedDays]);
 
   return (
-    <View 
+    <View
       style={{
         flex: 1,
         backgroundColor: colors.dark,
@@ -130,7 +153,7 @@ export default function Stats() {
           fontWeight: "bold",
           color: colors.text,
         }} >
-          Hello
+          Weekly
         </Text>
       </View>
 
@@ -165,6 +188,39 @@ export default function Stats() {
           selected
 
         />
+      </View>
+
+      <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12, marginTop: 18 }}>
+        {perHabitStats.map(h => (
+          <View
+            key={h.id}
+            style={{ width: "48%" }} // 2 columns
+            className="bg-colors-background border-black border-[1px] rounded-tr-3xl rounded-bl-3xl p-3"
+          >
+            <Text
+              style={{ fontFamily: "Poppins_600SemiBold" }}
+              className="text-colors-text text-base mb-2"
+              numberOfLines={1}
+            >
+              {h.title}
+            </Text>
+
+            <View style={{ alignItems: "center" }}>
+              <DayRing
+                dayNumber={`${h.percent}%`}
+                percent={h.percent}
+                size={110}
+                strokeWidth={10}
+                textSize={20}
+                selected
+              />
+            </View>
+
+            <Text className="text-colors-text/80 text-xs mt-2" style={{ textAlign: "center" }}>
+              {h.done}/{h.possible} days
+            </Text>
+          </View>
+        ))}
       </View>
 
     </View >
