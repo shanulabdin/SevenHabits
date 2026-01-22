@@ -4,7 +4,7 @@ import Svg, { Circle } from "react-native-svg";
 
 type DayRingProps = {
   dayNumber: string;   // "11"
-  dayLabel: string;    // "Sun"
+  dayLabel?: string;    // "Sun"
   percent: number;     // 0-100
   selected?: boolean;
   onPress?: () => void;
@@ -77,12 +77,15 @@ export default function DayRing({
       </View>
 
       {/* Weekday label */}
-      <Text
-        style={{ fontFamily: "Poppins_600SemiBold", fontSize: textSize }}
-        className={`  mt-1 ${selected ? "text-colors-orange" : "text-colors-text/80"}`}
-      >
-        {dayLabel}
-      </Text>
+      {dayLabel ? (
+        <Text
+          style={{ fontFamily: "Poppins_600SemiBold" }}
+          className={`text-xs mt-1 ${selected ? "text-colors-orange" : "text-colors-text/80"
+            }`}
+        >
+          {dayLabel}
+        </Text>
+      ) : null}
     </Pressable>
   );
 }

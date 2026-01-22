@@ -106,9 +106,28 @@ export default function Stats() {
       </View>
 
       <View
-        className="p-4 mt-10"
-      >
+        style={{
+          width: 260,
+          aspectRatio: 1,          // ✅ height = width
+          alignSelf: "center",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: 40,
 
+          // shadow
+          // shadowColor: "black",
+          // shadowOpacity: 0.25,
+          // shadowRadius: 8,
+          // elevation: 6, // Android
+
+        }}
+        className="
+        bg-colors-background
+        rounded-tr-3xl
+        rounded-bl-3xl
+        border-black border-[1px]
+  "
+      >
         <DayRing
           dayNumber={`${overallPercentage}%`}   // center text
           dayLabel={``}  // label under ring
@@ -117,7 +136,7 @@ export default function Stats() {
           strokeWidth={20}
           textSize={40}
           selected
-          
+
         />
       </View>
 
