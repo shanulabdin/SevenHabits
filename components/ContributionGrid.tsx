@@ -69,7 +69,7 @@ export default function ContributionGrid({
                   borderWidth: 1,
                   borderColor: "black",
                   borderRadius: 3,
-                  backgroundColor: done ? colors.orange : colors.dark,
+                  backgroundColor: done ? colors.orange : "black",
                 }}
               />
             );
