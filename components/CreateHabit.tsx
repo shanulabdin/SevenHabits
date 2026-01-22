@@ -29,7 +29,7 @@ export default function CreateHabit({ newHabitTitle, setNewHabitTitle, createHab
     <View className="
         w-full 
         flex-row 
-        bg-colors-background 
+        bg-colors-dark 
         rounded-tr-2xl
         rounded-bl-2xl
         justify-between 

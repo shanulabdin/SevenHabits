@@ -105,7 +105,7 @@ export default function Stats() {
             style={{
               flex: 1,
               padding: 10,
-              backgroundColor: colors.background,
+              backgroundColor: colors.dark,
               alignItems: "center",
             }}
             className="
@@ -134,7 +134,7 @@ export default function Stats() {
           width: "100%",
           alignSelf: "center",
           marginTop: 20,
-          backgroundColor: colors.background,
+          backgroundColor: colors.dark,
         }} // 2 columns
         className="
           bg-colors-background 
@@ -192,7 +192,7 @@ export default function Stats() {
             key={h.id}
             style={{ width: "48%" }} // 2 columns
             className="
-              bg-colors-background 
+              bg-colors-dark 
               border-black border-[1px]
               rounded-tr-2xl rounded-bl-2xl 
               "

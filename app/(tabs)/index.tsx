@@ -307,11 +307,10 @@ export default function Index() {
                     key={habit.id}
                     className="
                       w-full
-                      bg-colors-background
+                      bg-colors-dark
                       border-[1px]
                       rounded-tr-2xl
                       rounded-bl-2xl
-                      bo
                       mb-3
                       justify-center
                     "
@@ -364,7 +363,7 @@ export default function Index() {
           }
           <Pressable
             onPress={resetAllData}
-            className="self-end mb-3 px-3 py-2 rounded-lg bg-colors-background border border-black"
+            className="self-end mb-3 px-3 py-2 rounded-lg bg-colors-dark  border-black"
           >
             <Text className="text-colors-orange">Reset Data</Text>
           </Pressable>
@@ -381,7 +380,7 @@ export default function Index() {
 
           >
             <Pressable
-              className="bg-colors-background rounded-tr-2xl rounded-bl-2xl w-64 border-black border-[1px]"
+              className="bg-colors-dark rounded-tr-2xl rounded-bl-2xl w-64 border-black border-[1px]"
               onPress={() => {
                 setIsModalVisible(false);
                 setSelectedHabitId(null);

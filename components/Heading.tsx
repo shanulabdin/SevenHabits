@@ -13,7 +13,7 @@ export default function Heading({ title, iconTitle, icon, onIconPress }: Heading
   return (
     <View className="
       w-full 
-      bg-colors-background 
+      bg-colors-dark 
       rounded-tr-2xl
       rounded-bl-2xl
       flex-row 

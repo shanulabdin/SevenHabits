@@ -45,7 +45,7 @@ export default function DayRing({
             cx={cx}
             cy={cy}
             r={r}
-            stroke="#2b2b2b"
+            stroke={colors.dark}
             strokeWidth={strokeWidth}
             fill="transparent"
           />

@@ -30,7 +30,7 @@ export default function HabitCard({
       <Pressable
         className={`
         flex-row 
-        bg-colors-background 
+        bg-colors-dark 
         w-full
         p-4 
         rounded-tr-2xl
@@ -92,7 +92,7 @@ export default function HabitCard({
 
       {showGrid && (
         <View className={` 
-        bg-colors-background        
+        bg-colors-dark        
         p-4
         rounded-bl-2xl
         border-[1px]
