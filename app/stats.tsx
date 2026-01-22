@@ -79,7 +79,7 @@ export default function Stats() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.dark, width: "100%" }}
+      style={{ flex: 1, backgroundColor: "black", width: "100%" }}
       contentContainerStyle={{ padding: 12, paddingTop: 80, paddingBottom: 200 }}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}

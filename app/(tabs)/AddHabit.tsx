@@ -24,7 +24,7 @@ export default function AddHabit() {
     <View className="
       flex-1 
       items-center 
-      bg-colors-dark 
+      bg-black
       p-3 pt-20 
       w-full 
     ">
