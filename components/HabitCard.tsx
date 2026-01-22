@@ -39,7 +39,8 @@ export default function HabitCard({
         justify-between
         border-[1px]
         border-black
-        ${showGrid ? "border-b-0" : " rounded-bl-2xl"}
+        
+        ${showGrid ? "" : " rounded-bl-2xl border-b-[1px]"}
       `}
         onLongPress={onLongPress}
       >
