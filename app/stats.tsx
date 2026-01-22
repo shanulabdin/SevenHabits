@@ -1,7 +1,14 @@
 import Heading from "@/components/Heading";
 import { colors } from "@/constants/colors";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
-import { View } from "react-native";
+import { useEffect, useMemo, useState } from "react";
+import { Pressable, Text, View } from "react-native";
+
+import type { Habit } from "@/types/habit";
+import { getDateKey, getLastNDays } from "@/utils/date";
+
+const STORAGE_KEY = "@sevenhabits/habits_v1";
 
 export default function Stats() {
   const router = useRouter();
@@ -9,6 +16,42 @@ export default function Stats() {
     if (router.canGoBack()) router.back();
     else router.replace("/(tabs)"); // fallback only if needed
   }
+
+  const [habits, setHabits] = useState<Habit[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const raw = await AsyncStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return;
+
+      setHabits(parsed as Habit[]);
+    })();
+  }, []);
+
+  const [selectedDays, setSelectedDays] = useState(10);
+
+  const overall100 = useMemo(() => {
+    if (!habits.length) return 0;
+
+    const last100Days = getLastNDays(selectedDays);
+    const dateKeys = last100Days.map(d => getDateKey(d));
+
+    let totalPossible = habits.length * dateKeys.length;
+    let totalDone = 0;
+
+    for (const habit of habits) {
+      for (const key of dateKeys) {
+        if (habit.history?.[key] === true) totalDone += 1;
+      }
+    }
+
+    if (totalPossible === 0) return 0;
+    return Math.round((totalDone / totalPossible) * 100);
+  }, [habits, selectedDays]);
+
 
   return (
     <View style={{
@@ -23,7 +66,48 @@ export default function Stats() {
         icon="arrow-back"
         onIconPress={() => onBack()}
       />
+      <View
+        style={{
+          flexDirection: "row",
+          marginTop: 16,
+          gap: 8,
+        }}
+      >
+        {[7, 30, 100, 365].map(d => (
+          <Pressable
+            key={d}
+            onPress={() => setSelectedDays(d)}
+            style={{
+              flex: 1,
+              padding: 10,
+              backgroundColor: selectedDays === d ? "#444" : "#222",
+              alignItems: "center",
+            }}
+            className="
+              bg-colors-background 
+              rounded-tr-xl
+              rounded-bl-xl
+              border-black border-[1px]
+            "
+          >
+            <Text
+              style={{
+                color: "white",
+                fontFamily: "Poppins_600SemiBold",
+                fontSize: 12,
+              }}
+            >
+              {d} days
+            </Text>
+          </Pressable>
+        ))}
+      </View>
 
-    </View>
+
+      <Text style={{ color: "white", fontSize: 22, marginTop: 16 }}>
+        Last {selectedDays} days overall: {overall100}%
+      </Text>
+
+    </View >
   );
 }
