@@ -11,6 +11,7 @@ type DayRingProps = {
   size?: number;
   strokeWidth?: number;
   textSize?: number;
+  strokeColor?: string;
 };
 
 export default function DayRing({
@@ -21,8 +22,8 @@ export default function DayRing({
   onPress,
   size = 50,
   strokeWidth = 5,
-  textSize = 12
-
+  textSize = 12,
+  strokeColor = colors.dark,
 }: DayRingProps) {
 
   const r = (size - strokeWidth) / 2;
@@ -45,7 +46,7 @@ export default function DayRing({
             cx={cx}
             cy={cy}
             r={r}
-            stroke={colors.dark}
+            stroke={strokeColor}
             strokeWidth={strokeWidth}
             fill="transparent"
           />

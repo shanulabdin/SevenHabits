@@ -179,6 +179,7 @@ export default function Stats() {
             percent={overallStats.percent}          // arc percent
             size={200}
             strokeWidth={20}
+            strokeColor={"black"}
             textSize={40}
             selected
           />
@@ -234,6 +235,7 @@ export default function Stats() {
                 percent={h.percent}
                 size={110}
                 strokeWidth={10}
+                strokeColor={"black"}
                 textSize={20}
                 selected
               />
