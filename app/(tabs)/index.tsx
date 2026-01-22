@@ -9,7 +9,6 @@ import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, Tex
 
 
 // Utils
-import { colors } from '@/constants/colors';
 import { getDateKey, getLastNDays } from '@/utils/date';
 import { getPercentForDate, getWeeklyPercent } from '@/utils/stats';
 import { getHabitStreakWithGrace } from '@/utils/streaks';
@@ -262,16 +261,16 @@ export default function Index() {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: colors.dark }}
+      style={{ flex: 1, backgroundColor: "black" }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <View
-        style={{ flex: 1, backgroundColor: colors.dark, padding: 12, paddingTop: 80, width: "100%", alignItems: "center" }}
+        style={{ flex: 1, backgroundColor: "black", padding: 12, paddingTop: 80, width: "100%", alignItems: "center" }}
       >
         <ScrollView
           contentContainerStyle={{ paddingBottom: 350 }}
           keyboardShouldPersistTaps="handled"
-          style={{ flex: 1, backgroundColor: colors.dark }}
+          style={{ flex: 1, backgroundColor: "black" }}
           ref={scrollRef}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}

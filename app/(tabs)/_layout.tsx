@@ -12,12 +12,11 @@ export default function TabLayout() {
         },
         tabBarStyle: {
           backgroundColor: colors.dark,
-          borderTopWidth: 1,
-          borderTopColor: "black",
           width: '100%',
           paddingBottom: 10,
           paddingTop: 10,
           marginTop: -23,
+          borderTopWidth: 0,
         },
         tabBarShowLabel: false,
         tabBarActiveTintColor: colors.orange,
@@ -32,7 +31,7 @@ export default function TabLayout() {
       <Tabs.Screen name="AddHabit" options={{
         title: "Weekly",
         tabBarIcon: ({ size, focused }) => (
-          <Ionicons name="add-outline" className={`${focused ? 'bg-colors-orange' : 'bg-colors-text'} rounded color-transparent`} size={focused ? size + 3 : size}  />
+          <Ionicons name="add-outline" className={`${focused ? 'bg-colors-orange' : 'bg-colors-text'} rounded color-transparent`} size={focused ? size + 3 : size} />
         ),
       }} />
       <Tabs.Screen name="Settings" options={{
