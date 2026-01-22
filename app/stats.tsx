@@ -80,7 +80,7 @@ export default function Stats() {
             style={{
               flex: 1,
               padding: 10,
-              backgroundColor: selectedDays === d ? "#444" : "#222",
+              backgroundColor: colors.background,
               alignItems: "center",
             }}
             className="
@@ -88,16 +88,17 @@ export default function Stats() {
               rounded-tr-xl
               rounded-bl-xl
               border-black border-[1px]
+              color-colors-orange
             "
           >
             <Text
               style={{
-                color: "white",
+                color: selectedDays === d ? colors.orange : colors.text,
                 fontFamily: "Poppins_600SemiBold",
                 fontSize: 12,
               }}
             >
-              {d} days
+              {d}
             </Text>
           </Pressable>
         ))}
