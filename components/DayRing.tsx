@@ -36,7 +36,7 @@ export default function DayRing({
   return (
     <Pressable className="items-center" onPress={onPress}>
       <View
-        className={`relative ${selected ? "opacity-100" : "opacity-60"}`}
+        className={`relative opacity-100`}
         style={{ width: size, height: size }}
       >
         <Svg width={size} height={size}>
