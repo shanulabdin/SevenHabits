@@ -82,13 +82,13 @@ export default function Stats() {
       style={{
         flex: 1,
         backgroundColor: colors.dark,
-        padding: 12, 
-        paddingTop: 80, 
+        padding: 12,
+        paddingTop: 80,
         paddingBottom: 200,
         width: "100%",
-      }} 
-      
-      >
+      }}
+
+    >
       <Heading
         title="Stats"
         iconTitle="Back"
@@ -137,8 +137,10 @@ export default function Stats() {
         style={{
           width: 260,
           alignSelf: "center",
-          justifyContent: "center",
-          alignItems: "flex-start",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          display: "flex",
           marginTop: 20,
           paddingVertical: 10,
           paddingHorizontal: 20,
@@ -153,11 +155,18 @@ export default function Stats() {
       >
         <Text style={{
           fontFamily: "Poppins_600SemiBold",
+
           fontSize: 20,
           fontWeight: "bold",
           color: colors.text,
         }} >
           Overall
+        </Text>
+        <Text
+          className="text-colors-text/80 text-base"
+          style={{ fontFamily: "Poppins_600SemiBold" }}
+        >
+          {overallStats.done}/{overallStats.possible}
         </Text>
       </View>
 
@@ -193,12 +202,6 @@ export default function Stats() {
           selected
 
         />
-        <Text
-          className="text-colors-text/80 text-base"
-          style={{ textAlign: "center", fontFamily: "Poppins_600SemiBold", marginTop: 20, }}
-        >
-          {overallStats.done}/{overallStats.possible}
-        </Text>
       </View>
 
       <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12, marginTop: 18, marginHorizontal: 14 }}>
@@ -215,10 +218,13 @@ export default function Stats() {
           >
             <View
               style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between"
               }}
               className="
-                bg-colors-background
                 border-b-[1px]
+                border-black
                 rounded-tr-2xl
                 pt-2
                 pb-2
@@ -234,11 +240,14 @@ export default function Stats() {
               }} >
                 {h.title}
               </Text>
+              <Text
+                className="text-colors-text/80 text-xs "
+                style={{ textAlign: "center", fontFamily: "Poppins_600SemiBold" }}>
+                {h.done}/{h.possible}
+              </Text>
             </View>
 
-
             <View style={{ padding: 20, }}>
-
               <View style={{ alignItems: "center" }}>
                 <DayRing
                   dayNumber={`${h.percent}%`}
@@ -249,13 +258,8 @@ export default function Stats() {
                   selected
                 />
               </View>
-
-              <Text
-                className="text-colors-text/80 text-xs mt-[20px]"
-                style={{ textAlign: "center", fontFamily: "Poppins_600SemiBold" }}>
-                {h.done}/{h.possible} days
-              </Text>
             </View>
+
           </View>
         ))}
       </View>
