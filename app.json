@@ -19,7 +19,8 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.SevenHabits"
+      "package": "com.anonymous.SevenHabits",
+      "backgroundColor": "#151515"
     },
     "androidStatusBar": {
       "hidden": true

@@ -34,12 +34,19 @@ export default function RootLayout() {
 
 
   if (!fontsLoaded) {
-    return null; // or splash screen
+    return <View style={{ flex: 1, backgroundColor: colors.dark }} />;
   }
   return (
     <ThemeProvider value={MyDarkTheme}>
       <View style={{ flex: 1, backgroundColor: "#000000" }}>
-        <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: "#000000" } }} />
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            contentStyle: { backgroundColor: "#000000" },
+            animation: "fade",
+            freezeOnBlur: true,
+          }}
+        />
       </View>
     </ThemeProvider>
   );

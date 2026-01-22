@@ -7,6 +7,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 
+
 // Utils
 import { colors } from '@/constants/colors';
 import { getDateKey, getLastNDays } from '@/utils/date';
@@ -126,6 +127,7 @@ export default function Index() {
   // Weekly overall percentage --|
 
 
+
   // Other Hooks --|
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedHabitId, setSelectedHabitId] = useState<string | null>(null);
@@ -175,11 +177,19 @@ export default function Index() {
     setHabits(prev => [...prev, newHabit]);
   }, [selectedDateKey]);
 
+
+  const consumedRef = useRef<string | null>(null);
+
   useEffect(() => {
-    if (newHabit) {
-      createHabit(newHabit);
-    }
-  }, [newHabit, createHabit]);
+    if (!newHabit) return;
+    if (consumedRef.current === newHabit) return;
+
+    consumedRef.current = newHabit;
+    createHabit(newHabit);
+    router.setParams({ newHabit: undefined });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newHabit]);
+
 
   useEffect(() => {
     setHabits(prev =>
@@ -252,11 +262,11 @@ export default function Index() {
 
   return (
     <KeyboardAvoidingView
-    style={{flex: 1}}
+      style={{ flex: 1, backgroundColor: colors.dark }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      className="flex-1 bg-colors-dark">
+    >
       <View
-        className="flex-1 items-center bg-colors-dark p-3 pt-20 w-full"
+        style={{ flex: 1, backgroundColor: colors.dark, padding: 12, paddingTop: 80, width: "100%", alignItems: "center" }}
       >
         <ScrollView
           contentContainerStyle={{ paddingBottom: 350 }}

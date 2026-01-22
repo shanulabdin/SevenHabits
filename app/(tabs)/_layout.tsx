@@ -7,6 +7,9 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
+        sceneStyle: {
+          backgroundColor: colors.dark
+        },
         tabBarStyle: {
           backgroundColor: "#222222",
           borderTopWidth: 0,
