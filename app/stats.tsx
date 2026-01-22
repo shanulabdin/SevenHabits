@@ -79,16 +79,12 @@ export default function Stats() {
 
   return (
     <ScrollView
-      style={{
-        flex: 1,
-        backgroundColor: colors.dark,
-        padding: 12,
-        paddingTop: 80,
-        paddingBottom: 200,
-        width: "100%",
-      }}
-
+      style={{ flex: 1, backgroundColor: colors.dark, width: "100%" }}
+      contentContainerStyle={{ padding: 12, paddingTop: 80, paddingBottom: 200 }}
+      keyboardShouldPersistTaps="handled"
+      showsVerticalScrollIndicator={false}
     >
+
       <Heading
         title="Stats"
         iconTitle="Back"
@@ -135,76 +131,61 @@ export default function Stats() {
 
       <View
         style={{
-          width: 260,
+          width: "100%",
           alignSelf: "center",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          display: "flex",
           marginTop: 20,
-          paddingVertical: 10,
-          paddingHorizontal: 20,
-          padding: 16,
-          borderBottomWidth: 0,
-        }}
+          backgroundColor: colors.background,
+        }} // 2 columns
         className="
-          bg-colors-background
-          rounded-tr-3xl
+          bg-colors-background 
           border-black border-[1px]
-        "
-      >
-        <Text style={{
-          fontFamily: "Poppins_600SemiBold",
-
-          fontSize: 20,
-          fontWeight: "bold",
-          color: colors.text,
-        }} >
-          Overall
-        </Text>
-        <Text
-          className="text-colors-text/80 text-base"
-          style={{ fontFamily: "Poppins_600SemiBold" }}
-        >
-          {overallStats.done}/{overallStats.possible}
-        </Text>
-      </View>
-
-      <View
-        style={{
-          width: 260,
-          // aspectRatio: 1,          // ✅ height = width
-          alignSelf: "center",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: 20,
-
-          // shadow
-          // shadowColor: "black",
-          // shadowOpacity: 0.25,
-          // shadowRadius: 8,
-          // elevation: 6, // Android
-
-        }}
-        className="
-          bg-colors-background
-          rounded-bl-3xl
-          border-black border-[1px]
+          rounded-tr-2xl rounded-bl-2xl 
           "
       >
-        <DayRing
-          dayNumber={`${overallStats.percent}%`}   // center text
-          dayLabel={``}  // label under ring
-          percent={overallStats.percent}          // arc percent
-          size={200}
-          strokeWidth={20}
-          textSize={40}
-          selected
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}
+          className="
+            border-b-[1px]
+            border-black
+            rounded-tr-2xl
+            p-4
+          "
+        >
+          <Text style={{
+            fontFamily: "Poppins_600SemiBold",
+            fontSize: 20,
+            fontWeight: "bold",
+            color: colors.text,
+          }} >
+            Overall
+          </Text>
 
-        />
+          <Text
+            className="text-colors-text/80 text-base"
+            style={{ fontFamily: "Poppins_600SemiBold" }}
+          >
+            {overallStats.done}/{overallStats.possible}
+          </Text>
+        </View>
+
+        <View style={{ padding: 20, }} pointerEvents="none">
+          <DayRing
+            dayNumber={`${overallStats.percent}%`}   // center text
+            dayLabel={``}  // label under ring
+            percent={overallStats.percent}          // arc percent
+            size={200}
+            strokeWidth={20}
+            textSize={40}
+            selected
+          />
+        </View>
       </View>
 
-      <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12, marginTop: 18, marginHorizontal: 14 }}>
+      <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12, marginTop: 20, }}>
         {perHabitStats.map(h => (
 
           <View
@@ -247,17 +228,15 @@ export default function Stats() {
               </Text>
             </View>
 
-            <View style={{ padding: 20, }}>
-              <View style={{ alignItems: "center" }}>
-                <DayRing
-                  dayNumber={`${h.percent}%`}
-                  percent={h.percent}
-                  size={110}
-                  strokeWidth={10}
-                  textSize={20}
-                  selected
-                />
-              </View>
+            <View style={{ padding: 20, }} pointerEvents="none">
+              <DayRing
+                dayNumber={`${h.percent}%`}
+                percent={h.percent}
+                size={110}
+                strokeWidth={10}
+                textSize={20}
+                selected
+              />
             </View>
 
           </View>
