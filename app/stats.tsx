@@ -34,23 +34,23 @@ export default function Stats() {
 
   const [selectedDays, setSelectedDays] = useState(10);
 
-  const overallPercentage = useMemo(() => {
-    if (!habits.length) return 0;
+  const overallStats = useMemo(() => {
+    if (!habits.length) return { percent: 0, done: 0, possible: 0 };
 
-    const last100Days = getLastNDays(selectedDays);
-    const dateKeys = last100Days.map(d => getDateKey(d));
+    const lastDays = getLastNDays(selectedDays);
+    const dateKeys = lastDays.map(d => getDateKey(d));
 
-    let totalPossible = habits.length * dateKeys.length;
-    let totalDone = 0;
+    const possible = habits.length * dateKeys.length;
+    let done = 0;
 
     for (const habit of habits) {
       for (const key of dateKeys) {
-        if (habit.history?.[key] === true) totalDone += 1;
+        if (habit.history?.[key] === true) done += 1;
       }
     }
 
-    if (totalPossible === 0) return 0;
-    return Math.round((totalDone / totalPossible) * 100);
+    const percent = possible ? Math.round((done / possible) * 100) : 0;
+    return { percent, done, possible };
   }, [habits, selectedDays]);
 
   const perHabitStats = useMemo(() => {
@@ -82,11 +82,15 @@ export default function Stats() {
       style={{
         flex: 1,
         backgroundColor: colors.dark,
-        padding: 12, paddingTop: 80,
+        padding: 12, 
+        paddingTop: 80, 
+        paddingBottom: 200,
         width: "100%",
-      }} >
+      }} 
+      
+      >
       <Heading
-        title="Overall Stats"
+        title="Stats"
         iconTitle="Back"
         icon="arrow-back"
         onIconPress={() => onBack()}
@@ -153,17 +157,18 @@ export default function Stats() {
           fontWeight: "bold",
           color: colors.text,
         }} >
-          Weekly
+          Overall
         </Text>
       </View>
 
       <View
         style={{
           width: 260,
-          aspectRatio: 1,          // ✅ height = width
+          // aspectRatio: 1,          // ✅ height = width
           alignSelf: "center",
           justifyContent: "center",
           alignItems: "center",
+          padding: 20,
 
           // shadow
           // shadowColor: "black",
@@ -179,18 +184,24 @@ export default function Stats() {
           "
       >
         <DayRing
-          dayNumber={`${overallPercentage}%`}   // center text
+          dayNumber={`${overallStats.percent}%`}   // center text
           dayLabel={``}  // label under ring
-          percent={overallPercentage}          // arc percent
+          percent={overallStats.percent}          // arc percent
           size={200}
           strokeWidth={20}
           textSize={40}
           selected
 
         />
+        <Text
+          className="text-colors-text/80 text-base"
+          style={{ textAlign: "center", fontFamily: "Poppins_600SemiBold", marginTop: 20, }}
+        >
+          {overallStats.done}/{overallStats.possible}
+        </Text>
       </View>
 
-      <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12, marginTop: 18 }}>
+      <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12, marginTop: 18, marginHorizontal: 14 }}>
         {perHabitStats.map(h => (
 
           <View
@@ -199,7 +210,7 @@ export default function Stats() {
             className="
               bg-colors-background 
               border-black border-[1px]
-              rounded-tr-3xl rounded-bl-3xl 
+              rounded-tr-2xl rounded-bl-2xl 
               "
           >
             <View
@@ -207,9 +218,12 @@ export default function Stats() {
               }}
               className="
                 bg-colors-background
-                rounded-tr-3xl
                 border-b-[1px]
-                p-2
+                rounded-tr-2xl
+                pt-2
+                pb-2
+                pr-4
+                pl-4
               "
             >
               <Text style={{
@@ -236,8 +250,8 @@ export default function Stats() {
                 />
               </View>
 
-              <Text 
-                className="text-colors-text/80 text-xs mt-[20px]" 
+              <Text
+                className="text-colors-text/80 text-xs mt-[20px]"
                 style={{ textAlign: "center", fontFamily: "Poppins_600SemiBold" }}>
                 {h.done}/{h.possible} days
               </Text>
