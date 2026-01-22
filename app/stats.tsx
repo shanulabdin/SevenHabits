@@ -1,4 +1,5 @@
 import Heading from "@/components/Heading";
+import { colors } from "@/constants/colors";
 import { useRouter } from "expo-router";
 import { View } from "react-native";
 
@@ -10,13 +11,19 @@ export default function Stats() {
   }
 
   return (
-    <View className="flex-1 bg-colors-dark  p-3 pt-20 w-full" >
+    <View style={{
+      flex: 1,
+      backgroundColor: colors.dark,
+      padding: 12, paddingTop: 80,
+      width: "100%",
+    }} >
       <Heading
         title="Overall Stats"
         iconTitle="Back"
         icon="arrow-back"
         onIconPress={() => onBack()}
       />
+
     </View>
   );
 }
