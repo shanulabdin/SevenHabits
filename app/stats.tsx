@@ -3,7 +3,7 @@ import { colors } from "@/constants/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 
 import DayRing from "@/components/DayRing";
 import type { Habit } from "@/types/habit";
@@ -78,7 +78,7 @@ export default function Stats() {
   }, [habits, selectedDays]);
 
   return (
-    <View
+    <ScrollView
       style={{
         flex: 1,
         backgroundColor: colors.dark,
@@ -192,37 +192,60 @@ export default function Stats() {
 
       <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12, marginTop: 18 }}>
         {perHabitStats.map(h => (
+
           <View
             key={h.id}
             style={{ width: "48%" }} // 2 columns
-            className="bg-colors-background border-black border-[1px] rounded-tr-3xl rounded-bl-3xl p-3"
+            className="
+              bg-colors-background 
+              border-black border-[1px]
+              rounded-tr-3xl rounded-bl-3xl 
+              "
           >
-            <Text
-              style={{ fontFamily: "Poppins_600SemiBold" }}
-              className="text-colors-text text-base mb-2"
-              numberOfLines={1}
+            <View
+              style={{
+              }}
+              className="
+                bg-colors-background
+                rounded-tr-3xl
+                border-b-[1px]
+                p-2
+              "
             >
-              {h.title}
-            </Text>
-
-            <View style={{ alignItems: "center" }}>
-              <DayRing
-                dayNumber={`${h.percent}%`}
-                percent={h.percent}
-                size={110}
-                strokeWidth={10}
-                textSize={20}
-                selected
-              />
+              <Text style={{
+                fontFamily: "Poppins_600SemiBold",
+                fontSize: 15,
+                fontWeight: "bold",
+                color: colors.text,
+              }} >
+                {h.title}
+              </Text>
             </View>
 
-            <Text className="text-colors-text/80 text-xs mt-2" style={{ textAlign: "center" }}>
-              {h.done}/{h.possible} days
-            </Text>
+
+            <View style={{ padding: 20, }}>
+
+              <View style={{ alignItems: "center" }}>
+                <DayRing
+                  dayNumber={`${h.percent}%`}
+                  percent={h.percent}
+                  size={110}
+                  strokeWidth={10}
+                  textSize={20}
+                  selected
+                />
+              </View>
+
+              <Text 
+                className="text-colors-text/80 text-xs mt-[20px]" 
+                style={{ textAlign: "center", fontFamily: "Poppins_600SemiBold" }}>
+                {h.done}/{h.possible} days
+              </Text>
+            </View>
           </View>
         ))}
       </View>
 
-    </View >
+    </ScrollView >
   );
 }
