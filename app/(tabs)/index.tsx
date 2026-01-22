@@ -8,6 +8,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 
 // Utils
+import { colors } from '@/constants/colors';
 import { getDateKey, getLastNDays } from '@/utils/date';
 import { getPercentForDate, getWeeklyPercent } from '@/utils/stats';
 import { getHabitStreakWithGrace } from '@/utils/streaks';
@@ -251,6 +252,7 @@ export default function Index() {
 
   return (
     <KeyboardAvoidingView
+    style={{flex: 1}}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       className="flex-1 bg-colors-dark">
       <View
@@ -259,7 +261,7 @@ export default function Index() {
         <ScrollView
           contentContainerStyle={{ paddingBottom: 350 }}
           keyboardShouldPersistTaps="handled"
-          style={{ backgroundColor: "#151515" }}
+          style={{ flex: 1, backgroundColor: colors.dark }}
           ref={scrollRef}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
