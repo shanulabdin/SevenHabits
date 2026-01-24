@@ -3,7 +3,12 @@ import Heading from "@/components/Heading";
 import { colors } from "@/constants/colors"; // adjust if needed
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Alert, Linking, Pressable, ScrollView, Share, StyleSheet, Text, View } from "react-native";
+
+import Constants from "expo-constants";
+import { router } from "expo-router";
+import * as StoreReview from "expo-store-review";
+
 
 type Item = {
   title: string;
@@ -11,6 +16,41 @@ type Item = {
   onPress?: () => void;
 };
 
+// Helper Functions
+const openUrl = async (url: string) => {
+  const can = await Linking.canOpenURL(url);
+  if (!can) return Alert.alert("Can't open link", url);
+  await Linking.openURL(url);
+};
+
+const shareApp = async () => {
+  const message = "Check out SevenHabits!";
+  await Share.share({ message });
+};
+
+const rateApp = async () => {
+  const available = await StoreReview.isAvailableAsync();
+  if (available) {
+    await StoreReview.requestReview();
+  } else {
+    // fallback: open store page if you have it
+    Alert.alert("Rating not available on this device.");
+  }
+};
+
+const sendFeedback = async () => {
+  const to = "support@yourdomain.com"; // change
+  const subject = encodeURIComponent("SevenHabits Feedback");
+  const body = encodeURIComponent(
+    `Hi,\n\nFeedback:\n\n\n---\nApp: SevenHabits\nVersion: ${Constants.expoConfig?.version ?? "unknown"}\n`
+  );
+
+  const mailto = `mailto:${to}?subject=${subject}&body=${body}`;
+  await openUrl(mailto);
+};
+
+
+// Components
 function SettingsRow({ title, icon, onPress }: Item) {
   return (
     <Pressable onPress={onPress} style={styles.row} android_ripple={{ color: "#2b2b2b" }}>
@@ -22,7 +62,7 @@ function SettingsRow({ title, icon, onPress }: Item) {
 
 function SettingsGroup({ items }: { items: Item[] }) {
   return (
-    <View style={styles.group}  className="rounded-tr-2xl rounded-bl-2xl">
+    <View style={styles.group} className="rounded-tr-2xl rounded-bl-2xl">
       {items.map((it, idx) => (
         <View key={it.title}>
           <SettingsRow {...it} />
@@ -35,23 +75,21 @@ function SettingsGroup({ items }: { items: Item[] }) {
 
 export default function SettingsScreen() {
   const top: Item[] = [
-    { title: "Theme", icon: "color-palette-outline", onPress: () => { } },
-    { title: "General", icon: "grid-outline", onPress: () => { } },
-    { title: "Widgets", icon: "cube-outline", onPress: () => { } },
+    { title: "Theme", icon: "color-palette-outline", onPress: () => router.push("/settings/theme") },
+    { title: "General", icon: "grid-outline", onPress: () => router.push("/settings/general") },
+    { title: "Widgets", icon: "cube-outline", onPress: () => router.push("/settings/widgets") },
   ];
-
   const cloud: Item[] = [
-    { title: "Cloud Backup", icon: "cloud-outline", onPress: () => { } },
-    { title: "Import", icon: "download-outline", onPress: () => { } },
-    { title: "Export", icon: "share-outline", onPress: () => { } },
+    { title: "Cloud Backup", icon: "cloud-outline", onPress: () => Alert.alert("Coming soon") },
+    { title: "Import", icon: "download-outline", onPress: () => Alert.alert("Coming soon") },
+    { title: "Export", icon: "share-outline", onPress: () => Alert.alert("Coming soon") },
   ];
-
   const misc: Item[] = [
-    { title: "Share", icon: "share-social-outline", onPress: () => { } },
-    { title: "Rate", icon: "star-outline", onPress: () => { } },
-    { title: "Privacy Policy", icon: "document-text-outline", onPress: () => { } },
-    { title: "Terms & Conditions", icon: "document-outline", onPress: () => { } },
-    { title: "Feedback", icon: "chatbubble-ellipses-outline", onPress: () => { } },
+    { title: "Share", icon: "share-social-outline", onPress: shareApp },
+    { title: "Rate", icon: "star-outline", onPress: rateApp },
+    { title: "Privacy Policy", icon: "document-text-outline", onPress: () => openUrl("https://yourdomain.com/privacy") },
+    { title: "Terms & Conditions", icon: "document-outline", onPress: () => openUrl("https://yourdomain.com/terms") },
+    { title: "Feedback", icon: "chatbubble-ellipses-outline", onPress: sendFeedback },
   ];
 
   return (
@@ -61,7 +99,7 @@ export default function SettingsScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* Header */}
-        <Heading title="Settings" iconTitle="" icon="settings"  />
+        <Heading title="Settings" iconTitle="" icon="settings" />
 
         {/* Groups */}
         <SettingsGroup items={top} />
