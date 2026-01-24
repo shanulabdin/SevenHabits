@@ -39,7 +39,7 @@ export default function ThemeScreen() {
                 Select
               </Text>
             </Pressable>
-            {idx !== arr.length - 1 ? <View className="h-[1px] bg-black/40 mx-4" /> : null}
+            {idx !== arr.length - 1 ? <View className="h-[1px] bg-black mx-4" /> : null}
           </View>
         ))}
       </View>

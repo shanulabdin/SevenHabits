@@ -1,6 +1,5 @@
 // app/settings/widgets.tsx
 import Heading from "@/components/Heading";
-import { colors } from "@/constants/colors";
 import { useRouter } from "expo-router";
 import { Alert, Pressable, ScrollView, Text, View } from "react-native";
 
@@ -16,7 +15,7 @@ function WidgetCard({
   return (
     <Pressable
       onPress={onPress}
-      className="bg-colors-background border-black border-[1px] rounded-tr-2xl rounded-bl-2xl p-4"
+      className="bg-colors-dark border-black border-[1px] rounded-tr-2xl rounded-bl-2xl p-4"
       android_ripple={{ color: "#2b2b2b" }}
     >
       <Text style={{ fontFamily: "Poppins_600SemiBold", fontSize: 16 }} className="text-colors-text">
@@ -34,7 +33,7 @@ export default function WidgetsScreen() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.dark }}
+      style={{ flex: 1, backgroundColor: "black" }}
       contentContainerStyle={{ padding: 12, paddingTop: 80, paddingBottom: 24 }}
       showsVerticalScrollIndicator={false}
     >
@@ -63,9 +62,6 @@ export default function WidgetsScreen() {
         />
       </View>
 
-      <Text className="text-colors-text/70 mt-3 text-xs" style={{ fontFamily: "Poppins_500Medium" }}>
-        Widgets will be added later — this screen is ready.
-      </Text>
     </ScrollView>
   );
 }
