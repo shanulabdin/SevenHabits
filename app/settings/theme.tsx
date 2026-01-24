@@ -1,0 +1,59 @@
+// app/settings/theme.tsx
+import Heading from "@/components/Heading";
+import { colors } from "@/constants/colors";
+import { useRouter } from "expo-router";
+import { Alert, Pressable, ScrollView, Text, View } from "react-native";
+
+export default function ThemeScreen() {
+  const router = useRouter();
+
+  return (
+    <ScrollView
+      style={{ flex: 1, backgroundColor: colors.dark }}
+      contentContainerStyle={{ padding: 12, paddingTop: 80, paddingBottom: 24 }}
+      showsVerticalScrollIndicator={false}
+    >
+      <Heading
+        title="Theme"
+        iconTitle="Back"
+        icon="arrow-back"
+        onIconPress={() => (router.canGoBack() ? router.back() : router.replace("/(tabs)"))}
+      />
+
+      <View className="bg-colors-background border-black border-[1px] rounded-tr-2xl rounded-bl-2xl mt-4 overflow-hidden">
+        <Text
+          className="text-colors-text p-4 border-b-[1px] border-black"
+          style={{ fontFamily: "Poppins_600SemiBold", fontSize: 16 }}
+        >
+          Choose Theme
+        </Text>
+
+        {[
+          { label: "Dark (current)", value: "dark" },
+          { label: "Light", value: "light" },
+          { label: "System", value: "system" },
+        ].map((t, idx, arr) => (
+          <View key={t.value}>
+            <Pressable
+              onPress={() => Alert.alert("Coming soon", `Theme: ${t.label}`)}
+              className="flex-row items-center justify-between px-4 py-4"
+              android_ripple={{ color: "#2b2b2b" }}
+            >
+              <Text style={{ fontFamily: "Poppins_600SemiBold" }} className="text-colors-text">
+                {t.label}
+              </Text>
+              <Text className="text-colors-text/70" style={{ fontFamily: "Poppins_600SemiBold" }}>
+                Select
+              </Text>
+            </Pressable>
+            {idx !== arr.length - 1 ? <View className="h-[1px] bg-black/40 mx-4" /> : null}
+          </View>
+        ))}
+      </View>
+
+      <Text className="text-colors-text/70 mt-3 text-xs" style={{ fontFamily: "Poppins_500Medium" }}>
+        You’ll wire this to AsyncStorage/Context later.
+      </Text>
+    </ScrollView>
+  );
+}
