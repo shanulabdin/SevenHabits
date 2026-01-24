@@ -1,53 +1,44 @@
-import { DarkTheme, ThemeProvider } from "@react-navigation/native";
-import { useFonts } from "expo-font";
+import { DarkTheme, ThemeProvider as NavThemeProvider } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { View } from "react-native";
-import "./globals.css";
+import { ThemeProvider, useThemeColors } from "../constants/theme";
 
-import { colors } from "@/constants/colors";
-import {
-  Poppins_400Regular,
-  Poppins_500Medium,
-  Poppins_600SemiBold,
-  Poppins_700Bold,
-} from "@expo-google-fonts/poppins";
+function AppStack() {
+  const { colors, isLoaded } = useThemeColors();
 
-
-const MyDarkTheme = {
-  ...DarkTheme,
-  colors: {
-    ...DarkTheme.colors,
-    background: colors.dark, // or colors.dark
-    card: "#000000",
-  },
-};
-
-
-export default function RootLayout() {
-  const [fontsLoaded] = useFonts({
-    Poppins_400Regular,
-    Poppins_500Medium,
-    Poppins_600SemiBold,
-    Poppins_700Bold,
-  });
-
-
-
-  if (!fontsLoaded) {
-    return <View style={{ flex: 1, backgroundColor: colors.dark }} />;
+  if (!isLoaded) {
+    return <View style={{ flex: 1, backgroundColor: "#000" }} />;
   }
+
+  const navTheme = {
+    ...DarkTheme,
+    colors: {
+      ...DarkTheme.colors,
+      background: "black",
+      card: colors.dark,
+      text: colors.text,
+    },
+  };
+
   return (
-    <ThemeProvider value={MyDarkTheme}>
-      <View style={{ flex: 1, backgroundColor: "#000000" }}>
+    <NavThemeProvider value={navTheme}>
+      <View style={{ flex: 1, backgroundColor: colors.dark }}>
         <Stack
           screenOptions={{
             headerShown: false,
-            contentStyle: { backgroundColor: "#000000" },
-            animation: "fade",
-            freezeOnBlur: true,
+            contentStyle: { backgroundColor: "black" },
+            animation: "slide_from_right",
           }}
         />
       </View>
+    </NavThemeProvider>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <ThemeProvider>
+      <AppStack />
     </ThemeProvider>
   );
 }
