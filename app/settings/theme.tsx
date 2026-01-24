@@ -1,14 +1,31 @@
-// app/settings/theme.tsx
 import Heading from "@/components/Heading";
+import { useThemeColors } from "@/constants/theme";
 import { useRouter } from "expo-router";
-import { Alert, Pressable, ScrollView, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 
 export default function ThemeScreen() {
   const router = useRouter();
+  const { theme, setTheme, colors } = useThemeColors();
+
+  const Row = ({ label, value }: { label: string; value: "dark" | "light" }) => (
+    <Pressable
+      onPress={() => setTheme(value)}
+      className="flex-row items-center justify-between px-4 py-4"
+      android_ripple={{ color: "#2b2b2b" }}
+      style={{ backgroundColor: colors.background }}
+    >
+      <Text style={{ fontFamily: "Poppins_600SemiBold", color: colors.text }}>
+        {label}
+      </Text>
+      <Text style={{ fontFamily: "Poppins_600SemiBold", color: theme === value ? colors.orange : colors.text }}>
+        {theme === value ? "Selected" : ""}
+      </Text>
+    </Pressable>
+  );
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: "black" }}
+      style={{ flex: 1, backgroundColor: colors.dark }}
       contentContainerStyle={{ padding: 12, paddingTop: 80, paddingBottom: 24 }}
       showsVerticalScrollIndicator={false}
     >
@@ -19,29 +36,10 @@ export default function ThemeScreen() {
         onIconPress={() => (router.canGoBack() ? router.back() : router.replace("/(tabs)"))}
       />
 
-      <View className="bg-colors-dark border-black border-[1px] rounded-tr-2xl rounded-bl-2xl mt-4 overflow-hidden">
-
-        {[
-          { label: "Dark", value: "dark" },
-          { label: "Light", value: "light" },
-          { label: "System", value: "system" },
-        ].map((t, idx, arr) => (
-          <View key={t.value}>
-            <Pressable
-              onPress={() => Alert.alert("Coming soon", `Theme: ${t.label}`)}
-              className="flex-row items-center justify-between px-4 py-4"
-              android_ripple={{ color: "#2b2b2b" }}
-            >
-              <Text style={{ fontFamily: "Poppins_600SemiBold" }} className="text-colors-text">
-                {t.label}
-              </Text>
-              <Text className="text-colors-text/70" style={{ fontFamily: "Poppins_600SemiBold" }}>
-                Select
-              </Text>
-            </Pressable>
-            {idx !== arr.length - 1 ? <View className="h-[1px] bg-black mx-4" /> : null}
-          </View>
-        ))}
+      <View className="mt-4 border-black border-[1px] rounded-tr-2xl rounded-bl-2xl overflow-hidden">
+        <Row label="Dark" value="dark" />
+        <View className="h-[1px] bg-black mx-4" />
+        <Row label="Light" value="light" />
       </View>
     </ScrollView>
   );
