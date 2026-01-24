@@ -21,13 +21,6 @@ export default function ThemeScreen() {
 
       <View className="bg-colors-dark border-black border-[1px] rounded-tr-2xl rounded-bl-2xl mt-4 overflow-hidden">
 
-        <Text
-          className="text-colors-text p-4 border-b-[1px] border-black"
-          style={{ fontFamily: "Poppins_600SemiBold", fontSize: 16 }}
-        >
-          Choose Theme
-        </Text>
-
         {[
           { label: "Dark", value: "dark" },
           { label: "Light", value: "light" },
