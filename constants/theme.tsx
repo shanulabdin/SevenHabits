@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 type ThemeMode = "dark" | "light";
 
@@ -8,15 +8,15 @@ const THEME_KEY = "@sevenhabits/theme_v1";
 const DARK = {
   dark: "#0B0B0B",
   background: "#141414",
-  text: "#EDEDED",
-  orange: "#F59E0B",
+  text: "white",
+  orange: "#FF6D1F",
 };
 
 const LIGHT = {
   dark: "#F6F6F6",
   background: "#FFFFFF",
-  text: "#111111",
-  orange: "#F59E0B",
+  text: "black",
+  orange: "#FF6D1F",
 };
 
 type ThemeCtx = {

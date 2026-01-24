@@ -1,20 +1,18 @@
+import { ThemeProvider, useThemeColors } from "@/constants/theme";
 import { DarkTheme, ThemeProvider as NavThemeProvider } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { View } from "react-native";
-import { ThemeProvider, useThemeColors } from "../constants/theme";
 
-function AppStack() {
+function AppShell() {
   const { colors, isLoaded } = useThemeColors();
 
-  if (!isLoaded) {
-    return <View style={{ flex: 1, backgroundColor: "#000" }} />;
-  }
+  if (!isLoaded) return <View style={{ flex: 1, backgroundColor: "#151515" }} />;
 
   const navTheme = {
     ...DarkTheme,
     colors: {
       ...DarkTheme.colors,
-      background: "black",
+      background: colors.dark,
       card: colors.dark,
       text: colors.text,
     },
@@ -26,7 +24,7 @@ function AppStack() {
         <Stack
           screenOptions={{
             headerShown: false,
-            contentStyle: { backgroundColor: "black" },
+            contentStyle: { backgroundColor: colors.dark },
             animation: "slide_from_right",
           }}
         />
@@ -38,7 +36,7 @@ function AppStack() {
 export default function RootLayout() {
   return (
     <ThemeProvider>
-      <AppStack />
+      <AppShell />
     </ThemeProvider>
   );
 }

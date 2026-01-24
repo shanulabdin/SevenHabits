@@ -9,6 +9,7 @@ import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, Tex
 
 
 // Utils
+import { useThemeColors } from '@/constants/theme';
 import { getDateKey, getLastNDays } from '@/utils/date';
 import { getPercentForDate, getWeeklyPercent } from '@/utils/stats';
 import { getHabitStreakWithGrace } from '@/utils/streaks';
@@ -16,6 +17,8 @@ import { getHabitStreakWithGrace } from '@/utils/streaks';
 const STORAGE_KEY = "@sevenhabits/habits_v1";
 
 export default function Index() {
+  const { colors } = useThemeColors();
+
   // Heading date
   const todayKey = getDateKey();
   const [selectedDateKey, setSelectedDateKey] = useState(todayKey);

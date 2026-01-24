@@ -1,5 +1,6 @@
 import Heading from "@/components/Heading";
 import { useThemeColors } from "@/constants/theme";
+import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Pressable, ScrollView, Text, View } from "react-native";
 
@@ -14,12 +15,12 @@ export default function ThemeScreen() {
       android_ripple={{ color: "#2b2b2b" }}
       style={{ backgroundColor: colors.background }}
     >
-      <Text style={{ fontFamily: "Poppins_600SemiBold", color: colors.text }}>
-        {label}
-      </Text>
-      <Text style={{ fontFamily: "Poppins_600SemiBold", color: theme === value ? colors.orange : colors.text }}>
-        {theme === value ? "Selected" : ""}
-      </Text>
+      <Text style={{ fontFamily: "Poppins_600SemiBold", color: colors.text }}>{label}</Text>
+      {theme === value ? (
+        <Ionicons name="radio-button-on-outline" style={{color: colors.orange }} size={20} ></Ionicons>
+      ) : (
+        <View />
+      )}
     </Pressable>
   );
 
