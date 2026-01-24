@@ -264,16 +264,16 @@ export default function Index() {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: "black" }}
+      style={{ flex: 1, backgroundColor: colors.dark }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <View
-        style={{ flex: 1, backgroundColor: "black", padding: 12, paddingTop: 80, width: "100%", alignItems: "center" }}
+        style={{ flex: 1, backgroundColor: colors.dark, padding: 12, paddingTop: 80, width: "100%", alignItems: "center" }}
       >
         <ScrollView
           contentContainerStyle={{ paddingBottom: 350 }}
           keyboardShouldPersistTaps="handled"
-          style={{ flex: 1, backgroundColor: "black" }}
+          style={{ flex: 1, backgroundColor: colors.dark }}
           ref={scrollRef}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
