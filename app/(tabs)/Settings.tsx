@@ -118,11 +118,10 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    paddingTop: 64,
   },
   content: {
-    paddingTop: 18,
-    paddingHorizontal: 16,
+    paddingTop: 80,
+    paddingHorizontal: 12,
     paddingBottom: 24,
     gap: 18,
   },

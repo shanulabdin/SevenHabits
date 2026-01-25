@@ -23,6 +23,7 @@ import { useThemeColors } from '@/constants/theme';
 import { getDateKey, getLastNDays } from '@/utils/date';
 import { getPercentForDate, getWeeklyPercent } from '@/utils/stats';
 import { getHabitStreakWithGrace } from '@/utils/streaks';
+import { Ionicons } from '@expo/vector-icons';
 
 const STORAGE_KEY = "@sevenhabits/habits_v1";
 
@@ -317,10 +318,7 @@ export default function Index() {
                   style={[styles.editCard, { backgroundColor: colors.card, borderColor: colors.border }]}
                   onLayout={(e) => {
                     const y = e.nativeEvent.layout.y;
-                    scrollRef.current?.scrollTo({
-                      y: Math.max(0, y - 80),
-                      animated: true,
-                    });
+                    scrollRef.current?.scrollTo({ y: Math.max(0, y - 80), animated: true });
                   }}
                 >
                   <TextInput
@@ -333,13 +331,23 @@ export default function Index() {
                     onBlur={() => saveEditingHabit(habit.id)}
                     style={[
                       styles.editInput,
-                      {
-                        color: colors.text, // assumes colors.text exists
-                        fontFamily: "Poppins_600SemiBold",
-                      },
+                      { color: colors.text, fontFamily: "Poppins_600SemiBold" },
                     ]}
+                    placeholder="Edit habit"
+                    placeholderTextColor={colors.text + "99"} // optional
                   />
+
+                  <Pressable
+                    onPress={() => saveEditingHabit(habit.id)}
+                    hitSlop={12}
+                    style={[
+                      styles.editSubmitBtn,
+                    ]}
+                  >
+                    <Ionicons name="add-sharp" size={32} color={colors.orange} />
+                  </Pressable>
                 </View>
+
               );
             }
 
@@ -382,7 +390,7 @@ export default function Index() {
             }}
           >
             <Pressable
-              style={[styles.modalCard, { backgroundColor: colors.card, borderColor: colors.border  }]}
+              style={[styles.modalCard, { backgroundColor: colors.card, borderColor: colors.border }]}
               onPress={() => {
                 setIsModalVisible(false);
                 setSelectedHabitId(null);
@@ -395,7 +403,7 @@ export default function Index() {
                   startEditingHabit(selectedHabitId);
                 }}
               >
-                <Text style={[styles.modalItem, styles.modalItemBorder, { color: colors.text, borderBottomColor: colors.border  }]}>
+                <Text style={[styles.modalItem, styles.modalItemBorder, { color: colors.text, borderBottomColor: colors.border }]}>
                   Edit
                 </Text>
               </Pressable>
@@ -409,7 +417,7 @@ export default function Index() {
                   setSelectedHabitId(null);
                 }}
               >
-                <Text style={[styles.modalItem, styles.modalItemBorder, { color: colors.text, borderBottomColor: colors.border  }]}>
+                <Text style={[styles.modalItem, styles.modalItemBorder, { color: colors.text, borderBottomColor: colors.border }]}>
                   {gridLabel}
                 </Text>
               </Pressable>
@@ -452,7 +460,7 @@ const styles = StyleSheet.create({
   scroll: {
     flex: 1,
     width: "100%",
-    
+
     padding: 12,
     paddingTop: 80,
   },
@@ -471,21 +479,38 @@ const styles = StyleSheet.create({
 
   editCard: {
     width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+
     borderWidth: 1,
-    borderTopRightRadius: 16,
-    borderBottomLeftRadius: 16,
-    marginBottom: 12,
-    justifyContent: "center",
-  },
-  editInput: {
-    height: 54,
+    // borderTopRightRadius: 16,
+    // borderBottomLeftRadius: 16,
+    borderRadius: 10,
+
     paddingHorizontal: 16,
+    height: 64,          // feels like your card height
+    marginBottom: 12,
+  },
+
+  editInput: {
+    flex: 1,
     fontSize: 20,
-    lineHeight: 24,
+    paddingVertical: 0,  // keep it vertically centered
+    paddingLeft: -2,
+    marginRight: 12,
+
     includeFontPadding: false, // Android
     textAlignVertical: "center", // Android
-    textAlign: "left",
   },
+
+  editSubmitBtn: {
+    width: 32,
+    height: 32,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
 
   resetBtn: {
     alignSelf: "flex-end",
