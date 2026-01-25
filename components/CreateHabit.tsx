@@ -1,4 +1,4 @@
-import { colors } from "@/constants/colors";
+import { useThemeColors } from "@/constants/theme";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useRef } from "react";
@@ -20,7 +20,8 @@ export default function CreateHabit({
   setNewHabitTitle,
   createHabit,
 }: CreateHabitProps) {
-  const inputRef = useRef<TextInput>(null);
+  const { colors } = useThemeColors();  
+    const inputRef = useRef<TextInput>(null);
 
   useFocusEffect(
     useCallback(() => {

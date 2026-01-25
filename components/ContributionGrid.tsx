@@ -1,4 +1,4 @@
-import { colors } from "@/constants/colors";
+import { useThemeColors } from "@/constants/theme";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 
@@ -35,6 +35,7 @@ export default function ContributionGrid({
   size = 16,
   gap = 3,
 }: Props) {
+  const { colors } = useThemeColors();  
   const totalDays = weeks * 7;
 
   const columns = useMemo(() => {
@@ -75,7 +76,7 @@ export default function ContributionGrid({
                   {
                     width: size,
                     height: size,
-                    backgroundColor: done ? colors.accent : "black",
+                    backgroundColor: done ? colors.accent : colors.background,
                     // spacing between rows
                     marginBottom: j !== col.length - 1 ? gap : 0,
                   },

@@ -1,7 +1,9 @@
 import { colors } from "@/constants/colors";
+import { useThemeColors } from "@/constants/theme";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import ContributionGrid from "./ContributionGrid";
+
 
 type HabitCardProps = {
   title: string;
@@ -24,6 +26,9 @@ export default function HabitCard({
   markComplete,
   onLongPress,
 }: HabitCardProps) {
+  
+const { colors } = useThemeColors();
+
   return (
     <View style={styles.wrapper}>
       <Pressable
