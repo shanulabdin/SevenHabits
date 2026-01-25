@@ -16,7 +16,7 @@ const DARK = {
   inverseSurface: "#F2F2F2",
   inverseText: "#000000",
 
-  border: "rgba(161, 161, 161, 0.5)",
+  border: "rgba(161, 161, 161, 1)",
   borderMuted: "rgba(161, 161, 161, 0)",
 
   accent: "#FF6D1F",

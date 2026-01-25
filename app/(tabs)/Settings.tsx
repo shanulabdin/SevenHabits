@@ -3,7 +3,6 @@ import Heading from "@/components/Heading";
 import { Ionicons } from "@expo/vector-icons";
 import { Alert, Linking, Pressable, ScrollView, Share, StyleSheet, Text, View } from "react-native";
 
-import { colors } from "@/constants/colors";
 import { useThemeColors } from '@/constants/theme';
 import Constants from "expo-constants";
 import { router } from "expo-router";
@@ -61,6 +60,7 @@ function SettingsRow({ title, icon, onPress }: Item) {
 }
 
 function SettingsGroup({ items }: { items: Item[] }) {
+  const { colors } = useThemeColors();  
   return (
     <View style={[styles.group, {borderColor: colors.border}]}>
       {items.map((it, idx) => (

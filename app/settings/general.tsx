@@ -1,5 +1,5 @@
 import Heading from "@/components/Heading";
-import { colors } from "@/constants/colors";
+import { useThemeColors } from "@/constants/theme";
 import { useRouter } from "expo-router";
 import {
   Alert,
@@ -19,6 +19,7 @@ function Row({
   right?: string;
   onPress?: () => void;
 }) {
+  const { colors } = useThemeColors();
   return (
     <Pressable
       onPress={onPress}
@@ -35,10 +36,11 @@ function Row({
 
 export default function GeneralScreen() {
   const router = useRouter();
+  const { colors } = useThemeColors();
 
   return (
     <ScrollView
-      style={styles.scroll}
+      style={[styles.scroll, {backgroundColor: colors.background}]}
       contentContainerStyle={styles.scrollContent}
       showsVerticalScrollIndicator={false}
     >
@@ -51,20 +53,20 @@ export default function GeneralScreen() {
         }
       />
 
-      <View style={[styles.card, { backgroundColor: colors.card }]}>
+      <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
         <Row
           title="Week starts on"
           right="Mon"
           onPress={() => Alert.alert("Coming soon")}
         />
-        <View style={styles.divider} />
+        <View style={[styles.divider, {backgroundColor: colors.border}]} />
 
         <Row
           title="Haptics"
           right="On"
           onPress={() => Alert.alert("Coming soon")}
         />
-        <View style={styles.divider} />
+        <View style={[styles.divider, {backgroundColor: colors.border}]} />
 
         <Row
           title="Reset all data"
@@ -81,7 +83,7 @@ export default function GeneralScreen() {
 const styles = StyleSheet.create({
   scroll: {
     flex: 1,
-    backgroundColor: "black",
+    // backgroundColor: "black",
   },
   scrollContent: {
     padding: 12,
@@ -92,7 +94,7 @@ const styles = StyleSheet.create({
   card: {
     marginTop: 16,
     borderWidth: 1,
-    borderColor: "black",
+    // borderColor: "black",
     borderTopRightRadius: 16,
     borderBottomLeftRadius: 16,
     overflow: "hidden",
@@ -118,7 +120,7 @@ const styles = StyleSheet.create({
 
   divider: {
     height: 1,
-    backgroundColor: "black",
+    backgroundColor: "green",
     marginHorizontal: 16,
   },
 });

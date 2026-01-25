@@ -34,7 +34,7 @@ export default function CreateHabit({
   );
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.card }]}>
+    <View style={[styles.container, { backgroundColor: colors.card, borderColor: colors.border }]}>
       <TextInput
         ref={inputRef}
         style={[
@@ -74,7 +74,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 4,
     borderWidth: 1,
-    borderColor: "black",
     borderTopRightRadius: 16,
     borderBottomLeftRadius: 16,
   },
