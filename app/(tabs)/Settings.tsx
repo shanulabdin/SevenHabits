@@ -2,7 +2,6 @@
 import Heading from "@/components/Heading";
 import { colors } from "@/constants/colors"; // adjust if needed
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
 import { Alert, Linking, Pressable, ScrollView, Share, StyleSheet, Text, View } from "react-native";
 
 import Constants from "expo-constants";
@@ -62,7 +61,7 @@ function SettingsRow({ title, icon, onPress }: Item) {
 
 function SettingsGroup({ items }: { items: Item[] }) {
   return (
-    <View style={styles.group} className="rounded-tr-2xl rounded-bl-2xl">
+    <View style={styles.group}>
       {items.map((it, idx) => (
         <View key={it.title}>
           <SettingsRow {...it} />
@@ -93,7 +92,7 @@ export default function SettingsScreen() {
   ];
 
   return (
-    <View style={styles.screen} className="pt-20" >
+    <View style={styles.screen} >
       <ScrollView
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
@@ -114,7 +113,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: "black",
-
+    paddingTop: 64,
   },
   content: {
     paddingTop: 18,
@@ -128,6 +127,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "black",
     overflow: "hidden",
+    borderTopRightRadius: 16,
+    borderBottomLeftRadius: 16,
   },
   row: {
     height: 46,
