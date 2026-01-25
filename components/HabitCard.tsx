@@ -131,7 +131,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 12,
     shadowOffset: { width: 0, height: 6 },
-    elevation: 3,
   },
 
   left: {
@@ -164,8 +163,8 @@ const styles = StyleSheet.create({
   },
 
   checkbox: {
-    width: 32,
-    height: 32,
+    width: 30,
+    height: 30,
     borderRadius: 16,
     alignItems: "center",
     justifyContent: "center",

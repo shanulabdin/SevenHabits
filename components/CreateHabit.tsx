@@ -58,7 +58,7 @@ export default function CreateHabit({
         style={styles.iconBtn}
         onPress={() => createHabit(newHabitTitle)}
       >
-        <Ionicons name="add" size={26} color={colors.accent} />
+        <Ionicons name="add-sharp" size={32} color={colors.orange} />
       </Pressable>
     </View>
   );

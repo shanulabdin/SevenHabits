@@ -17,7 +17,10 @@ export default function TabLayout() {
           paddingBottom: 10,
           paddingTop: 10,
           marginTop: -23,
-          borderTopWidth: 0,
+          borderTopWidth: 1,
+          borderTopColor: colors.border,
+          elevation: 0,           // ANDROID
+          shadowColor: "transparent", // iOS
         },
         tabBarShowLabel: false,
         tabBarActiveTintColor: colors.accent,
@@ -48,7 +51,7 @@ export default function TabLayout() {
                   backgroundColor: focused ? colors.orange : colors.orange,
                   width: (focused ? size + 6 : size + 2) + 6,
                   height: (focused ? size + 6 : size + 2) + 6,
-                  borderRadius: ((focused ? size + 6 : size + 2) ) / 4,
+                  borderRadius: ((focused ? size + 6 : size + 2)) / 4,
                 },
               ]}
             >

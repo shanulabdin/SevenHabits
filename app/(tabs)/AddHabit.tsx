@@ -4,6 +4,7 @@ import { useThemeColors } from "@/constants/theme";
 import { router } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AddHabit() {
   const { colors } = useThemeColors();
@@ -23,19 +24,21 @@ export default function AddHabit() {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Heading
-        title="Add Habit"
-        iconTitle="Save"
-        icon="checkmark"
-        onIconPress={() => submit(newHabitTitle)}
-      />
-      <CreateHabit
-        newHabitTitle={newHabitTitle}
-        setNewHabitTitle={setNewHabitTitle}
-        createHabit={submit}
-      />
-    </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
+        <Heading
+          title="Add Habit"
+          iconTitle="Save"
+          icon="checkmark"
+          onIconPress={() => submit(newHabitTitle)}
+        />
+        <CreateHabit
+          newHabitTitle={newHabitTitle}
+          setNewHabitTitle={setNewHabitTitle}
+          createHabit={submit}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -44,7 +47,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     padding: 12,
-    paddingTop: 80,
+    paddingTop: 10,
     width: "100%",
   },
 });

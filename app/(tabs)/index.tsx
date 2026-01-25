@@ -5,6 +5,7 @@ import { Habit } from '@/types/habit';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import {
   KeyboardAvoidingView,
@@ -274,170 +275,174 @@ export default function Index() {
   const gridLabel = selectedHabit?.showGrid ?? true ? "Hide Grid" : "Show Grid";
 
   return (
-    <KeyboardAvoidingView
-      style={[styles.kav]}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <View style={[styles.screen, { backgroundColor: colors.background }]}>
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          keyboardShouldPersistTaps="handled"
-          style={[styles.scroll, { backgroundColor: colors.background }]}
-          ref={scrollRef}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-        >
-          <Heading
-            title={headingTitle}
-            iconTitle={`${weeklyPercent}%`}
-            icon="pie-chart"
-            onIconPress={() => router.push("/stats")}
-          />
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
 
-          {/* Week rings row */}
-          <View style={styles.weekRow}>
-            {weekStats.map((d) => (
-              <DayRing
-                key={d.key}
-                dayNumber={d.dayNumber}
-                dayLabel={d.dayLabel}
-                percent={d.percent}
-                selected={d.dateKey === selectedDateKey}
-                onPress={() => setSelectedDateKey(d.dateKey)}
-              />
-            ))}
-          </View>
+      <KeyboardAvoidingView
+        style={[styles.kav, { flex: 1, backgroundColor: colors.background }]}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <View style={[styles.screen, { backgroundColor: colors.background, flex: 1 }]}>
+          <ScrollView
+            contentContainerStyle={[styles.scrollContent, { paddingBottom: 150 }]}
+            keyboardShouldPersistTaps="handled"
+            style={[styles.scroll, { flex: 1, backgroundColor: colors.background }]}
+            ref={scrollRef}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+          >
+            <Heading
+              title={headingTitle}
+              iconTitle={`${weeklyPercent}%`}
+              icon="pie-chart"
+              onIconPress={() => router.push("/stats")}
+            />
 
-          {habits.map((habit) => {
-            const isEditing = editingHabitId === habit.id;
+            {/* Week rings row */}
+            <View style={styles.weekRow}>
+              {weekStats.map((d) => (
+                <DayRing
+                  key={d.key}
+                  dayNumber={d.dayNumber}
+                  dayLabel={d.dayLabel}
+                  percent={d.percent}
+                  selected={d.dateKey === selectedDateKey}
+                  onPress={() => setSelectedDateKey(d.dateKey)}
+                />
+              ))}
+            </View>
 
-            if (isEditing) {
-              return (
-                <View
-                  key={habit.id}
-                  style={[styles.editCard, { backgroundColor: colors.card, borderColor: colors.border }]}
-                  onLayout={(e) => {
-                    const y = e.nativeEvent.layout.y;
-                    scrollRef.current?.scrollTo({ y: Math.max(0, y - 80), animated: true });
-                  }}
-                >
-                  <TextInput
-                    value={editingHabitTitle}
-                    onChangeText={setEditingHabitTitle}
-                    autoFocus
-                    returnKeyType="done"
-                    maxLength={24}
-                    onSubmitEditing={() => saveEditingHabit(habit.id)}
-                    onBlur={() => saveEditingHabit(habit.id)}
-                    style={[
-                      styles.editInput,
-                      { color: colors.text, fontFamily: "Poppins_600SemiBold" },
-                    ]}
-                    placeholder="Edit habit"
-                    placeholderTextColor={colors.text + "99"} // optional
-                  />
+            {habits.map((habit) => {
+              const isEditing = editingHabitId === habit.id;
 
-                  <Pressable
-                    onPress={() => saveEditingHabit(habit.id)}
-                    hitSlop={12}
-                    style={[
-                      styles.editSubmitBtn,
-                    ]}
+              if (isEditing) {
+                return (
+                  <View
+                    key={habit.id}
+                    style={[styles.editCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+                    onLayout={(e) => {
+                      const y = e.nativeEvent.layout.y;
+                      scrollRef.current?.scrollTo({ y: Math.max(0, y - 300), animated: true });
+                    }}
                   >
-                    <Ionicons name="add-sharp" size={32} color={colors.orange} />
-                  </Pressable>
-                </View>
+                    <TextInput
+                      value={editingHabitTitle}
+                      onChangeText={setEditingHabitTitle}
+                      autoFocus
+                      returnKeyType="done"
+                      maxLength={24}
+                      onSubmitEditing={() => saveEditingHabit(habit.id)}
+                      onBlur={() => saveEditingHabit(habit.id)}
+                      style={[
+                        styles.editInput,
+                        { color: colors.text, fontFamily: "Poppins_600SemiBold" },
+                      ]}
+                      placeholder="Edit habit"
+                      placeholderTextColor={colors.text + "99"} // optional
+                    />
 
+                    <Pressable
+                      onPress={() => saveEditingHabit(habit.id)}
+                      hitSlop={12}
+                      style={[
+                        styles.editSubmitBtn,
+                      ]}
+                    >
+                      <Ionicons name="add-sharp" size={30} color={colors.orange} />
+                    </Pressable>
+                  </View>
+
+                );
+              }
+
+              const checkedSelectedDay = habit.history[selectedDateKey] === true;
+              const streak = getHabitStreakWithGrace(habit, selectedDateKey, todayKey);
+
+              return (
+                <HabitCard
+                  key={habit.id}
+                  title={habit.title}
+                  checked={checkedSelectedDay}
+                  streak={streak}
+                  history={habit.history}
+                  todayKey={todayKey}
+                  showGrid={habit.showGrid ?? true}
+                  markComplete={() => toggleHabit(habit.id)}
+                  onLongPress={longPressHabit(habit.id)}
+                />
               );
-            }
+            })}
 
-            const checkedSelectedDay = habit.history[selectedDateKey] === true;
-            const streak = getHabitStreakWithGrace(habit, selectedDateKey, todayKey);
-
-            return (
-              <HabitCard
-                key={habit.id}
-                title={habit.title}
-                checked={checkedSelectedDay}
-                streak={streak}
-                history={habit.history}
-                todayKey={todayKey}
-                showGrid={habit.showGrid ?? true}
-                markComplete={() => toggleHabit(habit.id)}
-                onLongPress={longPressHabit(habit.id)}
-              />
-            );
-          })}
-
-          {/* Reset button */}
-          <Pressable
-            onPress={resetAllData}
-            style={[styles.resetBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
-          >
-            <Text style={[styles.resetText, { color: colors.accent }]}>
-              Reset Data
-            </Text>
-          </Pressable>
-        </ScrollView>
-
-        {/* Modal */}
-        <Modal visible={isModalVisible} transparent animationType="fade">
-          <Pressable
-            style={styles.modalOverlay}
-            onPress={() => {
-              setIsModalVisible(false);
-              setSelectedHabitId(null);
-            }}
-          >
+            {/* Reset button */}
             <Pressable
-              style={[styles.modalCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+              onPress={resetAllData}
+              style={[styles.resetBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
+            >
+              <Text style={[styles.resetText, { color: colors.accent }]}>
+                Reset Data
+              </Text>
+            </Pressable>
+          </ScrollView>
+
+          {/* Modal */}
+          <Modal visible={isModalVisible} transparent animationType="fade">
+            <Pressable
+              style={styles.modalOverlay}
               onPress={() => {
                 setIsModalVisible(false);
                 setSelectedHabitId(null);
               }}
             >
-              {/* Edit */}
               <Pressable
+                style={[styles.modalCard, { backgroundColor: colors.card, borderColor: colors.border }]}
                 onPress={() => {
-                  if (!selectedHabitId) return;
-                  startEditingHabit(selectedHabitId);
-                }}
-              >
-                <Text style={[styles.modalItem, styles.modalItemBorder, { color: colors.text, borderBottomColor: colors.border }]}>
-                  Edit
-                </Text>
-              </Pressable>
-
-              {/* Toggle grid */}
-              <Pressable
-                onPress={() => {
-                  if (!selectedHabitId) return;
-                  toggleGridForHabit(selectedHabitId);
                   setIsModalVisible(false);
                   setSelectedHabitId(null);
                 }}
               >
-                <Text style={[styles.modalItem, styles.modalItemBorder, { color: colors.text, borderBottomColor: colors.border }]}>
-                  {gridLabel}
-                </Text>
-              </Pressable>
+                {/* Edit */}
+                <Pressable
+                  onPress={() => {
+                    if (!selectedHabitId) return;
+                    startEditingHabit(selectedHabitId);
+                  }}
+                >
+                  <Text style={[styles.modalItem, styles.modalItemBorder, { color: colors.text, borderBottomColor: colors.border }]}>
+                    Edit
+                  </Text>
+                </Pressable>
 
-              {/* Delete */}
-              <Pressable
-                onPress={() => {
-                  if (!selectedHabitId) return;
-                  deleteHabit(selectedHabitId);
-                }}
-              >
-                <Text style={[styles.modalDelete, { color: colors.accent }]}>
-                  Delete
-                </Text>
+                {/* Toggle grid */}
+                <Pressable
+                  onPress={() => {
+                    if (!selectedHabitId) return;
+                    toggleGridForHabit(selectedHabitId);
+                    setIsModalVisible(false);
+                    setSelectedHabitId(null);
+                  }}
+                >
+                  <Text style={[styles.modalItem, styles.modalItemBorder, { color: colors.text, borderBottomColor: colors.border }]}>
+                    {gridLabel}
+                  </Text>
+                </Pressable>
+
+                {/* Delete */}
+                <Pressable
+                  onPress={() => {
+                    if (!selectedHabitId) return;
+                    deleteHabit(selectedHabitId);
+                  }}
+                >
+                  <Text style={[styles.modalDelete, { color: colors.orange }]}>
+                    Delete
+                  </Text>
+                </Pressable>
               </Pressable>
             </Pressable>
-          </Pressable>
-        </Modal>
-      </View>
-    </KeyboardAvoidingView>
+          </Modal>
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
+
   );
 }
 
@@ -450,22 +455,16 @@ const styles = StyleSheet.create({
 
     width: "100%",
     alignItems: "center",
-
-    shadowColor: "#000",
-    shadowOpacity: 0.25,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 3,
   },
   scroll: {
     flex: 1,
     width: "100%",
 
     padding: 12,
-    paddingTop: 80,
+    paddingTop: 10,
   },
   scrollContent: {
-    paddingBottom: 350,
+    paddingBottom: 0,
   },
 
   weekRow: {
@@ -491,6 +490,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     height: 64,          // feels like your card height
     marginBottom: 12,
+
+    // iOS
+    shadowColor: "#000",
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+
+    // Android
+    elevation: 3,
   },
 
   editInput: {

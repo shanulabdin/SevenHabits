@@ -7,6 +7,7 @@ import { useThemeColors } from '@/constants/theme';
 import Constants from "expo-constants";
 import { router } from "expo-router";
 import * as StoreReview from "expo-store-review";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type Item = {
   title: string;
@@ -97,21 +98,23 @@ export default function SettingsScreen() {
   const { colors } = useThemeColors();
 
   return (
-    <View style={[styles.screen, { backgroundColor: colors.background }]} >
-      <ScrollView
-        contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
+      <View style={[styles.screen, { backgroundColor: colors.background }]} >
+        <ScrollView
+          contentContainerStyle={styles.content}
+          showsVerticalScrollIndicator={false}
 
-      >
-        {/* Header */}
-        <Heading title="Settings" iconTitle="" icon="settings" />
+        >
+          {/* Header */}
+          <Heading title="Settings" iconTitle="" icon="settings" />
 
-        {/* Groups */}
-        <SettingsGroup items={top} />
-        <SettingsGroup items={cloud} />
-        <SettingsGroup items={misc} />
-      </ScrollView>
-    </View>
+          {/* Groups */}
+          <SettingsGroup items={top} />
+          <SettingsGroup items={cloud} />
+          <SettingsGroup items={misc} />
+        </ScrollView>
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -120,7 +123,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    paddingTop: 80,
+    paddingTop: 10,
     paddingHorizontal: 12,
     paddingBottom: 24,
     gap: 18,
@@ -136,7 +139,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 6 },
 
     // Android
-    elevation: 6,
+    elevation: 3,
   },
   group: {
     borderWidth: 1,
