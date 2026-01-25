@@ -1,19 +1,19 @@
-import { useThemeColors } from '@/constants/theme';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { useThemeColors } from "@/constants/theme";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { Tabs } from "expo-router";
+import { StyleSheet, View } from "react-native";
 
 export default function TabLayout() {
   const { colors } = useThemeColors();
+
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        sceneStyle: {
-          backgroundColor: colors.dark
-        },
+        sceneStyle: { backgroundColor: colors.dark },
         tabBarStyle: {
           backgroundColor: colors.dark,
-          width: '100%',
+          width: "100%",
           paddingBottom: 10,
           paddingTop: 10,
           marginTop: -23,
@@ -24,23 +24,63 @@ export default function TabLayout() {
         tabBarInactiveTintColor: colors.text,
       }}
     >
-      <Tabs.Screen name="index" options={{
-        tabBarIcon: ({ color, size, focused }) => (
-          <Ionicons name="home" size={focused ? size + 3 : size} color={color} />
-        ),
-      }} />
-      <Tabs.Screen name="AddHabit" options={{
-        title: "Weekly",
-        tabBarIcon: ({ size, focused }) => (
-          <Ionicons name="add-outline" className={`${focused ? 'bg-colors-orange' : 'bg-colors-text'} rounded color-transparent`} size={focused ? size + 3 : size} />
-        ),
-      }} />
-      <Tabs.Screen name="Settings" options={{
-        title: "Overall",
-        tabBarIcon: ({ color, size, focused }) => (
-          <Ionicons name="settings" size={focused ? size + 3 : size} color={color} />
-        ),
-      }} />
+      <Tabs.Screen
+        name="index"
+        options={{
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name="home"
+              size={focused ? size + 3 : size}
+              color={color}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="AddHabit"
+        options={{
+          tabBarIcon: ({ focused, size }) => (
+            <View
+              style={[
+                styles.addBubble,
+                {
+                  backgroundColor: focused ? colors.orange : colors.text,
+                  width: (focused ? size + 6 : size + 2) + 6,
+                  height: (focused ? size + 6 : size + 2) + 6,
+                  borderRadius: ((focused ? size + 6 : size + 2) ) / 4,
+                },
+              ]}
+            >
+              <Ionicons
+                name="add"
+                size={focused ? size + 3 : size}
+                color={colors.dark}
+              />
+            </View>
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="Settings"
+        options={{
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name="settings"
+              size={focused ? size + 3 : size}
+              color={color}
+            />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  addBubble: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
