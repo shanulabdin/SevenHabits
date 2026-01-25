@@ -1,11 +1,11 @@
-import { useThemeColors } from "@/constants/theme"; // ✅ your theme hook
-import { Pressable, Text, View } from "react-native";
+import { useThemeColors } from "@/constants/theme";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 
 type DayRingProps = {
-  dayNumber: string;   // "11"
-  dayLabel?: string;   // "Sun"
-  percent: number;     // 0-100
+  dayNumber: string; // "11"
+  dayLabel?: string; // "Sun"
+  percent: number; // 0-100
   selected?: boolean;
   onPress?: () => void;
 
@@ -14,10 +14,10 @@ type DayRingProps = {
   textSize?: number;
 
   // Optional overrides
-  trackColor?: string;     // ring background/track
-  progressColor?: string;  // arc color
-  textColor?: string;      // center number color
-  labelColor?: string;     // label color
+  trackColor?: string;
+  progressColor?: string;
+  textColor?: string;
+  labelColor?: string;
 };
 
 export default function DayRing({
@@ -29,17 +29,16 @@ export default function DayRing({
   size = 50,
   strokeWidth = 5,
   textSize = 12,
-
   trackColor,
   progressColor,
   textColor,
   labelColor,
 }: DayRingProps) {
-  const { colors } = useThemeColors(); // ✅ dynamic palette
+  const { colors } = useThemeColors();
 
-  // ✅ Theme defaults (can be overridden by props)
-  const _track = trackColor ?? colors.background;     // subtle track
-  const _progress = progressColor ?? colors.orange;   // your accent
+  // Theme defaults (can be overridden by props)
+  const _track = trackColor ?? colors.background;
+  const _progress = progressColor ?? colors.orange;
   const _text = textColor ?? colors.text;
   const _label = labelColor ?? (selected ? colors.orange : colors.text);
 
@@ -51,13 +50,13 @@ export default function DayRing({
   const clamped = Math.max(0, Math.min(100, percent));
   const dashOffset = circumference * (1 - clamped / 100);
 
-  // ✅ Don’t use Pressable if not needed (prevents Android scroll issues)
+  // Don’t use Pressable if not needed
   const Wrapper: any = onPress ? Pressable : View;
   const wrapperProps = onPress ? { onPress } : {};
 
   return (
-    <Wrapper className="items-center" {...wrapperProps}>
-      <View className="relative opacity-100" style={{ width: size, height: size }}>
+    <Wrapper style={styles.wrapper} {...wrapperProps}>
+      <View style={[styles.ringBox, { width: size, height: size }]}>
         <Svg width={size} height={size}>
           {/* Track */}
           <Circle
@@ -86,13 +85,13 @@ export default function DayRing({
         </Svg>
 
         {/* Center number */}
-        <View className="absolute inset-0 items-center justify-center">
+        <View style={styles.center}>
           <Text
             style={{
               fontFamily: "Poppins_600SemiBold",
               fontSize: textSize,
               lineHeight: textSize + 5,
-              color: _text, // ✅ theme-aware
+              color: _text,
             }}
           >
             {dayNumber}
@@ -100,15 +99,17 @@ export default function DayRing({
         </View>
       </View>
 
-      {/* Label (renders only when exists, so takes zero space) */}
+      {/* Label */}
       {dayLabel ? (
         <Text
-          style={{
-            fontFamily: "Poppins_600SemiBold",
-            color: _label, // ✅ theme-aware
-            opacity: selected ? 1 : 0.8,
-          }}
-          className="text-xs mt-1"
+          style={[
+            styles.label,
+            {
+              fontFamily: "Poppins_600SemiBold",
+              color: _label,
+              opacity: selected ? 1 : 0.8,
+            },
+          ]}
           numberOfLines={1}
         >
           {dayLabel}
@@ -117,3 +118,26 @@ export default function DayRing({
     </Wrapper>
   );
 }
+
+const styles = StyleSheet.create({
+  wrapper: {
+    alignItems: "center",
+  },
+  ringBox: {
+    position: "relative",
+    opacity: 1,
+  },
+  center: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  label: {
+    marginTop: 4,
+    fontSize: 12,
+  },
+});
