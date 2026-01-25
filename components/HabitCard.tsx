@@ -1,6 +1,5 @@
 import { colors } from "@/constants/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import React from "react";
 import { Pressable, Text, View } from "react-native";
 import ContributionGrid from "./ContributionGrid";
 
