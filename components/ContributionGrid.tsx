@@ -1,13 +1,13 @@
 import { colors } from "@/constants/colors";
-import React, { useMemo } from "react";
-import { View } from "react-native";
+import { useMemo } from "react";
+import { StyleSheet, View } from "react-native";
 
 type Props = {
   history: Record<string, boolean>;
-  endDateKey: string;     // usually todayKey
-  weeks?: number;         // default 14 -> 98 days (like your screenshot vibe)
-  size?: number;          // square size
-  gap?: number;           // spacing
+  endDateKey: string; // usually todayKey
+  weeks?: number; // default 14 -> 98 days
+  size?: number; // square size
+  gap?: number; // spacing
 };
 
 function dateKeyToDate(dateKey: string) {
@@ -40,7 +40,7 @@ export default function ContributionGrid({
   const columns = useMemo(() => {
     const firstKey = addDaysToKey(endDateKey, -(totalDays - 1));
 
-    // Build week-columns (GitHub style): each column has 7 squares (Sun..Sat)
+    // GitHub style: each column has 7 squares (Sun..Sat)
     const cols: string[][] = [];
     for (let w = 0; w < weeks; w++) {
       const col: string[] = [];
@@ -54,23 +54,32 @@ export default function ContributionGrid({
   }, [endDateKey, weeks, totalDays]);
 
   return (
-    <View className="flex-row" style={{ gap }}>
+    <View style={styles.row}>
       {columns.map((col, i) => (
-        <View key={i} style={{ gap }}>
-          {col.map((dateKey) => {
+        <View
+          key={i}
+          style={[
+            styles.col,
+            // spacing between columns
+            i !== columns.length - 1 && { marginRight: gap },
+          ]}
+        >
+          {col.map((dateKey, j) => {
             const done = history[dateKey] === true;
 
             return (
               <View
                 key={dateKey}
-                style={{
-                  width: size,
-                  height: size,
-                  borderWidth: 1,
-                  borderColor: "black",
-                  borderRadius: 3,
-                  backgroundColor: done ? colors.orange : "black",
-                }}
+                style={[
+                  styles.cell,
+                  {
+                    width: size,
+                    height: size,
+                    backgroundColor: done ? colors.orange : "black",
+                    // spacing between rows
+                    marginBottom: j !== col.length - 1 ? gap : 0,
+                  },
+                ]}
               />
             );
           })}
@@ -79,3 +88,17 @@ export default function ContributionGrid({
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: "row",
+  },
+  col: {
+    flexDirection: "column",
+  },
+  cell: {
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 3,
+  },
+});
