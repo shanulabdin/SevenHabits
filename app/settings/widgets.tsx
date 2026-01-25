@@ -1,7 +1,8 @@
 // app/settings/widgets.tsx
 import Heading from "@/components/Heading";
+import { colors } from "@/constants/colors";
 import { useRouter } from "expo-router";
-import { Alert, Pressable, ScrollView, Text, View } from "react-native";
+import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 function WidgetCard({
   title,
@@ -15,13 +16,13 @@ function WidgetCard({
   return (
     <Pressable
       onPress={onPress}
-      className="bg-colors-dark border-black border-[1px] rounded-tr-2xl rounded-bl-2xl p-4"
       android_ripple={{ color: "#2b2b2b" }}
+      style={[styles.card, { backgroundColor: colors.dark }]}
     >
-      <Text style={{ fontFamily: "Poppins_600SemiBold", fontSize: 16 }} className="text-colors-text">
+      <Text style={[styles.title, { color: colors.text }]}>
         {title}
       </Text>
-      <Text style={{ fontFamily: "Poppins_500Medium" }} className="text-colors-text/70 mt-1 text-xs">
+      <Text style={[styles.desc, { color: colors.text, opacity: 0.7 }]}>
         {desc}
       </Text>
     </Pressable>
@@ -65,3 +66,22 @@ export default function WidgetsScreen() {
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  card: {
+    padding: 16,
+    borderWidth: 1,
+    borderColor: "black",
+    borderTopRightRadius: 16,
+    borderBottomLeftRadius: 16,
+  },
+  title: {
+    fontFamily: "Poppins_600SemiBold",
+    fontSize: 16,
+  },
+  desc: {
+    fontFamily: "Poppins_500Medium",
+    fontSize: 12,
+    marginTop: 4,
+  },
+});
