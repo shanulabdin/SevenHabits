@@ -1,6 +1,6 @@
 import { colors } from "@/constants/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import ContributionGrid from "./ContributionGrid";
 
 type HabitCardProps = {
@@ -25,43 +25,30 @@ export default function HabitCard({
   onLongPress,
 }: HabitCardProps) {
   return (
-    <View className="mb-3 items-center">
+    <View style={styles.wrapper}>
       <Pressable
-        className={`
-        flex-row 
-        bg-colors-dark 
-        w-full
-        p-4 
-        rounded-tr-2xl
-        
-        items-center
-        justify-between
-        border-[1px]
-        border-black
-        
-        ${showGrid ? "" : " rounded-bl-2xl border-b-[1px]"}
-      `}
         onLongPress={onLongPress}
+        style={[
+          styles.card,
+          { backgroundColor: colors.dark },
+          showGrid ? null : styles.cardNoGrid,
+        ]}
       >
-        {/* LEFT SIDE: Title + Streak */}
-        <View className="flex-row items-center gap-4 max-w-[75%]">
+        {/* LEFT SIDE */}
+        <View style={styles.left}>
           <Text
-            style={{ fontFamily: "Poppins_600SemiBold" }}
-            className={`
-            text-colors-text 
-            text-xl 
-            ${checked ? "line-through text-colors-text/50" : ""}
-          `}
+            style={[
+              styles.title,
+              { color: colors.text },
+              checked && styles.titleChecked,
+            ]}
             numberOfLines={1}
           >
             {title}
           </Text>
 
-          <View className={`flex-row items-baseline opacity-80`}>
-            <Text
-              style={{ fontFamily: "Poppins_600SemiBold" }}
-              className="text-colors-text text-xs"
-            >
+          <View style={styles.streak}>
+            <Text style={[styles.streakText, { color: colors.text }]}>
               {streak}
             </Text>
             <Ionicons
@@ -73,36 +60,106 @@ export default function HabitCard({
           </View>
         </View>
 
-        {/* RIGHT SIDE: Checkbox */}
+        {/* RIGHT SIDE */}
         <Pressable
           onPress={markComplete}
           hitSlop={12}
-          className={`
-          w-8 h-8 rounded-full 
-          items-center justify-center 
-          border-[2px] border-colors-orange
-          ${checked ? "bg-colors-orange" : ""}
-        `}
+          style={[
+            styles.checkbox,
+            checked && { backgroundColor: colors.orange },
+          ]}
         >
           {checked && (
-            <Ionicons name="checkmark-sharp" size={23} color={colors.dark} />
+            <Ionicons
+              name="checkmark-sharp"
+              size={23}
+              color={colors.dark}
+            />
           )}
         </Pressable>
       </Pressable>
 
+      {/* CONTRIBUTION GRID */}
       {showGrid && (
-        <View className={` 
-        bg-colors-dark        
-        p-4
-        rounded-bl-2xl
-        border-[1px]
-        border-black
-        w-full
-        items-center
-      `}>
-          <ContributionGrid history={history} endDateKey={todayKey} weeks={19} />
+        <View style={[styles.gridBox, { backgroundColor: colors.dark }]}>
+          <ContributionGrid
+            history={history}
+            endDateKey={todayKey}
+            weeks={19}
+          />
         </View>
       )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  wrapper: {
+    marginBottom: 12,
+    alignItems: "center",
+    width: "100%",
+  },
+
+  card: {
+    flexDirection: "row",
+    width: "100%",
+    padding: 16,
+    borderTopRightRadius: 16,
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderWidth: 1,
+    borderColor: "black",
+  },
+
+  cardNoGrid: {
+    borderBottomLeftRadius: 16,
+  },
+
+  left: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 16,
+    maxWidth: "75%",
+  },
+
+  title: {
+    fontSize: 20,
+    fontFamily: "Poppins_600SemiBold",
+  },
+
+  titleChecked: {
+    textDecorationLine: "line-through",
+    opacity: 0.5,
+  },
+
+  streak: {
+    flexDirection: "row",
+    alignItems: "baseline",
+    opacity: 0.8,
+  },
+
+  streakText: {
+    fontSize: 12,
+    fontFamily: "Poppins_600SemiBold",
+    marginRight: 2,
+  },
+
+  checkbox: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
+    borderColor: colors.orange,
+  },
+
+  gridBox: {
+    width: "100%",
+    padding: 16,
+    borderBottomLeftRadius: 16,
+    borderWidth: 1,
+    borderColor: "black",
+    alignItems: "center",
+  },
+});
