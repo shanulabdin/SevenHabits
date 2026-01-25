@@ -49,8 +49,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 16,
     borderWidth: 1,
-    borderTopRightRadius: 16,
-    borderBottomLeftRadius: 16,
+    // borderTopRightRadius: 16,
+    // borderBottomLeftRadius: 16,
+    // borderBottomRightRadius: 10,
+    borderRadius: 16,
   },
   title: {
     fontSize: 24,

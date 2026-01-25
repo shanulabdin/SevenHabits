@@ -6,7 +6,7 @@ type ThemeMode = "dark" | "light";
 const THEME_KEY = "@sevenhabits/theme_v1";
 
 const DARK = {
-  background: "#0B0B0B",
+  background: "#000000ff",
   surface: "#141414",
   card: "#151515",
   text: "#FFFFFF",
@@ -16,8 +16,8 @@ const DARK = {
   inverseSurface: "#F2F2F2",
   inverseText: "#000000",
 
-  border: "rgba(161, 161, 161, 0.5)",
-  borderMuted: "rgba(161, 161, 161, 0.25)",
+  border: "rgba(161, 161, 161, 0.3)",
+  borderMuted: "rgba(161, 161, 161, 0)",
 
   orange: "#FF6D1F",
 
@@ -36,7 +36,7 @@ const LIGHT = {
   inverseSurface: "#151515",
   inverseText: "#FFFFFF",
 
-  border: "rgba(0, 0, 0, 0.5)",
+  border: "rgba(0, 0, 0, 0.1)",
   borderMuted: "rgba(0, 0, 0, 0.25)",
   
   orange: "#FF6D1F",

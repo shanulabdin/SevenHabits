@@ -110,14 +110,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     padding: 16,
-    borderTopRightRadius: 16,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
     alignItems: "center",
     justifyContent: "space-between",
     borderWidth: 1,
   },
 
   cardNoGrid: {
-    borderBottomLeftRadius: 16,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
 
   left: {
@@ -163,7 +165,8 @@ const styles = StyleSheet.create({
   gridBox: {
     width: "100%",
     padding: 16,
-    borderBottomLeftRadius: 16,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
     borderWidth: 1,
     alignItems: "center",
   },
