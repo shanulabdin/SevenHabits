@@ -2,7 +2,6 @@ import { ThemeProvider, useThemeColors } from "@/constants/theme";
 import { DarkTheme, ThemeProvider as NavThemeProvider } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { View } from "react-native";
-import "./globals.css";
 
 function AppShell() {
   const { colors, isLoaded } = useThemeColors();
