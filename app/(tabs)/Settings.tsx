@@ -50,25 +50,27 @@ const sendFeedback = async () => {
 
 // Components
 function SettingsRow({ title, icon, onPress }: Item) {
-  const { colors } = useThemeColors();  
+  const { colors } = useThemeColors();
   return (
     <Pressable onPress={onPress} style={styles.row} android_ripple={{ color: "#2b2b2b" }}>
-      <Text style={[styles.rowText, {color: colors.text}]}>{title}</Text>
+      <Text style={[styles.rowText, { color: colors.text }]}>{title}</Text>
       <Ionicons name={icon} size={18} color={colors.text} />
     </Pressable>
   );
 }
 
 function SettingsGroup({ items }: { items: Item[] }) {
-  const { colors } = useThemeColors();  
+  const { colors } = useThemeColors();
   return (
-    <View style={[styles.group, {borderColor: colors.border, backgroundColor: colors.card}]}>
-      {items.map((it, idx) => (
-        <View key={it.title}>
-          <SettingsRow {...it} />
-          {idx !== items.length - 1 ? <View style={[styles.divider, {backgroundColor: colors.border}]} /> : null}
-        </View>
-      ))}
+    <View style={styles.shadowWrapper}>
+      <View style={[styles.group, { borderColor: colors.border, backgroundColor: colors.card }]}>
+        {items.map((it, idx) => (
+          <View key={it.title}>
+            <SettingsRow {...it} />
+            {idx !== items.length - 1 ? <View style={[styles.divider, { backgroundColor: colors.border }]} /> : null}
+          </View>
+        ))}
+      </View>
     </View>
   );
 }
@@ -95,7 +97,7 @@ export default function SettingsScreen() {
   const { colors } = useThemeColors();
 
   return (
-    <View style={[styles.screen, {backgroundColor: colors.background}]} >
+    <View style={[styles.screen, { backgroundColor: colors.background }]} >
       <ScrollView
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
@@ -124,7 +126,19 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
     gap: 18,
   },
+  shadowWrapper: {
+    borderRadius: 10,
+    backgroundColor: "transparent",
 
+    // iOS
+    shadowColor: "#000",
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+
+    // Android
+    elevation: 6,
+  },
   group: {
     borderWidth: 1,
     overflow: "hidden",

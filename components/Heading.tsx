@@ -53,6 +53,12 @@ const styles = StyleSheet.create({
     // borderBottomLeftRadius: 16,
     // borderBottomRightRadius: 10,
     borderRadius: 10,
+
+    shadowColor: "#000",
+    shadowOpacity: 0.35,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 3,
   },
   title: {
     fontSize: 24,

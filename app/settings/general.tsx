@@ -99,6 +99,12 @@ const styles = StyleSheet.create({
     // borderBottomLeftRadius: 16,
     borderRadius: 10,
     overflow: "hidden",
+
+    shadowColor: "#000",
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 3,
   },
 
   row: {

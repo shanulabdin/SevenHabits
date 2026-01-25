@@ -77,6 +77,12 @@ const styles = StyleSheet.create({
     // borderTopRightRadius: 16,
     // borderBottomLeftRadius: 16,
     borderRadius: 10,
+
+    shadowColor: "#000",
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 3,
   },
   input: {
     flex: 1,

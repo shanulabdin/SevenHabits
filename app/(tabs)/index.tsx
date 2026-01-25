@@ -439,14 +439,22 @@ const styles = StyleSheet.create({
   },
   screen: {
     flex: 1,
-    padding: 12,
-    paddingTop: 80,
+
     width: "100%",
     alignItems: "center",
+
+    shadowColor: "#000",
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 3,
   },
   scroll: {
     flex: 1,
     width: "100%",
+    
+    padding: 12,
+    paddingTop: 80,
   },
   scrollContent: {
     paddingBottom: 350,
@@ -500,8 +508,9 @@ const styles = StyleSheet.create({
   },
   modalCard: {
     width: 256, // w-64
-    borderTopRightRadius: 16,
-    borderBottomLeftRadius: 16,
+    // borderTopRightRadius: 16,
+    // borderBottomLeftRadius: 16,
+    borderRadius: 10,
     borderWidth: 1,
     overflow: "hidden",
   },
