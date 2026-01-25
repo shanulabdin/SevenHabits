@@ -74,13 +74,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 4,
     borderWidth: 1,
-    borderTopRightRadius: 16,
-    borderBottomLeftRadius: 16,
+    // borderTopRightRadius: 16,
+    // borderBottomLeftRadius: 16,
+    borderRadius: 10,
   },
   input: {
     flex: 1,
     fontSize: 16,
     paddingVertical: 8,
+    paddingBottom: 12,
   },
   iconBtn: {
     justifyContent: "center",

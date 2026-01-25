@@ -72,8 +72,9 @@ const styles = StyleSheet.create({
     padding: 16,
     borderWidth: 1,
     borderColor: "black",
-    borderTopRightRadius: 16,
-    borderBottomLeftRadius: 16,
+    // borderTopRightRadius: 16,
+    // borderBottomLeftRadius: 16,
+    borderRadius: 10,
   },
   title: {
     fontFamily: "Poppins_600SemiBold",

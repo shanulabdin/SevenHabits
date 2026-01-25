@@ -84,8 +84,9 @@ const styles = StyleSheet.create({
   card: {
     marginTop: 16,
     borderWidth: 1,
-    borderTopRightRadius: 16,
-    borderBottomLeftRadius: 16,
+    // borderTopRightRadius: 16,
+    // borderBottomLeftRadius: 16,
+    borderRadius: 10,
     overflow: "hidden",
   },
 

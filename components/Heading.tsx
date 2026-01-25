@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     // borderTopRightRadius: 16,
     // borderBottomLeftRadius: 16,
     // borderBottomRightRadius: 10,
-    borderRadius: 16,
+    borderRadius: 10,
   },
   title: {
     fontSize: 24,

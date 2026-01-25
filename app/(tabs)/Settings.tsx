@@ -62,7 +62,7 @@ function SettingsRow({ title, icon, onPress }: Item) {
 function SettingsGroup({ items }: { items: Item[] }) {
   const { colors } = useThemeColors();  
   return (
-    <View style={[styles.group, {borderColor: colors.border}]}>
+    <View style={[styles.group, {borderColor: colors.border, backgroundColor: colors.card}]}>
       {items.map((it, idx) => (
         <View key={it.title}>
           <SettingsRow {...it} />
@@ -95,7 +95,7 @@ export default function SettingsScreen() {
   const { colors } = useThemeColors();
 
   return (
-    <View style={[styles.screen, {backgroundColor: colors.card}]} >
+    <View style={[styles.screen, {backgroundColor: colors.background}]} >
       <ScrollView
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
@@ -128,8 +128,7 @@ const styles = StyleSheet.create({
   group: {
     borderWidth: 1,
     overflow: "hidden",
-    borderTopRightRadius: 16,
-    borderBottomLeftRadius: 16,
+    borderRadius: 10,
   },
   row: {
     height: 46,
