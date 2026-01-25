@@ -1,24 +1,25 @@
+import DayRing from "@/components/DayRing";
 import Heading from "@/components/Heading";
 import { colors } from "@/constants/colors";
+import type { Habit } from "@/types/habit";
+import { getDateKey, getLastNDays } from "@/utils/date";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
-
-import DayRing from "@/components/DayRing";
-import type { Habit } from "@/types/habit";
-import { getDateKey, getLastNDays } from "@/utils/date";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 const STORAGE_KEY = "@sevenhabits/habits_v1";
 
 export default function Stats() {
   const router = useRouter();
+
   function onBack() {
     if (router.canGoBack()) router.back();
-    else router.replace("/(tabs)"); // fallback only if needed
+    else router.replace("/(tabs)");
   }
 
   const [habits, setHabits] = useState<Habit[]>([]);
+  const [selectedDays, setSelectedDays] = useState(10);
 
   useEffect(() => {
     (async () => {
@@ -32,13 +33,11 @@ export default function Stats() {
     })();
   }, []);
 
-  const [selectedDays, setSelectedDays] = useState(10);
-
   const overallStats = useMemo(() => {
     if (!habits.length) return { percent: 0, done: 0, possible: 0 };
 
     const lastDays = getLastNDays(selectedDays);
-    const dateKeys = lastDays.map(d => getDateKey(d));
+    const dateKeys = lastDays.map((d) => getDateKey(d));
 
     const possible = habits.length * dateKeys.length;
     let done = 0;
@@ -55,16 +54,16 @@ export default function Stats() {
 
   const perHabitStats = useMemo(() => {
     const lastDays = getLastNDays(selectedDays);
-    const dateKeys = lastDays.map(d => getDateKey(d));
+    const dateKeys = lastDays.map((d) => getDateKey(d));
 
-    return habits.map(h => {
+    return habits.map((h) => {
       let done = 0;
 
       for (const key of dateKeys) {
         if (h.history?.[key] === true) done += 1;
       }
 
-      const possible = dateKeys.length; // 1 habit per day
+      const possible = dateKeys.length;
       const percent = possible ? Math.round((done / possible) * 100) : 0;
 
       return {
@@ -77,51 +76,41 @@ export default function Stats() {
     });
   }, [habits, selectedDays]);
 
+  const dayOptions = [7, 30, 100, 365];
+
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: "black", width: "100%" }}
-      contentContainerStyle={{ padding: 12, paddingTop: 80, paddingBottom: 200 }}
+      style={styles.scroll}
+      contentContainerStyle={styles.scrollContent}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >
-
       <Heading
         title="Stats"
         iconTitle="Back"
         icon="arrow-back"
-        onIconPress={() => onBack()}
+        onIconPress={onBack}
       />
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: 16,
-          gap: 8,
-        }}
-      >
-        {[7, 30, 100, 365].map(d => (
+
+      {/* Day selector row */}
+      <View style={styles.selectorRow}>
+        {dayOptions.map((d, idx) => (
           <Pressable
             key={d}
             onPress={() => setSelectedDays(d)}
-            style={{
-              flex: 1,
-              padding: 10,
-              backgroundColor: colors.dark,
-              alignItems: "center",
-            }}
-            className="
-              bg-colors-background 
-              rounded-tr-xl
-              rounded-bl-xl
-              border-black border-[1px]
-              color-colors-orange
-            "
+            style={[
+              styles.selectorBtn,
+              { backgroundColor: colors.dark },
+              idx !== dayOptions.length - 1 && styles.selectorBtnGap,
+            ]}
           >
             <Text
-              style={{
-                color: selectedDays === d ? colors.orange : colors.text,
-                fontFamily: "Poppins_600SemiBold",
-                fontSize: 12,
-              }}
+              style={[
+                styles.selectorText,
+                {
+                  color: selectedDays === d ? colors.orange : colors.text,
+                },
+              ]}
             >
               {d}
             </Text>
@@ -129,122 +118,184 @@ export default function Stats() {
         ))}
       </View>
 
-      <View
-        style={{
-          width: "100%",
-          alignSelf: "center",
-          marginTop: 20,
-          backgroundColor: colors.dark,
-        }} // 2 columns
-        className="
-          bg-colors-background 
-          border-black border-[1px]
-          rounded-tr-2xl rounded-bl-2xl 
-          "
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between"
-          }}
-          className="
-            border-b-[1px]
-            border-black
-            rounded-tr-2xl
-            p-4
-          "
-        >
-          <Text style={{
-            fontFamily: "Poppins_600SemiBold",
-            fontSize: 20,
-            fontWeight: "bold",
-            color: colors.text,
-          }} >
-            Overall
-          </Text>
-
-          <Text
-            className="text-colors-text/80 text-base"
-            style={{ fontFamily: "Poppins_600SemiBold" }}
-          >
+      {/* Overall card */}
+      <View style={[styles.card, { backgroundColor: colors.dark }]}>
+        <View style={styles.cardHeader}>
+          <Text style={[styles.cardTitle, { color: colors.text }]}>Overall</Text>
+          <Text style={[styles.cardCount, { color: colors.text, opacity: 0.8 }]}>
             {overallStats.done}/{overallStats.possible}
           </Text>
         </View>
 
-        <View style={{ padding: 20, }} pointerEvents="none">
+        <View style={styles.ringWrap} pointerEvents="none">
           <DayRing
-            dayNumber={`${overallStats.percent}%`}   // center text
-            dayLabel={``}  // label under ring
-            percent={overallStats.percent}          // arc percent
+            dayNumber={`${overallStats.percent}%`}
+            percent={overallStats.percent}
             size={200}
             strokeWidth={20}
-            strokeColor={"black"}
             textSize={40}
             selected
           />
         </View>
       </View>
 
-      <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12, marginTop: 20, }}>
-        {perHabitStats.map(h => (
-
-          <View
-            key={h.id}
-            style={{ width: "48%" }} // 2 columns
-            className="
-              bg-colors-dark 
-              border-black border-[1px]
-              rounded-tr-2xl rounded-bl-2xl 
-              "
-          >
+      {/* Per-habit cards (2 columns) */}
+      <View style={styles.grid}>
+        {perHabitStats.map((h, idx) => {
+          const isLeft = idx % 2 === 0;
+          return (
             <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between"
-              }}
-              className="
-                border-b-[1px]
-                border-black
-                rounded-tr-2xl
-                pt-2
-                pb-2
-                pr-4
-                pl-4
-              "
+              key={h.id}
+              style={[
+                styles.habitCard,
+                { backgroundColor: colors.dark },
+                isLeft ? styles.gridLeft : styles.gridRight,
+              ]}
             >
-              <Text style={{
-                fontFamily: "Poppins_600SemiBold",
-                fontSize: 15,
-                fontWeight: "bold",
-                color: colors.text,
-              }} >
-                {h.title}
-              </Text>
-              <Text
-                className="text-colors-text/80 text-xs "
-                style={{ textAlign: "center", fontFamily: "Poppins_600SemiBold" }}>
-                {h.done}/{h.possible}
-              </Text>
-            </View>
+              <View style={styles.habitHeader}>
+                <Text
+                  style={[styles.habitTitle, { color: colors.text }]}
+                  numberOfLines={1}
+                >
+                  {h.title}
+                </Text>
 
-            <View style={{ padding: 20, }} pointerEvents="none">
-              <DayRing
-                dayNumber={`${h.percent}%`}
-                percent={h.percent}
-                size={110}
-                strokeWidth={10}
-                strokeColor={"black"}
-                textSize={20}
-                selected
-              />
-            </View>
+                <Text
+                  style={[
+                    styles.habitCount,
+                    { color: colors.text, opacity: 0.8 },
+                  ]}
+                >
+                  {h.done}/{h.possible}
+                </Text>
+              </View>
 
-          </View>
-        ))}
+              <View style={styles.habitRing} pointerEvents="none">
+                <DayRing
+                  dayNumber={`${h.percent}%`}
+                  percent={h.percent}
+                  size={110}
+                  strokeWidth={10}
+                  textSize={20}
+                  selected
+                />
+              </View>
+            </View>
+          );
+        })}
       </View>
-
-    </ScrollView >
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  scroll: {
+    flex: 1,
+    backgroundColor: "black",
+    width: "100%",
+  },
+  scrollContent: {
+    padding: 12,
+    paddingTop: 80,
+    paddingBottom: 200,
+  },
+
+  selectorRow: {
+    flexDirection: "row",
+    marginTop: 16,
+  },
+  selectorBtn: {
+    flex: 1,
+    paddingVertical: 10,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "black",
+    borderTopRightRadius: 12,
+    borderBottomLeftRadius: 12,
+  },
+  selectorBtnGap: {
+    marginRight: 8,
+  },
+  selectorText: {
+    fontFamily: "Poppins_600SemiBold",
+    fontSize: 12,
+  },
+
+  card: {
+    width: "100%",
+    alignSelf: "center",
+    marginTop: 20,
+    borderWidth: 1,
+    borderColor: "black",
+    borderTopRightRadius: 16,
+    borderBottomLeftRadius: 16,
+    overflow: "hidden",
+  },
+  cardHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
+    borderBottomColor: "black",
+    padding: 16,
+  },
+  cardTitle: {
+    fontFamily: "Poppins_600SemiBold",
+    fontSize: 20,
+    fontWeight: "700",
+  },
+  cardCount: {
+    fontFamily: "Poppins_600SemiBold",
+    fontSize: 16,
+  },
+  ringWrap: {
+    padding: 20,
+    alignItems: "center",
+  },
+
+  grid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginTop: 20,
+  },
+  habitCard: {
+    width: "48%",
+    borderWidth: 1,
+    borderColor: "black",
+    borderTopRightRadius: 16,
+    borderBottomLeftRadius: 16,
+    overflow: "hidden",
+    marginBottom: 12,
+  },
+  gridLeft: {
+    marginRight: "4%",
+  },
+  gridRight: {
+    marginRight: 0,
+  },
+  habitHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
+    borderBottomColor: "black",
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
+  habitTitle: {
+    fontFamily: "Poppins_600SemiBold",
+    fontSize: 15,
+    fontWeight: "700",
+    flex: 1,
+    marginRight: 10,
+  },
+  habitCount: {
+    fontFamily: "Poppins_600SemiBold",
+    fontSize: 12,
+    textAlign: "center",
+  },
+  habitRing: {
+    padding: 20,
+    alignItems: "center",
+  },
+});
