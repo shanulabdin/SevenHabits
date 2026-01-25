@@ -277,11 +277,11 @@ export default function Index() {
       style={[styles.kav]}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <View style={[styles.screen]}>
+      <View style={[styles.screen, { backgroundColor: colors.background }]}>
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
-          style={[styles.scroll, { backgroundColor: colors.card }]}
+          style={[styles.scroll, { backgroundColor: colors.background }]}
           ref={scrollRef}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
@@ -314,7 +314,7 @@ export default function Index() {
               return (
                 <View
                   key={habit.id}
-                  style={[styles.editCard, { backgroundColor: colors.card }]}
+                  style={[styles.editCard, { backgroundColor: colors.card, borderColor: colors.border }]}
                   onLayout={(e) => {
                     const y = e.nativeEvent.layout.y;
                     scrollRef.current?.scrollTo({
@@ -364,7 +364,7 @@ export default function Index() {
           {/* Reset button */}
           <Pressable
             onPress={resetAllData}
-            style={[styles.resetBtn, { backgroundColor: colors.card }]}
+            style={[styles.resetBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
           >
             <Text style={[styles.resetText, { color: colors.accent }]}>
               Reset Data
@@ -382,7 +382,7 @@ export default function Index() {
             }}
           >
             <Pressable
-              style={[styles.modalCard, { backgroundColor: colors.card }]}
+              style={[styles.modalCard, { backgroundColor: colors.card, borderColor: colors.border  }]}
               onPress={() => {
                 setIsModalVisible(false);
                 setSelectedHabitId(null);
@@ -395,7 +395,7 @@ export default function Index() {
                   startEditingHabit(selectedHabitId);
                 }}
               >
-                <Text style={[styles.modalItem, styles.modalItemBorder, { color: colors.text }]}>
+                <Text style={[styles.modalItem, styles.modalItemBorder, { color: colors.text, borderBottomColor: colors.border  }]}>
                   Edit
                 </Text>
               </Pressable>
@@ -409,7 +409,7 @@ export default function Index() {
                   setSelectedHabitId(null);
                 }}
               >
-                <Text style={[styles.modalItem, styles.modalItemBorder, { color: colors.text }]}>
+                <Text style={[styles.modalItem, styles.modalItemBorder, { color: colors.text, borderBottomColor: colors.border  }]}>
                   {gridLabel}
                 </Text>
               </Pressable>
@@ -464,7 +464,6 @@ const styles = StyleSheet.create({
   editCard: {
     width: "100%",
     borderWidth: 1,
-    borderColor: "black",
     borderTopRightRadius: 16,
     borderBottomLeftRadius: 16,
     marginBottom: 12,
@@ -487,7 +486,6 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "black",
   },
   resetText: {
     fontSize: 14,
@@ -505,7 +503,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 16,
     borderBottomLeftRadius: 16,
     borderWidth: 1,
-    borderColor: "black",
     overflow: "hidden",
   },
   modalItem: {
@@ -514,7 +511,6 @@ const styles = StyleSheet.create({
   },
   modalItemBorder: {
     borderBottomWidth: 1,
-    borderBottomColor: "black",
   },
   modalDelete: {
     padding: 16,
