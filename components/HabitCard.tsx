@@ -35,7 +35,7 @@ const { colors } = useThemeColors();
         onLongPress={onLongPress}
         style={[
           styles.card,
-          { backgroundColor: colors.card },
+          { backgroundColor: colors.card, borderColor: colors.border },
           showGrid ? null : styles.cardNoGrid,
         ]}
       >
@@ -86,7 +86,7 @@ const { colors } = useThemeColors();
 
       {/* CONTRIBUTION GRID */}
       {showGrid && (
-        <View style={[styles.gridBox, { backgroundColor: colors.card }]}>
+        <View style={[styles.gridBox, { backgroundColor: colors.card, borderColor: colors.border, borderTopWidth: 0 }]}>
           <ContributionGrid
             history={history}
             endDateKey={todayKey}
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     borderWidth: 1,
-    borderColor: "black",
+    // borderColor: "black",
   },
 
   cardNoGrid: {
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     padding: 16,
     borderBottomLeftRadius: 16,
     borderWidth: 1,
-    borderColor: "black",
+    // borderColor: "black",
     alignItems: "center",
   },
 });

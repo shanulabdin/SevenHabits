@@ -37,7 +37,7 @@ export default function DayRing({
   const { colors } = useThemeColors();
 
   // Theme defaults (can be overridden by props)
-  const _track = trackColor ?? colors.card;
+  const _track = trackColor ?? colors.accentMuted;
   const _progress = progressColor ?? colors.accent;
   const _text = textColor ?? colors.text;
   const _label = labelColor ?? (selected ? colors.accent : colors.text);

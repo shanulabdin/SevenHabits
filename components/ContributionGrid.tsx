@@ -72,11 +72,13 @@ export default function ContributionGrid({
               <View
                 key={dateKey}
                 style={[
-                  styles.cell,
                   {
                     width: size,
                     height: size,
-                    backgroundColor: done ? colors.accent : colors.background,
+                    backgroundColor: done ? colors.accent : colors.accentMuted,
+                    borderColor: done ? "transparent" : colors.borderMuted,
+                    borderWidth: 1,
+                    borderRadius: 3,
                     // spacing between rows
                     marginBottom: j !== col.length - 1 ? gap : 0,
                   },
@@ -96,10 +98,5 @@ const styles = StyleSheet.create({
   },
   col: {
     flexDirection: "column",
-  },
-  cell: {
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 3,
   },
 });
