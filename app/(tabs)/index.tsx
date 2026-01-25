@@ -274,10 +274,10 @@ export default function Index() {
 
   return (
     <KeyboardAvoidingView
-      style={[styles.kav, { backgroundColor: colors.dark }]}
+      style={[styles.kav]}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <View style={[styles.screen, { backgroundColor: colors.dark }]}>
+      <View style={[styles.screen]}>
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"

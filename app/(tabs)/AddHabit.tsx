@@ -1,11 +1,12 @@
 import CreateHabit from "@/components/CreateHabit";
 import Heading from "@/components/Heading";
-import { colors } from "@/constants/colors";
+import { useThemeColors } from "@/constants/theme";
 import { router } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 export default function AddHabit() {
+  const { colors } = useThemeColors();
   const [newHabitTitle, setNewHabitTitle] = useState("");
 
   function submit(title: string) {

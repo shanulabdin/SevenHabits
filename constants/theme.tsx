@@ -6,18 +6,25 @@ type ThemeMode = "dark" | "light";
 const THEME_KEY = "@sevenhabits/theme_v1";
 
 const DARK = {
-  dark: "#0B0B0B",
-  background: "#141414",
-  text: "white",
-  orange: "#FF6D1F",
+  background: "#0B0B0B",
+  surface: "#141414",
+  card: "#151515",
+  text: "#FFFFFF",
+  mutedText: "rgba(255,255,255,0.7)",
+  border: "#000000",
+  accent: "#FF6D1F",
 };
 
 const LIGHT = {
-  dark: "#F6F6F6",
   background: "#FFFFFF",
-  text: "black",
-  orange: "#FF6D1F",
+  surface: "#F6F6F6",
+  card: "#FAFAFA",
+  text: "#000000",
+  mutedText: "rgba(0,0,0,0.7)",
+  border: "#E5E5E5",
+  accent: "#FF6D1F",
 };
+
 
 type ThemeCtx = {
   theme: ThemeMode;
