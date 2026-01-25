@@ -10,9 +10,9 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        sceneStyle: { backgroundColor: colors.dark },
+        sceneStyle: { backgroundColor: colors.card },
         tabBarStyle: {
-          backgroundColor: colors.dark,
+          backgroundColor: colors.card,
           width: "100%",
           paddingBottom: 10,
           paddingTop: 10,
@@ -20,7 +20,7 @@ export default function TabLayout() {
           borderTopWidth: 0,
         },
         tabBarShowLabel: false,
-        tabBarActiveTintColor: colors.orange,
+        tabBarActiveTintColor: colors.accent,
         tabBarInactiveTintColor: colors.text,
       }}
     >
@@ -45,7 +45,7 @@ export default function TabLayout() {
               style={[
                 styles.addBubble,
                 {
-                  backgroundColor: focused ? colors.orange : colors.text,
+                  backgroundColor: focused ? colors.accent : colors.text,
                   width: (focused ? size + 6 : size + 2) + 6,
                   height: (focused ? size + 6 : size + 2) + 6,
                   borderRadius: ((focused ? size + 6 : size + 2) ) / 4,
@@ -55,7 +55,7 @@ export default function TabLayout() {
               <Ionicons
                 name="add"
                 size={focused ? size + 3 : size}
-                color={colors.dark}
+                color={colors.card}
               />
             </View>
           ),

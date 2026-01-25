@@ -100,7 +100,7 @@ export default function Stats() {
             onPress={() => setSelectedDays(d)}
             style={[
               styles.selectorBtn,
-              { backgroundColor: colors.dark },
+              { backgroundColor: colors.card },
               idx !== dayOptions.length - 1 && styles.selectorBtnGap,
             ]}
           >
@@ -108,7 +108,7 @@ export default function Stats() {
               style={[
                 styles.selectorText,
                 {
-                  color: selectedDays === d ? colors.orange : colors.text,
+                  color: selectedDays === d ? colors.accent : colors.text,
                 },
               ]}
             >
@@ -119,7 +119,7 @@ export default function Stats() {
       </View>
 
       {/* Overall card */}
-      <View style={[styles.card, { backgroundColor: colors.dark }]}>
+      <View style={[styles.card, { backgroundColor: colors.card }]}>
         <View style={styles.cardHeader}>
           <Text style={[styles.cardTitle, { color: colors.text }]}>Overall</Text>
           <Text style={[styles.cardCount, { color: colors.text, opacity: 0.8 }]}>
@@ -148,7 +148,7 @@ export default function Stats() {
               key={h.id}
               style={[
                 styles.habitCard,
-                { backgroundColor: colors.dark },
+                { backgroundColor: colors.card },
                 isLeft ? styles.gridLeft : styles.gridRight,
               ]}
             >

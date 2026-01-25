@@ -38,9 +38,9 @@ export default function DayRing({
 
   // Theme defaults (can be overridden by props)
   const _track = trackColor ?? colors.background;
-  const _progress = progressColor ?? colors.orange;
+  const _progress = progressColor ?? colors.accent;
   const _text = textColor ?? colors.text;
-  const _label = labelColor ?? (selected ? colors.orange : colors.text);
+  const _label = labelColor ?? (selected ? colors.accent : colors.text);
 
   const r = (size - strokeWidth) / 2;
   const cx = size / 2;

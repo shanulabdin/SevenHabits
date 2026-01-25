@@ -33,7 +33,7 @@ export default function CreateHabit({
   );
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.dark }]}>
+    <View style={[styles.container, { backgroundColor: colors.card }]}>
       <TextInput
         ref={inputRef}
         style={[
@@ -44,7 +44,7 @@ export default function CreateHabit({
           },
         ]}
         placeholder="Create Habit"
-        placeholderTextColor={colors.orange}
+        placeholderTextColor={colors.accent}
         onChangeText={setNewHabitTitle}
         value={newHabitTitle}
         returnKeyType="done"
@@ -57,7 +57,7 @@ export default function CreateHabit({
         style={styles.iconBtn}
         onPress={() => createHabit(newHabitTitle)}
       >
-        <Ionicons name="add" size={26} color={colors.orange} />
+        <Ionicons name="add" size={26} color={colors.accent} />
       </Pressable>
     </View>
   );

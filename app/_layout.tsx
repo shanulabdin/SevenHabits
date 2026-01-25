@@ -12,19 +12,19 @@ function AppShell() {
     ...DarkTheme,
     colors: {
       ...DarkTheme.colors,
-      background: colors.dark,
-      card: colors.dark,
+      background: colors.card,
+      card: colors.card,
       text: colors.text,
     },
   };
 
   return (
     <NavThemeProvider value={navTheme}>
-      <View style={{ flex: 1, backgroundColor: colors.dark }}>
+      <View style={{ flex: 1, backgroundColor: colors.card }}>
         <Stack
           screenOptions={{
             headerShown: false,
-            contentStyle: { backgroundColor: colors.dark },
+            contentStyle: { backgroundColor: colors.card },
             animation: "slide_from_right",
           }}
         />

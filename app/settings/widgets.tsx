@@ -17,7 +17,7 @@ function WidgetCard({
     <Pressable
       onPress={onPress}
       android_ripple={{ color: "#2b2b2b" }}
-      style={[styles.card, { backgroundColor: colors.dark }]}
+      style={[styles.card, { backgroundColor: colors.card }]}
     >
       <Text style={[styles.title, { color: colors.text }]}>
         {title}

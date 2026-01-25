@@ -30,7 +30,7 @@ export default function HabitCard({
         onLongPress={onLongPress}
         style={[
           styles.card,
-          { backgroundColor: colors.dark },
+          { backgroundColor: colors.card },
           showGrid ? null : styles.cardNoGrid,
         ]}
       >
@@ -53,7 +53,7 @@ export default function HabitCard({
             </Text>
             <Ionicons
               name="flame"
-              color={colors.orange}
+              color={colors.accent}
               size={18}
               style={{ transform: [{ translateY: 1 }] }}
             />
@@ -66,14 +66,14 @@ export default function HabitCard({
           hitSlop={12}
           style={[
             styles.checkbox,
-            checked && { backgroundColor: colors.orange },
+            checked && { backgroundColor: colors.accent },
           ]}
         >
           {checked && (
             <Ionicons
               name="checkmark-sharp"
               size={23}
-              color={colors.dark}
+              color={colors.card}
             />
           )}
         </Pressable>
@@ -81,7 +81,7 @@ export default function HabitCard({
 
       {/* CONTRIBUTION GRID */}
       {showGrid && (
-        <View style={[styles.gridBox, { backgroundColor: colors.dark }]}>
+        <View style={[styles.gridBox, { backgroundColor: colors.card }]}>
           <ContributionGrid
             history={history}
             endDateKey={todayKey}
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 2,
-    borderColor: colors.orange,
+    borderColor: colors.accent,
   },
 
   gridBox: {

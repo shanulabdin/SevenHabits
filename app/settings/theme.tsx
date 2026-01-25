@@ -39,7 +39,7 @@ export default function ThemeScreen() {
         <Ionicons
           name="radio-button-on-outline"
           size={20}
-          color={colors.orange}
+          color={colors.accent}
         />
       ) : (
         <View />
@@ -49,7 +49,7 @@ export default function ThemeScreen() {
 
   return (
     <ScrollView
-      style={[styles.scroll, { backgroundColor: colors.dark }]}
+      style={[styles.scroll, { backgroundColor: colors.card }]}
       contentContainerStyle={styles.scrollContent}
       showsVerticalScrollIndicator={false}
     >

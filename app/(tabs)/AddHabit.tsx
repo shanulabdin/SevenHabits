@@ -23,7 +23,7 @@ export default function AddHabit() {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.dark }]}>
+    <View style={[styles.container, { backgroundColor: colors.card }]}>
       <Heading
         title="Add Habit"
         iconTitle="Save"

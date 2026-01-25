@@ -16,7 +16,7 @@ export default function Heading({
   onIconPress,
 }: HeadingProps) {
   return (
-    <View style={[styles.container, { backgroundColor: colors.dark }]}>
+    <View style={[styles.container, { backgroundColor: colors.card }]}>
       <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
 
       {(icon || iconTitle) && (

@@ -281,7 +281,7 @@ export default function Index() {
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
-          style={[styles.scroll, { backgroundColor: colors.dark }]}
+          style={[styles.scroll, { backgroundColor: colors.card }]}
           ref={scrollRef}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
@@ -314,7 +314,7 @@ export default function Index() {
               return (
                 <View
                   key={habit.id}
-                  style={[styles.editCard, { backgroundColor: colors.dark }]}
+                  style={[styles.editCard, { backgroundColor: colors.card }]}
                   onLayout={(e) => {
                     const y = e.nativeEvent.layout.y;
                     scrollRef.current?.scrollTo({
@@ -364,9 +364,9 @@ export default function Index() {
           {/* Reset button */}
           <Pressable
             onPress={resetAllData}
-            style={[styles.resetBtn, { backgroundColor: colors.dark }]}
+            style={[styles.resetBtn, { backgroundColor: colors.card }]}
           >
-            <Text style={[styles.resetText, { color: colors.orange }]}>
+            <Text style={[styles.resetText, { color: colors.accent }]}>
               Reset Data
             </Text>
           </Pressable>
@@ -382,7 +382,7 @@ export default function Index() {
             }}
           >
             <Pressable
-              style={[styles.modalCard, { backgroundColor: colors.dark }]}
+              style={[styles.modalCard, { backgroundColor: colors.card }]}
               onPress={() => {
                 setIsModalVisible(false);
                 setSelectedHabitId(null);
@@ -421,7 +421,7 @@ export default function Index() {
                   deleteHabit(selectedHabitId);
                 }}
               >
-                <Text style={[styles.modalDelete, { color: colors.orange }]}>
+                <Text style={[styles.modalDelete, { color: colors.accent }]}>
                   Delete
                 </Text>
               </Pressable>

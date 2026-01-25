@@ -51,7 +51,7 @@ export default function GeneralScreen() {
         }
       />
 
-      <View style={[styles.card, { backgroundColor: colors.dark }]}>
+      <View style={[styles.card, { backgroundColor: colors.card }]}>
         <Row
           title="Week starts on"
           right="Mon"

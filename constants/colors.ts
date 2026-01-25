@@ -1,8 +1,9 @@
 export const colors = {
-  background: "#222222",
-  orange: "#FF6D1F",
-  light: "#F5E7C6",
-  lighter: "#FAF3E1",
+  background: "#0B0B0B",
+  surface: "#141414",
+  card: "#151515",
   text: "#FFFFFF",
-  dark: "#151515",
+  mutedText: "rgba(255,255,255,0.7)",
+  border: "#000000",
+  accent: "#FF6D1F",
 };

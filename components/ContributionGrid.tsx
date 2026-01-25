@@ -75,7 +75,7 @@ export default function ContributionGrid({
                   {
                     width: size,
                     height: size,
-                    backgroundColor: done ? colors.orange : "black",
+                    backgroundColor: done ? colors.accent : "black",
                     // spacing between rows
                     marginBottom: j !== col.length - 1 ? gap : 0,
                   },

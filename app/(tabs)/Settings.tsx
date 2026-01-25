@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   },
 
   group: {
-    backgroundColor: colors.dark,
+    backgroundColor: colors.card,
     borderWidth: 1,
     borderColor: "black",
     overflow: "hidden",
