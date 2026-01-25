@@ -16,11 +16,13 @@ const DARK = {
   inverseSurface: "#F2F2F2",
   inverseText: "#000000",
 
-  border: "rgba(161, 161, 161, 1)",
-  borderMuted: "rgba(161, 161, 161, 0)",
+  border: "rgba(161, 161, 161, 0.5)",
+  borderMuted: "rgba(161, 161, 161, 0.25)",
 
-  accent: "#FF6D1F",
-  accentMuted: "rgba(255, 109, 31, 0.1)",
+  orange: "#FF6D1F",
+
+  accent: "#ffffffff",
+  accentMuted: "rgba(255, 255, 255, 0.1)",
 };
 
 const LIGHT = {
@@ -36,9 +38,11 @@ const LIGHT = {
 
   border: "rgba(0, 0, 0, 0.5)",
   borderMuted: "rgba(0, 0, 0, 0.25)",
+  
+  orange: "#FF6D1F",
 
-  accent: "#FF6D1F",
-  accentMuted: "rgba(255, 109, 31, 0.1)",
+  accent: "#000000ff",
+  accentMuted: "rgba(0, 0, 0, 0.1)",
 };
 
 

@@ -58,7 +58,7 @@ const { colors } = useThemeColors();
             </Text>
             <Ionicons
               name="flame"
-              color={colors.accent}
+              color={colors.orange}
               size={18}
               style={{ transform: [{ translateY: 1 }] }}
             />
@@ -71,7 +71,8 @@ const { colors } = useThemeColors();
           hitSlop={12}
           style={[
             styles.checkbox,
-            checked && { backgroundColor: colors.accent },
+            checked && { backgroundColor: colors.orange, borderColor: colors.orange },
+            
           ]}
         >
           {checked && (
@@ -113,7 +114,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     borderWidth: 1,
-    // borderColor: "black",
   },
 
   cardNoGrid: {
@@ -156,7 +156,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 2,
-    borderColor: colors.accent,
+    backgroundColor: "transparent",
+    borderColor: colors.accent
   },
 
   gridBox: {
@@ -164,7 +165,6 @@ const styles = StyleSheet.create({
     padding: 16,
     borderBottomLeftRadius: 16,
     borderWidth: 1,
-    // borderColor: "black",
     alignItems: "center",
   },
 });

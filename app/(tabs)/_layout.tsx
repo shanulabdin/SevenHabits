@@ -45,7 +45,7 @@ export default function TabLayout() {
               style={[
                 styles.addBubble,
                 {
-                  backgroundColor: focused ? colors.accent : colors.text,
+                  backgroundColor: focused ? colors.orange : colors.orange,
                   width: (focused ? size + 6 : size + 2) + 6,
                   height: (focused ? size + 6 : size + 2) + 6,
                   borderRadius: ((focused ? size + 6 : size + 2) ) / 4,

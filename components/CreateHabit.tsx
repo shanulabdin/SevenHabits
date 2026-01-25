@@ -45,7 +45,7 @@ export default function CreateHabit({
           },
         ]}
         placeholder="Create Habit"
-        placeholderTextColor={colors.accent}
+        placeholderTextColor={colors.text}
         onChangeText={setNewHabitTitle}
         value={newHabitTitle}
         returnKeyType="done"

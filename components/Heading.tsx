@@ -18,7 +18,7 @@ export default function Heading({
   const { colors } = useThemeColors();
   return (
     <View style={[styles.container, { backgroundColor: colors.card, borderColor: colors.border }]}>
-      <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
+      <Text style={[styles.title, { color: colors.accent }]}>{title}</Text>
 
       {(icon || iconTitle) && (
         <Pressable

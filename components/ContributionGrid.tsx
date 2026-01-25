@@ -75,7 +75,7 @@ export default function ContributionGrid({
                   {
                     width: size,
                     height: size,
-                    backgroundColor: done ? colors.accent : colors.accentMuted,
+                    backgroundColor: done ? colors.orange : colors.accentMuted,
                     borderColor: done ? "transparent" : colors.borderMuted,
                     borderWidth: 1,
                     borderRadius: 3,
