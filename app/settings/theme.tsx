@@ -24,7 +24,7 @@ export default function ThemeScreen() {
     <Pressable
       onPress={() => setTheme(value)}
       android_ripple={{ color: "#2b2b2b" }}
-      style={[styles.row, { backgroundColor: colors.background }]}
+      style={[styles.row, { backgroundColor: colors.card }]}
     >
       <Text
         style={[
@@ -49,7 +49,7 @@ export default function ThemeScreen() {
 
   return (
     <ScrollView
-      style={[styles.scroll, { backgroundColor: colors.card }]}
+      style={[styles.scroll, { backgroundColor: colors.background }]}
       contentContainerStyle={styles.scrollContent}
       showsVerticalScrollIndicator={false}
     >
@@ -62,9 +62,9 @@ export default function ThemeScreen() {
         }
       />
 
-      <View style={styles.card}>
+      <View style={[styles.card, {borderColor: colors.border}]}>
         <Row label="Dark" value="dark" />
-        <View style={styles.divider} />
+        <View style={[styles.divider, {backgroundColor: colors.border}]} />
         <Row label="Light" value="light" />
       </View>
     </ScrollView>
@@ -84,7 +84,6 @@ const styles = StyleSheet.create({
   card: {
     marginTop: 16,
     borderWidth: 1,
-    borderColor: "black",
     borderTopRightRadius: 16,
     borderBottomLeftRadius: 16,
     overflow: "hidden",
@@ -105,7 +104,6 @@ const styles = StyleSheet.create({
 
   divider: {
     height: 1,
-    backgroundColor: "black",
     marginHorizontal: 16,
   },
 });

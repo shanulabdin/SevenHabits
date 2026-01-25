@@ -1,4 +1,4 @@
-import { colors } from "@/constants/colors";
+import { useThemeColors } from '@/constants/theme';
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -15,8 +15,9 @@ export default function Heading({
   icon,
   onIconPress,
 }: HeadingProps) {
+  const { colors } = useThemeColors();
   return (
-    <View style={[styles.container, { backgroundColor: colors.card }]}>
+    <View style={[styles.container, { backgroundColor: colors.card, borderColor: colors.border }]}>
       <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
 
       {(icon || iconTitle) && (
@@ -48,7 +49,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 16,
     borderWidth: 1,
-    borderColor: "black",
     borderTopRightRadius: 16,
     borderBottomLeftRadius: 16,
   },

@@ -1,13 +1,13 @@
 // app/(tabs)/settings.tsx  (or wherever your settings route lives)
 import Heading from "@/components/Heading";
-import { colors } from "@/constants/colors"; // adjust if needed
 import { Ionicons } from "@expo/vector-icons";
 import { Alert, Linking, Pressable, ScrollView, Share, StyleSheet, Text, View } from "react-native";
 
+import { colors } from "@/constants/colors";
+import { useThemeColors } from '@/constants/theme';
 import Constants from "expo-constants";
 import { router } from "expo-router";
 import * as StoreReview from "expo-store-review";
-
 
 type Item = {
   title: string;
@@ -51,9 +51,10 @@ const sendFeedback = async () => {
 
 // Components
 function SettingsRow({ title, icon, onPress }: Item) {
+  const { colors } = useThemeColors();  
   return (
     <Pressable onPress={onPress} style={styles.row} android_ripple={{ color: "#2b2b2b" }}>
-      <Text style={styles.rowText}>{title}</Text>
+      <Text style={[styles.rowText, {color: colors.text}]}>{title}</Text>
       <Ionicons name={icon} size={18} color={colors.text} />
     </Pressable>
   );
@@ -61,11 +62,11 @@ function SettingsRow({ title, icon, onPress }: Item) {
 
 function SettingsGroup({ items }: { items: Item[] }) {
   return (
-    <View style={styles.group}>
+    <View style={[styles.group, {borderColor: colors.border}]}>
       {items.map((it, idx) => (
         <View key={it.title}>
           <SettingsRow {...it} />
-          {idx !== items.length - 1 ? <View style={styles.divider} /> : null}
+          {idx !== items.length - 1 ? <View style={[styles.divider, {backgroundColor: colors.border}]} /> : null}
         </View>
       ))}
     </View>
@@ -91,11 +92,14 @@ export default function SettingsScreen() {
     { title: "Feedback", icon: "chatbubble-ellipses-outline", onPress: sendFeedback },
   ];
 
+  const { colors } = useThemeColors();
+
   return (
-    <View style={styles.screen} >
+    <View style={[styles.screen, {backgroundColor: colors.card}]} >
       <ScrollView
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
+
       >
         {/* Header */}
         <Heading title="Settings" iconTitle="" icon="settings" />
@@ -112,7 +116,6 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "black",
     paddingTop: 64,
   },
   content: {
@@ -123,9 +126,7 @@ const styles = StyleSheet.create({
   },
 
   group: {
-    backgroundColor: colors.card,
     borderWidth: 1,
-    borderColor: "black",
     overflow: "hidden",
     borderTopRightRadius: 16,
     borderBottomLeftRadius: 16,
@@ -138,14 +139,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   rowText: {
-    color: colors.text,
     fontSize: 16,
     fontFamily: "Poppins_600SemiBold",
     opacity: 0.8,
   },
   divider: {
     height: 1,
-    backgroundColor: "black",
     marginLeft: 14,
     marginRight: 14,
   },

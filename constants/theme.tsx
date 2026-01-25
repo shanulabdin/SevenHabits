@@ -11,7 +11,7 @@ const DARK = {
   card: "#151515",
   text: "#FFFFFF",
   mutedText: "rgba(255,255,255,0.7)",
-  border: "#000000",
+  border: "#ffffffff",
   accent: "#FF6D1F",
 };
 
@@ -21,7 +21,7 @@ const LIGHT = {
   card: "#FAFAFA",
   text: "#000000",
   mutedText: "rgba(0,0,0,0.7)",
-  border: "#E5E5E5",
+  border: "#000000",
   accent: "#FF6D1F",
 };
 
