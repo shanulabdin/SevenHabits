@@ -242,7 +242,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 20,
     borderWidth: 1,
-
   },
 
   modalTitle: {
@@ -266,14 +265,14 @@ const styles = StyleSheet.create({
   cancelBtn: {
     paddingVertical: 10,
     paddingHorizontal: 16,
-    borderRadius: 10,
+    borderRadius: 6,
     borderWidth: 1,
   },
 
   deleteBtn: {
     paddingVertical: 10,
     paddingHorizontal: 16,
-    borderRadius: 10,
+    borderRadius: 6,
   },
 
   deleteText: {
