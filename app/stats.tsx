@@ -217,6 +217,12 @@ const styles = StyleSheet.create({
     // borderTopRightRadius: 16,
     // borderBottomLeftRadius: 16,
     borderRadius: 6,
+
+    shadowColor: "#000",
+    shadowOpacity: 0.35,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 3,
   },
   selectorBtnGap: {
     marginRight: 8,
@@ -236,6 +242,12 @@ const styles = StyleSheet.create({
     // borderBottomLeftRadius: 16,
     borderRadius: 10,
     overflow: "hidden",
+
+    shadowColor: "#000",
+    shadowOpacity: 0.35,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 3,
   },
   cardHeader: {
     flexDirection: "row",
@@ -273,6 +285,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow: "hidden",
     marginBottom: 12,
+
+    shadowColor: "#000",
+    shadowOpacity: 0.35,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 3,
   },
   gridLeft: {
     marginRight: "4%",
