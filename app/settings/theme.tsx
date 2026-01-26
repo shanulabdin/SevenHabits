@@ -9,6 +9,7 @@ import {
   Text,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ThemeScreen() {
   const router = useRouter();
@@ -48,26 +49,29 @@ export default function ThemeScreen() {
   );
 
   return (
-    <ScrollView
-      style={[styles.scroll, { backgroundColor: colors.background }]}
-      contentContainerStyle={styles.scrollContent}
-      showsVerticalScrollIndicator={false}
-    >
-      <Heading
-        title="Theme"
-        iconTitle="Back"
-        icon="arrow-back"
-        onIconPress={() =>
-          router.canGoBack() ? router.back() : router.replace("/(tabs)")
-        }
-      />
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
 
-      <View style={[styles.card, {borderColor: colors.border}]}>
-        <Row label="Dark" value="dark" />
-        <View style={[styles.divider, {backgroundColor: colors.border}]} />
-        <Row label="Light" value="light" />
-      </View>
-    </ScrollView>
+      <ScrollView
+        style={[styles.scroll, { backgroundColor: colors.background }]}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <Heading
+          title="Theme"
+          iconTitle="Back"
+          icon="arrow-back"
+          onIconPress={() =>
+            router.canGoBack() ? router.back() : router.replace("/(tabs)")
+          }
+        />
+
+        <View style={[styles.card, { borderColor: colors.border }]}>
+          <Row label="Dark" value="dark" />
+          <View style={[styles.divider, { backgroundColor: colors.border }]} />
+          <Row label="Light" value="light" />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -77,8 +81,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     padding: 12,
-    paddingTop: 80,
-    paddingBottom: 24,
+    paddingTop: 10,
   },
 
   card: {
