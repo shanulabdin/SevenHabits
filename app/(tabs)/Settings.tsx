@@ -1,13 +1,14 @@
 // app/(tabs)/settings.tsx  (or wherever your settings route lives)
 import Heading from "@/components/Heading";
 import { Ionicons } from "@expo/vector-icons";
-import { Alert, Linking, Pressable, ScrollView, Share, StyleSheet, Text, View } from "react-native";
+import { Alert, Linking, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View } from "react-native";
 
 import { useThemeColors } from '@/constants/theme';
 import { useHabits } from "@/src/context/HabitsProvider";
 import Constants from "expo-constants";
 import { router } from "expo-router";
 import * as StoreReview from "expo-store-review";
+import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 type Item = {
@@ -81,24 +82,8 @@ function SettingsGroup({ items }: { items: Item[] }) {
 
 export default function SettingsScreen() {
   const { resetAllData } = useHabits();
-  function confirmDeleteAllData() {
-    Alert.alert(
-      "Delete all data?",
-      "This will permanently remove all habits and history. This action cannot be undone.",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Delete",
-          style: "destructive",
-          onPress: resetAllData,
-        },
-      ],
-      { cancelable: true }
-    );
-  }
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+
 
   const top: Item[] = [
     { title: "Theme", icon: "color-palette-outline", onPress: () => router.push("/settings/theme") },
@@ -118,7 +103,7 @@ export default function SettingsScreen() {
     { title: "Feedback", icon: "chatbubble-ellipses-outline", onPress: sendFeedback },
   ];
   const deleteData: Item[] = [
-    { title: "Delete All Data", icon: "trash-outline", onPress: () => confirmDeleteAllData() }
+    { title: "Delete All Data", icon: "trash-outline", onPress: () => setShowDeleteConfirm(true) }
   ];
 
   const { colors } = useThemeColors();
@@ -143,6 +128,48 @@ export default function SettingsScreen() {
           <SettingsGroup items={deleteData} />
         </ScrollView>
       </View>
+
+      <Modal
+        visible={showDeleteConfirm}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowDeleteConfirm(false)}
+      >
+        <View style={styles.overlay}>
+          <View style={[styles.modal, { backgroundColor: colors.card, borderColor: colors.border }]}>
+
+            <Text style={[styles.modalTitle, { color: colors.text }]}>
+              Delete all data?
+            </Text>
+
+            <Text style={[styles.modalText, { color: colors.mutedText }]}>
+              This will permanently remove all habits and history.
+              This action cannot be undone.
+            </Text>
+
+            <View style={styles.modalActions}>
+              <Pressable
+                onPress={() => setShowDeleteConfirm(false)}
+                style={[styles.cancelBtn, { borderColor: colors.border }]}
+              >
+                <Text style={{ color: colors.text }}>Cancel</Text>
+              </Pressable>
+
+              <Pressable
+                onPress={() => {
+                  setShowDeleteConfirm(false);
+                  resetAllData();
+                }}
+                style={[styles.deleteBtn, { backgroundColor: colors.orange }]}
+              >
+                <Text style={styles.deleteText}>Delete</Text>
+              </Pressable>
+            </View>
+
+          </View>
+        </View>
+      </Modal>
+
     </SafeAreaView>
   );
 }
@@ -203,4 +230,55 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
   },
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  modal: {
+    width: "85%",
+    borderRadius: 10,
+    padding: 20,
+    borderWidth: 1,
+
+  },
+
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "600",
+    marginBottom: 8,
+  },
+
+  modalText: {
+    fontSize: 14,
+    lineHeight: 20,
+    marginBottom: 20,
+  },
+
+  modalActions: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    gap: 12,
+  },
+
+  cancelBtn: {
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 10,
+    borderWidth: 1,
+  },
+
+  deleteBtn: {
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 10,
+  },
+
+  deleteText: {
+    color: "#fff",
+    fontWeight: "600",
+  },
+
 });
