@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const STORAGE_KEY = "@sevenhabits/habits_v1";
 
@@ -80,112 +81,115 @@ export default function Stats() {
   const dayOptions = [7, 30, 100, 365];
 
   return (
-    <ScrollView
-      style={[styles.scroll, { backgroundColor: colors.background }]}
-      contentContainerStyle={styles.scrollContent}
-      keyboardShouldPersistTaps="handled"
-      showsVerticalScrollIndicator={false}
-    >
-      <Heading
-        title="Stats"
-        iconTitle="Back"
-        icon="arrow-back"
-        onIconPress={onBack}
-      />
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
 
-      {/* Day selector row */}
-      <View style={styles.selectorRow}>
-        {dayOptions.map((d, idx) => (
-          <Pressable
-            key={d}
-            onPress={() => setSelectedDays(d)}
-            style={[
-              styles.selectorBtn,
-              { backgroundColor: colors.card, borderColor: colors.border },
-              idx !== dayOptions.length - 1 && styles.selectorBtnGap,
-            ]}
-          >
-            <Text
+      <ScrollView
+        style={[styles.scroll, { backgroundColor: colors.background }]}
+        contentContainerStyle={styles.scrollContent}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
+        <Heading
+          title="Stats"
+          iconTitle="Back"
+          icon="arrow-back"
+          onIconPress={onBack}
+        />
+
+        {/* Day selector row */}
+        <View style={styles.selectorRow}>
+          {dayOptions.map((d, idx) => (
+            <Pressable
+              key={d}
+              onPress={() => setSelectedDays(d)}
               style={[
-                styles.selectorText,
-                {
-                  color: selectedDays === d ? colors.orange : colors.text,
-                },
-              ]}
-            >
-              {d}
-            </Text>
-          </Pressable>
-        ))}
-      </View>
-
-      {/* Overall card */}
-      <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-        <View style={[styles.cardHeader, { borderBottomColor: colors.border }]}>
-          <Text style={[styles.cardTitle, { color: colors.text }]}>Overall</Text>
-          <Text style={[styles.cardCount, { color: colors.text, opacity: 0.8 }]}>
-            {overallStats.done}/{overallStats.possible}
-          </Text>
-        </View>
-
-        <View style={styles.ringWrap} pointerEvents="none">
-          <DayRing
-            dayNumber={`${overallStats.percent}%`}
-            percent={overallStats.percent}
-            size={200}
-            strokeWidth={20}
-            textSize={40}
-            selected
-          />
-        </View>
-      </View>
-
-      {/* Per-habit cards (2 columns) */}
-      <View style={styles.grid}>
-        {perHabitStats.map((h, idx) => {
-          const isLeft = idx % 2 === 0;
-          return (
-            <View
-              key={h.id}
-              style={[
-                styles.habitCard,
+                styles.selectorBtn,
                 { backgroundColor: colors.card, borderColor: colors.border },
-                isLeft ? styles.gridLeft : styles.gridRight,
+                idx !== dayOptions.length - 1 && styles.selectorBtnGap,
               ]}
             >
-              <View style={[styles.habitHeader, { borderBottomColor: colors.border }]}>
-                <Text
-                  style={[styles.habitTitle, { color: colors.text }]}
-                  numberOfLines={1}
-                >
-                  {h.title}
-                </Text>
+              <Text
+                style={[
+                  styles.selectorText,
+                  {
+                    color: selectedDays === d ? colors.orange : colors.text,
+                  },
+                ]}
+              >
+                {d}
+              </Text>
+            </Pressable>
+          ))}
+        </View>
 
-                <Text
-                  style={[
-                    styles.habitCount,
-                    { color: colors.text, opacity: 0.8 },
-                  ]}
-                >
-                  {h.done}/{h.possible}
-                </Text>
-              </View>
+        {/* Overall card */}
+        <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <View style={[styles.cardHeader, { borderBottomColor: colors.border }]}>
+            <Text style={[styles.cardTitle, { color: colors.text }]}>Overall</Text>
+            <Text style={[styles.cardCount, { color: colors.text, opacity: 0.8 }]}>
+              {overallStats.done}/{overallStats.possible}
+            </Text>
+          </View>
 
-              <View style={styles.habitRing} pointerEvents="none">
-                <DayRing
-                  dayNumber={`${h.percent}%`}
-                  percent={h.percent}
-                  size={110}
-                  strokeWidth={10}
-                  textSize={20}
-                  selected
-                />
+          <View style={styles.ringWrap} pointerEvents="none">
+            <DayRing
+              dayNumber={`${overallStats.percent}%`}
+              percent={overallStats.percent}
+              size={200}
+              strokeWidth={20}
+              textSize={40}
+              selected
+            />
+          </View>
+        </View>
+
+        {/* Per-habit cards (2 columns) */}
+        <View style={styles.grid}>
+          {perHabitStats.map((h, idx) => {
+            const isLeft = idx % 2 === 0;
+            return (
+              <View
+                key={h.id}
+                style={[
+                  styles.habitCard,
+                  { backgroundColor: colors.card, borderColor: colors.border },
+                  isLeft ? styles.gridLeft : styles.gridRight,
+                ]}
+              >
+                <View style={[styles.habitHeader, { borderBottomColor: colors.border }]}>
+                  <Text
+                    style={[styles.habitTitle, { color: colors.text }]}
+                    numberOfLines={1}
+                  >
+                    {h.title}
+                  </Text>
+
+                  <Text
+                    style={[
+                      styles.habitCount,
+                      { color: colors.text, opacity: 0.8 },
+                    ]}
+                  >
+                    {h.done}/{h.possible}
+                  </Text>
+                </View>
+
+                <View style={styles.habitRing} pointerEvents="none">
+                  <DayRing
+                    dayNumber={`${h.percent}%`}
+                    percent={h.percent}
+                    size={110}
+                    strokeWidth={10}
+                    textSize={20}
+                    selected
+                  />
+                </View>
               </View>
-            </View>
-          );
-        })}
-      </View>
-    </ScrollView>
+            );
+          })}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -197,8 +201,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     padding: 12,
-    paddingTop: 80,
-    paddingBottom: 200,
+    paddingTop: 10,
   },
 
   selectorRow: {
