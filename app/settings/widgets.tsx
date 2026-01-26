@@ -3,6 +3,7 @@ import Heading from "@/components/Heading";
 import { useThemeColors } from "@/constants/theme";
 import { useRouter } from "expo-router";
 import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 function WidgetCard({
   title,
@@ -39,45 +40,46 @@ export default function WidgetsScreen() {
   const { colors } = useThemeColors();
 
   return (
-    <ScrollView
-      style={{ flex: 1, backgroundColor: colors.background }}
-      contentContainerStyle={{ padding: 12, paddingTop: 80, paddingBottom: 24 }}
-      showsVerticalScrollIndicator={false}
-    >
-      <Heading
-        title="Widgets"
-        iconTitle="Back"
-        icon="arrow-back"
-        onIconPress={() => (router.canGoBack() ? router.back() : router.replace("/(tabs)"))}
-      />
-
-      <View style={{
-        gap: 12, marginTop: 16,
-
-        shadowColor: "#000",
-        shadowOpacity: 0.25,
-        shadowRadius: 12,
-        shadowOffset: { width: 0, height: 6 },
-        elevation: 3,
-      }}>
-        <WidgetCard
-          title="Home Widget"
-          desc="Show today’s progress and streaks on your home screen."
-          onPress={() => Alert.alert("Coming soon")}
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
+      <ScrollView
+        style={[styles.scrollContent, { flex: 1, backgroundColor: colors.background }]}
+        showsVerticalScrollIndicator={false}
+      >
+        <Heading
+          title="Widgets"
+          iconTitle="Back"
+          icon="arrow-back"
+          onIconPress={() => (router.canGoBack() ? router.back() : router.replace("/(tabs)"))}
         />
-        <WidgetCard
-          title="Lock Screen Widget"
-          desc="Quick view of weekly % and today’s habits."
-          onPress={() => Alert.alert("Coming soon")}
-        />
-        <WidgetCard
-          title="Widget Style"
-          desc="Choose compact / expanded layout and colors."
-          onPress={() => Alert.alert("Coming soon")}
-        />
-      </View>
 
-    </ScrollView>
+        <View style={{
+          gap: 12, marginTop: 16,
+
+          shadowColor: "#000",
+          shadowOpacity: 0.25,
+          shadowRadius: 12,
+          shadowOffset: { width: 0, height: 6 },
+          elevation: 3,
+        }}>
+          <WidgetCard
+            title="Home Widget"
+            desc="Show today’s progress and streaks on your home screen."
+            onPress={() => Alert.alert("Coming soon")}
+          />
+          <WidgetCard
+            title="Lock Screen Widget"
+            desc="Quick view of weekly % and today’s habits."
+            onPress={() => Alert.alert("Coming soon")}
+          />
+          <WidgetCard
+            title="Widget Style"
+            desc="Choose compact / expanded layout and colors."
+            onPress={() => Alert.alert("Coming soon")}
+          />
+        </View>
+
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -95,7 +97,11 @@ const styles = StyleSheet.create({
     // Android
     elevation: 6,
   },
-
+  scrollContent: {
+    padding: 12,
+    paddingTop: 10,
+    paddingBottom: 24
+  },
   card: {
     padding: 16,
     borderRadius: 10,
