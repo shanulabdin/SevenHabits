@@ -9,7 +9,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const STORAGE_KEY = "@sevenhabits/habits_v1";
+const STORAGE_KEY = "@forge/habits_v1";
 
 export default function Stats() {
   const { colors } = useThemeColors();
