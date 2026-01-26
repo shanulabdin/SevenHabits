@@ -5,7 +5,7 @@ import { Alert, Linking, Pressable, ScrollView, Share, StyleSheet, Text, View } 
 
 import { useThemeColors } from '@/constants/theme';
 import { useHabits } from "@/src/context/HabitsProvider";
-import { useConfirmModal } from "@/src/context/hooks/useConfirmModal";
+import { useConfirmModal } from "@/src/hooks/useConfirmModal";
 import Constants from "expo-constants";
 import { router } from "expo-router";
 import * as StoreReview from "expo-store-review";

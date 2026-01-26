@@ -21,7 +21,7 @@ import {
 
 // Utils
 import { useThemeColors } from '@/constants/theme';
-import { useConfirmModal } from '@/src/context/hooks/useConfirmModal';
+import { useConfirmModal } from '@/src/hooks/useConfirmModal';
 import { getDateKey, getLastNDays } from '@/utils/date';
 import { getPercentForDate, getWeeklyPercent } from '@/utils/stats';
 import { getHabitStreakWithGrace } from '@/utils/streaks';
