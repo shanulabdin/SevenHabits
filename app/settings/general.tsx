@@ -1,13 +1,13 @@
 import Heading from "@/components/Heading";
 import { useThemeColors } from "@/constants/theme";
+import { useComingSoon } from "@/src/hooks/useComingSoon";
 import { useRouter } from "expo-router";
 import {
-  Alert,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
-  View,
+  View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -39,6 +39,8 @@ export default function GeneralScreen() {
   const router = useRouter();
   const { colors } = useThemeColors();
 
+  const { openComingSoon, ComingSoonModal } = useComingSoon();
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
       <ScrollView
@@ -59,18 +61,25 @@ export default function GeneralScreen() {
           <Row
             title="Week starts on"
             right="Mon"
-            onPress={() => Alert.alert("Coming soon")}
+            onPress={openComingSoon}
           />
           <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
           <Row
             title="Haptics"
             right="On"
-            onPress={() => Alert.alert("Coming soon")}
+            onPress={openComingSoon}
           />
+          <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
+          <Row
+            title="Show Streak"
+            right=""
+            onPress={openComingSoon}
+          />
         </View>
       </ScrollView>
+      {ComingSoonModal}
     </SafeAreaView>
   );
 }
