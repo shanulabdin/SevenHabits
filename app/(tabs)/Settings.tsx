@@ -146,16 +146,11 @@ export default function SettingsScreen() {
 
           {/* Reset button */}
           <SettingsGroup items={deleteData} />
+          {DeleteConfirmModal}
+
         </ScrollView>
       </View>
 
-      <View style={{ flex: 1 }}>
-        <Pressable onPress={openDeleteConfirm}>
-          <Text>Delete all data</Text>
-        </Pressable>
-
-        {DeleteConfirmModal}
-      </View>
 
     </SafeAreaView>
   );
