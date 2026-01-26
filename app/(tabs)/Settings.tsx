@@ -5,6 +5,7 @@ import { Alert, Linking, Pressable, ScrollView, Share, StyleSheet, Text, View } 
 
 import { useThemeColors } from '@/constants/theme';
 import { useHabits } from "@/src/context/HabitsProvider";
+import { useComingSoon } from "@/src/hooks/useComingSoon";
 import { useConfirmModal } from "@/src/hooks/useConfirmModal";
 import Constants from "expo-constants";
 import { router } from "expo-router";
@@ -95,16 +96,9 @@ export default function SettingsScreen() {
     confirmText: "Delete",
     countdownSeconds: 2,
     onConfirm: resetAllData,
-    colors: {
-      card: colors.card,
-      border: colors.border,
-      text: colors.text,
-      mutedText: colors.mutedText,
-      confirmBg: colors.orange,
-      confirmText: "#fff",
-    },
   });
 
+  const { openComingSoon, ComingSoonModal } = useComingSoon();
 
   const top: Item[] = [
     { title: "Theme", icon: "color-palette-outline", onPress: () => router.push("/settings/theme") },
@@ -112,9 +106,9 @@ export default function SettingsScreen() {
     { title: "Widgets", icon: "cube-outline", onPress: () => router.push("/settings/widgets") },
   ];
   const cloud: Item[] = [
-    { title: "Cloud Backup", icon: "cloud-outline", onPress: () => Alert.alert("Coming soon") },
-    { title: "Import", icon: "download-outline", onPress: () => Alert.alert("Coming soon") },
-    { title: "Export", icon: "share-outline", onPress: () => Alert.alert("Coming soon") },
+    { title: "Cloud Backup", icon: "cloud-outline", onPress: openComingSoon },
+    { title: "Import", icon: "download-outline", onPress: openComingSoon },
+    { title: "Export", icon: "share-outline", onPress: openComingSoon },
   ];
   const misc: Item[] = [
     { title: "Share", icon: "share-social-outline", onPress: shareApp },
@@ -143,6 +137,7 @@ export default function SettingsScreen() {
           <SettingsGroup items={top} />
           <SettingsGroup items={cloud} />
           <SettingsGroup items={misc} />
+          {ComingSoonModal}
 
           {/* Reset button */}
           <SettingsGroup items={deleteData} />
@@ -150,7 +145,6 @@ export default function SettingsScreen() {
 
         </ScrollView>
       </View>
-
 
     </SafeAreaView>
   );

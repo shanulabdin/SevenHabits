@@ -9,15 +9,6 @@ type UseConfirmModalArgs = {
 
   onConfirm: (id?: string) => void;
 
-  colors: {
-    card: string;
-    border: string;
-    text: string;
-    mutedText: string;
-    confirmBg: string;
-    confirmText: string;
-  };
-
   countdownSeconds?: number; // optional
 };
 
@@ -27,7 +18,6 @@ export function useConfirmModal({
   confirmText = "Confirm",
   cancelText = "Cancel",
   onConfirm,
-  colors,
   countdownSeconds,
 }: UseConfirmModalArgs) {
   const [visible, setVisible] = useState(false);
@@ -58,12 +48,10 @@ export function useConfirmModal({
       confirmText={confirmText}
       countdown={countdown}
       confirmCountdownLabel={(c) => `${confirmText} ${c}`}
-      onCancel={closeConfirm}
       onConfirm={() => {
         closeConfirm();
         onConfirm();
       }}
-      colors={colors}
     />
   );
 

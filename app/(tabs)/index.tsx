@@ -215,14 +215,6 @@ export default function Index() {
       if (!selectedHabitId) return;
       deleteHabit(selectedHabitId);
     },
-    colors: {
-      card: colors.card,
-      border: colors.border,
-      text: colors.text,
-      mutedText: colors.mutedText,
-      confirmBg: colors.orange,
-      confirmText: "#fff",
-    },
   });
 
   return (

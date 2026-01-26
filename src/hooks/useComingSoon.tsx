@@ -1,16 +1,8 @@
 import { useCallback, useState } from "react";
 import ConfirmModal from "../../components/ConfirmModal";
 
-type Colors = {
-  card: string;
-  border: string;
-  text: string;
-  mutedText: string;
-  confirmBg: string;
-  confirmText: string;
-}
 
-export function useComingSoon(colors: Colors) {
+export function useComingSoon() {
   const [visible, setVisible] = useState(false);
 
   const openComingSoon = useCallback(() => setVisible(true), []);
@@ -24,8 +16,8 @@ export function useComingSoon(colors: Colors) {
       cancelText="Close"
       confirmText="OK"
       onCancel={closeComingSoon}
+      showCancel={false}
       onConfirm={closeComingSoon}
-      colors={colors}
     />
   );
 

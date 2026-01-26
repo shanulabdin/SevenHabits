@@ -1,3 +1,4 @@
+import { useThemeColors } from "@/constants/theme";
 import React from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -6,10 +7,11 @@ type ConfirmModalProps = {
   title: string;
   message: string | React.ReactNode;
 
-  onCancel: () => void;
+  onCancel?: () => void;
   onConfirm: () => void;
 
   cancelText?: string;
+  showCancel?: boolean;
   confirmText?: string;
 
   // Optional: disable/opacity + countdown label
@@ -17,15 +19,6 @@ type ConfirmModalProps = {
   countdown?: number; // e.g. 3 -> shows "Delete 3"
   confirmCountdownLabel?: (count: number) => string;
 
-  // Styling hooks (so you can pass your theme colors)
-  colors: {
-    card: string;
-    border: string;
-    text: string;
-    mutedText: string;
-    confirmBg: string;
-    confirmText: string;
-  };
 
   // Optional: modal width/padding overrides if needed
   containerStyle?: any;
@@ -38,11 +31,11 @@ export default function ConfirmModal({
   onCancel,
   onConfirm,
   cancelText = "Cancel",
+  showCancel = true,
   confirmText = "Confirm",
   confirmDisabled = false,
   countdown,
   confirmCountdownLabel,
-  colors,
   containerStyle,
 }: ConfirmModalProps) {
   const isCountdownActive = typeof countdown === "number" && countdown > 0;
@@ -52,6 +45,7 @@ export default function ConfirmModal({
     ? (confirmCountdownLabel ? confirmCountdownLabel(countdown!) : `${confirmText} ${countdown}`)
     : confirmText;
 
+  const { colors } = useThemeColors();
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
       <View style={styles.overlay}>
@@ -71,19 +65,24 @@ export default function ConfirmModal({
           )}
 
           <View style={styles.actions}>
-            <Pressable onPress={onCancel} style={[styles.cancelBtn, { borderColor: colors.border }]}>
-              <Text style={{ color: colors.text }}>{cancelText}</Text>
-            </Pressable>
+            {showCancel && (
+              <Pressable
+                onPress={onCancel}
+                style={[styles.cancelBtn, { borderColor: colors.border }]}
+              >
+                <Text style={{ color: colors.text }}>{cancelText}</Text>
+              </Pressable>
+            )}
 
             <Pressable
               disabled={disabled}
               onPress={onConfirm}
               style={[
                 styles.confirmBtn,
-                { backgroundColor: colors.confirmBg, opacity: disabled ? 0.6 : 1 },
+                { backgroundColor: colors.orange, opacity: disabled ? 0.6 : 1 },
               ]}
             >
-              <Text style={[styles.confirmText, { color: colors.confirmText }]}>{confirmLabel}</Text>
+              <Text style={[styles.confirmText, { color: colors.inverseText }]}>{confirmLabel}</Text>
             </Pressable>
           </View>
         </View>
