@@ -81,6 +81,25 @@ function SettingsGroup({ items }: { items: Item[] }) {
 
 export default function SettingsScreen() {
   const { resetAllData } = useHabits();
+  function confirmDeleteAllData() {
+    Alert.alert(
+      "Delete all data?",
+      "This will permanently remove all habits and history. This action cannot be undone.",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: resetAllData,
+        },
+      ],
+      { cancelable: true }
+    );
+  }
+
   const top: Item[] = [
     { title: "Theme", icon: "color-palette-outline", onPress: () => router.push("/settings/theme") },
     { title: "General", icon: "grid-outline", onPress: () => router.push("/settings/general") },
@@ -99,7 +118,7 @@ export default function SettingsScreen() {
     { title: "Feedback", icon: "chatbubble-ellipses-outline", onPress: sendFeedback },
   ];
   const deleteData: Item[] = [
-    { title: "Delete All Data", icon: "trash-outline", onPress: () => resetAllData() }
+    { title: "Delete All Data", icon: "trash-outline", onPress: () => confirmDeleteAllData() }
   ];
 
   const { colors } = useThemeColors();
