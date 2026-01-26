@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
 import ConfirmModal from "@/components/ConfirmModal";
+import { useCallback, useEffect, useState } from "react";
 
 type UseConfirmModalArgs = {
   title: string;
@@ -7,7 +7,7 @@ type UseConfirmModalArgs = {
   confirmText?: string;
   cancelText?: string;
 
-  onConfirm: () => void;
+  onConfirm: (id?: string) => void;
 
   colors: {
     card: string;

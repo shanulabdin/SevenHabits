@@ -21,6 +21,7 @@ import {
 
 // Utils
 import { useThemeColors } from '@/constants/theme';
+import { useConfirmModal } from '@/src/context/hooks/useConfirmModal';
 import { getDateKey, getLastNDays } from '@/utils/date';
 import { getPercentForDate, getWeeklyPercent } from '@/utils/stats';
 import { getHabitStreakWithGrace } from '@/utils/streaks';
@@ -144,7 +145,7 @@ export default function Index() {
         };
       })
     );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [todayKey]);
 
   function deleteHabit(id: string) {
@@ -200,6 +201,31 @@ export default function Index() {
     : null;
 
   const gridLabel = selectedHabit?.showGrid ?? true ? "Hide Grid" : "Show Grid";
+
+  const { resetAllData } = useHabits();
+
+  const {
+    openConfirm: openDeleteHabitConfirm,
+    Confirm: DeleteHabitConfirmModal,
+  } = useConfirmModal({
+    title: "Delete this habit?",
+    message:
+      "This will permanently remove this habit and its history.",
+    confirmText: "Delete",
+    countdownSeconds: 0,
+    onConfirm: () => {
+      if (!selectedHabitId) return;
+      deleteHabit(selectedHabitId);
+    },
+    colors: {
+      card: colors.card,
+      border: colors.border,
+      text: colors.text,
+      mutedText: colors.mutedText,
+      confirmBg: colors.orange,
+      confirmText: "#fff",
+    },
+  });
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
@@ -347,7 +373,7 @@ export default function Index() {
                 <Pressable
                   onPress={() => {
                     if (!selectedHabitId) return;
-                    deleteHabit(selectedHabitId);
+                    openDeleteHabitConfirm();
                   }}
                 >
                   <Text style={[styles.modalDelete, { color: colors.orange }]}>
@@ -359,6 +385,7 @@ export default function Index() {
           </Modal>
         </View>
       </KeyboardAvoidingView>
+      {DeleteHabitConfirmModal}
     </SafeAreaView>
 
   );

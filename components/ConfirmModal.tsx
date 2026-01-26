@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Pressable, Text, View, StyleSheet } from "react-native";
+import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 
 type ConfirmModalProps = {
   visible: boolean;
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.45)",
     justifyContent: "center",
-    padding: 18,
+    padding: 30,
   },
   modal: {
     borderWidth: 1,
@@ -107,12 +107,12 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 18,
     fontWeight: "700",
-    marginBottom: 8,
+    marginBottom: 15,
   },
   modalText: {
     fontSize: 14,
-    lineHeight: 20,
-    marginBottom: 14,
+    lineHeight: 22,
+    marginBottom: 20,
   },
   actions: {
     flexDirection: "row",
