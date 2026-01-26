@@ -84,7 +84,7 @@ export default function SettingsScreen() {
   const { resetAllData } = useHabits();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   
-  const [deleteEnabled, setDeleteEnabled] = useState(false);
+  const [countDown, setCountDown] = useState(2);
 
   const top: Item[] = [
     { title: "Theme", icon: "color-palette-outline", onPress: () => router.push("/settings/theme") },
@@ -109,15 +109,21 @@ export default function SettingsScreen() {
 
   useEffect(() => {
     if (!showDeleteConfirm) {
-      setDeleteEnabled(false);
+      setCountDown(2);
       return;
     }
 
-    const timer = setTimeout(() => {
-      setDeleteEnabled(true);
-    }, 2000);
+    const interval = setInterval(() => {
+      setCountDown(prev => {
+        if(prev <= 1){
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
 
-    return () => clearTimeout(timer);
+    return () => clearTimeout(interval);
   }, [showDeleteConfirm])
 
   const { colors } = useThemeColors();
@@ -170,14 +176,14 @@ export default function SettingsScreen() {
               </Pressable>
 
               <Pressable
-                disabled={!deleteEnabled}
+                disabled={countDown > 0}
                 onPress={() => {
                   setShowDeleteConfirm(false);
                   resetAllData();
                 }}
-                style={[styles.deleteBtn, { backgroundColor: colors.orange, opacity: deleteEnabled ? 1 : 0.6 }]}
+                style={[styles.deleteBtn, { backgroundColor: colors.orange, opacity: countDown === 0 ? 1 : 0.6 }]}
               >
-                <Text style={styles.deleteText}>Delete</Text>
+                <Text style={styles.deleteText}>{countDown === 0 ? "Delete" : `Delete ${countDown}`}</Text>
               </Pressable>
             </View>
 
@@ -273,7 +279,7 @@ const styles = StyleSheet.create({
 
   modalActions: {
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     gap: 12,
   },
 
