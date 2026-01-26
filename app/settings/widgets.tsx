@@ -2,7 +2,7 @@
 import Heading from "@/components/Heading";
 import { useThemeColors } from "@/constants/theme";
 import { useRouter } from "expo-router";
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 function WidgetCard({
@@ -19,7 +19,7 @@ function WidgetCard({
     <View style={styles.shadowWrapper}>
       <Pressable
         onPress={onPress}
-        android_ripple={{ color: "#2b2b2b", foreground: true }}
+        // android_ripple={{ color: "#cfcfcfff", foreground: true }}
         style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
       >
         <Text style={[styles.title, { color: colors.text }]}>
@@ -64,17 +64,10 @@ export default function WidgetsScreen() {
           <WidgetCard
             title="Home Widget"
             desc="Show today’s progress and streaks on your home screen."
-            onPress={() => Alert.alert("Coming soon")}
-          />
-          <WidgetCard
-            title="Lock Screen Widget"
-            desc="Quick view of weekly % and today’s habits."
-            onPress={() => Alert.alert("Coming soon")}
           />
           <WidgetCard
             title="Widget Style"
             desc="Choose compact / expanded layout and colors."
-            onPress={() => Alert.alert("Coming soon")}
           />
         </View>
 

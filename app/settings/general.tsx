@@ -68,15 +68,7 @@ export default function GeneralScreen() {
             right="On"
             onPress={() => Alert.alert("Coming soon")}
           />
-          <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
-          <Row
-            title="Reset all data"
-            right=""
-            onPress={() =>
-              Alert.alert("Later", "You’ll wire AsyncStorage reset here")
-            }
-          />
         </View>
       </ScrollView>
     </SafeAreaView>
