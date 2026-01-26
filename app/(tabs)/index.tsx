@@ -42,7 +42,6 @@ export default function Index() {
   const router = useRouter();
 
   const { habits, setHabits } = useHabits();
-  const { resetAllData } = useHabits();
 
   // Async Storage --|
 
@@ -299,15 +298,6 @@ export default function Index() {
               );
             })}
 
-            {/* Reset button */}
-            <Pressable
-              onPress={resetAllData}
-              style={[styles.resetBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
-            >
-              <Text style={[styles.resetText, { color: colors.accent }]}>
-                Reset Data
-              </Text>
-            </Pressable>
           </ScrollView>
 
           {/* Modal */}
@@ -444,20 +434,6 @@ const styles = StyleSheet.create({
     height: 32,
     alignItems: "center",
     justifyContent: "center",
-  },
-
-
-  resetBtn: {
-    alignSelf: "flex-end",
-    marginBottom: 12,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 10,
-    borderWidth: 1,
-  },
-  resetText: {
-    fontSize: 14,
-    fontWeight: "600",
   },
 
   modalOverlay: {

@@ -4,11 +4,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { Alert, Linking, Pressable, ScrollView, Share, StyleSheet, Text, View } from "react-native";
 
 import { useThemeColors } from '@/constants/theme';
+import { useHabits } from "@/src/context/HabitsProvider";
 import Constants from "expo-constants";
 import { router } from "expo-router";
 import * as StoreReview from "expo-store-review";
 import { SafeAreaView } from "react-native-safe-area-context";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type Item = {
   title: string;
@@ -76,24 +76,11 @@ function SettingsGroup({ items }: { items: Item[] }) {
     </View>
   );
 }
-  // async function resetAllData() {
-  //   try {
-  //     await AsyncStorage.removeItem(STORAGE_KEY);
-  //     setHabits([]); // or setHabits(defaultHabits)
-  //   } catch (e) {
-  //     console.log("Failed to reset storage:", e);
-  //   }
-  // }
-  {/* Reset button */ }
-  // <Pressable
-  //   onPress={resetAllData}
-  //   style={[styles.resetBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
-  // >
-  //   <Text style={[styles.resetText, { color: colors.accent }]}>
-  //     Reset Data
-  //   </Text>
-  // </Pressable>
+
+
+
 export default function SettingsScreen() {
+  const { resetAllData } = useHabits();
   const top: Item[] = [
     { title: "Theme", icon: "color-palette-outline", onPress: () => router.push("/settings/theme") },
     { title: "General", icon: "grid-outline", onPress: () => router.push("/settings/general") },
@@ -110,6 +97,9 @@ export default function SettingsScreen() {
     { title: "Privacy Policy", icon: "document-text-outline", onPress: () => openUrl("https://yourdomain.com/privacy") },
     { title: "Terms & Conditions", icon: "document-outline", onPress: () => openUrl("https://yourdomain.com/terms") },
     { title: "Feedback", icon: "chatbubble-ellipses-outline", onPress: sendFeedback },
+  ];
+  const deleteData: Item[] = [
+    { title: "Delete All Data", icon: "trash-outline", onPress: () => resetAllData() }
   ];
 
   const { colors } = useThemeColors();
@@ -129,6 +119,9 @@ export default function SettingsScreen() {
           <SettingsGroup items={top} />
           <SettingsGroup items={cloud} />
           <SettingsGroup items={misc} />
+
+          {/* Reset button */}
+          <SettingsGroup items={deleteData} />
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -179,5 +172,16 @@ const styles = StyleSheet.create({
     height: 1,
     marginLeft: 14,
     marginRight: 14,
+  },
+  resetBtn: {
+    height: 46,
+    paddingHorizontal: 14,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  resetText: {
+    fontSize: 14,
+    fontWeight: "600",
   },
 });
