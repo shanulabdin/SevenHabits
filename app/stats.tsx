@@ -1,6 +1,6 @@
 import DayRing from "@/components/DayRing";
 import Heading from "@/components/Heading";
-import { colors } from "@/constants/colors";
+import { useThemeColors } from "@/constants/theme";
 import type { Habit } from "@/types/habit";
 import { getDateKey, getLastNDays } from "@/utils/date";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -11,6 +11,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 const STORAGE_KEY = "@sevenhabits/habits_v1";
 
 export default function Stats() {
+  const { colors } = useThemeColors();
   const router = useRouter();
 
   function onBack() {
@@ -80,7 +81,7 @@ export default function Stats() {
 
   return (
     <ScrollView
-      style={styles.scroll}
+      style={[styles.scroll, { backgroundColor: colors.background }]}
       contentContainerStyle={styles.scrollContent}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
@@ -100,7 +101,7 @@ export default function Stats() {
             onPress={() => setSelectedDays(d)}
             style={[
               styles.selectorBtn,
-              { backgroundColor: colors.card },
+              { backgroundColor: colors.card, borderColor: colors.border },
               idx !== dayOptions.length - 1 && styles.selectorBtnGap,
             ]}
           >
@@ -108,7 +109,7 @@ export default function Stats() {
               style={[
                 styles.selectorText,
                 {
-                  color: selectedDays === d ? colors.accent : colors.text,
+                  color: selectedDays === d ? colors.orange : colors.text,
                 },
               ]}
             >
@@ -119,8 +120,8 @@ export default function Stats() {
       </View>
 
       {/* Overall card */}
-      <View style={[styles.card, { backgroundColor: colors.card }]}>
-        <View style={styles.cardHeader}>
+      <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+        <View style={[styles.cardHeader, { borderBottomColor: colors.border }]}>
           <Text style={[styles.cardTitle, { color: colors.text }]}>Overall</Text>
           <Text style={[styles.cardCount, { color: colors.text, opacity: 0.8 }]}>
             {overallStats.done}/{overallStats.possible}
@@ -148,11 +149,11 @@ export default function Stats() {
               key={h.id}
               style={[
                 styles.habitCard,
-                { backgroundColor: colors.card },
+                { backgroundColor: colors.card, borderColor: colors.border },
                 isLeft ? styles.gridLeft : styles.gridRight,
               ]}
             >
-              <View style={styles.habitHeader}>
+              <View style={[styles.habitHeader, { borderBottomColor: colors.border }]}>
                 <Text
                   style={[styles.habitTitle, { color: colors.text }]}
                   numberOfLines={1}
@@ -191,7 +192,7 @@ export default function Stats() {
 const styles = StyleSheet.create({
   scroll: {
     flex: 1,
-    backgroundColor: "black",
+    // backgroundColor: "black",
     width: "100%",
   },
   scrollContent: {
@@ -209,9 +210,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "black",
-    borderTopRightRadius: 12,
-    borderBottomLeftRadius: 12,
+    borderColor: "red",
+    // borderTopRightRadius: 16,
+    // borderBottomLeftRadius: 16,
+    borderRadius: 6,
   },
   selectorBtnGap: {
     marginRight: 8,
@@ -226,9 +228,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 20,
     borderWidth: 1,
-    borderColor: "black",
-    borderTopRightRadius: 16,
-    borderBottomLeftRadius: 16,
+    // borderColor: "black",
+    // borderTopRightRadius: 16,
+    // borderBottomLeftRadius: 16,
+    borderRadius: 10,
     overflow: "hidden",
   },
   cardHeader: {
@@ -236,7 +239,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     borderBottomWidth: 1,
-    borderBottomColor: "black",
+    // borderBottomColor: "black",
     padding: 16,
   },
   cardTitle: {
@@ -261,9 +264,10 @@ const styles = StyleSheet.create({
   habitCard: {
     width: "48%",
     borderWidth: 1,
-    borderColor: "black",
-    borderTopRightRadius: 16,
-    borderBottomLeftRadius: 16,
+    // borderColor: "black",
+    // borderTopRightRadius: 16,
+    // borderBottomLeftRadius: 16,
+    borderRadius: 10,
     overflow: "hidden",
     marginBottom: 12,
   },
@@ -278,7 +282,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     borderBottomWidth: 1,
-    borderBottomColor: "black",
+    borderBottomColor: "green",
     paddingVertical: 8,
     paddingHorizontal: 16,
   },

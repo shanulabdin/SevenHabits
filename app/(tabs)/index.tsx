@@ -202,8 +202,6 @@ export default function Index() {
 
   const gridLabel = selectedHabit?.showGrid ?? true ? "Hide Grid" : "Show Grid";
 
-  const { resetAllData } = useHabits();
-
   const {
     openConfirm: openDeleteHabitConfirm,
     Confirm: DeleteHabitConfirmModal,
