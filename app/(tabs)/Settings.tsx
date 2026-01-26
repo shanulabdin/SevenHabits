@@ -3,13 +3,12 @@ import Heading from "@/components/Heading";
 import { Ionicons } from "@expo/vector-icons";
 import { Alert, Linking, Pressable, ScrollView, Share, StyleSheet, Text, View } from "react-native";
 
-import ConfirmModal from "@/components/ConfirmModal";
 import { useThemeColors } from '@/constants/theme';
 import { useHabits } from "@/src/context/HabitsProvider";
+import { useConfirmModal } from "@/src/context/hooks/useConfirmModal";
 import Constants from "expo-constants";
 import { router } from "expo-router";
 import * as StoreReview from "expo-store-review";
-import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 type Item = {
@@ -80,12 +79,32 @@ function SettingsGroup({ items }: { items: Item[] }) {
 }
 
 
-
 export default function SettingsScreen() {
-  const { resetAllData } = useHabits();
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const { colors } = useThemeColors();
 
-  const [countDown, setCountDown] = useState(2);
+  // Delete confirm hooks
+  const { resetAllData } = useHabits();
+
+  const {
+    openConfirm: openDeleteConfirm,
+    Confirm: DeleteConfirmModal,
+  } = useConfirmModal({
+    title: "Delete all data?",
+    message:
+      "This will permanently remove all habits and history.\nThis action cannot be undone.",
+    confirmText: "Delete",
+    countdownSeconds: 2,
+    onConfirm: resetAllData,
+    colors: {
+      card: colors.card,
+      border: colors.border,
+      text: colors.text,
+      mutedText: colors.mutedText,
+      confirmBg: colors.orange,
+      confirmText: "#fff",
+    },
+  });
+
 
   const top: Item[] = [
     { title: "Theme", icon: "color-palette-outline", onPress: () => router.push("/settings/theme") },
@@ -105,29 +124,9 @@ export default function SettingsScreen() {
     { title: "Feedback", icon: "chatbubble-ellipses-outline", onPress: sendFeedback },
   ];
   const deleteData: Item[] = [
-    { title: "Delete All Data", icon: "trash-outline", onPress: () => setShowDeleteConfirm(true) }
+    { title: "Delete All Data", icon: "trash-outline", onPress: () => openDeleteConfirm() }
   ];
 
-  useEffect(() => {
-    if (!showDeleteConfirm) {
-      setCountDown(2);
-      return;
-    }
-
-    const interval = setInterval(() => {
-      setCountDown(prev => {
-        if (prev <= 1) {
-          clearInterval(interval);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearTimeout(interval);
-  }, [showDeleteConfirm])
-
-  const { colors } = useThemeColors();
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
@@ -150,30 +149,13 @@ export default function SettingsScreen() {
         </ScrollView>
       </View>
 
-      <ConfirmModal
-        visible={showDeleteConfirm}
-        title="Delete all data?"
-        message={
-          "This will permanently remove all habits and history.\nThis action cannot be undone."
-        }
-        onCancel={() => setShowDeleteConfirm(false)}
-        onConfirm={() => {
-          setShowDeleteConfirm(false);
-          resetAllData();
-        }}
-        cancelText="Cancel"
-        confirmText="Delete"
-        countdown={countDown}
-        confirmCountdownLabel={(c) => `Delete ${c}`}
-        colors={{
-          card: colors.card,
-          border: colors.border,
-          text: colors.text,
-          mutedText: colors.mutedText,
-          confirmBg: colors.orange,
-          confirmText: "#fff",
-        }}
-      />
+      <View style={{ flex: 1 }}>
+        <Pressable onPress={openDeleteConfirm}>
+          <Text>Delete all data</Text>
+        </Pressable>
+
+        {DeleteConfirmModal}
+      </View>
 
     </SafeAreaView>
   );

@@ -1,0 +1,76 @@
+import { useCallback, useEffect, useState } from "react";
+import ConfirmModal from "@/components/ConfirmModal";
+
+type UseConfirmModalArgs = {
+  title: string;
+  message: string | React.ReactNode;
+  confirmText?: string;
+  cancelText?: string;
+
+  onConfirm: () => void;
+
+  colors: {
+    card: string;
+    border: string;
+    text: string;
+    mutedText: string;
+    confirmBg: string;
+    confirmText: string;
+  };
+
+  countdownSeconds?: number; // optional
+};
+
+export function useConfirmModal({
+  title,
+  message,
+  confirmText = "Confirm",
+  cancelText = "Cancel",
+  onConfirm,
+  colors,
+  countdownSeconds,
+}: UseConfirmModalArgs) {
+  const [visible, setVisible] = useState(false);
+  const [countdown, setCountdown] = useState(countdownSeconds ?? 0);
+
+  const openConfirm = useCallback(() => {
+    setCountdown(countdownSeconds ?? 0);
+    setVisible(true);
+  }, [countdownSeconds]);
+
+  const closeConfirm = useCallback(() => {
+    setVisible(false);
+  }, []);
+
+  useEffect(() => {
+    if (!visible || countdown <= 0) return;
+
+    const t = setTimeout(() => setCountdown(c => c - 1), 1000);
+    return () => clearTimeout(t);
+  }, [visible, countdown]);
+
+  const Confirm = (
+    <ConfirmModal
+      visible={visible}
+      title={title}
+      message={message}
+      cancelText={cancelText}
+      confirmText={confirmText}
+      countdown={countdown}
+      confirmCountdownLabel={(c) => `${confirmText} ${c}`}
+      onCancel={closeConfirm}
+      onConfirm={() => {
+        closeConfirm();
+        onConfirm();
+      }}
+      colors={colors}
+    />
+  );
+
+  return {
+    openConfirm,
+    closeConfirm,
+    Confirm,
+    visible, // optional, sometimes useful
+  };
+}
