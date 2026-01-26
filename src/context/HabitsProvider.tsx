@@ -39,33 +39,34 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
         const parsed = JSON.parse(raw);
         if (!Array.isArray(parsed)) return;
 
-        const cleaned: Habit[] = parsed
-          .map((h: any) => {
+        const cleaned = parsed
+          .map((h: any): Habit | null => {
             if (!h?.id || !h?.title) return null;
 
-            // old format: { checked: boolean }
             if (!h.history && typeof h.checked === "boolean") {
-              return {
+              const habit: Habit = {
                 id: String(h.id),
                 title: String(h.title),
-                history: { [todayKey]: h.checked },
+                history: { [todayKey]: !!h.checked },
                 showGrid: typeof h.showGrid === "boolean" ? h.showGrid : true,
-              } satisfies Habit;
+              };
+              return habit;
             }
 
-            // new format: { history: {...} }
             if (h.history && typeof h.history === "object") {
-              return {
+              const habit: Habit = {
                 id: String(h.id),
                 title: String(h.title),
                 history: h.history as Record<string, boolean>,
                 showGrid: typeof h.showGrid === "boolean" ? h.showGrid : true,
-              } satisfies Habit;
+              };
+              return habit;
             }
 
             return null;
           })
           .filter((h): h is Habit => h !== null);
+
 
         if (cleaned.length) setHabits(cleaned);
       } catch (e) {
