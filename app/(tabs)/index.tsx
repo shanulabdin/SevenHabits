@@ -464,7 +464,7 @@ const styles = StyleSheet.create({
     width: 256, // w-64
     // borderTopRightRadius: 16,
     // borderBottomLeftRadius: 16,
-    borderRadius: 10,
+    borderRadius: 8,
     borderWidth: 1,
     overflow: "hidden",
   },

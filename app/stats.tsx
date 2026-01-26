@@ -260,7 +260,6 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontFamily: "Poppins_500Medium",
     fontSize: 20,
-    fontWeight: "700",
   },
   cardCount: {
     fontFamily: "Poppins_500Medium",
@@ -309,7 +308,7 @@ const styles = StyleSheet.create({
   },
   habitTitle: {
     fontSize: 15,
-    fontWeight: "700",
+    fontFamily: "Poppins_500Medium",
     flex: 1,
     marginRight: 10,
   },
