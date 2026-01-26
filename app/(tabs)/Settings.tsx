@@ -8,7 +8,7 @@ import { useHabits } from "@/src/context/HabitsProvider";
 import Constants from "expo-constants";
 import { router } from "expo-router";
 import * as StoreReview from "expo-store-review";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 type Item = {
@@ -83,7 +83,8 @@ function SettingsGroup({ items }: { items: Item[] }) {
 export default function SettingsScreen() {
   const { resetAllData } = useHabits();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-
+  
+  const [deleteEnabled, setDeleteEnabled] = useState(false);
 
   const top: Item[] = [
     { title: "Theme", icon: "color-palette-outline", onPress: () => router.push("/settings/theme") },
@@ -105,6 +106,19 @@ export default function SettingsScreen() {
   const deleteData: Item[] = [
     { title: "Delete All Data", icon: "trash-outline", onPress: () => setShowDeleteConfirm(true) }
   ];
+
+  useEffect(() => {
+    if (!showDeleteConfirm) {
+      setDeleteEnabled(false);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setDeleteEnabled(true);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [showDeleteConfirm])
 
   const { colors } = useThemeColors();
 
@@ -156,11 +170,12 @@ export default function SettingsScreen() {
               </Pressable>
 
               <Pressable
+                disabled={!deleteEnabled}
                 onPress={() => {
                   setShowDeleteConfirm(false);
                   resetAllData();
                 }}
-                style={[styles.deleteBtn, { backgroundColor: colors.orange }]}
+                style={[styles.deleteBtn, { backgroundColor: colors.orange, opacity: deleteEnabled ? 1 : 0.6 }]}
               >
                 <Text style={styles.deleteText}>Delete</Text>
               </Pressable>
