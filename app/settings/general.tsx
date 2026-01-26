@@ -59,13 +59,6 @@ export default function GeneralScreen() {
 
         <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <Row
-            title="Week starts on"
-            right="Mon"
-            onPress={openComingSoon}
-          />
-          <View style={[styles.divider, { backgroundColor: colors.border }]} />
-
-          <Row
             title="Haptics"
             right="On"
             onPress={openComingSoon}
@@ -74,7 +67,7 @@ export default function GeneralScreen() {
 
           <Row
             title="Show Streak"
-            right=""
+            right="On"
             onPress={openComingSoon}
           />
         </View>
