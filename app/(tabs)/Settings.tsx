@@ -1,8 +1,9 @@
 // app/(tabs)/settings.tsx  (or wherever your settings route lives)
 import Heading from "@/components/Heading";
 import { Ionicons } from "@expo/vector-icons";
-import { Alert, Linking, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View } from "react-native";
+import { Alert, Linking, Pressable, ScrollView, Share, StyleSheet, Text, View } from "react-native";
 
+import ConfirmModal from "@/components/ConfirmModal";
 import { useThemeColors } from '@/constants/theme';
 import { useHabits } from "@/src/context/HabitsProvider";
 import Constants from "expo-constants";
@@ -83,7 +84,7 @@ function SettingsGroup({ items }: { items: Item[] }) {
 export default function SettingsScreen() {
   const { resetAllData } = useHabits();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  
+
   const [countDown, setCountDown] = useState(2);
 
   const top: Item[] = [
@@ -115,7 +116,7 @@ export default function SettingsScreen() {
 
     const interval = setInterval(() => {
       setCountDown(prev => {
-        if(prev <= 1){
+        if (prev <= 1) {
           clearInterval(interval);
           return 0;
         }
@@ -149,47 +150,30 @@ export default function SettingsScreen() {
         </ScrollView>
       </View>
 
-      <Modal
+      <ConfirmModal
         visible={showDeleteConfirm}
-        transparent
-        animationType="fade"
-        onRequestClose={() => setShowDeleteConfirm(false)}
-      >
-        <View style={styles.overlay}>
-          <View style={[styles.modal, { backgroundColor: colors.card, borderColor: colors.border }]}>
-
-            <Text style={[styles.modalTitle, { color: colors.text }]}>
-              Delete all data?
-            </Text>
-
-            <Text style={[styles.modalText, { color: colors.mutedText }]}>
-              This will permanently remove all habits and history.
-              This action cannot be undone.
-            </Text>
-
-            <View style={styles.modalActions}>
-              <Pressable
-                onPress={() => setShowDeleteConfirm(false)}
-                style={[styles.cancelBtn, { borderColor: colors.border }]}
-              >
-                <Text style={{ color: colors.text }}>Cancel</Text>
-              </Pressable>
-
-              <Pressable
-                disabled={countDown > 0}
-                onPress={() => {
-                  setShowDeleteConfirm(false);
-                  resetAllData();
-                }}
-                style={[styles.deleteBtn, { backgroundColor: colors.orange, opacity: countDown === 0 ? 1 : 0.6 }]}
-              >
-                <Text style={styles.deleteText}>{countDown === 0 ? "Delete" : `Delete ${countDown}`}</Text>
-              </Pressable>
-            </View>
-
-          </View>
-        </View>
-      </Modal>
+        title="Delete all data?"
+        message={
+          "This will permanently remove all habits and history.\nThis action cannot be undone."
+        }
+        onCancel={() => setShowDeleteConfirm(false)}
+        onConfirm={() => {
+          setShowDeleteConfirm(false);
+          resetAllData();
+        }}
+        cancelText="Cancel"
+        confirmText="Delete"
+        countdown={countDown}
+        confirmCountdownLabel={(c) => `Delete ${c}`}
+        colors={{
+          card: colors.card,
+          border: colors.border,
+          text: colors.text,
+          mutedText: colors.mutedText,
+          confirmBg: colors.orange,
+          confirmText: "#fff",
+        }}
+      />
 
     </SafeAreaView>
   );
