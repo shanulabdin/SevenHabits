@@ -115,7 +115,7 @@ export default function Index() {
     };
 
     setHabits(prev => [...prev, newHabit]);
-  }, [selectedDateKey]);
+  }, [selectedDateKey, setHabits]);
 
 
   const consumedRef = useRef<string | null>(null);
@@ -144,6 +144,7 @@ export default function Index() {
         };
       })
     );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [todayKey]);
 
   function deleteHabit(id: string) {
