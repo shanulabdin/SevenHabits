@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   selectorText: {
-    fontFamily: "Poppins_600SemiBold",
+    fontFamily: "Poppins_500Medium",
     fontSize: 12,
   },
 
@@ -258,12 +258,12 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   cardTitle: {
-    fontFamily: "Poppins_600SemiBold",
+    fontFamily: "Poppins_500Medium",
     fontSize: 20,
     fontWeight: "700",
   },
   cardCount: {
-    fontFamily: "Poppins_600SemiBold",
+    fontFamily: "Poppins_500Medium",
     fontSize: 16,
   },
   ringWrap: {
@@ -308,14 +308,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   habitTitle: {
-    fontFamily: "Poppins_600SemiBold",
     fontSize: 15,
     fontWeight: "700",
     flex: 1,
     marginRight: 10,
   },
   habitCount: {
-    fontFamily: "Poppins_600SemiBold",
+    fontFamily: "Poppins_500Medium",
     fontSize: 12,
     textAlign: "center",
   },

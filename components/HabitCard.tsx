@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: 20,
-    fontFamily: "Poppins_600SemiBold",
+    fontFamily: "Poppins_500Medium",
   },
 
   titleChecked: {
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
 
   streakText: {
     fontSize: 12,
-    fontFamily: "Poppins_600SemiBold",
+    fontFamily: "Poppins_500Medium",
     marginRight: 2,
   },
 

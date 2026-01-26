@@ -18,7 +18,7 @@ export default function Heading({
   const { colors } = useThemeColors();
   return (
     <View style={[styles.container, { backgroundColor: colors.card, borderColor: colors.border }]}>
-      <Text style={[styles.title, { color: colors.accent }]}>{title}</Text>
+      <Text style={[styles.title, { color: colors.accent, fontFamily: "Poppins_600SemiBold" }]}>{title}</Text>
 
       {(icon || iconTitle) && (
         <Pressable
@@ -28,7 +28,7 @@ export default function Heading({
           style={styles.iconRow}
         >
           {!!iconTitle && (
-            <Text style={[styles.iconTitle, { color: colors.text }]}>
+            <Text style={[styles.iconTitle, { color: colors.text, fontFamily: "Poppins_500Medium", }]}>
               {iconTitle}
             </Text>
           )}
@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
     borderWidth: 1,
     // borderTopRightRadius: 16,
     // borderBottomLeftRadius: 16,
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: "700",
+    marginTop: 5,
   },
   iconRow: {
     flexDirection: "row",
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
   },
   iconTitle: {
     marginRight: 8,
-    fontSize: 16,
-    fontWeight: "600",
+    marginTop: 5,
+    fontSize: 14,
   },
 });

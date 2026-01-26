@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   },
 
   rowText: {
-    fontFamily: "Poppins_600SemiBold",
+    fontFamily: "Poppins_500Medium",
     fontSize: 16,
   },
 

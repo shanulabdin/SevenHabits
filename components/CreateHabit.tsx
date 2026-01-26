@@ -41,7 +41,7 @@ export default function CreateHabit({
           styles.input,
           {
             color: colors.text,
-            fontFamily: "Poppins_600SemiBold",
+            fontFamily: "Poppins_500Medium",
           },
         ]}
         placeholder="Create Habit"
@@ -88,7 +88,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     paddingVertical: 8,
-    paddingBottom: 12,
   },
   iconBtn: {
     justifyContent: "center",

@@ -70,7 +70,7 @@ export default function ConfirmModal({
                 onPress={onCancel}
                 style={[styles.cancelBtn, { borderColor: colors.border }]}
               >
-                <Text style={{ color: colors.text }}>{cancelText}</Text>
+                <Text style={{ color: colors.text, fontFamily: "Poppins_400Regular" }}>{cancelText}</Text>
               </Pressable>
             )}
 
@@ -79,7 +79,7 @@ export default function ConfirmModal({
               onPress={onConfirm}
               style={[
                 styles.confirmBtn,
-                { backgroundColor: colors.orange, opacity: disabled ? 0.6 : 1 },
+                { backgroundColor: colors.orange, opacity: disabled ? 0.6 : 1, borderColor: colors.orange },
               ]}
             >
               <Text style={[styles.confirmText, { color: colors.inverseText }]}>{confirmLabel}</Text>
@@ -100,18 +100,20 @@ const styles = StyleSheet.create({
   },
   modal: {
     borderWidth: 1,
-    borderRadius: 14,
-    padding: 16,
+    borderRadius: 10,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
   },
   modalTitle: {
     fontSize: 18,
-    fontWeight: "700",
     marginBottom: 15,
+    fontFamily: "Poppins_600SemiBold",
   },
   modalText: {
     fontSize: 14,
     lineHeight: 22,
     marginBottom: 20,
+    fontFamily: "Poppins_500Medium",
   },
   actions: {
     flexDirection: "row",
@@ -120,16 +122,17 @@ const styles = StyleSheet.create({
   },
   cancelBtn: {
     borderWidth: 1,
-    borderRadius: 10,
-    paddingVertical: 10,
+    borderRadius: 6,
+    paddingVertical: 6,
     paddingHorizontal: 14,
   },
   confirmBtn: {
-    borderRadius: 10,
-    paddingVertical: 10,
+    borderWidth: 1,
+    borderRadius: 6,
+    paddingVertical: 6,
     paddingHorizontal: 14,
   },
   confirmText: {
-    fontWeight: "700",
+    fontFamily: "Poppins_500Medium",
   },
 });

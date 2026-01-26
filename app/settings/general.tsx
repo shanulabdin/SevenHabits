@@ -112,12 +112,12 @@ const styles = StyleSheet.create({
   },
 
   rowText: {
-    fontFamily: "Poppins_600SemiBold",
+    fontFamily: "Poppins_500Medium",
     fontSize: 16,
   },
 
   rowRight: {
-    fontFamily: "Poppins_600SemiBold",
+    fontFamily: "Poppins_500Medium",
     fontSize: 14,
   },
 

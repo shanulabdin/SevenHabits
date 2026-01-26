@@ -277,7 +277,7 @@ export default function Index() {
                       onBlur={() => saveEditingHabit(habit.id)}
                       style={[
                         styles.editInput,
-                        { color: colors.text, fontFamily: "Poppins_600SemiBold" },
+                        { color: colors.text, fontFamily: "Poppins_500Medium" },
                       ]}
                       placeholder="Edit habit"
                       placeholderTextColor={colors.text + "99"} // optional
@@ -340,7 +340,7 @@ export default function Index() {
                     startEditingHabit(selectedHabitId);
                   }}
                 >
-                  <Text style={[styles.modalItem, styles.modalItemBorder, { color: colors.text, borderBottomColor: colors.border }]}>
+                  <Text style={[styles.modalItem, styles.modalItemBorder, { color: colors.text, borderBottomColor: colors.border, fontFamily: "Poppins_500Medium" }]}>
                     Edit
                   </Text>
                 </Pressable>
@@ -354,7 +354,7 @@ export default function Index() {
                     setSelectedHabitId(null);
                   }}
                 >
-                  <Text style={[styles.modalItem, styles.modalItemBorder, { color: colors.text, borderBottomColor: colors.border }]}>
+                  <Text style={[styles.modalItem, styles.modalItemBorder, { color: colors.text, borderBottomColor: colors.border, fontFamily: "Poppins_500Medium" }]}>
                     {gridLabel}
                   </Text>
                 </Pressable>
@@ -366,7 +366,7 @@ export default function Index() {
                     openDeleteHabitConfirm();
                   }}
                 >
-                  <Text style={[styles.modalDelete, { color: colors.orange }]}>
+                  <Text style={[styles.modalDelete, { color: colors.orange, fontFamily: "Poppins_500Medium" }]}>
                     Delete
                   </Text>
                 </Pressable>
@@ -469,15 +469,18 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   modalItem: {
-    padding: 16,
-    fontSize: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    fontSize: 16,
+    lineHeight: 36
   },
   modalItemBorder: {
     borderBottomWidth: 1,
   },
   modalDelete: {
-    padding: 16,
-    fontSize: 20,
-    fontWeight: "600",
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    fontSize: 16,
+    lineHeight: 36
   },
 });

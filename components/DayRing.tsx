@@ -88,7 +88,7 @@ export default function DayRing({
         <View style={styles.center}>
           <Text
             style={{
-              fontFamily: "Poppins_600SemiBold",
+              fontFamily: "Poppins_500Medium",
               fontSize: textSize,
               lineHeight: textSize + 5,
               color: _text,
@@ -105,7 +105,7 @@ export default function DayRing({
           style={[
             styles.label,
             {
-              fontFamily: "Poppins_600SemiBold",
+              fontFamily: "Poppins_500Medium",
               color: _label,
               opacity: selected ? 1 : 0.8,
             },

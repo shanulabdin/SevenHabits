@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   title: {
-    fontFamily: "Poppins_600SemiBold",
+    fontFamily: "Poppins_500Medium",
     fontSize: 16,
   },
   desc: {

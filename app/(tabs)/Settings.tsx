@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
   },
   rowText: {
     fontSize: 16,
-    fontFamily: "Poppins_600SemiBold",
+    fontFamily: "Poppins_500Medium",
     opacity: 0.8,
   },
   divider: {
@@ -253,7 +253,6 @@ const styles = StyleSheet.create({
 
   deleteText: {
     color: "#fff",
-    fontWeight: "600",
   },
 
 });

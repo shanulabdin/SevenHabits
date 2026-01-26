@@ -6,6 +6,7 @@ type UseConfirmModalArgs = {
   message: string | React.ReactNode;
   confirmText?: string;
   cancelText?: string;
+  onCancel?: () => void;
 
   onConfirm: (id?: string) => void;
 
@@ -17,6 +18,7 @@ export function useConfirmModal({
   message,
   confirmText = "Confirm",
   cancelText = "Cancel",
+  onCancel,
   onConfirm,
   countdownSeconds,
 }: UseConfirmModalArgs) {
@@ -52,6 +54,11 @@ export function useConfirmModal({
         closeConfirm();
         onConfirm();
       }}
+      onCancel={() => {
+        closeConfirm();
+        onCancel?.();   // optional external callback
+      }}
+
     />
   );
 
