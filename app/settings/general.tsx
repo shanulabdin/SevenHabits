@@ -9,6 +9,7 @@ import {
   Text,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 function Row({
   title,
@@ -39,44 +40,46 @@ export default function GeneralScreen() {
   const { colors } = useThemeColors();
 
   return (
-    <ScrollView
-      style={[styles.scroll, {backgroundColor: colors.background}]}
-      contentContainerStyle={styles.scrollContent}
-      showsVerticalScrollIndicator={false}
-    >
-      <Heading
-        title="General"
-        iconTitle="Back"
-        icon="arrow-back"
-        onIconPress={() =>
-          router.canGoBack() ? router.back() : router.replace("/(tabs)")
-        }
-      />
-
-      <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-        <Row
-          title="Week starts on"
-          right="Mon"
-          onPress={() => Alert.alert("Coming soon")}
-        />
-        <View style={[styles.divider, {backgroundColor: colors.border}]} />
-
-        <Row
-          title="Haptics"
-          right="On"
-          onPress={() => Alert.alert("Coming soon")}
-        />
-        <View style={[styles.divider, {backgroundColor: colors.border}]} />
-
-        <Row
-          title="Reset all data"
-          right=""
-          onPress={() =>
-            Alert.alert("Later", "You’ll wire AsyncStorage reset here")
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
+      <ScrollView
+        style={[styles.scroll, { backgroundColor: colors.background }]}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <Heading
+          title="General"
+          iconTitle="Back"
+          icon="arrow-back"
+          onIconPress={() =>
+            router.canGoBack() ? router.back() : router.replace("/(tabs)")
           }
         />
-      </View>
-    </ScrollView>
+
+        <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <Row
+            title="Week starts on"
+            right="Mon"
+            onPress={() => Alert.alert("Coming soon")}
+          />
+          <View style={[styles.divider, { backgroundColor: colors.border }]} />
+
+          <Row
+            title="Haptics"
+            right="On"
+            onPress={() => Alert.alert("Coming soon")}
+          />
+          <View style={[styles.divider, { backgroundColor: colors.border }]} />
+
+          <Row
+            title="Reset all data"
+            right=""
+            onPress={() =>
+              Alert.alert("Later", "You’ll wire AsyncStorage reset here")
+            }
+          />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -87,8 +90,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     padding: 12,
-    paddingTop: 80,
-    paddingBottom: 24,
+    paddingTop: 10,
   },
 
   card: {
