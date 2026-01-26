@@ -8,6 +8,7 @@ import Constants from "expo-constants";
 import { router } from "expo-router";
 import * as StoreReview from "expo-store-review";
 import { SafeAreaView } from "react-native-safe-area-context";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type Item = {
   title: string;
@@ -75,7 +76,23 @@ function SettingsGroup({ items }: { items: Item[] }) {
     </View>
   );
 }
-
+  // async function resetAllData() {
+  //   try {
+  //     await AsyncStorage.removeItem(STORAGE_KEY);
+  //     setHabits([]); // or setHabits(defaultHabits)
+  //   } catch (e) {
+  //     console.log("Failed to reset storage:", e);
+  //   }
+  // }
+  {/* Reset button */ }
+  // <Pressable
+  //   onPress={resetAllData}
+  //   style={[styles.resetBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
+  // >
+  //   <Text style={[styles.resetText, { color: colors.accent }]}>
+  //     Reset Data
+  //   </Text>
+  // </Pressable>
 export default function SettingsScreen() {
   const top: Item[] = [
     { title: "Theme", icon: "color-palette-outline", onPress: () => router.push("/settings/theme") },

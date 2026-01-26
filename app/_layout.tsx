@@ -20,15 +20,15 @@ function AppShell() {
 
   return (
     <NavThemeProvider value={navTheme}>
-      <View style={{ flex: 1, backgroundColor: colors.card }}>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            contentStyle: { backgroundColor: colors.card },
-            animation: "slide_from_right",
-          }}
-        />
-      </View>
+        <View style={{ flex: 1, backgroundColor: colors.card }}>
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              contentStyle: { backgroundColor: colors.card },
+              animation: "slide_from_right",
+            }}
+          />
+        </View>
     </NavThemeProvider>
   );
 }

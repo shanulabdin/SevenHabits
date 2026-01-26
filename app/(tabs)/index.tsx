@@ -1,8 +1,8 @@
 import DayRing from '@/components/DayRing';
 import HabitCard from '@/components/HabitCard';
 import Heading from '@/components/Heading';
+import { useHabits } from '@/src/context/HabitsProvider';
 import { Habit } from '@/types/habit';
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -26,7 +26,6 @@ import { getPercentForDate, getWeeklyPercent } from '@/utils/stats';
 import { getHabitStreakWithGrace } from '@/utils/streaks';
 import { Ionicons } from '@expo/vector-icons';
 
-const STORAGE_KEY = "@sevenhabits/habits_v1";
 
 export default function Index() {
   const { colors } = useThemeColors();
@@ -42,81 +41,9 @@ export default function Index() {
 
   const router = useRouter();
 
-  // Setting habits
-  const [habits, setHabits] = useState<Habit[]>([
-    { id: '1', title: 'Code', history: { [todayKey]: false }, showGrid: true },
-    { id: '2', title: 'Workout', history: { [todayKey]: false }, showGrid: false },
-    { id: '3', title: 'Read 1 Page', history: { [todayKey]: false }, showGrid: true },
-    { id: '4', title: 'Meditate', history: { [todayKey]: false }, showGrid: false },
-    { id: '5', title: 'Sleep Early', history: { [todayKey]: false }, showGrid: false },
-  ]);
+  const { habits, setHabits } = useHabits();
+  const { resetAllData } = useHabits();
 
-  // Async Storage --|
-  useEffect(() => {
-    (async () => {
-      try {
-        const raw = await AsyncStorage.getItem(STORAGE_KEY);
-        if (!raw) return;
-
-        const parsed = JSON.parse(raw);
-
-        // Safety: ensure it's an array
-        if (!Array.isArray(parsed)) return;
-
-        // Optional migration / cleanup (handles old shapes gracefully)
-        const cleaned: Habit[] = parsed
-          .map((h: any) => {
-            if (!h?.id || !h?.title) return null;
-
-            // If old format exists (checked boolean), convert to history for today
-            if (!h.history && typeof h.checked === "boolean") {
-              return {
-                id: String(h.id),
-                title: String(h.title),
-                history: { [todayKey]: h.checked },
-              } satisfies Habit;
-            }
-
-            // Normal new format
-            if (h.history && typeof h.history === "object") {
-              return {
-                id: String(h.id),
-                title: String(h.title),
-                history: h.history as Record<string, boolean>,
-                showGrid: typeof h.showGrid === "boolean" ? h.showGrid : true,
-              } satisfies Habit;
-            }
-
-            return null;
-          })
-          .filter((h): h is Habit => h !== null);
-
-
-        if (cleaned.length) setHabits(cleaned);
-      } catch (e) {
-        console.log("Failed to load habits:", e);
-      }
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  useEffect(() => {
-    (async () => {
-      try {
-        await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(habits));
-      } catch (e) {
-        console.log("Failed to save habits:", e);
-      }
-    })();
-  }, [habits]);
-
-  async function resetAllData() {
-    try {
-      await AsyncStorage.removeItem(STORAGE_KEY);
-      setHabits([]); // or setHabits(defaultHabits)
-    } catch (e) {
-      console.log("Failed to reset storage:", e);
-    }
-  }
   // Async Storage --|
 
   // Weekly stats
