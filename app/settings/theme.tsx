@@ -13,18 +13,18 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ThemeScreen() {
   const router = useRouter();
-  const { theme, setTheme, colors } = useThemeColors();
+  const { themePref, setTheme, colors } = useThemeColors();
 
   const Row = ({
     label,
     value,
   }: {
     label: string;
-    value: "dark" | "light";
+    value: "system" | "dark" | "light";
   }) => (
     <Pressable
       onPress={() => setTheme(value)}
-      android_ripple={{ color: "#2b2b2b" }}
+      android_ripple={{ color: colors.border, borderless: false }}
       style={[styles.row, { backgroundColor: colors.card }]}
     >
       <Text
@@ -36,7 +36,7 @@ export default function ThemeScreen() {
         {label}
       </Text>
 
-      {theme === value ? (
+      {themePref === value ? (
         <Ionicons
           name="radio-button-on-outline"
           size={20}
@@ -66,6 +66,8 @@ export default function ThemeScreen() {
         />
 
         <View style={[styles.card, { borderColor: colors.border }]}>
+          <Row label="System" value="system" />
+          <View style={[styles.divider, { backgroundColor: colors.border }]} />
           <Row label="Dark" value="dark" />
           <View style={[styles.divider, { backgroundColor: colors.border }]} />
           <Row label="Light" value="light" />
@@ -105,6 +107,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 16,
     paddingVertical: 16,
+    overflow: "hidden",
   },
 
   rowText: {
@@ -114,6 +117,5 @@ const styles = StyleSheet.create({
 
   divider: {
     height: 1,
-    marginHorizontal: 16,
   },
 });

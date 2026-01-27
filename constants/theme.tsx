@@ -1,9 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { useColorScheme } from "react-native";
 
+type ThemePref = "system" | "dark" | "light";
 type ThemeMode = "dark" | "light";
 
-const THEME_KEY = "@sevenhabits/theme_v1";
+const THEME_KEY = "@forge/theme_v1";
 
 const DARK = {
   background: "#000000ff",
@@ -38,7 +40,7 @@ const LIGHT = {
 
   border: "rgba(0, 0, 0, 0.1)",
   borderMuted: "rgba(0, 0, 0, 0.25)",
-  
+
   orange: "#FF6D1F",
 
   accent: "#000000ff",
@@ -47,8 +49,9 @@ const LIGHT = {
 
 
 type ThemeCtx = {
+  themePref: ThemePref;
   theme: ThemeMode;
-  setTheme: (t: ThemeMode) => void;
+  setTheme: (t: ThemePref) => void;
   colors: typeof DARK;
   isLoaded: boolean;
 };
@@ -56,30 +59,44 @@ type ThemeCtx = {
 const ThemeContext = createContext<ThemeCtx | null>(null);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<ThemeMode>("dark");
+  const systemScheme = useColorScheme();
+
+  const [themePref, setThemePref] = useState<ThemePref>("system");
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     (async () => {
       try {
         const saved = await AsyncStorage.getItem(THEME_KEY);
-        if (saved === "dark" || saved === "light") setThemeState(saved);
+        
+        if (saved === "system" || saved === "dark" || saved === "light") {
+          setThemePref(saved);
+        } else {
+          setThemePref("system")
+        }
       } finally {
         setIsLoaded(true);
       }
     })();
   }, []);
 
-  const setTheme = async (t: ThemeMode) => {
-    setThemeState(t);
+  const theme: ThemeMode = useMemo(() => {
+    if(themePref === "system"){
+      return (systemScheme ?? "light") as ThemeMode;
+    }
+    return themePref;
+  }, [themePref, systemScheme])
+
+  const setTheme = async (t: ThemePref) => {
+    setThemePref(t);
     await AsyncStorage.setItem(THEME_KEY, t);
   };
 
   const palette = useMemo(() => (theme === "dark" ? DARK : LIGHT), [theme]);
 
   const value = useMemo(
-    () => ({ theme, setTheme, colors: palette, isLoaded }),
-    [theme, palette, isLoaded]
+    () => ({themePref, theme, setTheme, colors: palette, isLoaded }),
+    [themePref, theme, palette, isLoaded]
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
