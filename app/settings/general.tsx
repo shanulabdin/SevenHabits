@@ -41,7 +41,7 @@ export default function GeneralScreen() {
   const router = useRouter();
   const { colors } = useThemeColors();
 
-  const { openComingSoon, ComingSoonModal } = useComingSoon();
+  const { ComingSoonModal } = useComingSoon();
 
   const { hapticsEnabled, toggleHaptics, isLoaded } = useSettings();
 
