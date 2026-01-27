@@ -1,4 +1,3 @@
-// app/(tabs)/settings.tsx  (or wherever your settings route lives)
 import Heading from "@/components/Heading";
 import { Ionicons } from "@expo/vector-icons";
 import { Linking, Platform, Pressable, ScrollView, Share, StyleSheet, Text, View } from "react-native";
@@ -29,9 +28,11 @@ const openUrl = async (url: string) => {
 };
 
 const shareApp = async () => {
-  const message = "Check out SevenHabits!";
+  const message =
+    "Check out Forge (beta)!\n\nI'm testing a habit tracker app.\n\nWant to try it? Reply to me and I'll share the APK / Test link.";
   await Share.share({ message });
 };
+
 
 const rateApp = async () => {
   const available = await StoreReview.isAvailableAsync();
@@ -162,7 +163,7 @@ export default function SettingsScreen() {
     {
       title: "Rate",
       icon: "star-outline",
-      onPress: withHaptic(rateApp, "light"),
+      onPress: withHaptic(openComingSoon, "light"),
     },
     {
       title: "Privacy Policy",
