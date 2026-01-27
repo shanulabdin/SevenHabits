@@ -1,6 +1,7 @@
 import Heading from "@/components/Heading";
 import { useThemeColors } from "@/constants/theme";
 import { useComingSoon } from "@/src/hooks/useComingSoon";
+import { hapticLight } from "@/utils/haptics";
 import { useRouter } from "expo-router";
 import {
   Pressable,
@@ -61,14 +62,20 @@ export default function GeneralScreen() {
           <Row
             title="Haptics"
             right="On"
-            onPress={openComingSoon}
+            onPress={() => {
+              hapticLight();
+              openComingSoon();
+            }}
           />
           <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
           <Row
             title="Show Streak"
             right="On"
-            onPress={openComingSoon}
+            onPress={() => {
+              hapticLight();
+              openComingSoon();
+            }}
           />
         </View>
       </ScrollView>

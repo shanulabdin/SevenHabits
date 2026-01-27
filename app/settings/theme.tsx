@@ -1,5 +1,6 @@
 import Heading from "@/components/Heading";
 import { useThemeColors } from "@/constants/theme";
+import { hapticLight } from "@/utils/haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import {
@@ -23,11 +24,13 @@ export default function ThemeScreen() {
     value: "system" | "dark" | "light";
   }) => (
     <Pressable
-      onPress={() => setTheme(value)}
-      android_ripple={{ color: colors.border, borderless: false }}
-      style={({ pressed }) => [
+      onPress={() => {
+        hapticLight();
+        setTheme(value);
+      }}
+      style={[
         styles.row,
-        { backgroundColor: colors.card, opacity: pressed ? 0.5 : 1 },
+        { backgroundColor: colors.card },
       ]}
 
     >
