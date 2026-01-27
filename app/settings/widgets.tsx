@@ -1,6 +1,7 @@
 // app/settings/widgets.tsx
 import Heading from "@/components/Heading";
 import { useThemeColors } from "@/constants/theme";
+import { hapticLight } from "@/utils/haptics";
 import { useRouter } from "expo-router";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -18,7 +19,10 @@ function WidgetCard({
   return (
     <View style={styles.shadowWrapper}>
       <Pressable
-        onPress={onPress}
+        onPress={() => {
+          hapticLight();
+          onPress?.();
+        }}
         // android_ripple={{ color: "#cfcfcfff", foreground: true }}
         style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
       >
