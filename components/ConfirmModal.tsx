@@ -1,4 +1,5 @@
 import { useThemeColors } from "@/constants/theme";
+import { hapticHeavy, hapticLight } from "@/utils/haptics";
 import React from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -67,7 +68,10 @@ export default function ConfirmModal({
           <View style={styles.actions}>
             {showCancel && (
               <Pressable
-                onPress={onCancel}
+                onPress={() => {
+                  hapticLight();
+                  onCancel?.();
+                }}
                 style={[styles.cancelBtn, { borderColor: colors.border }]}
               >
                 <Text style={{ color: colors.text, fontFamily: "Poppins_400Regular" }}>{cancelText}</Text>
@@ -76,7 +80,10 @@ export default function ConfirmModal({
 
             <Pressable
               disabled={disabled}
-              onPress={onConfirm}
+              onPress={() => {
+                hapticHeavy();
+                onConfirm();
+              }}
               style={[
                 styles.confirmBtn,
                 { backgroundColor: colors.orange, opacity: disabled ? 0.6 : 1, borderColor: colors.orange },
