@@ -25,7 +25,11 @@ export default function ThemeScreen() {
     <Pressable
       onPress={() => setTheme(value)}
       android_ripple={{ color: colors.border, borderless: false }}
-      style={[styles.row, { backgroundColor: colors.card }]}
+      style={({ pressed }) => [
+        styles.row,
+        { backgroundColor: colors.card, opacity: pressed ? 0.5 : 1 },
+      ]}
+
     >
       <Text
         style={[
@@ -117,5 +121,6 @@ const styles = StyleSheet.create({
 
   divider: {
     height: 1,
+    marginHorizontal: 16,
   },
 });
