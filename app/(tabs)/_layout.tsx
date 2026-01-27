@@ -1,6 +1,6 @@
 import { useThemeColors } from "@/constants/theme";
 import { HabitsProvider } from "@/src/context/HabitsProvider";
-import { hapticSelect } from "@/utils/haptics"; // <- adjust path if yours is different
+import { hapticSelect } from "@/utils/haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Tabs } from "expo-router";
 import { Pressable, StyleSheet, View } from "react-native";

@@ -3,4 +3,5 @@ export type Habit = {
   title: string;
   history: Record<string, boolean>;
   showGrid?: boolean;
+  showStreak?: boolean;
 };

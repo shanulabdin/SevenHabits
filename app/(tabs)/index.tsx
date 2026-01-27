@@ -114,6 +114,7 @@ export default function Index() {
         [selectedDateKey]: false,
       },
       showGrid: false,
+      showStreak: true
     };
 
     setHabits(prev => [...prev, newHabit]);
@@ -319,6 +320,7 @@ export default function Index() {
                   history={habit.history}
                   todayKey={todayKey}
                   showGrid={habit.showGrid ?? true}
+                  showStreak={habit.showStreak ?? true}
                   markComplete={() => toggleHabit(habit.id)}
                   onLongPress={longPressHabit(habit.id)}
                 />

@@ -12,6 +12,7 @@ type HabitCardProps = {
   history: Record<string, boolean>;
   todayKey: string;
   showGrid: boolean;
+  showStreak: boolean;
   markComplete: () => void;
   onLongPress: () => void;
 };
@@ -23,6 +24,7 @@ export default function HabitCard({
   history,
   todayKey,
   showGrid,
+  showStreak,
   markComplete,
   onLongPress,
 }: HabitCardProps) {
@@ -40,29 +42,32 @@ export default function HabitCard({
         ]}
       >
         {/* LEFT SIDE */}
-        <View style={styles.left}>
+        <View style={[styles.left, showStreak ? styles.left : styles.noStreakLeft]}>
           <Text
             style={[
               styles.title,
               { color: colors.text },
               checked && styles.titleChecked,
+
             ]}
             numberOfLines={1}
           >
             {title}
           </Text>
 
-          <View style={styles.streak}>
-            <Text style={[styles.streakText, { color: colors.text }]}>
-              {streak}
-            </Text>
-            <Ionicons
-              name="flame"
-              color={colors.orange}
-              size={18}
-              style={{ transform: [{ translateY: 1 }] }}
-            />
-          </View>
+          {showStreak && (
+            <View style={styles.streak}>
+              <Text style={[styles.streakText, { color: colors.text }]}>
+                {streak}
+              </Text>
+              <Ionicons
+                name="flame"
+                color={colors.orange}
+                size={18}
+                style={{ transform: [{ translateY: 1 }] }}
+              />
+            </View>)
+          }
         </View>
 
         {/* RIGHT SIDE */}
@@ -141,6 +146,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 16,
     maxWidth: "75%",
+  },
+  noStreakLeft: {
+    maxWidth: "100%",
   },
 
   title: {
