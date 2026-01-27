@@ -23,6 +23,7 @@ import {
 import { useThemeColors } from '@/constants/theme';
 import { useConfirmModal } from '@/src/hooks/useConfirmModal';
 import { getDateKey, getLastNDays } from '@/utils/date';
+import { hapticLight } from '@/utils/haptics';
 import { getPercentForDate, getWeeklyPercent } from '@/utils/stats';
 import { getHabitStreakWithGrace } from '@/utils/streaks';
 import { Ionicons } from '@expo/vector-icons';
@@ -249,7 +250,10 @@ export default function Index() {
                   dayLabel={d.dayLabel}
                   percent={d.percent}
                   selected={d.dateKey === selectedDateKey}
-                  onPress={() => setSelectedDateKey(d.dateKey)}
+                  onPress={() => {
+                    setSelectedDateKey(d.dateKey);
+                    hapticLight();
+                  }}
                 />
               ))}
             </View>
