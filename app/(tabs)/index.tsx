@@ -277,7 +277,10 @@ export default function Index() {
                       autoFocus
                       returnKeyType="done"
                       maxLength={24}
-                      onSubmitEditing={() => saveEditingHabit(habit.id)}
+                      onSubmitEditing={() => {
+                        hapticLight();
+                        saveEditingHabit(habit.id);
+                      }}
                       onBlur={() => saveEditingHabit(habit.id)}
                       style={[
                         styles.editInput,
@@ -288,7 +291,10 @@ export default function Index() {
                     />
 
                     <Pressable
-                      onPress={() => saveEditingHabit(habit.id)}
+                      onPress={() => {
+                        hapticLight();
+                        saveEditingHabit(habit.id)
+                      }}
                       hitSlop={12}
                       style={[
                         styles.editSubmitBtn,
