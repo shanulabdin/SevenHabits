@@ -1,8 +1,23 @@
 import { useThemeColors } from "@/constants/theme";
 import { HabitsProvider } from "@/src/context/HabitsProvider";
+import { hapticSelect } from "@/utils/haptics"; // <- adjust path if yours is different
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Tabs } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
+
+function HapticTabButton(props: any) {
+  const { onPress, ...rest } = props;
+
+  return (
+    <Pressable
+      {...rest}
+      onPress={(e) => {
+        hapticSelect();
+        onPress?.(e);
+      }}
+    />
+  );
+}
 
 export default function TabLayout() {
   const { colors } = useThemeColors();
@@ -13,6 +28,10 @@ export default function TabLayout() {
         screenOptions={{
           headerShown: false,
           sceneStyle: { backgroundColor: colors.card },
+
+          // ✅ haptics on ALL tab presses
+          tabBarButton: (props) => <HapticTabButton {...props} />,
+
           tabBarStyle: {
             backgroundColor: colors.card,
             width: "100%",
@@ -21,11 +40,11 @@ export default function TabLayout() {
             marginTop: -23,
             borderTopWidth: 1,
             borderTopColor: colors.border,
-            elevation: 0,           // ANDROID
+            elevation: 0, // ANDROID
             shadowColor: "transparent", // iOS
           },
           tabBarShowLabel: false,
-          tabBarActiveTintColor: colors.accent,
+          tabBarActiveTintColor: colors.orange,
           tabBarInactiveTintColor: colors.text,
         }}
       >
@@ -34,7 +53,7 @@ export default function TabLayout() {
           options={{
             tabBarIcon: ({ color, size, focused }) => (
               <Ionicons
-                name="home"
+                name={focused ? "home" : "home-outline"}
                 size={focused ? size + 3 : size}
                 color={color}
               />
@@ -50,17 +69,19 @@ export default function TabLayout() {
                 style={[
                   styles.addBubble,
                   {
-                    backgroundColor: focused ? colors.orange : colors.orange,
-                    width: (focused ? size + 6 : size + 2) + 6,
-                    height: (focused ? size + 6 : size + 2) + 6,
-                    borderRadius: ((focused ? size + 6 : size + 2)) / 4,
+                    backgroundColor: (focused ? colors.orange : colors.card),
+                    borderWidth: 1,
+                    borderColor: (focused ? colors.orange : colors.text),
+                    width: (focused ? size + 3 : size + 2) + 6,
+                    height: (focused ? size + 3 : size + 2) + 6,
+                    borderRadius: (focused ? size + 6 : size + 2) / 4,
                   },
                 ]}
               >
                 <Ionicons
-                  name="add"
+                  name={focused ? "add" : "add-outline"}
                   size={focused ? size + 3 : size}
-                  color={colors.card}
+                  color={(focused ? colors.card : colors.text)}
                 />
               </View>
             ),
@@ -72,7 +93,7 @@ export default function TabLayout() {
           options={{
             tabBarIcon: ({ color, size, focused }) => (
               <Ionicons
-                name="settings"
+                name={focused ? "settings" : "settings-outline"}
                 size={focused ? size + 3 : size}
                 color={color}
               />
