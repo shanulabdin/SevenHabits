@@ -16,7 +16,7 @@ const HabitsContext = createContext<HabitsContextValue | null>(null);
 function buildDefaultHabits(todayKey: string): Habit[] {
   return [
     { id: "1", title: "Workout", history: { [todayKey]: false }, showGrid: false, showStreak: true },
-    { id: "2", title: "Meditate and go to school", history: { [todayKey]: false }, showGrid: false, showStreak: true },
+    { id: "2", title: "Meditate", history: { [todayKey]: false }, showGrid: false, showStreak: true },
     { id: "3", title: "Sleep Early", history: { [todayKey]: false }, showGrid: false, showStreak: false },
   ];
 }

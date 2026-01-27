@@ -7,11 +7,13 @@ import { useThemeColors } from '@/constants/theme';
 import { useHabits } from "@/src/context/HabitsProvider";
 import { useComingSoon } from "@/src/hooks/useComingSoon";
 import { useConfirmModal } from "@/src/hooks/useConfirmModal";
-import { hapticLight } from "@/utils/haptics";
+import { hapticError, hapticLight, hapticSelect } from "@/utils/haptics";
 import Constants from "expo-constants";
 import { router } from "expo-router";
 import * as StoreReview from "expo-store-review";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+
 
 type Item = {
   title: string;
@@ -80,6 +82,17 @@ function SettingsGroup({ items }: { items: Item[] }) {
   );
 }
 
+const withHaptic = (fn: () => void | Promise<void>, type: "light" | "select" = "light") =>
+  async () => {
+    if (type === "light") hapticLight();
+    else hapticSelect();
+    try {
+      await fn();
+    } catch (e) {
+      hapticError?.(); // if you have it
+      console.warn(e);
+    }
+  };
 
 export default function SettingsScreen() {
   const { colors } = useThemeColors();
@@ -102,57 +115,57 @@ export default function SettingsScreen() {
   const { openComingSoon, ComingSoonModal } = useComingSoon();
 
   const top: Item[] = [
-    { title: "Theme", icon: "color-palette-outline", onPress: () => {
-      hapticLight();
-      router.push("/settings/theme");
-    } },
-    { title: "General", icon: "grid-outline", onPress: () => {
-      hapticLight();
-      router.push("/settings/general");
-    } },
-    { title: "Widgets", icon: "cube-outline", onPress: () => {
-      hapticLight();
-      router.push("/settings/widgets");
-    } },
+    {
+      title: "Theme", icon: "color-palette-outline", 
+      onPress: withHaptic(() => router.push("/settings/theme"), "light"),
+    },
+    {
+      title: "General", icon: "grid-outline", 
+      onPress: withHaptic(() => router.push("/settings/general"), "light"),
+    },
+    {
+      title: "Widgets", icon: "cube-outline", 
+      onPress: withHaptic(() => router.push("/settings/widgets"), "light"),
+    },
   ];
   const cloud: Item[] = [
-    { title: "Cloud Backup", icon: "cloud-outline", onPress: () => {
-      hapticLight();
-      openComingSoon();
-    } },
-    { title: "Import", icon: "download-outline", onPress: () => {
-      hapticLight();
-      openComingSoon();
-    } },
-    { title: "Export", icon: "share-outline", onPress: () => {
-      hapticLight();
-      openComingSoon();
-    } },
+    {
+      title: "Cloud Backup", icon: "cloud-outline", 
+      onPress: withHaptic(() => openComingSoon(), "light"),
+    },
+    {
+      title: "Import", icon: "download-outline", 
+      onPress: withHaptic(() => openComingSoon(), "light"),
+    },
+    {
+      title: "Export", icon: "share-outline", 
+      onPress: withHaptic(() => openComingSoon(), "light"),
+    },
   ];
   const misc: Item[] = [
-    { title: "Share", icon: "share-social-outline", onPress: () => {
-      hapticLight();
-      shareApp();
-    } },
-    { title: "Rate", icon: "star-outline", onPress: rateApp },
-    { title: "Privacy Policy", icon: "document-text-outline", onPress: () => {
-      hapticLight();
-      openUrl("https://yourdomain.com/privacy");
-    } },
-    { title: "Terms & Conditions", icon: "document-outline", onPress: () => {
-      hapticLight();
-      openUrl("https://yourdomain.com/terms");
-    } },
-    { title: "Feedback", icon: "chatbubble-ellipses-outline", onPress:() => {
-      hapticLight();
-      sendFeedback();
-    } },
+    {
+      title: "Share", icon: "share-social-outline", 
+      onPress: withHaptic(() => shareApp(), "light"),
+    },
+    { title: "Rate", icon: "star-outline", onPress: withHaptic(() => openUrl("https://yourdomain.com/privacy")) },
+    {
+      title: "Privacy Policy", icon: "document-text-outline", 
+      onPress: withHaptic(() => openUrl("https://yourdomain.com/privacy"), "light"),
+    },
+    {
+      title: "Terms & Conditions", icon: "document-outline", 
+      onPress: withHaptic(() => openUrl("https://yourdomain.com/terms"), "light"),
+    },
+    {
+      title: "Feedback", icon: "chatbubble-ellipses-outline", 
+      onPress: withHaptic(() => sendFeedback(), "light"),
+    },
   ];
   const deleteData: Item[] = [
-    { title: "Delete All Data", icon: "trash-outline", onPress: () => {
-      hapticLight();
-      openDeleteConfirm();
-    } }
+    {
+      title: "Delete All Data", icon: "trash-outline", 
+      onPress: withHaptic(() => openDeleteConfirm(), "light"),
+    }
   ];
 
 
