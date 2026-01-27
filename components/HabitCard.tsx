@@ -56,18 +56,26 @@ export default function HabitCard({
           </Text>
 
           {showStreak && (
-            <View style={styles.streak}>
-              <Text style={[styles.streakText, { color: colors.text }]}>
-                {streak}
+            <View style={[styles.streak, {opacity: streak === 0 ? 0.25 : 1}]}>
+              <Text
+                style={[
+                  styles.streakText
+                ]}
+              >
+                {streak < 2 ? "" : streak}
               </Text>
+
               <Ionicons
                 name="flame"
-                color={colors.orange}
+                color={streak === 0 ? colors.accent : colors.orange}
                 size={18}
-                style={{ transform: [{ translateY: 1 }] }}
+                style={{
+                  transform: [{ translateY: 1 }]
+                }}
               />
-            </View>)
-          }
+            </View>
+          )}
+
         </View>
 
         {/* RIGHT SIDE */}
