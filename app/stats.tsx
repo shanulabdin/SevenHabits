@@ -3,6 +3,7 @@ import Heading from "@/components/Heading";
 import { useThemeColors } from "@/constants/theme";
 import type { Habit } from "@/types/habit";
 import { getDateKey, getLastNDays } from "@/utils/date";
+import { hapticLight } from "@/utils/haptics";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
@@ -101,7 +102,10 @@ export default function Stats() {
           {dayOptions.map((d, idx) => (
             <Pressable
               key={d}
-              onPress={() => setSelectedDays(d)}
+              onPress={() => {
+                hapticLight();
+                setSelectedDays(d);
+              }}
               style={[
                 styles.selectorBtn,
                 { backgroundColor: colors.card, borderColor: colors.border },
