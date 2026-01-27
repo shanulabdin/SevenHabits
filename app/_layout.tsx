@@ -17,7 +17,6 @@ import { useFonts } from "expo-font";
 function AppShell() {
   const { colors, isLoaded: themeLoaded } = useThemeColors();
 
-  // ⛔ wait until BOTH theme + fonts are ready
   if (!themeLoaded) {
     return <View style={{ flex: 1, backgroundColor: "#151515" }} />;
   }
@@ -49,7 +48,6 @@ function AppShell() {
 }
 
 export default function RootLayout() {
-  // ✅ FONT LOADING (this was missing before)
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
@@ -57,7 +55,6 @@ export default function RootLayout() {
     Poppins_700Bold,
   });
 
-  // ⛔ do NOT render app until fonts are ready
   if (!fontsLoaded) {
     return <View style={{ flex: 1, backgroundColor: "#151515" }} />;
   }

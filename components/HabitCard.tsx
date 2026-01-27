@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
   left: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 16,
+    gap: 15,
     maxWidth: "75%",
   },
   noStreakLeft: {

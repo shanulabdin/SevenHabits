@@ -16,7 +16,7 @@ const HabitsContext = createContext<HabitsContextValue | null>(null);
 function buildDefaultHabits(todayKey: string): Habit[] {
   return [
     { id: "1", title: "Workout", history: { [todayKey]: false }, showGrid: false, showStreak: true },
-    { id: "2", title: "Meditate", history: { [todayKey]: false }, showGrid: false, showStreak: true },
+    { id: "2", title: "Meditate and go to school", history: { [todayKey]: false }, showGrid: false, showStreak: true },
     { id: "3", title: "Sleep Early", history: { [todayKey]: false }, showGrid: false, showStreak: false },
   ];
 }
@@ -46,7 +46,7 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
                 id: String(h.id),
                 title: String(h.title),
                 history: { [todayKey]: !!h.checked },
-                showStreak: typeof h.showStreak === "boolean" ? h.showStreak : true,
+                showStreak: typeof h.showStreak === "boolean" ? h.showStreak : false,
               };
               return habit;
             }
@@ -57,7 +57,7 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
                 title: String(h.title),
                 history: h.history as Record<string, boolean>,
                 showGrid: typeof h.showGrid === "boolean" ? h.showGrid : true,
-                showStreak: typeof h.showStreak === "boolean" ? h.showStreak : true,
+                showStreak: typeof h.showStreak === "boolean" ? h.showStreak : false,
               };
               return habit;
             }

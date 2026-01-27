@@ -114,7 +114,7 @@ export default function Index() {
         [selectedDateKey]: false,
       },
       showGrid: false,
-      showStreak: true
+      showStreak: false
     };
 
     setHabits(prev => [...prev, newHabit]);
