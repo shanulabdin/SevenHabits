@@ -1,6 +1,7 @@
 import CreateHabit from "@/components/CreateHabit";
 import Heading from "@/components/Heading";
 import { useThemeColors } from "@/constants/theme";
+import { hapticLight } from "@/utils/haptics";
 import { router } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -30,7 +31,10 @@ export default function AddHabit() {
           title="Add Habit"
           iconTitle="Save"
           icon="checkmark"
-          onIconPress={() => submit(newHabitTitle)}
+          onIconPress={() => {
+            hapticLight();
+            submit(newHabitTitle)
+          }}
         />
         <CreateHabit
           newHabitTitle={newHabitTitle}

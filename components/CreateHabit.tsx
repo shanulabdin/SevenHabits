@@ -1,4 +1,5 @@
 import { useThemeColors } from "@/constants/theme";
+import { hapticSelect } from "@/utils/haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useRef } from "react";
@@ -20,8 +21,8 @@ export default function CreateHabit({
   setNewHabitTitle,
   createHabit,
 }: CreateHabitProps) {
-  const { colors } = useThemeColors();  
-    const inputRef = useRef<TextInput>(null);
+  const { colors } = useThemeColors();
+  const inputRef = useRef<TextInput>(null);
 
   useFocusEffect(
     useCallback(() => {
@@ -49,15 +50,21 @@ export default function CreateHabit({
         onChangeText={setNewHabitTitle}
         value={newHabitTitle}
         returnKeyType="done"
-        onSubmitEditing={() => createHabit(newHabitTitle)}
+        onSubmitEditing={() => {
+          createHabit(newHabitTitle)
+        }}
         maxLength={24}
       />
 
       <Pressable
         hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
         style={styles.iconBtn}
-        onPress={() => createHabit(newHabitTitle)}
+        onPress={() => {
+          createHabit(newHabitTitle)
+          hapticSelect();
+        }}
       >
+
         <Ionicons name="add-sharp" size={32} color={colors.orange} />
       </Pressable>
     </View>
