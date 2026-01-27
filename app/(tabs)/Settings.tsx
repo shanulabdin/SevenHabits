@@ -7,6 +7,7 @@ import { useThemeColors } from '@/constants/theme';
 import { useHabits } from "@/src/context/HabitsProvider";
 import { useComingSoon } from "@/src/hooks/useComingSoon";
 import { useConfirmModal } from "@/src/hooks/useConfirmModal";
+import { hapticLight } from "@/utils/haptics";
 import Constants from "expo-constants";
 import { router } from "expo-router";
 import * as StoreReview from "expo-store-review";
@@ -101,24 +102,57 @@ export default function SettingsScreen() {
   const { openComingSoon, ComingSoonModal } = useComingSoon();
 
   const top: Item[] = [
-    { title: "Theme", icon: "color-palette-outline", onPress: () => router.push("/settings/theme") },
-    { title: "General", icon: "grid-outline", onPress: () => router.push("/settings/general") },
-    { title: "Widgets", icon: "cube-outline", onPress: () => router.push("/settings/widgets") },
+    { title: "Theme", icon: "color-palette-outline", onPress: () => {
+      hapticLight();
+      router.push("/settings/theme");
+    } },
+    { title: "General", icon: "grid-outline", onPress: () => {
+      hapticLight();
+      router.push("/settings/general");
+    } },
+    { title: "Widgets", icon: "cube-outline", onPress: () => {
+      hapticLight();
+      router.push("/settings/widgets");
+    } },
   ];
   const cloud: Item[] = [
-    { title: "Cloud Backup", icon: "cloud-outline", onPress: openComingSoon },
-    { title: "Import", icon: "download-outline", onPress: openComingSoon },
-    { title: "Export", icon: "share-outline", onPress: openComingSoon },
+    { title: "Cloud Backup", icon: "cloud-outline", onPress: () => {
+      hapticLight();
+      openComingSoon();
+    } },
+    { title: "Import", icon: "download-outline", onPress: () => {
+      hapticLight();
+      openComingSoon();
+    } },
+    { title: "Export", icon: "share-outline", onPress: () => {
+      hapticLight();
+      openComingSoon();
+    } },
   ];
   const misc: Item[] = [
-    { title: "Share", icon: "share-social-outline", onPress: shareApp },
+    { title: "Share", icon: "share-social-outline", onPress: () => {
+      hapticLight();
+      shareApp();
+    } },
     { title: "Rate", icon: "star-outline", onPress: rateApp },
-    { title: "Privacy Policy", icon: "document-text-outline", onPress: () => openUrl("https://yourdomain.com/privacy") },
-    { title: "Terms & Conditions", icon: "document-outline", onPress: () => openUrl("https://yourdomain.com/terms") },
-    { title: "Feedback", icon: "chatbubble-ellipses-outline", onPress: sendFeedback },
+    { title: "Privacy Policy", icon: "document-text-outline", onPress: () => {
+      hapticLight();
+      openUrl("https://yourdomain.com/privacy");
+    } },
+    { title: "Terms & Conditions", icon: "document-outline", onPress: () => {
+      hapticLight();
+      openUrl("https://yourdomain.com/terms");
+    } },
+    { title: "Feedback", icon: "chatbubble-ellipses-outline", onPress:() => {
+      hapticLight();
+      sendFeedback();
+    } },
   ];
   const deleteData: Item[] = [
-    { title: "Delete All Data", icon: "trash-outline", onPress: () => openDeleteConfirm() }
+    { title: "Delete All Data", icon: "trash-outline", onPress: () => {
+      hapticLight();
+      openDeleteConfirm();
+    } }
   ];
 
 
