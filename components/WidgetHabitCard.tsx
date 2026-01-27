@@ -28,8 +28,8 @@ export default function WidgetHabitCard({
   onOpen,
   showGrid = true,
   showStreak = true,
-  weeks = 12,  // smaller than HabitCard
-  size = 10,   // smaller squares
+  weeks = 19,  // smaller than HabitCard
+  size = 17,   // smaller squares
   gap = 2,
 }: Props) {
   const { colors } = useThemeColors();
@@ -50,7 +50,7 @@ export default function WidgetHabitCard({
 
         {showStreak && (
           <View style={[styles.streak, { opacity: streak === 0 ? 0.35 : 1 }]}>
-            <Text style={[styles.streakText, { color: colors.text }]}>
+            <Text style={[styles.streakText, { color: colors.text, fontFamily: "Poppins_500Medium" }]}>
               {streak < 2 ? "" : streak}
             </Text>
             <Ionicons
@@ -62,6 +62,8 @@ export default function WidgetHabitCard({
           </View>
         )}
       </View>
+
+      <View style={[styles.divider, { backgroundColor: colors.text }]} />
 
       {/* Grid */}
       {showGrid && (
@@ -75,11 +77,6 @@ export default function WidgetHabitCard({
           />
         </View>
       )}
-
-      {/* Hint */}
-      <Text style={[styles.hint, { color: colors.text }]}>
-        Tap to open
-      </Text>
     </Pressable>
   );
 }
@@ -119,15 +116,11 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
   gridWrap: {
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 10,
     alignItems: "center",
   },
-  hint: {
-    fontSize: 11,
-    fontFamily: "Poppins_500Medium",
-    opacity: 0.45,
-    textAlign: "right",
+  divider: {
+    height: 1,
+    marginHorizontal: 0,
+    marginBottom: 10,
   },
 });
