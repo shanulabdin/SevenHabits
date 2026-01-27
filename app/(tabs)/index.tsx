@@ -23,7 +23,7 @@ import {
 import { useThemeColors } from '@/constants/theme';
 import { useConfirmModal } from '@/src/hooks/useConfirmModal';
 import { getDateKey, getLastNDays } from '@/utils/date';
-import { hapticLight } from '@/utils/haptics';
+import { hapticHeavy, hapticLight, hapticSelect } from '@/utils/haptics';
 import { getPercentForDate, getWeeklyPercent } from '@/utils/stats';
 import { getHabitStreakWithGrace } from '@/utils/streaks';
 import { Ionicons } from '@expo/vector-icons';
@@ -341,6 +341,7 @@ export default function Index() {
                 <Pressable
                   onPress={() => {
                     if (!selectedHabitId) return;
+                    hapticSelect();
                     startEditingHabit(selectedHabitId);
                   }}
                 >
@@ -352,6 +353,7 @@ export default function Index() {
                 {/* Toggle grid */}
                 <Pressable
                   onPress={() => {
+                    hapticSelect();
                     if (!selectedHabitId) return;
                     toggleGridForHabit(selectedHabitId);
                     setIsModalVisible(false);
@@ -367,6 +369,7 @@ export default function Index() {
                 <Pressable
                   onPress={() => {
                     if (!selectedHabitId) return;
+                    hapticHeavy();
                     openDeleteHabitConfirm();
                   }}
                 >
