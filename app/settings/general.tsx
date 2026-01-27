@@ -1,8 +1,10 @@
 import Heading from "@/components/Heading";
 import { useThemeColors } from "@/constants/theme";
 import { useComingSoon } from "@/src/hooks/useComingSoon";
-import { hapticLight } from "@/utils/haptics";
+import { hapticLight, setHapticsEnabled } from "@/utils/haptics";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
+import { useState } from "react";
 import {
   Pressable,
   ScrollView,
@@ -42,6 +44,7 @@ export default function GeneralScreen() {
 
   const { openComingSoon, ComingSoonModal } = useComingSoon();
 
+  const [hapticsOn, setHapticsOnState] = useState(true);
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
       <ScrollView
@@ -61,16 +64,20 @@ export default function GeneralScreen() {
         <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <Row
             title="Haptics"
-            right="On"
-            onPress={() => {
-              hapticLight();
-              openComingSoon();
+            right={hapticsOn ? "On" : "Off"}
+            onPress={async () => {
+              const next = !hapticsOn;
+              setHapticsOnState(next);
+              setHapticsEnabled(next);
+              await AsyncStorage.setItem("hapticsEnabled", JSON.stringify(next));
+
+              if (next) hapticLight(); // only vibrate when turning ON
             }}
           />
           <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
           <Row
-            title="Show Streak"
+            title="Show Streaks"
             right="On"
             onPress={() => {
               hapticLight();

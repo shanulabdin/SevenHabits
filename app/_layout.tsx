@@ -7,16 +7,28 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { View } from "react-native";
 
+import { setHapticsEnabled } from "@/utils/haptics";
 import {
   Poppins_400Regular,
   Poppins_500Medium,
   Poppins_600SemiBold,
   Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFonts } from "expo-font";
+import { useEffect } from "react";
 
 function AppShell() {
   const { colors, isLoaded: themeLoaded } = useThemeColors();
+
+  useEffect(() => {
+    (async () => {
+      const raw = await AsyncStorage.getItem("hapticsEnabled");
+      const saved = raw ? JSON.parse(raw) : true;
+
+      setHapticsEnabled(saved);
+    })();
+  }, []);
 
   if (!themeLoaded) {
     return <View style={{ flex: 1, backgroundColor: "#151515" }} />;
@@ -32,6 +44,8 @@ function AppShell() {
       border: colors.border,
     },
   };
+
+
 
   const isDark = colors.text === "#FFFFFF";
   return (

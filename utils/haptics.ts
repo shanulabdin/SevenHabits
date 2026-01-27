@@ -1,17 +1,25 @@
 import * as Haptics from "expo-haptics";
 import { Platform } from "react-native";
 
-const safe = <T>(fn: Promise<T>) => {
+let enabled = true;
+
+export const setHapticsEnabled = (value: boolean) => {
+  enabled = value;
+};
+
+export const getHapticsEnabled = () => enabled;
+
+const safe = <T>(promise: Promise<T>) => {
+  if (!enabled) return;
   if (Platform.OS === "web") return;
-  fn.catch(() => {});
+  promise.catch(() => {});
 };
 
 /* ======================
    BASIC INTERACTIONS
 ====================== */
 
-export const hapticSelect = () =>
-  safe(Haptics.selectionAsync());
+export const hapticSelect = () => safe(Haptics.selectionAsync());
 
 export const hapticLight = () =>
   safe(Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light));
