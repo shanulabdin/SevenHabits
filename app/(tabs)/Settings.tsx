@@ -70,7 +70,7 @@ export const sendFeedback = async () => {
 function SettingsRow({ title, icon, onPress }: Item) {
   const { colors } = useThemeColors();
   return (
-    <Pressable onPress={onPress} style={styles.row} android_ripple={{ color: "#2b2b2b" }}>
+    <Pressable onPress={onPress} style={styles.row}>
       <Text style={[styles.rowText, { color: colors.text }]}>{title}</Text>
       <Ionicons name={icon} size={18} color={colors.text} />
     </Pressable>

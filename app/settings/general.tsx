@@ -1,10 +1,9 @@
 import Heading from "@/components/Heading";
 import { useThemeColors } from "@/constants/theme";
+import { useSettings } from "@/src/context/SettingsProvider";
 import { useComingSoon } from "@/src/hooks/useComingSoon";
-import { hapticLight, setHapticsEnabled } from "@/utils/haptics";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { hapticLight } from "@/utils/haptics";
 import { useRouter } from "expo-router";
-import { useState } from "react";
 import {
   Pressable,
   ScrollView,
@@ -27,7 +26,6 @@ function Row({
   return (
     <Pressable
       onPress={onPress}
-      android_ripple={{ color: "#2b2b2b" }}
       style={styles.row}
     >
       <Text style={[styles.rowText, { color: colors.text }]}>{title}</Text>
@@ -44,7 +42,8 @@ export default function GeneralScreen() {
 
   const { openComingSoon, ComingSoonModal } = useComingSoon();
 
-  const [hapticsOn, setHapticsOnState] = useState(true);
+  const { hapticsEnabled, toggleHaptics, isLoaded } = useSettings();
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
       <ScrollView
@@ -64,20 +63,18 @@ export default function GeneralScreen() {
         <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <Row
             title="Haptics"
-            right={hapticsOn ? "On" : "Off"}
-            onPress={async () => {
-              const next = !hapticsOn;
-              setHapticsOnState(next);
-              setHapticsEnabled(next);
-              await AsyncStorage.setItem("hapticsEnabled", JSON.stringify(next));
-
-              if (next) hapticLight(); // only vibrate when turning ON
+            right={!isLoaded ? "..." : (hapticsEnabled ? "On" : "Off")}
+            onPress={() => {
+              // optional: give a “last” tap feedback only when currently on
+              if (hapticsEnabled) hapticLight();
+              toggleHaptics();
             }}
           />
+
           <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
           <Row
-            title="Show Streaks"
+            title="Show Streak"
             right="On"
             onPress={() => {
               hapticLight();

@@ -23,7 +23,6 @@ function WidgetCard({
           hapticLight();
           onPress?.();
         }}
-        // android_ripple={{ color: "#cfcfcfff", foreground: true }}
         style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
       >
         <Text style={[styles.title, { color: colors.text }]}>
