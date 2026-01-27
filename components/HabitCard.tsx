@@ -1,9 +1,9 @@
 import { colors } from "@/constants/colors";
 import { useThemeColors } from "@/constants/theme";
+import { hapticLight } from "@/utils/haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import ContributionGrid from "./ContributionGrid";
-
 
 type HabitCardProps = {
   title: string;
@@ -26,8 +26,8 @@ export default function HabitCard({
   markComplete,
   onLongPress,
 }: HabitCardProps) {
-  
-const { colors } = useThemeColors();
+
+  const { colors } = useThemeColors();
 
   return (
     <View style={styles.wrapper}>
@@ -67,12 +67,15 @@ const { colors } = useThemeColors();
 
         {/* RIGHT SIDE */}
         <Pressable
-          onPress={markComplete}
+          onPress={() => {
+            hapticLight();
+            markComplete();
+          }}
           hitSlop={12}
           style={[
             styles.checkbox,
             checked && { backgroundColor: colors.orange, borderColor: colors.orange },
-            
+
           ]}
         >
           {checked && (
@@ -179,8 +182,8 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     borderWidth: 1,
-    alignItems: "center",    
-    
+    alignItems: "center",
+
     shadowColor: "#000",
     shadowOpacity: 0.25,
     shadowRadius: 12,
