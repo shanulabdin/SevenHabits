@@ -1,7 +1,7 @@
 // app/(tabs)/settings.tsx  (or wherever your settings route lives)
 import Heading from "@/components/Heading";
 import { Ionicons } from "@expo/vector-icons";
-import { Alert, Linking, Pressable, ScrollView, Share, StyleSheet, Text, View } from "react-native";
+import { Linking, Platform, Pressable, ScrollView, Share, StyleSheet, Text, View } from "react-native";
 
 import { useThemeColors } from '@/constants/theme';
 import { useHabits } from "@/src/context/HabitsProvider";
@@ -24,7 +24,7 @@ type Item = {
 // Helper Functions
 const openUrl = async (url: string) => {
   const can = await Linking.canOpenURL(url);
-  if (!can) return Alert.alert("Can't open link", url);
+  if (!can) throw new Error("Cannot open URL: " + url);
   await Linking.openURL(url);
 };
 
@@ -37,23 +37,34 @@ const rateApp = async () => {
   const available = await StoreReview.isAvailableAsync();
   if (available) {
     await StoreReview.requestReview();
-  } else {
-    // fallback: open store page if you have it
-    Alert.alert("Rating not available on this device.");
+    return;
   }
+
+  const iosUrl = "itms-apps://itunes.apple.com/app/idYOUR_APP_ID?action=write-review";
+  const androidUrl = "market://details?id=com.shanulabdin.Forge";
+
+  const url = Platform.OS === "ios" ? iosUrl : androidUrl;
+  await Linking.openURL(url);
 };
 
 const sendFeedback = async () => {
-  const to = "support@yourdomain.com"; // change
+  const to = "support@yourdomain.com";
   const subject = encodeURIComponent("SevenHabits Feedback");
   const body = encodeURIComponent(
     `Hi,\n\nFeedback:\n\n\n---\nApp: SevenHabits\nVersion: ${Constants.expoConfig?.version ?? "unknown"}\n`
   );
 
   const mailto = `mailto:${to}?subject=${subject}&body=${body}`;
-  await openUrl(mailto);
-};
 
+  const can = await Linking.canOpenURL(mailto);
+  if (!can) {
+    // fallback: open a web contact page (replace)
+    await openUrl("https://yourdomain.com/contact");
+    return;
+  }
+
+  await Linking.openURL(mailto);
+};
 
 // Components
 function SettingsRow({ title, icon, onPress }: Item) {
@@ -116,54 +127,63 @@ export default function SettingsScreen() {
 
   const top: Item[] = [
     {
-      title: "Theme", icon: "color-palette-outline", 
+      title: "Theme", icon: "color-palette-outline",
       onPress: withHaptic(() => router.push("/settings/theme"), "light"),
     },
     {
-      title: "General", icon: "grid-outline", 
+      title: "General", icon: "grid-outline",
       onPress: withHaptic(() => router.push("/settings/general"), "light"),
     },
     {
-      title: "Widgets", icon: "cube-outline", 
+      title: "Widgets", icon: "cube-outline",
       onPress: withHaptic(() => router.push("/settings/widgets"), "light"),
     },
   ];
   const cloud: Item[] = [
     {
-      title: "Cloud Backup", icon: "cloud-outline", 
+      title: "Cloud Backup", icon: "cloud-outline",
       onPress: withHaptic(() => openComingSoon(), "light"),
     },
     {
-      title: "Import", icon: "download-outline", 
+      title: "Import", icon: "download-outline",
       onPress: withHaptic(() => openComingSoon(), "light"),
     },
     {
-      title: "Export", icon: "share-outline", 
+      title: "Export", icon: "share-outline",
       onPress: withHaptic(() => openComingSoon(), "light"),
     },
   ];
   const misc: Item[] = [
     {
-      title: "Share", icon: "share-social-outline", 
-      onPress: withHaptic(() => shareApp(), "light"),
+      title: "Share",
+      icon: "share-social-outline",
+      onPress: withHaptic(shareApp, "light"),
     },
-    { title: "Rate", icon: "star-outline", onPress: withHaptic(() => openUrl("https://yourdomain.com/privacy")) },
     {
-      title: "Privacy Policy", icon: "document-text-outline", 
+      title: "Rate",
+      icon: "star-outline",
+      onPress: withHaptic(rateApp, "light"),
+    },
+    {
+      title: "Privacy Policy",
+      icon: "document-text-outline",
       onPress: withHaptic(() => openUrl("https://yourdomain.com/privacy"), "light"),
     },
     {
-      title: "Terms & Conditions", icon: "document-outline", 
+      title: "Terms & Conditions",
+      icon: "document-outline",
       onPress: withHaptic(() => openUrl("https://yourdomain.com/terms"), "light"),
     },
     {
-      title: "Feedback", icon: "chatbubble-ellipses-outline", 
-      onPress: withHaptic(() => sendFeedback(), "light"),
+      title: "Feedback",
+      icon: "chatbubble-ellipses-outline",
+      onPress: withHaptic(sendFeedback, "light"),
     },
   ];
+
   const deleteData: Item[] = [
     {
-      title: "Delete All Data", icon: "trash-outline", 
+      title: "Delete All Data", icon: "trash-outline",
       onPress: withHaptic(() => openDeleteConfirm(), "light"),
     }
   ];
