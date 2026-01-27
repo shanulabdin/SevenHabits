@@ -4,6 +4,7 @@ import {
   ThemeProvider as NavThemeProvider,
 } from "@react-navigation/native";
 import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { View } from "react-native";
 
 import {
@@ -32,9 +33,11 @@ function AppShell() {
     },
   };
 
+  const isDark = colors.text === "#FFFFFF";
   return (
     <NavThemeProvider value={navTheme}>
       <View style={{ flex: 1, backgroundColor: colors.card }}>
+        <StatusBar style={isDark ? "light" : "dark"} />
         <Stack
           screenOptions={{
             headerShown: false,

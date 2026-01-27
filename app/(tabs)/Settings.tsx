@@ -48,24 +48,23 @@ const rateApp = async () => {
   await Linking.openURL(url);
 };
 
-const sendFeedback = async () => {
+export const sendFeedback = async () => {
   const to = "forgehabits.app@gmail.com";
   const subject = encodeURIComponent("Forge Feedback");
   const body = encodeURIComponent(
-    `Hi,\n\nFeedback:\n\n\n---\nApp: Forge\nVersion: ${Constants.expoConfig?.version ?? "unknown"}\n`
+    `Hi,\n\nFeedback:\n\n\n---\nApp: Forge\nVersion: ${Constants.expoConfig?.version ?? "1.0.0"}\n`
   );
 
   const mailto = `mailto:${to}?subject=${subject}&body=${body}`;
 
-  const can = await Linking.canOpenURL(mailto);
-  if (!can) {
-    // fallback: open a web contact page (replace)
-    await openUrl("https://yourdomain.com/contact");
-    return;
+  try {
+    await Linking.openURL(mailto);
+  } catch (e) {
+    // fallback only if openURL actually fails
+    await Linking.openURL("https://shanulabdin.github.io/forge-legal/");
   }
-
-  await Linking.openURL(mailto);
 };
+
 
 // Components
 function SettingsRow({ title, icon, onPress }: Item) {
