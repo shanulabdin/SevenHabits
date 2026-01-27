@@ -49,10 +49,10 @@ const rateApp = async () => {
 };
 
 const sendFeedback = async () => {
-  const to = "support@yourdomain.com";
-  const subject = encodeURIComponent("SevenHabits Feedback");
+  const to = "forgehabits.app@gmail.com";
+  const subject = encodeURIComponent("Forge Feedback");
   const body = encodeURIComponent(
-    `Hi,\n\nFeedback:\n\n\n---\nApp: SevenHabits\nVersion: ${Constants.expoConfig?.version ?? "unknown"}\n`
+    `Hi,\n\nFeedback:\n\n\n---\nApp: Forge\nVersion: ${Constants.expoConfig?.version ?? "unknown"}\n`
   );
 
   const mailto = `mailto:${to}?subject=${subject}&body=${body}`;
@@ -168,12 +168,12 @@ export default function SettingsScreen() {
     {
       title: "Privacy Policy",
       icon: "document-text-outline",
-      onPress: withHaptic(() => openUrl("https://yourdomain.com/privacy"), "light"),
+      onPress: withHaptic(() => openUrl("https://shanulabdin.github.io/forge-legal/privacy-policy.html"), "light"),
     },
     {
       title: "Terms & Conditions",
       icon: "document-outline",
-      onPress: withHaptic(() => openUrl("https://yourdomain.com/terms"), "light"),
+      onPress: withHaptic(() => openUrl("https://shanulabdin.github.io/forge-legal/privacy-policy.html"), "light"),
     },
     {
       title: "Feedback",
