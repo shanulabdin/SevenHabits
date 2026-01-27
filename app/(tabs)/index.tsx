@@ -197,12 +197,21 @@ export default function Index() {
       )
     );
   }
+  // Toggle Grid for habit
+  function toggleStreakForHabit(id: string) {
+    setHabits(prev =>
+      prev.map(h =>
+        h.id === id ? { ...h, showStreak: !(h.showStreak ?? true) } : h
+      )
+    );
+  }
 
   const selectedHabit = selectedHabitId
     ? habits.find(h => h.id === selectedHabitId)
     : null;
 
   const gridLabel = selectedHabit?.showGrid ?? true ? "Hide Grid" : "Show Grid";
+  const streakLabel = selectedHabit?.showStreak ?? true ? "Hide Streak" : "Show Streak";
 
   const {
     openConfirm: openDeleteHabitConfirm,
@@ -370,6 +379,21 @@ export default function Index() {
                 >
                   <Text style={[styles.modalItem, styles.modalItemBorder, { color: colors.text, borderBottomColor: colors.border, fontFamily: "Poppins_500Medium" }]}>
                     {gridLabel}
+                  </Text>
+                </Pressable>
+
+                {/* Toggle Streak */}
+                <Pressable
+                  onPress={() => {
+                    hapticSelect();
+                    if (!selectedHabitId) return;
+                    toggleStreakForHabit(selectedHabitId);
+                    setIsModalVisible(false);
+                    setSelectedHabitId(null);
+                  }}
+                >
+                  <Text style={[styles.modalItem, styles.modalItemBorder, { color: colors.text, borderBottomColor: colors.border, fontFamily: "Poppins_500Medium" }]}>
+                    {streakLabel}
                   </Text>
                 </Pressable>
 
