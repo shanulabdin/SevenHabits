@@ -1,4 +1,5 @@
 import { useThemeColors } from '@/constants/theme';
+import { hapticSelect } from '@/utils/haptics';
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -23,7 +24,11 @@ export default function Heading({
       {(icon || iconTitle) && (
         <Pressable
           disabled={!onIconPress}
-          onPress={onIconPress}
+          onPress={() => {
+            hapticSelect();
+            onIconPress?.();
+          }
+          }
           hitSlop={12}
           style={styles.iconRow}
         >
