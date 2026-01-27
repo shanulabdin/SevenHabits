@@ -1,10 +1,14 @@
 // app/settings/widgets.tsx
 import Heading from "@/components/Heading";
+import WidgetHabitCard from "@/components/WidgetHabitCard";
 import { useThemeColors } from "@/constants/theme";
+import { useHabits } from "@/src/context/HabitsProvider";
 import { hapticLight } from "@/utils/haptics";
 import { useRouter } from "expo-router";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+import { getDateKey } from '@/utils/date';
 
 function WidgetCard({
   title,
@@ -37,10 +41,14 @@ function WidgetCard({
 }
 
 
-
 export default function WidgetsScreen() {
   const router = useRouter();
   const { colors } = useThemeColors();
+
+  const { habits } = useHabits();
+  const firstHabit = habits[0];
+
+  const todayKey = getDateKey();
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
@@ -74,6 +82,19 @@ export default function WidgetsScreen() {
           />
         </View>
 
+        {firstHabit && (
+          <View style={{ marginBottom: 16 }}>
+            <WidgetHabitCard
+              title={firstHabit.title}
+              streak={1}
+              history={firstHabit.history}
+              todayKey={todayKey}
+              onOpen={() => router.push(`/settings/widgets`)} // choose your route
+              showGrid={true}
+              showStreak={true}
+            />
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
