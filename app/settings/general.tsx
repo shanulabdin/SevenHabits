@@ -1,5 +1,6 @@
 import Heading from "@/components/Heading";
 import { useThemeColors } from "@/constants/theme";
+import { useHabits } from "@/src/context/HabitsProvider";
 import { useSettings } from "@/src/context/SettingsProvider";
 import { useComingSoon } from "@/src/hooks/useComingSoon";
 import { hapticLight } from "@/utils/haptics";
@@ -44,6 +45,12 @@ export default function GeneralScreen() {
 
   const { hapticsEnabled, toggleHaptics, isLoaded } = useSettings();
 
+  // Show streaks and grid
+  const { habits, setShowGridForAll, setShowStreakForAll } = useHabits();
+
+  const showGridOn = habits.some(h => (h.showGrid ?? true) === true);
+  const showStreakOn = habits.some(h => (h.showStreak ?? true) === true);
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
       <ScrollView
@@ -70,15 +77,26 @@ export default function GeneralScreen() {
               toggleHaptics();
             }}
           />
+          
+          <View style={[styles.divider, { backgroundColor: colors.border }]} />
+
+          <Row
+            title="Show Grid"
+            right={showGridOn ? "On" : "Off"}
+            onPress={() => {
+              hapticLight();
+              setShowGridForAll(!showGridOn);
+            }}
+          />
 
           <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
           <Row
             title="Show Streak"
-            right="On"
+            right={showStreakOn ? "On" : "Off"}
             onPress={() => {
               hapticLight();
-              openComingSoon();
+              setShowStreakForAll(!showStreakOn);
             }}
           />
         </View>

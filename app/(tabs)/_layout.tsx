@@ -1,5 +1,4 @@
 import { useThemeColors } from "@/constants/theme";
-import { HabitsProvider } from "@/src/context/HabitsProvider";
 import { hapticSelect } from "@/utils/haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Tabs } from "expo-router";
@@ -23,7 +22,6 @@ export default function TabLayout() {
   const { colors } = useThemeColors();
 
   return (
-    <HabitsProvider>
       <Tabs
         screenOptions={{
           headerShown: false,
@@ -101,7 +99,6 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
-    </HabitsProvider>
   );
 }
 

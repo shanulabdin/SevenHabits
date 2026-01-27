@@ -7,6 +7,7 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { View } from "react-native";
 
+import { HabitsProvider } from "@/src/context/HabitsProvider";
 import { SettingsProvider } from "@/src/context/SettingsProvider";
 import {
   Poppins_400Regular,
@@ -65,9 +66,11 @@ export default function RootLayout() {
 
   return (
     <SettingsProvider>
-      <ThemeProvider>
-        <AppShell />
-      </ThemeProvider>
+      <HabitsProvider>
+        <ThemeProvider>
+          <AppShell />
+        </ThemeProvider>
+      </HabitsProvider>
     </SettingsProvider>
   );
 }

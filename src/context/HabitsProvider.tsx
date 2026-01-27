@@ -9,6 +9,8 @@ type HabitsContextValue = {
   habits: Habit[];
   setHabits: React.Dispatch<React.SetStateAction<Habit[]>>;
   resetAllData: () => Promise<void>;
+  setShowGridForAll: (value: boolean) => void;
+  setShowStreakForAll: (value: boolean) => void;
 };
 
 const HabitsContext = createContext<HabitsContextValue | null>(null);
@@ -27,6 +29,14 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
   // 1) STATE (moved from index)
   const [habits, setHabits] = useState<Habit[]>(() => buildDefaultHabits(todayKey));
 
+  // Show grid and streak
+  const setShowGridForAll = (value: boolean) => {
+    setHabits(prev => prev.map(h => ({ ...h, showGrid: value })));
+  };
+
+  const setShowStreakForAll = (value: boolean) => {
+    setHabits(prev => prev.map(h => ({ ...h, showStreak: value })));
+  };
   // 2) LOAD once (moved from index)
   useEffect(() => {
     (async () => {
@@ -99,7 +109,11 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
-  const value: HabitsContextValue = { habits, setHabits, resetAllData };
+  const value: HabitsContextValue = {
+    habits, setHabits, resetAllData, 
+    setShowGridForAll,
+    setShowStreakForAll,
+  };
 
   return <HabitsContext.Provider value={value}>{children}</HabitsContext.Provider>;
 }
