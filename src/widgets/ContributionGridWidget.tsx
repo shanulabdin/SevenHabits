@@ -1,10 +1,5 @@
 "use no memo";
-import {
-  FlexWidget,
-  SvgWidget,
-  TextWidget,
-  type ColorProp,
-} from "react-native-android-widget";
+import { FlexWidget, SvgWidget, type ColorProp } from "react-native-android-widget";
 import { gridSvg } from "./gridSvg";
 
 type Props = {
@@ -15,22 +10,17 @@ type Props = {
   size?: number;
   gap?: number;
   bg: ColorProp;
-  text: ColorProp;
-  muted: ColorProp;
-  empty: string;  // hex string
-  filled: string; // hex string
+  empty: string;
+  filled: string;
 };
 
 export function ContributionGridWidget({
-  title,
   history,
   endDateKey,
-  weeks = 20,
+  weeks = 10,
   size = 10,
   gap = 3,
   bg,
-  text,
-  muted,
   empty,
   filled,
 }: Props) {
@@ -42,37 +32,17 @@ export function ContributionGridWidget({
         width: "match_parent",
         height: "match_parent",
         padding: 14,
-        borderRadius: 18,
+        borderRadius: 14,
         backgroundColor: bg,
-        flexDirection: "column",
       }}
     >
-      <TextWidget
-        text={title}
+      <SvgWidget
+        svg={svg}
         style={{
           width: "match_parent",
-          fontSize: 14,
-          fontFamily: "Poppins",
-          fontWeight: "700",
-          color: text,
+          height: "match_parent",
         }}
       />
-      <TextWidget
-        text={`${weeks * 7} days`}
-        style={{
-          width: "match_parent",
-          marginTop: 2,
-          fontSize: 12,
-          fontFamily: "Poppins",
-          fontWeight: "500",
-          color: muted,
-        }}
-      />
-
-      {/* spacer */}
-      <FlexWidget style={{ height: 10 }} />
-
-      <SvgWidget svg={svg} style={{ width: "match_parent" }} />
     </FlexWidget>
   );
 }
