@@ -72,17 +72,42 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
 
     const percent = possible ? Math.round((done / possible) * 100) : 0;
 
+    const LIGHT = {
+      bg: "#FFFFFF" as const,
+      text: "#111111" as const,
+      muted: "#11111199" as const,
+    };
+
+    const DARK = {
+      bg: "#151515" as const,
+      text: "#FFFFFF" as const,
+      muted: "#FFFFFFB3" as const,
+    };
+
+
     requestWidgetUpdate({
       widgetName: "PercentCard",
-      renderWidget: () => (
-        <PercentWidget
-          title={`${first.title}`}
-          percent={percent}
-          subtitle={`${done}/${possible}`}
-        />
-      ),
+      renderWidget: () => ({
+        light: (
+          <PercentWidget
+            title={`${first.title} (10d)`}
+            percent={percent}
+            subtitle={`${done}/${possible}`}
+            {...LIGHT}
+          />
+        ),
+        dark: (
+          <PercentWidget
+            title={`${first.title} (10d)`}
+            percent={percent}
+            subtitle={`${done}/${possible}`}
+            {...DARK}
+          />
+        ),
+      }),
       widgetNotFound: () => { },
     });
+
   }, [habits]);
 
 

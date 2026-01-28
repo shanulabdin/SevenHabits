@@ -1,20 +1,23 @@
 'use no memo';
 
-import { FlexWidget, OverlapWidget, SvgWidget, TextWidget, type FlexWidgetProps } from "react-native-android-widget";
+import { ColorProp, FlexWidget, OverlapWidget, SvgWidget, TextWidget, type FlexWidgetProps } from "react-native-android-widget";
 
 type Props = {
-  title: string;     // "Overall"
-  percent: number;   // 0..100
-  subtitle?: string; // "32/50" optional
+  title: string;
+  percent: number;
+  subtitle?: string;
+  bg: ColorProp;
+  text: ColorProp;
+  muted: ColorProp;
 };
 
-export function PercentWidget({ title, percent, subtitle }: Props) {
+export function PercentWidget({ title, percent, subtitle, bg, text, muted }: Props) {
   const container: FlexWidgetProps["style"] = {
     width: "match_parent",
     height: "match_parent",
     padding: 10,
     borderRadius: 10,
-    backgroundColor: "#151515",
+    backgroundColor: bg,
     justifyContent: "center",
     alignItems: "center"
   };
@@ -64,7 +67,7 @@ export function PercentWidget({ title, percent, subtitle }: Props) {
             fontSize: 24,
             fontFamily: "Poppins",
             fontWeight: "700",
-            color: "#FFFFFF",
+            color: text,
             textAlign: "center",
             // Move the text down into the true center (tweak if needed)
             marginTop: 64,
@@ -77,7 +80,7 @@ export function PercentWidget({ title, percent, subtitle }: Props) {
             fontSize: 12,
             fontFamily: "Poppins",
             fontWeight: "500",
-            color: "#ffffffb3",
+            color: muted,
             textAlign: "center",
             marginTop: 150,
           }}

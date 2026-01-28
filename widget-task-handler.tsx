@@ -4,17 +4,9 @@ import { PercentWidget } from "./src/widgets/PercentWidget";
 import { StreakOnlyWidget } from "./src/widgets/StreakOnlyWidget";
 
 // Map widgetName -> component
-const nameToWidget = {
-  PercentWidget: PercentWidget,           // existing widget
-  StreakOnly: StreakOnlyWidget, // NEW widget
-};
 
 export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
   const { widgetInfo, widgetAction } = props;
-
-  const Widget =
-    nameToWidget[widgetInfo.widgetName as keyof typeof nameToWidget] ??
-    PercentWidget;
 
   switch (widgetAction) {
     case "WIDGET_ADDED":
@@ -27,9 +19,10 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
           <StreakOnlyWidget title="Forge" streak={12} />
         );
       } else {
-        props.renderWidget(
-          <PercentWidget title="7 Day Score" percent={64} subtitle="32/50" />
-        );
+        props.renderWidget({
+          light: <PercentWidget title="7 Day Score" percent={64} subtitle="32/50" bg={"#F6F6F6"} text={"#FFFFFF"} muted={"#0000004c"} />,
+          dark: <PercentWidget title="7 Day Score" percent={64} subtitle="32/50" bg={"#151515"} text={"#000000"} muted={"#ffffffb3"} />,
+        });
       }
       break;
     }

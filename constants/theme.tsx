@@ -19,7 +19,7 @@ const DARK = {
   inverseText: "#000000",
 
   border: "#a1a1a14d",
-  borderMuted: "rgba(161, 161, 161, 0)",
+  borderMuted: "#a1a1a1",
 
   orange: "#FF6D1F",
 
