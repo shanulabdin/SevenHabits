@@ -1,6 +1,10 @@
 'use no memo';
 
-import { FlexWidget, TextWidget, type FlexWidgetProps } from "react-native-android-widget";
+import {
+  FlexWidget,
+  TextWidget,
+  type FlexWidgetProps,
+} from "react-native-android-widget";
 
 type Props = {
   title: string;
@@ -13,26 +17,52 @@ export function StreakOnlyWidget({ title, streak }: Props) {
     height: "match_parent",
     padding: 16,
     borderRadius: 18,
-    backgroundColor: "#0B1220",
-    justifyContent: "space-between",
+    backgroundColor: "#151515",
+    justifyContent: "center",
+    alignItems: "center",
   };
 
   return (
     <FlexWidget style={containerStyle}>
+      {/* 🔥 + streak */}
+      <FlexWidget
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          marginBottom: 20,
+        }}
+      >
+        <TextWidget
+          text={`${streak}`}
+          style={{
+            fontSize: 32,
+            fontFamily: "Poppins_600SemiBold",
+            color: "#FFFFFF",
+          }}
+        />
+        <TextWidget
+          text="🔥"
+          style={{
+            fontSize: 28, // icon size
+            marginRight: 6,
+          }}
+        />
+      </FlexWidget>
+
+      {/* Habit title */}
       <TextWidget
         text={title}
-        style={{ fontSize: 16, fontWeight: "700", color: "#FFFFFF" }}
-      />
-
-      <TextWidget
-        text={`🔥 ${streak}`}
-        style={{ fontSize: 34, fontWeight: "900", color: "#FFFFFF" }}
-      />
-
-      <TextWidget
-        text="Tap to open"
-        style={{ fontSize: 12, color: "#A7B0C0" }}
+        style={{
+          fontSize: 14,
+          fontFamily: "Poppins_600SemiBold",
+          color: "#ffffffb3",
+        }}
       />
     </FlexWidget>
   );
 }
+
+// "Poppins_400Regular"
+// "Poppins_500Medium"
+// "Poppins_600SemiBold"
+// "Poppins_700Bold"
