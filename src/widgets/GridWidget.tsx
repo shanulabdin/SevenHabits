@@ -51,9 +51,9 @@ function buildColumns(endDateKey: string, weeks: number) {
 export function GridWidget({
   history,
   endDateKey,
-  weeks = 12,   // good fit for 4x2
-  size = 10,    // adjust if needed
-  gap = 2,
+  weeks = 14,   // good fit for 4x2
+  size = 20,    // adjust if needed
+  gap = 4,
   bg,
   orange,
   muted,
@@ -69,8 +69,8 @@ export function GridWidget({
       backgroundColor: bg,
       borderRadius: 16,
       flexDirection: "row",
-      alignItems: "flex-start",
-      justifyContent: "flex-start",
+      alignItems: "center",
+      justifyContent: "center",
     },
   };
 
@@ -95,7 +95,7 @@ export function GridWidget({
                   height: size,
                   backgroundColor: done ? orange : muted,
                   borderRadius: 3,
-                  borderWidth: done ? 0 : 1,
+                  // borderWidth: done ? 0 : 1,
                   marginBottom: j === col.length - 1 ? 0 : gap,
                 }}
               />

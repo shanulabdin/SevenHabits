@@ -143,14 +143,14 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
     const LIGHT = {
       bg: "#FFFFFF",
       orange: "#FF6D1F",
-      muted: "#00000014",
+      muted: "#a1a1a14d",
       border: "#00000033",
     } as const;
 
     const DARK = {
-      bg: "#000000",
+      bg: "#151515",
       orange: "#FF6D1F",
-      muted: "#FFFFFF14",
+      muted: "#a1a1a14d",
       border: "#FFFFFF33",
     } as const;
 
