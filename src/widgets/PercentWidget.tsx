@@ -12,8 +12,8 @@ export function PercentWidget({ title, percent, subtitle }: Props) {
   const container: FlexWidgetProps["style"] = {
     width: "match_parent",
     height: "match_parent",
-    padding: 16,
-    borderRadius: 18,
+    padding: 10,
+    borderRadius: 10,
     backgroundColor: "#151515",
     justifyContent: "center",
     alignItems: "center"
@@ -44,42 +44,25 @@ export function PercentWidget({ title, percent, subtitle }: Props) {
   return (
     <FlexWidget style={container}>
       <TextWidget
-        text={title}
+        text={`${percent}%`}
         style={{
-          fontSize: 14,
+          fontSize: 24,
           fontFamily: "Poppins",
-          fontWeight: "600",
-          color: "#ffffffb3",
+          fontWeight: "700",
+          color: "#FFFFFF",
         }}
       />
 
-      <FlexWidget style={{ alignItems: "center", justifyContent: "center" }}>
-        <TextWidget
-          text={`${percent}%`}
-          style={{
-            fontSize: 40,
-            fontFamily: "Poppins",
-            fontWeight: "700",
-            color: "#FFFFFF",
-          }}
-        />
-        <SvgWidget
-          svg={ringFor(percent)}
-          style={{ width: 120, height: 120 }}
-        />
-
-        {subtitle ? (
-          <TextWidget
-            text={subtitle}
-            style={{
-              fontSize: 12,
-              fontFamily: "Poppins",
-              fontWeight: "500",
-              color: "#ffffff80",
-            }}
-          />
-        ) : null}
-      </FlexWidget>
+      {/* Then render the ring */}
+      <SvgWidget
+        svg={ringFor(percent)}
+        style={{
+          width: 120,
+          height: 120,
+          // small negative margin pulls ring “behind” the text visually
+          marginTop: 0,
+        }}
+      />
     </FlexWidget>
   );
 }
