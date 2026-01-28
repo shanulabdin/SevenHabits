@@ -1,12 +1,11 @@
-import React from "react";
 import type { WidgetTaskHandlerProps } from "react-native-android-widget";
 
-import { HabitWidget } from "./src/widgets/HabitWidget";
+import { PercentWidget } from "./src/widgets/PercentWidget";
 import { StreakOnlyWidget } from "./src/widgets/StreakOnlyWidget";
 
 // Map widgetName -> component
 const nameToWidget = {
-  Habit: HabitWidget,           // existing widget
+  PercentWidget: PercentWidget,           // existing widget
   StreakOnly: StreakOnlyWidget, // NEW widget
 };
 
@@ -16,7 +15,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
 
   const Widget =
     nameToWidget[widgetInfo.widgetName as keyof typeof nameToWidget] ??
-    HabitWidget;
+    PercentWidget;
 
   switch (widgetAction) {
     case "WIDGET_ADDED":
@@ -30,7 +29,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
         );
       } else {
         props.renderWidget(
-          <HabitWidget title="Forge" streak={12} percent7d={64} />
+          <PercentWidget title="Overall (7d)" percent={64} subtitle="32/50" />
         );
       }
       break;

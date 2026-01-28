@@ -1,9 +1,10 @@
 import type { Habit } from "@/types/habit"; // <-- adjust path
-import { getDateKey } from "@/utils/date"; // <-- adjust path to where your getDateKey is
+import { getDateKey, getLastNDays } from "@/utils/date"; // <-- adjust path to where your getDateKey is
 import { getHabitStreakWithGrace } from "@/utils/streaks";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { requestWidgetUpdate } from "react-native-android-widget";
+import { PercentWidget } from "../widgets/PercentWidget";
 import { StreakOnlyWidget } from "../widgets/StreakOnlyWidget";
 
 const STORAGE_KEY = "@forge/habits_v1";
@@ -51,6 +52,42 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
       },
     });
   }, [habits, todayKey]);
+
+  // ✅ Update Overall % widget (last 7 days)
+  useEffect(() => {
+    if (!habits || habits.length === 0) return;
+
+    const DAYS = 7;
+    const lastDays = getLastNDays(DAYS);
+    const dateKeys = lastDays.map((d) => getDateKey(d));
+
+    const possible = habits.length * dateKeys.length;
+    let done = 0;
+
+    for (const habit of habits) {
+      for (const key of dateKeys) {
+        if (habit.history?.[key] === true) done += 1;
+      }
+    }
+
+    const percent = possible
+      ? Math.round((done / possible) * 100)
+      : 0;
+
+    requestWidgetUpdate({
+      widgetName: "PercentCard",
+      renderWidget: () => (
+        <PercentWidget
+          title="Overall (7d)"
+          percent={percent}
+          subtitle={`${done}/${possible}`}
+        />
+      ),
+      widgetNotFound: () => {
+        // widget not added on home screen — safe to ignore
+      },
+    });
+  }, [habits]);
 
 
   // Show grid and streak

@@ -58,20 +58,20 @@
           ],
           "widgets": [
             {
-              "name": "Habit",
-              "label": "Forge Habit",
-              "description": "Shows your habit streak",
-              "minWidth": "120dp",
-              "minHeight": "120dp",
+              "name": "StreakOnly",
+              "label": "Streaks",
+              "description": "Shows streak only",
+              "minWidth": "110dp",
+              "minHeight": "110dp",
               "targetCellWidth": 2,
               "targetCellHeight": 2,
               "previewImage": "./assets/images/logo-2.png",
               "updatePeriodMillis": 0
             },
             {
-              "name": "StreakOnly",
-              "label": "Forge Streak",
-              "description": "Shows streak only",
+              "name": "PercentCard",
+              "label": "Forge Score",
+              "description": "Overall completion percentage",
               "minWidth": "110dp",
               "minHeight": "110dp",
               "targetCellWidth": 2,
