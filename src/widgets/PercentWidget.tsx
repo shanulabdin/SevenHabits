@@ -77,7 +77,7 @@ export function PercentWidget({ title, percent, subtitle, bg, text, muted }: Pro
           text={title}
           style={{
             width: "match_parent",
-            fontSize: 12,
+            fontSize: 14,
             fontFamily: "Poppins",
             fontWeight: "500",
             color: muted,

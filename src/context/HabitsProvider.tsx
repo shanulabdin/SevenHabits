@@ -39,14 +39,36 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
     const first = habits[0];
     const streak = getHabitStreakWithGrace(first, todayKey, todayKey);
 
+    const LIGHT = {
+      bg: "#FFFFFF" as const,
+      text: "#111111" as const,
+      muted: "#11111199" as const,
+    };
+
+    const DARK = {
+      bg: "#151515" as const,
+      text: "#FFFFFF" as const,
+      muted: "#FFFFFFB3" as const,
+    };
+
     requestWidgetUpdate({
       widgetName: "StreakOnly",
-      renderWidget: () => (
-        <StreakOnlyWidget
-          title={first.title || "Forge"}
-          streak={typeof streak === "number" ? streak : 0}
-        />
-      ),
+      renderWidget: () => ({
+        light: (
+          <StreakOnlyWidget
+            title={first.title || "Forge"}
+            streak={typeof streak === "number" ? streak : 0}
+            {...LIGHT}
+          />
+        ),
+        dark: (
+          <StreakOnlyWidget
+            title={first.title || "Forge"}
+            streak={typeof streak === "number" ? streak : 0}
+            {...DARK}
+          />
+        ),
+      }),
       widgetNotFound: () => {
         // No widget placed on home screen yet — ignore
       },
@@ -90,7 +112,7 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
       renderWidget: () => ({
         light: (
           <PercentWidget
-            title={`${first.title} (10d)`}
+            title={`${first.title}`}
             percent={percent}
             subtitle={`${done}/${possible}`}
             {...LIGHT}
@@ -98,7 +120,7 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
         ),
         dark: (
           <PercentWidget
-            title={`${first.title} (10d)`}
+            title={`${first.title}`}
             percent={percent}
             subtitle={`${done}/${possible}`}
             {...DARK}

@@ -15,9 +15,11 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
       // Temporary static data for v1 wiring
       // (We’ll replace this with real habit data next)
       if (widgetInfo.widgetName === "StreakOnly") {
-        props.renderWidget(
-          <StreakOnlyWidget title="Forge" streak={12} />
-        );
+
+        props.renderWidget({
+          light: <StreakOnlyWidget title="Forge" streak={12} bg={"#F6F6F6"} text={"#FFFFFF"} muted={"#0000004c"} />,
+          dark: <StreakOnlyWidget title="Forge" streak={12} bg={"#151515"} text={"#000000"} muted={"#ffffffb3"} />,
+        });
       } else {
         props.renderWidget({
           light: <PercentWidget title="7 Day Score" percent={64} subtitle="32/50" bg={"#F6F6F6"} text={"#FFFFFF"} muted={"#0000004c"} />,

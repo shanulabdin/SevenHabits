@@ -1,6 +1,7 @@
 'use no memo';
 
 import {
+  ColorProp,
   FlexWidget,
   SvgWidget,
   TextWidget,
@@ -10,15 +11,18 @@ import {
 type Props = {
   title: string;
   streak: number;
+  bg: ColorProp;
+  text: ColorProp;
+  muted: ColorProp;
 };
 
-export function StreakOnlyWidget({ title, streak }: Props) {
+export function StreakOnlyWidget({ title, streak, bg, text, muted }: Props) {
   const containerStyle: FlexWidgetProps["style"] = {
     width: "match_parent",
     height: "match_parent",
     padding: 16,
     borderRadius: 18,
-    backgroundColor: "#151515",
+    backgroundColor: bg,
     justifyContent: "center",
     alignItems: "center",
   };
@@ -39,7 +43,7 @@ export function StreakOnlyWidget({ title, streak }: Props) {
             fontSize: 35,
             fontFamily: "Poppins",
             fontWeight: "700",
-            color: "#FFFFFF",
+            color: text,
           }}
         />
         <SvgWidget
@@ -55,7 +59,7 @@ export function StreakOnlyWidget({ title, streak }: Props) {
           fontSize: 14,
           fontFamily: "Poppins",
           fontWeight: "500",
-          color: "#ffffffb3",
+          color: muted,
         }}
       />
     </FlexWidget>
