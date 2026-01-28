@@ -28,7 +28,7 @@ export function StreakOnlyWidget({ title, streak, bg, text, muted }: Props) {
   };
 
   return (
-    <FlexWidget style={containerStyle}>
+    <FlexWidget clickAction="OPEN_APP" style={containerStyle}>
       {/* 🔥 + streak */}
       <FlexWidget
         style={{

@@ -45,7 +45,7 @@ export function PercentWidget({ title, percent, subtitle, bg, text, muted }: Pro
 
 
   return (
-    <FlexWidget style={container}>
+    <FlexWidget clickAction="OPEN_APP" style={container}>
       <OverlapWidget
         style={{
           width: 170,
