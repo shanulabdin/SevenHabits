@@ -4,7 +4,7 @@ import { getHabitStreakWithGrace } from "@/utils/streaks";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { requestWidgetUpdate } from "react-native-android-widget";
-import { ContributionGridWidget } from "../widgets/ContributionGridWidget";
+import { GridWidget } from "../widgets/GridWidget";
 import { PercentWidget } from "../widgets/PercentWidget";
 import { StreakOnlyWidget } from "../widgets/StreakOnlyWidget";
 
@@ -33,7 +33,7 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
   // 1) STATE (moved from index)
   const [habits, setHabits] = useState<Habit[]>(() => buildDefaultHabits(todayKey));
 
-  // StreakOnly widget
+  // Push real data to the "StreakOnly" widget whenever habits change
   useEffect(() => {
     if (!habits || habits.length === 0) return;
 
@@ -76,7 +76,7 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
     });
   }, [habits, todayKey]);
 
-  // Percentage widget
+  // Update Overall % widget (last 7 days)
   useEffect(() => {
     if (!habits || habits.length === 0) return;
 
@@ -133,57 +133,48 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
 
   }, [habits]);
 
-  // ContributionGridWidget
+  // Grid Widget
   useEffect(() => {
     if (!habits || habits.length === 0) return;
 
     const first = habits[0];
+    const todayKey = getDateKey(new Date());
 
     const LIGHT = {
-      bg: "#FFFFFF" as const,
-      text: "#111111" as const,
-      muted: "#11111199" as const,
-      empty: "#ECECEC" as const,
-      filled: "#FF7A00" as const, // your orange
-    };
+      bg: "#FFFFFF",
+      orange: "#FF6D1F",
+      muted: "#00000014",
+      border: "#00000033",
+    } as const;
 
     const DARK = {
-      bg: "#151515" as const,
-      text: "#FFFFFF" as const,
-      muted: "#FFFFFFB3" as const,
-      empty: "#2A2A2A" as const,
-      filled: "#FF7A00" as const,
-    };
+      bg: "#000000",
+      orange: "#FF6D1F",
+      muted: "#FFFFFF14",
+      border: "#FFFFFF33",
+    } as const;
 
     requestWidgetUpdate({
-      widgetName: "ContributionGrid",
+      widgetName: "GridWidget",
       renderWidget: () => ({
         light: (
-          <ContributionGridWidget
-            title={first.title || "Forge"}
-            history={first.history || {}}
+          <GridWidget
+            history={first.history ?? {}}
             endDateKey={todayKey}
-            weeks={20}
-            size={12}
-            gap={3}
             {...LIGHT}
           />
         ),
         dark: (
-          <ContributionGridWidget
-            title={first.title || "Forge"}
-            history={first.history || {}}
+          <GridWidget
+            history={first.history ?? {}}
             endDateKey={todayKey}
-            weeks={20}
-            size={12}
-            gap={3}
             {...DARK}
           />
         ),
       }),
       widgetNotFound: () => { },
     });
-  }, [habits, todayKey]);
+  }, [habits]);
 
 
   // Show grid and streak

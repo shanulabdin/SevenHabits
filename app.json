@@ -89,6 +89,17 @@
               "targetCellHeight": 2,
               "previewImage": "./assets/images/logo-2.png",
               "updatePeriodMillis": 0
+            },
+            {
+              "name": "GridWidget",
+              "label": "Grid View",
+              "description": "",
+              "minWidth": "180dp",
+              "minHeight": "110dp",
+              "targetCellWidth": 3,
+              "targetCellHeight": 2,
+              "previewImage": "./assets/images/logo-2.png",
+              "updatePeriodMillis": 0
             }
           ]
         }
