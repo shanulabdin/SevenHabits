@@ -12,6 +12,7 @@ const nameToWidget = {
 
 export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
   const { widgetInfo, widgetAction } = props;
+  console.log("widgetInfo", widgetInfo);
 
   const Widget =
     nameToWidget[widgetInfo.widgetName as keyof typeof nameToWidget] ??

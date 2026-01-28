@@ -61,9 +61,9 @@
               "name": "Habit",
               "label": "Forge Habit",
               "description": "Shows your habit streak",
-              "minWidth": "320dp",
+              "minWidth": "120dp",
               "minHeight": "120dp",
-              "targetCellWidth": 5,
+              "targetCellWidth": 2,
               "targetCellHeight": 2,
               "previewImage": "./assets/images/logo-2.png",
               "updatePeriodMillis": 0
@@ -72,9 +72,9 @@
               "name": "StreakOnly",
               "label": "Forge Streak",
               "description": "Shows streak only",
-              "minWidth": "240dp",
+              "minWidth": "110dp",
               "minHeight": "110dp",
-              "targetCellWidth": 4,
+              "targetCellWidth": 2,
               "targetCellHeight": 2,
               "previewImage": "./assets/images/logo-2.png",
               "updatePeriodMillis": 0

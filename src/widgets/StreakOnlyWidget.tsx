@@ -36,7 +36,7 @@ export function StreakOnlyWidget({ title, streak }: Props) {
         <TextWidget
           text={`${streak}`}
           style={{
-            fontSize: 45,
+            fontSize: 35,
             fontFamily: "Poppins",
             fontWeight: "700",
             color: "#FFFFFF",
@@ -44,7 +44,7 @@ export function StreakOnlyWidget({ title, streak }: Props) {
         />
         <SvgWidget
           svg={require("@/src/widgets/flame-1.svg")}
-          style={{ width: 50, height: 50, marginLeft: 4, marginTop: 2, }}
+          style={{ width: 40, height: 40, marginLeft: 4, marginTop: 2, }}
         />
       </FlexWidget>
 
@@ -61,8 +61,3 @@ export function StreakOnlyWidget({ title, streak }: Props) {
     </FlexWidget>
   );
 }
-
-// "Poppins_400Regular"
-// "Poppins_500Medium"
-// "Poppins_600SemiBold"
-// "Poppins_700Bold"
