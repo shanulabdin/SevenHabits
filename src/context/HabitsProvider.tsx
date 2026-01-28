@@ -1,7 +1,10 @@
 import type { Habit } from "@/types/habit"; // <-- adjust path
 import { getDateKey } from "@/utils/date"; // <-- adjust path to where your getDateKey is
+import { getHabitStreakWithGrace } from "@/utils/streaks";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { requestWidgetUpdate } from "react-native-android-widget";
+import { StreakOnlyWidget } from "../widgets/StreakOnlyWidget";
 
 const STORAGE_KEY = "@forge/habits_v1";
 
@@ -27,6 +30,28 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
 
   // 1) STATE (moved from index)
   const [habits, setHabits] = useState<Habit[]>(() => buildDefaultHabits(todayKey));
+
+  // ✅ Push real data to the "StreakOnly" widget whenever habits change
+  useEffect(() => {
+    if (!habits || habits.length === 0) return;
+
+    const first = habits[0];
+    const streak = getHabitStreakWithGrace(first, todayKey, todayKey);
+
+    requestWidgetUpdate({
+      widgetName: "StreakOnly",
+      renderWidget: () => (
+        <StreakOnlyWidget
+          title={first.title || "Forge"}
+          streak={typeof streak === "number" ? streak : 0}
+        />
+      ),
+      widgetNotFound: () => {
+        // No widget placed on home screen yet — ignore
+      },
+    });
+  }, [habits, todayKey]);
+
 
   // Show grid and streak
   const setShowGridForAll = (value: boolean) => {
@@ -109,7 +134,7 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
   }
 
   const value: HabitsContextValue = {
-    habits, setHabits, resetAllData, 
+    habits, setHabits, resetAllData,
     setShowGridForAll,
     setShowStreakForAll,
   };

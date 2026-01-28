@@ -62,6 +62,17 @@
               "targetCellHeight": 2,
               "previewImage": "./assets/images/logo-2.png",
               "updatePeriodMillis": 0
+            },
+            {
+              "name": "StreakOnly",
+              "label": "Forge Streak",
+              "description": "Shows streak only",
+              "minWidth": "240dp",
+              "minHeight": "110dp",
+              "targetCellWidth": 4,
+              "targetCellHeight": 2,
+              "previewImage": "./assets/images/logo-2.png",
+              "updatePeriodMillis": 0
             }
           ]
         }
