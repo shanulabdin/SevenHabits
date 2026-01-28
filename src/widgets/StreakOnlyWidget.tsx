@@ -29,7 +29,6 @@ export function StreakOnlyWidget({ title, streak, bg, text, muted }: Props) {
 
   return (
     <FlexWidget clickAction="OPEN_APP" style={containerStyle}>
-      {/* 🔥 + streak */}
       <FlexWidget
         style={{
           flexDirection: "row",
@@ -49,12 +48,11 @@ export function StreakOnlyWidget({ title, streak, bg, text, muted }: Props) {
           }}
         />
         <SvgWidget
-          svg={require("@/src/widgets/flame-1.svg")}
+          svg={require("@/assets/images/flame-1.svg")}
           style={{ width: 40, height: 40, marginLeft: 2, marginTop: 2, }}
         />
       </FlexWidget>
 
-      {/* Habit title */}
       <TextWidget
         text={title}
         style={{

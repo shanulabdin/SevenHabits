@@ -78,6 +78,17 @@
               "targetCellHeight": 2,
               "previewImage": "./assets/images/logo-2.png",
               "updatePeriodMillis": 0
+            },
+            {
+              "name": "ContributionGrid",
+              "label": "Contribution Grid",
+              "description": "See how often you do that habit.",
+              "minWidth": "180dp",
+              "minHeight": "110dp",
+              "targetCellWidth": 3,
+              "targetCellHeight": 2,
+              "previewImage": "./assets/images/logo-2.png",
+              "updatePeriodMillis": 0
             }
           ]
         }

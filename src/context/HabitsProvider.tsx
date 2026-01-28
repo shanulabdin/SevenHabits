@@ -4,6 +4,7 @@ import { getHabitStreakWithGrace } from "@/utils/streaks";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { requestWidgetUpdate } from "react-native-android-widget";
+import { ContributionGridWidget } from "../widgets/ContributionGridWidget";
 import { PercentWidget } from "../widgets/PercentWidget";
 import { StreakOnlyWidget } from "../widgets/StreakOnlyWidget";
 
@@ -32,7 +33,7 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
   // 1) STATE (moved from index)
   const [habits, setHabits] = useState<Habit[]>(() => buildDefaultHabits(todayKey));
 
-  // ✅ Push real data to the "StreakOnly" widget whenever habits change
+  // StreakOnly widget
   useEffect(() => {
     if (!habits || habits.length === 0) return;
 
@@ -75,7 +76,7 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
     });
   }, [habits, todayKey]);
 
-  // ✅ Update Overall % widget (last 7 days)
+  // Percentage widget
   useEffect(() => {
     if (!habits || habits.length === 0) return;
 
@@ -132,6 +133,57 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
 
   }, [habits]);
 
+  // ContributionGridWidget
+  useEffect(() => {
+    if (!habits || habits.length === 0) return;
+
+    const first = habits[0];
+
+    const LIGHT = {
+      bg: "#FFFFFF" as const,
+      text: "#111111" as const,
+      muted: "#11111199" as const,
+      empty: "#ECECEC" as const,
+      filled: "#FF7A00" as const, // your orange
+    };
+
+    const DARK = {
+      bg: "#151515" as const,
+      text: "#FFFFFF" as const,
+      muted: "#FFFFFFB3" as const,
+      empty: "#2A2A2A" as const,
+      filled: "#FF7A00" as const,
+    };
+
+    requestWidgetUpdate({
+      widgetName: "ContributionGrid",
+      renderWidget: () => ({
+        light: (
+          <ContributionGridWidget
+            title={first.title || "Forge"}
+            history={first.history || {}}
+            endDateKey={todayKey}
+            weeks={20}
+            size={12}
+            gap={3}
+            {...LIGHT}
+          />
+        ),
+        dark: (
+          <ContributionGridWidget
+            title={first.title || "Forge"}
+            history={first.history || {}}
+            endDateKey={todayKey}
+            weeks={20}
+            size={12}
+            gap={3}
+            {...DARK}
+          />
+        ),
+      }),
+      widgetNotFound: () => { },
+    });
+  }, [habits, todayKey]);
 
 
   // Show grid and streak

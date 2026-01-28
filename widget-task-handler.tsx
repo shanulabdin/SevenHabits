@@ -2,6 +2,7 @@ import type { WidgetTaskHandlerProps } from "react-native-android-widget";
 
 import { PercentWidget } from "./src/widgets/PercentWidget";
 import { StreakOnlyWidget } from "./src/widgets/StreakOnlyWidget";
+import { ContributionGridWidget } from "./src/widgets/ContributionGridWidget";
 
 // Map widgetName -> component
 
@@ -19,6 +20,40 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
         props.renderWidget({
           light: <StreakOnlyWidget title="Forge" streak={12} bg={"#F6F6F6"} text={"#FFFFFF"} muted={"#0000004c"} />,
           dark: <StreakOnlyWidget title="Forge" streak={12} bg={"#151515"} text={"#000000"} muted={"#ffffffb3"} />,
+        });
+      } else if (widgetInfo.widgetName === "ContributionGrid") {
+        const fakeHistory: Record<string, boolean> = {};
+        props.renderWidget({
+          light: (
+            <ContributionGridWidget
+              title="Forge"
+              history={fakeHistory}
+              endDateKey={"2026-01-28"}
+              weeks={20}
+              size={12}
+              gap={3}
+              bg={"#FFFFFF"}
+              text={"#111111"}
+              muted={"#11111199"}
+              empty={"#ECECEC"}
+              filled={"#FF7A00"}
+            />
+          ),
+          dark: (
+            <ContributionGridWidget
+              title="Forge"
+              history={fakeHistory}
+              endDateKey={"2026-01-28"}
+              weeks={20}
+              size={12}
+              gap={3}
+              bg={"#151515"}
+              text={"#FFFFFF"}
+              muted={"#FFFFFFB3"}
+              empty={"#2A2A2A"}
+              filled={"#FF7A00"}
+            />
+          ),
         });
       } else {
         props.renderWidget({
