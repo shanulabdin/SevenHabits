@@ -18,7 +18,7 @@ const DARK = {
   inverseSurface: "#F2F2F2",
   inverseText: "#000000",
 
-  border: "rgba(161, 161, 161, 0.3)",
+  border: "#a1a1a14d",
   borderMuted: "rgba(161, 161, 161, 0)",
 
   orange: "#FF6D1F",
