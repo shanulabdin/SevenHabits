@@ -1,5 +1,4 @@
 'use no memo';
-import React from "react";
 import {
   FlexWidget,
   TextWidget,
@@ -19,6 +18,7 @@ export function HabitWidget({ title, streak, percent7d }: HabitWidgetProps) {
     padding: 16,
     borderRadius: 18,
     backgroundColor: "#0B1220",
+    justifyContent: "space-between",
   };
 
   return (
