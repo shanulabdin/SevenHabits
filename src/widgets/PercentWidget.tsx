@@ -15,7 +15,8 @@ export function PercentWidget({ title, percent, subtitle }: Props) {
     padding: 16,
     borderRadius: 18,
     backgroundColor: "#151515",
-    justifyContent: "space-between",
+    justifyContent: "center",
+    alignItems: "center"
   };
 
   return (
@@ -52,16 +53,6 @@ export function PercentWidget({ title, percent, subtitle }: Props) {
           />
         ) : null}
       </FlexWidget>
-
-      <TextWidget
-        text="Tap to open"
-        style={{
-          fontSize: 12,
-          fontFamily: "Poppins",
-          fontWeight: "500",
-          color: "#ffffff66",
-        }}
-      />
     </FlexWidget>
   );
 }

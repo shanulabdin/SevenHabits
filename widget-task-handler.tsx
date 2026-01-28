@@ -11,7 +11,6 @@ const nameToWidget = {
 
 export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
   const { widgetInfo, widgetAction } = props;
-  console.log("widgetInfo", widgetInfo);
 
   const Widget =
     nameToWidget[widgetInfo.widgetName as keyof typeof nameToWidget] ??
@@ -29,7 +28,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
         );
       } else {
         props.renderWidget(
-          <PercentWidget title="Overall (7d)" percent={64} subtitle="32/50" />
+          <PercentWidget title="7 Day Score" percent={64} subtitle="32/50" />
         );
       }
       break;
