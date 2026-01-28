@@ -18,11 +18,10 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
         });
         return;
       }
-
       if (widgetInfo.widgetName === "PercentCard") {
         props.renderWidget({
-          light: <PercentWidget title="Hello" percent={64} subtitle="32/50" bg={"#FFFFFF"} text={"#111111"} muted={"#11111199"} />,
-          dark: <PercentWidget title="Hello" percent={64} subtitle="32/50" bg={"#000000"} text={"#FFFFFF"} muted={"#FFFFFFB3"} />,
+          light: <PercentWidget title="Forge" percent={64} subtitle="32/50" bg={"#FFFFFF"} text={"#111111"} muted={"#11111199"} />,
+          dark: <PercentWidget title="Forge" percent={64} subtitle="32/50" bg={"#000000"} text={"#FFFFFF"} muted={"#FFFFFFB3"} />,
         });
         return;
       }
