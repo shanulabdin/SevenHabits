@@ -42,20 +42,29 @@ export function PercentWidget({ title, percent, subtitle }: Props) {
 
 
   return (
-    <FlexWidget style={container}>
+    <FlexWidget
+      style={{
+        width: "match_parent",
+        height: "match_parent",
+        padding: 14,
+        borderRadius: 18,
+        backgroundColor: "#151515",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {/* Ring + percent overlay */}
       <OverlapWidget
         style={{
           width: 170,
           height: 170,
         }}
       >
-        {/* Ring */}
         <SvgWidget
           svg={ringFor(percent)}
           style={{ width: 170, height: 170 }}
         />
 
-        {/* Center text on top */}
         <TextWidget
           text={`${percent}%`}
           style={{
@@ -65,11 +74,24 @@ export function PercentWidget({ title, percent, subtitle }: Props) {
             fontWeight: "700",
             color: "#FFFFFF",
             textAlign: "center",
-            // Move the text down into the true center (tweak if needed)
-            marginTop: 63,
+            marginTop: 66, // tweak 62–70 if needed
           }}
         />
       </OverlapWidget>
+
+      {/* Title below ring */}
+      <TextWidget
+        text={title}
+        style={{
+          width: "match_parent",
+          fontSize: 12,
+          fontFamily: "Poppins",
+          fontWeight: "500",
+          color: "#ffffffb3",
+          textAlign: "center",
+          marginTop: 8, // gap between ring and title
+        }}
+      />
     </FlexWidget>
   );
 }

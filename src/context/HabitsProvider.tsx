@@ -57,37 +57,34 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!habits || habits.length === 0) return;
 
-    const DAYS = 7;
+    const DAYS = 10;
     const lastDays = getLastNDays(DAYS);
     const dateKeys = lastDays.map((d) => getDateKey(d));
 
-    const possible = habits.length * dateKeys.length;
+    const first = habits[0];
+
+    const possible = dateKeys.length;
     let done = 0;
 
-    for (const habit of habits) {
-      for (const key of dateKeys) {
-        if (habit.history?.[key] === true) done += 1;
-      }
+    for (const key of dateKeys) {
+      if (first.history?.[key] === true) done += 1;
     }
 
-    const percent = possible
-      ? Math.round((done / possible) * 100)
-      : 0;
+    const percent = possible ? Math.round((done / possible) * 100) : 0;
 
     requestWidgetUpdate({
       widgetName: "PercentCard",
       renderWidget: () => (
         <PercentWidget
-          title="Overall (7d)"
+          title={`${first.title}`}
           percent={percent}
           subtitle={`${done}/${possible}`}
         />
       ),
-      widgetNotFound: () => {
-        // widget not added on home screen — safe to ignore
-      },
+      widgetNotFound: () => { },
     });
   }, [habits]);
+
 
 
   // Show grid and streak
