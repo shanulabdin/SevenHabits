@@ -62,6 +62,7 @@ export const sendFeedback = async () => {
   } catch (e) {
     // fallback only if openURL actually fails
     await Linking.openURL("https://shanulabdin.github.io/forge-legal/");
+    console.log(e)
   }
 };
 
