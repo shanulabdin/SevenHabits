@@ -47,7 +47,25 @@
         }
       ],
       "expo-font",
-      "react-native-android-widget"
+      [
+        "react-native-android-widget",
+        {
+          "fonts": [],
+          "widgets": [
+            {
+              "name": "Habit",
+              "label": "Forge Habit",
+              "description": "Shows your habit streak",
+              "minWidth": "320dp",
+              "minHeight": "120dp",
+              "targetCellWidth": 5,
+              "targetCellHeight": 2,
+              "previewImage": "./assets/images/logo-2.png",
+              "updatePeriodMillis": 0
+            }
+          ]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
