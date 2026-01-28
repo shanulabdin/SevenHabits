@@ -2,6 +2,7 @@
 
 import {
   FlexWidget,
+  SvgWidget,
   TextWidget,
   type FlexWidgetProps,
 } from "react-native-android-widget";
@@ -40,12 +41,9 @@ export function StreakOnlyWidget({ title, streak }: Props) {
             color: "#FFFFFF",
           }}
         />
-        <TextWidget
-          text="🔥"
-          style={{
-            fontSize: 28, // icon size
-            marginRight: 6,
-          }}
+        <SvgWidget
+          svg={require("@/src/widgets/flame-1.svg")}
+          style={{ width: 40, height: 40, marginLeft: 6, marginTop: 2, }}
         />
       </FlexWidget>
 

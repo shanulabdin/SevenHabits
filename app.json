@@ -50,7 +50,10 @@
       [
         "react-native-android-widget",
         {
-          "fonts": [],
+          "fonts": [
+            "./assets/fonts/Poppins-SemiBold.ttf",
+            "./assets/fonts/Poppins-Bold.ttf"
+          ],
           "widgets": [
             {
               "name": "Habit",
