@@ -1,11 +1,13 @@
 import React from "react";
 import type { WidgetTaskHandlerProps } from "react-native-android-widget";
-import { HabitWidget } from "./src/widgets/HabitWidget";
 
-// This string must match the widgetName we'll register later in Expo config.
-// We'll use "Habit" for v1 to keep it simple.
+import { HabitWidget } from "./src/widgets/HabitWidget";
+import { StreakOnlyWidget } from "./src/widgets/StreakOnlyWidget";
+
+// Map widgetName -> component
 const nameToWidget = {
-  Habit: HabitWidget,
+  Habit: HabitWidget,           // existing widget
+  StreakOnly: StreakOnlyWidget, // NEW widget
 };
 
 export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
@@ -17,20 +19,28 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
 
   switch (widgetAction) {
     case "WIDGET_ADDED":
-      props.renderWidget(<Widget title="Forge" streak={0} percent7d={0} />);
-      break;
-
     case "WIDGET_UPDATE":
-    case "WIDGET_RESIZED":
-      props.renderWidget(<Widget title="Forge" streak={0} percent7d={0} />);
+    case "WIDGET_RESIZED": {
+      // Temporary static data for v1 wiring
+      // (We’ll replace this with real habit data next)
+      if (widgetInfo.widgetName === "StreakOnly") {
+        props.renderWidget(
+          <StreakOnlyWidget title="Forge" streak={12} />
+        );
+      } else {
+        props.renderWidget(
+          <HabitWidget title="Forge" streak={12} percent7d={64} />
+        );
+      }
+      break;
+    }
+
+    case "WIDGET_CLICK":
+      // Tap already opens the app via default intent — no-op here
       break;
 
     case "WIDGET_DELETED":
-      // We'll handle cleanup later (v1 can ignore)
-      break;
-
-    case "WIDGET_CLICK":
-      // We'll wire "tap opens app" later in v1.
+      // No cleanup needed for v1
       break;
 
     default:
