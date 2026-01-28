@@ -1,6 +1,6 @@
 'use no memo';
 
-import { FlexWidget, SvgWidget, TextWidget, type FlexWidgetProps } from "react-native-android-widget";
+import { FlexWidget, OverlapWidget, SvgWidget, TextWidget, type FlexWidgetProps } from "react-native-android-widget";
 
 type Props = {
   title: string;     // "Overall"
@@ -43,26 +43,33 @@ export function PercentWidget({ title, percent, subtitle }: Props) {
 
   return (
     <FlexWidget style={container}>
-      <TextWidget
-        text={`${percent}%`}
+      <OverlapWidget
         style={{
-          fontSize: 24,
-          fontFamily: "Poppins",
-          fontWeight: "700",
-          color: "#FFFFFF",
+          width: 170,
+          height: 170,
         }}
-      />
+      >
+        {/* Ring */}
+        <SvgWidget
+          svg={ringFor(percent)}
+          style={{ width: 170, height: 170 }}
+        />
 
-      {/* Then render the ring */}
-      <SvgWidget
-        svg={ringFor(percent)}
-        style={{
-          width: 120,
-          height: 120,
-          // small negative margin pulls ring “behind” the text visually
-          marginTop: 0,
-        }}
-      />
+        {/* Center text on top */}
+        <TextWidget
+          text={`${percent}%`}
+          style={{
+            width: "match_parent",
+            fontSize: 24,
+            fontFamily: "Poppins",
+            fontWeight: "700",
+            color: "#FFFFFF",
+            textAlign: "center",
+            // Move the text down into the true center (tweak if needed)
+            marginTop: 63,
+          }}
+        />
+      </OverlapWidget>
     </FlexWidget>
   );
 }
