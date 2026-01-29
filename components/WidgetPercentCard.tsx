@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     // Android shadow
     elevation: 2,
 
-    marginHorizontal: 8,
+    width: 200,
     marginBottom: 20,
   },
   card: {
