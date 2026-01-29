@@ -54,7 +54,7 @@ export default function WidgetsScreen() {
         showsVerticalScrollIndicator={false}
       >
 
-        <View style={{ width: "100%", alignItems: "center" }}>
+        <View style={{ width: "100%", alignItems: "center", marginBottom: 30 }}>
           <Heading
             title="Widgets"
             iconTitle="Back"
@@ -64,8 +64,8 @@ export default function WidgetsScreen() {
         </View>
 
         {firstHabit && (
-          <View style={{ width: "100%", alignItems: "center", marginVertical: 10, }}>
-            <Text style={styles.widgetTitle}>Streak</Text>
+          <View style={{ width: "100%", alignItems: "center", marginBottom: 10, }}>
+            <Text style={[styles.widgetTitle, {color: colors.text}]}>Streak</Text>
             <WidgetPercentCard
               title={firstHabit.title}
               percent={firstHabit10Day.percent}
@@ -82,7 +82,7 @@ export default function WidgetsScreen() {
 
         {firstHabit && (
           <View style={{ width: "100%", alignItems: "center", marginBottom: 10, }}>
-            <Text style={styles.widgetTitle}>Streak</Text>
+            <Text style={[styles.widgetTitle, {color: colors.text}]}>Streak</Text>
             <WidgetStreakCard
               title={firstHabit.title}
               streak={streakCount}
@@ -98,7 +98,7 @@ export default function WidgetsScreen() {
 
         {firstHabit && (
           <View style={{ width: "100%", alignItems: "center", marginVertical: 10, }}>
-            <Text style={styles.widgetTitle}>Grid View</Text>
+            <Text style={[styles.widgetTitle, {color: colors.text}]}>Grid View</Text>
             <WidgetHabitCard
               title={firstHabit.title}
               streak={streakCount}
@@ -106,16 +106,25 @@ export default function WidgetsScreen() {
               todayKey={todayKey}
               showStreak={true}
             />
+            <Text style={[styles.desc, { color: colors.muted }]}>
+              GitHub-style grid showing which days you completed the habit.
+            </Text>
           </View>
         )}
 
-        <View style={[styles.howToBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
+        <View style={[styles.howToBox, { backgroundColor: colors.background, borderColor: colors.border }]}>
           <Text style={[styles.howToTitle, { color: colors.text }]}>Add widgets to your home screen</Text>
 
-          <Text style={[styles.howToText, { color: colors.text }]}>
+          <Text style={[styles.howToText, { color: colors.muted }]}>
             1. Long press an empty spot on your home screen{"\n"}
+          </Text>
+          <Text style={[styles.howToText, { color: colors.muted }]}>
             2. Tap Widgets{"\n"}
+          </Text>
+          <Text style={[styles.howToText, { color: colors.muted }]}>
             3. Find Forge{"\n"}
+          </Text>
+          <Text style={[styles.howToText, { color: colors.muted }]}>
             4. Choose a widget and drag it onto your home screen{"\n"}
           </Text>
         </View>
@@ -159,7 +168,7 @@ const styles = StyleSheet.create({
     marginTop: -10,
     marginBottom: 14,
     marginHorizontal: 10,
-    width: 200,
+    width: 250,
     textAlign: "center",
     fontFamily: "Poppins_500Medium",
   },
@@ -190,24 +199,26 @@ const styles = StyleSheet.create({
   howToBox: {
     borderWidth: 1,
     borderRadius: 16,
-    padding: 14,
+    padding: 20,
     marginTop: 8,
     marginBottom: 30,
 
     elevation: 2,
 
-    width: 350,
+    width: 360,
   },
   howToTitle: {
-    fontSize: 15,
+    fontSize: 20,
+    opacity: 0.75,
+    marginBottom: 15,
+    marginHorizontal: 10,
+    textAlign: "center",
     fontFamily: "Poppins_600SemiBold",
-    marginBottom: 8,
-    textAlign: "center"
   },
   howToText: {
     fontSize: 13,
+    opacity: 0.75,
+    marginHorizontal: 10,
     fontFamily: "Poppins_500Medium",
-    opacity: 0.8,
-    lineHeight: 19,
   },
 });
