@@ -29,7 +29,7 @@ const openUrl = async (url: string) => {
 
 const shareApp = async () => {
   const message =
-    "Check out Forge (beta)!\n\nI'm testing a habit tracker app.\n\nWant to try it? Reply to me and I'll share the APK / Test link.";
+    "Forge - build habits, stay consistent\n\nA habit tracker designed to be simple and intentional.";
   await Share.share({ message });
 };
 
@@ -41,7 +41,7 @@ const rateApp = async () => {
     return;
   }
 
-  const iosUrl = "itms-apps://itunes.apple.com/app/idYOUR_APP_ID?action=write-review";
+  const iosUrl = "itms-apps://itunes.apple.com/app/idAPP_ID?action=write-review";
   const androidUrl = "market://details?id=com.shanulabdin.Forge";
 
   const url = Platform.OS === "ios" ? iosUrl : androidUrl;

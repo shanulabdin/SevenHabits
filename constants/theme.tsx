@@ -9,8 +9,8 @@ const THEME_KEY = "@forge/theme_v1";
 
 const DARK = {
   background: "#000000ff",
-  surface: "#141414",
-  card: "#151515",
+  surface: "#000000ff",
+  card: "#070707ff",
   text: "#FFFFFF",
   mutedText: "rgba(255,255,255,0.7)",
 
@@ -18,7 +18,7 @@ const DARK = {
   inverseSurface: "#F2F2F2",
   inverseText: "#000000",
 
-  border: "#a1a1a14d",
+  border: "#5a5a5a4d",
   borderMuted: "#a1a1a1",
 
   orange: "#FF6D1F",
