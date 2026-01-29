@@ -8,7 +8,6 @@ type Props = {
   history: Record<string, boolean>;
   todayKey: string;
 
-  showGrid?: boolean;
   showStreak?: boolean;
 
   weeks?: number;
@@ -19,7 +18,6 @@ type Props = {
 export default function WidgetHabitCard({
   history,
   todayKey,
-  showGrid = true,
   weeks = 14,  // smaller than HabitCard
   size = 20,   // smaller squares
   gap = 4,
@@ -37,18 +35,15 @@ export default function WidgetHabitCard({
 
         <View style={[styles.divider, { backgroundColor: colors.text }]} />
 
-        {/* Grid */}
-        {showGrid && (
-          <View style={[styles.gridWrap, { borderColor: colors.borderMuted }]}>
-            <ContributionGrid
-              history={history}
-              endDateKey={todayKey}
-              weeks={weeks}
-              size={size}
-              gap={gap}
-            />
-          </View>
-        )}
+        <View style={[styles.gridWrap, { borderColor: colors.borderMuted }]}>
+          <ContributionGrid
+            history={history}
+            endDateKey={todayKey}
+            weeks={weeks}
+            size={size}
+            gap={gap}
+          />
+        </View>
       </View>
     </ScrollView>
   );

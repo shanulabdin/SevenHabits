@@ -42,7 +42,6 @@ export default function WidgetsScreen() {
               streak={streakCount}
               history={firstHabit.history}
               todayKey={todayKey}
-              showGrid={true}
               showStreak={true}
             />
           </View>
