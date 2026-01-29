@@ -4,7 +4,7 @@
     "slug": "forge",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo-2.png",
+    "icon": "./assets/images/logo.png",
     "scheme": "forge",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -12,20 +12,19 @@
       "supportsTablet": true
     },
     "splash": {
-      "image": "./assets/images/logo-2.png",
+      "image": "./assets/images/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
     "android": {
       "softwareKeyboardLayoutMode": "resize",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo-2.png",
+        "foregroundImage": "./assets/images/logo-nobg.png",
         "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.shanulabdin.Forge",
-      "backgroundColor": "#000000"
+      "package": "com.shanulabdin.forge"
     },
     "androidStatusBar": {
       "barStyle": "light-content",
@@ -33,14 +32,14 @@
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/logo-2.png"
+      "favicon": "./assets/images/logo.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/logo-2.png",
+          "image": "./assets/images/logo.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#000000"
@@ -65,7 +64,7 @@
               "minHeight": "110dp",
               "targetCellWidth": 2,
               "targetCellHeight": 2,
-              "previewImage": "./assets/images/logo-2.png",
+              "previewImage": "./assets/images/Streak.png",
               "updatePeriodMillis": 0
             },
             {
@@ -76,7 +75,7 @@
               "minHeight": "110dp",
               "targetCellWidth": 2,
               "targetCellHeight": 2,
-              "previewImage": "./assets/images/logo-2.png",
+              "previewImage": "./assets/images/Score.png",
               "updatePeriodMillis": 0
             },
             {
@@ -87,7 +86,7 @@
               "minHeight": "110dp",
               "targetCellWidth": 4,
               "targetCellHeight": 2,
-              "previewImage": "./assets/images/logo-2.png",
+              "previewImage": "./assets/images/Grid.png",
               "updatePeriodMillis": 0
             }
           ]
