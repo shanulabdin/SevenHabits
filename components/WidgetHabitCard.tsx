@@ -1,6 +1,6 @@
 import ContributionGrid from "@/components/ContributionGrid";
 import { useThemeColors } from "@/constants/theme";
-import { Pressable, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 type Props = {
   title: string;
@@ -27,22 +27,30 @@ export default function WidgetHabitCard({
   const { colors } = useThemeColors();
 
   return (
-    <Pressable
-      style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
-    >
-      {/* Grid */}
-      {showGrid && (
-        <View style={[styles.gridWrap, { borderColor: colors.borderMuted }]}>
-          <ContributionGrid
-            history={history}
-            endDateKey={todayKey}
-            weeks={weeks}
-            size={size}
-            gap={gap}
-          />
-        </View>
-      )}
-    </Pressable>
+    <ScrollView>
+      <View
+        style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
+      >
+        <Text style={styles.title}>
+          Grid View
+        </Text>
+
+        <View style={[styles.divider, { backgroundColor: colors.text }]} />
+
+        {/* Grid */}
+        {showGrid && (
+          <View style={[styles.gridWrap, { borderColor: colors.borderMuted }]}>
+            <ContributionGrid
+              history={history}
+              endDateKey={todayKey}
+              weeks={weeks}
+              size={size}
+              gap={gap}
+            />
+          </View>
+        )}
+      </View>
+    </ScrollView>
   );
 }
 
@@ -53,12 +61,16 @@ const styles = StyleSheet.create({
     padding: 12,
     gap: 10,
     marginHorizontal: 8,
+    marginBottom: 20,
 
     shadowColor: "#000",
     shadowOpacity: 0.18,
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 5 },
     elevation: 2,
+
+    justifyContent: "center",
+    alignItems: "center",
   },
   header: {
     flexDirection: "row",
@@ -85,8 +97,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   divider: {
-    height: 1,
-    marginHorizontal: 0,
+    height: StyleSheet.hairlineWidth,
+    width: "80%",
     marginBottom: 10,
   },
 });
