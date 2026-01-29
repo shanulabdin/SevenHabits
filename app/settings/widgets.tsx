@@ -65,19 +65,6 @@ export default function WidgetsScreen() {
 
         {firstHabit && (
           <View style={{ width: "100%", alignItems: "center", marginVertical: 10, }}>
-            <Text style={styles.widgetTitle}>Grid View</Text>
-            <WidgetHabitCard
-              title={firstHabit.title}
-              streak={streakCount}
-              history={firstHabit.history}
-              todayKey={todayKey}
-              showStreak={true}
-            />
-          </View>
-        )}
-
-        {firstHabit && (
-          <View style={{ width: "100%", alignItems: "center", marginVertical: 10, }}>
             <Text style={styles.widgetTitle}>Streak</Text>
             <WidgetPercentCard
               title={firstHabit.title}
@@ -108,6 +95,20 @@ export default function WidgetsScreen() {
             </Text>
           </View>
         )}
+
+        {firstHabit && (
+          <View style={{ width: "100%", alignItems: "center", marginVertical: 10, }}>
+            <Text style={styles.widgetTitle}>Grid View</Text>
+            <WidgetHabitCard
+              title={firstHabit.title}
+              streak={streakCount}
+              history={firstHabit.history}
+              todayKey={todayKey}
+              showStreak={true}
+            />
+          </View>
+        )}
+
         <View style={[styles.howToBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <Text style={[styles.howToTitle, { color: colors.text }]}>Add widgets to your home screen</Text>
 
