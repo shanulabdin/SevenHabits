@@ -16,8 +16,8 @@ type Props = {
 export default function WidgetStreakCard({
   title,
   streak,
-  numberSize = 36,
-  iconSize = 38,
+  numberSize = 35,
+  iconSize = 40,
   style,
 }: Props) {
   const { colors } = useThemeColors();
@@ -52,7 +52,7 @@ export default function WidgetStreakCard({
             name="flame"
             size={iconSize}
             color={colors.orange}
-            style={{ marginLeft: 4, marginTop: 2 }}
+            style={{ marginLeft: 4, marginTop: 2, marginBottom: 4 }}
           />
         </View>
 
@@ -82,10 +82,10 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 5 },
 
     // Android shadow
-    elevation: 6,
+    elevation: 2,
 
-    marginHorizontal: 8,
     marginBottom: 20,
+    width: 200,
   },
   card: {
     borderWidth: 1,
@@ -94,11 +94,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignItems: "center",
     justifyContent: "center",
+    height: 218,
   },
   row: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10,
+    marginTop: 10,
+    marginBottom: 25,
   },
   streakNumber: {
     fontFamily: "Poppins_700Bold",
