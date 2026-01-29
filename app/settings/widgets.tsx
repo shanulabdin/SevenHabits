@@ -8,6 +8,7 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import WidgetPercentCard from "@/components/WidgetPercentCard";
+import WidgetStreakCard from "@/components/WidgetStreakCard";
 import { getDateKey } from '@/utils/date';
 import { getHabitStreak } from "@/utils/streaks";
 
@@ -59,6 +60,16 @@ export default function WidgetsScreen() {
               textSize={26}
             />
           </View>
+        )}
+
+        {firstHabit && (
+          <WidgetStreakCard
+            title={firstHabit.title}
+            streak={streakCount}
+            numberSize={32}
+            iconSize={34}
+          />
+
         )}
 
       </ScrollView>

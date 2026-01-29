@@ -76,12 +76,12 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
     });
   }, [habits, todayKey]);
 
-  // Update Overall % widget (last 7 days)
+  // Update Overall % widget (last 10 days)
   useEffect(() => {
     if (!habits || habits.length === 0) return;
 
-    const DAYS = 10;
-    const lastDays = getLastNDays(DAYS);
+    const TEN_DAYS = 10;
+    const lastDays = getLastNDays(TEN_DAYS);
     const dateKeys = lastDays.map((d) => getDateKey(d));
 
     const first = habits[0];

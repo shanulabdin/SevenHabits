@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 14,
     padding: 12,
+    paddingTop: 20,
     gap: 10,
     justifyContent: "center",
     alignItems: "center",
@@ -91,6 +92,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 15,
-    fontFamily: "Poppins_600SemiBold",
+    fontFamily: "Poppins_500Medium",
   },
 });
