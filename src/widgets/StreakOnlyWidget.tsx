@@ -60,6 +60,7 @@ export function StreakOnlyWidget({ title, streak, bg, text, muted }: Props) {
           fontFamily: "Poppins",
           fontWeight: "500",
           color: muted,
+          textAlign: "center",
         }}
       />
     </FlexWidget>

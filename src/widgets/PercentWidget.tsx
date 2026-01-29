@@ -50,7 +50,7 @@ export function PercentWidget({ title, percent, subtitle, bg, text, muted }: Pro
         style={{
           width: 170,
           height: 170,
-          marginBottom: 30,
+          marginBottom: 40,
         }}
       >
         {/* Ring */}
@@ -82,7 +82,7 @@ export function PercentWidget({ title, percent, subtitle, bg, text, muted }: Pro
             fontWeight: "500",
             color: muted,
             textAlign: "center",
-            marginTop: 150,
+            marginTop: 145,
           }}
         />
       </OverlapWidget>
