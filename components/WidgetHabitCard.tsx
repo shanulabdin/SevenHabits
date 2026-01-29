@@ -1,6 +1,6 @@
 import ContributionGrid from "@/components/ContributionGrid";
 import { useThemeColors } from "@/constants/theme";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 type Props = {
   title: string;
@@ -29,12 +29,6 @@ export default function WidgetHabitCard({
       <View
         style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
       >
-        <Text style={styles.title}>
-          Grid View
-        </Text>
-
-        <View style={[styles.divider, { backgroundColor: colors.text }]} />
-
         <View style={[styles.gridWrap, { borderColor: colors.borderMuted }]}>
           <ContributionGrid
             history={history}
@@ -55,7 +49,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     padding: 12,
     gap: 10,
-    marginHorizontal: 8,
+    marginHorizontal: 12,
     marginBottom: 20,
 
     shadowColor: "#000",

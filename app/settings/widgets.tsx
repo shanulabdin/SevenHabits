@@ -4,12 +4,12 @@ import WidgetHabitCard from "@/components/WidgetHabitCard";
 import { useThemeColors } from "@/constants/theme";
 import { useHabits } from "@/src/context/HabitsProvider";
 import { useRouter } from "expo-router";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import WidgetPercentCard from "@/components/WidgetPercentCard";
 import WidgetStreakCard from "@/components/WidgetStreakCard";
-import { getDateKey } from '@/utils/date';
+import { getDateKey, getLastNDays } from '@/utils/date';
 import { getHabitStreak } from "@/utils/streaks";
 
 export default function WidgetsScreen() {
@@ -22,6 +22,25 @@ export default function WidgetsScreen() {
   const todayKey = getDateKey();
 
   const streakCount = firstHabit ? getHabitStreak(firstHabit, todayKey) : 0;
+
+
+  const TEN_DAYS = 10;
+
+  const firstHabit10Day = (() => {
+    if (!firstHabit) return { percent: 0, done: 0, possible: TEN_DAYS };
+
+    const keys = getLastNDays(TEN_DAYS).map((d) => getDateKey(d));
+    let done = 0;
+
+    for (const k of keys) {
+      if (firstHabit.history?.[k] === true) done += 1;
+    }
+
+    const possible = keys.length;
+    const percent = possible ? Math.round((done / possible) * 100) : 0;
+
+    return { percent, done, possible };
+  })();
 
 
   return (
@@ -52,23 +71,35 @@ export default function WidgetsScreen() {
 
         {firstHabit && (
           <View>
+            <Text></Text>
             <WidgetPercentCard
-              title={`${firstHabit.title}`}
-              percent={20}
+              title={firstHabit.title}
+              percent={firstHabit10Day.percent}
               ringSize={140}
               strokeWidth={14}
               textSize={26}
             />
+
+            <Text style={[styles.desc, { color: colors.muted }]}>
+              Last 10 days: {firstHabit10Day.done}/{firstHabit10Day.possible} completed.
+            </Text>
           </View>
         )}
 
+
         {firstHabit && (
-          <WidgetStreakCard
-            title={firstHabit.title}
-            streak={streakCount}
-            numberSize={32}
-            iconSize={34}
-          />
+          <View>
+            <WidgetStreakCard
+              title={firstHabit.title}
+              streak={streakCount}
+              numberSize={32}
+              iconSize={34}
+            />
+
+            <Text style={[styles.desc, { color: colors.muted }]}>
+              Current streak for your top habit.
+            </Text>
+          </View>
 
         )}
 
@@ -119,5 +150,33 @@ const styles = StyleSheet.create({
   habitTitle: {
     fontSize: 14,
     fontFamily: "Poppins_500Medium",
-  }
+  },
+  desc: {
+    fontSize: 13,
+    fontFamily: "Poppins_500Medium",
+    opacity: 0.75,
+    marginTop: -10,
+    marginBottom: 14,
+    marginHorizontal: 10,
+  },
+
+  howToBox: {
+    borderWidth: 1,
+    borderRadius: 16,
+    padding: 14,
+    marginTop: 8,
+    marginBottom: 30,
+  },
+  howToTitle: {
+    fontSize: 15,
+    fontFamily: "Poppins_600SemiBold",
+    marginBottom: 8,
+  },
+  howToText: {
+    fontSize: 13,
+    fontFamily: "Poppins_500Medium",
+    opacity: 0.8,
+    lineHeight: 19,
+  },
+
 });
