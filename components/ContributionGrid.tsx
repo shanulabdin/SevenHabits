@@ -76,8 +76,6 @@ export default function ContributionGrid({
                     width: size,
                     height: size,
                     backgroundColor: done ? colors.orange : colors.accentMuted,
-                    borderColor: done ? "transparent" : colors.borderMuted,
-                    borderWidth: 1,
                     borderRadius: 3,
                     // spacing between rows
                     marginBottom: j !== col.length - 1 ? gap : 0,

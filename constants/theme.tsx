@@ -24,7 +24,7 @@ const DARK = {
   orange: "#FF6D1F",
 
   accent: "#ffffffff",
-  accentMuted: "rgba(255, 255, 255, 0.1)",
+  accentMuted: "#ffffff26",
 };
 
 const LIGHT = {
@@ -44,7 +44,7 @@ const LIGHT = {
   orange: "#FF6D1F",
 
   accent: "#000000ff",
-  accentMuted: "rgba(0, 0, 0, 0.1)",
+  accentMuted: "#00000026",
 };
 
 
@@ -68,7 +68,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     (async () => {
       try {
         const saved = await AsyncStorage.getItem(THEME_KEY);
-        
+
         if (saved === "system" || saved === "dark" || saved === "light") {
           setThemePref(saved);
         } else {
@@ -81,7 +81,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const theme: ThemeMode = useMemo(() => {
-    if(themePref === "system"){
+    if (themePref === "system") {
       return (systemScheme ?? "light") as ThemeMode;
     }
     return themePref;
@@ -95,7 +95,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const palette = useMemo(() => (theme === "dark" ? DARK : LIGHT), [theme]);
 
   const value = useMemo(
-    () => ({themePref, theme, setTheme, colors: palette, isLoaded }),
+    () => ({ themePref, theme, setTheme, colors: palette, isLoaded }),
     [themePref, theme, palette, isLoaded]
   );
 

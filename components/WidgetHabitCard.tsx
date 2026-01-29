@@ -1,70 +1,35 @@
 import ContributionGrid from "@/components/ContributionGrid";
 import { useThemeColors } from "@/constants/theme";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 
 type Props = {
   title: string;
   streak: number;
   history: Record<string, boolean>;
   todayKey: string;
-  onOpen: () => void;
 
-  // optional toggles (so you can reuse it in different places)
   showGrid?: boolean;
   showStreak?: boolean;
 
-  // compact controls
   weeks?: number;
   size?: number;
   gap?: number;
 };
 
 export default function WidgetHabitCard({
-  title,
-  streak,
   history,
   todayKey,
-  onOpen,
   showGrid = true,
-  showStreak = true,
-  weeks = 19,  // smaller than HabitCard
-  size = 17,   // smaller squares
-  gap = 2,
+  weeks = 14,  // smaller than HabitCard
+  size = 20,   // smaller squares
+  gap = 4,
 }: Props) {
   const { colors } = useThemeColors();
 
   return (
     <Pressable
-      onPress={onOpen}
       style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
     >
-      {/* Header row */}
-      <View style={styles.header}>
-        <Text
-          style={[styles.title, { color: colors.text }]}
-          numberOfLines={1}
-        >
-          {title}
-        </Text>
-
-        {showStreak && (
-          <View style={[styles.streak, { opacity: streak === 0 ? 0.35 : 1 }]}>
-            <Text style={[styles.streakText, { color: colors.text, fontFamily: "Poppins_500Medium" }]}>
-              {streak < 2 ? "" : streak}
-            </Text>
-            <Ionicons
-              name="flame"
-              size={16}
-              color={streak === 0 ? colors.accent : colors.orange}
-              style={{ transform: [{ translateY: 1 }] }}
-            />
-          </View>
-        )}
-      </View>
-
-      <View style={[styles.divider, { backgroundColor: colors.text }]} />
-
       {/* Grid */}
       {showGrid && (
         <View style={[styles.gridWrap, { borderColor: colors.borderMuted }]}>
@@ -87,6 +52,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     padding: 12,
     gap: 10,
+    marginHorizontal: 8,
 
     shadowColor: "#000",
     shadowOpacity: 0.18,

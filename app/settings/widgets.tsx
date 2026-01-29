@@ -42,7 +42,6 @@ export default function WidgetsScreen() {
               streak={streakCount}
               history={firstHabit.history}
               todayKey={todayKey}
-              onOpen={() => router.push(`/settings/widgets`)} // choose your route
               showGrid={true}
               showStreak={true}
             />

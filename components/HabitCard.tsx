@@ -59,7 +59,9 @@ export default function HabitCard({
             <View style={[styles.streak, {opacity: streak === 0 ? 0.25 : 1}]}>
               <Text
                 style={[
-                  styles.streakText
+                  styles.streakText, {
+                    color: colors.text
+                  }
                 ]}
               >
                 {streak < 2 ? "" : streak}

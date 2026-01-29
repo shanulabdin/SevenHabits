@@ -36,7 +36,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
               endDateKey={todayKey}
               bg={"#FFFFFF"}
               orange={"#FF6D1F"}
-              muted={"#00000014"}
+              muted={"#00000026"}
             />
           ),
           dark: (
@@ -45,7 +45,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
               endDateKey={todayKey}
               bg={"#000000"}
               orange={"#FF6D1F"}
-              muted={"#FFFFFF14"}
+              muted={"#ffffff26"}
             />
           ),
         });
