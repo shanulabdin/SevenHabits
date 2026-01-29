@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     padding: 12,
     gap: 10,
-    marginHorizontal: 12,
     marginBottom: 20,
+    width: 358,
 
     shadowColor: "#000",
     shadowOpacity: 0.18,
@@ -61,33 +61,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 10,
-  },
-  title: {
-    flex: 1,
-    fontSize: 16,
-    fontFamily: "Poppins_500Medium",
-  },
-  streak: {
-    flexDirection: "row",
-    alignItems: "baseline",
-  },
-  streakText: {
-    fontSize: 12,
-    fontFamily: "Poppins_500Medium",
-    marginRight: 2,
-    opacity: 0.8,
-  },
   gridWrap: {
     alignItems: "center",
-  },
-  divider: {
-    height: StyleSheet.hairlineWidth,
-    width: "80%",
-    marginBottom: 10,
   },
 });
