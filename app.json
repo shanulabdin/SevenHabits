@@ -59,7 +59,7 @@
           "widgets": [
             {
               "name": "StreakOnly",
-              "label": "Streaks",
+              "label": "Streak",
               "description": "Shows streak only",
               "minWidth": "110dp",
               "minHeight": "110dp",
@@ -70,7 +70,7 @@
             },
             {
               "name": "PercentCard",
-              "label": "Forge Score",
+              "label": "Score",
               "description": "Overall completion percentage",
               "minWidth": "110dp",
               "minHeight": "110dp",

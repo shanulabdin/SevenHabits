@@ -25,6 +25,8 @@ const DARK = {
 
   accent: "#ffffffff",
   accentMuted: "#ffffff26",
+
+  muted: "#FFFFFFB3",
 };
 
 const LIGHT = {
@@ -45,6 +47,8 @@ const LIGHT = {
 
   accent: "#000000ff",
   accentMuted: "#00000026",
+
+  muted: "#11111199",
 };
 
 
