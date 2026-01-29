@@ -4,13 +4,12 @@ import WidgetHabitCard from "@/components/WidgetHabitCard";
 import { useThemeColors } from "@/constants/theme";
 import { useHabits } from "@/src/context/HabitsProvider";
 import { useRouter } from "expo-router";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import WidgetPercentCard from "@/components/WidgetPercentCard";
 import { getDateKey } from '@/utils/date';
 import { getHabitStreak } from "@/utils/streaks";
-import { Ionicons } from "@expo/vector-icons";
-
 
 export default function WidgetsScreen() {
   const router = useRouter();
@@ -49,44 +48,19 @@ export default function WidgetsScreen() {
           </View>
         )}
 
-        {/* show streak widget */}
+
         {firstHabit && (
-          <View
-            style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
-          >
-            <Text style={[styles.title, { fontFamily: "Poppins_500Medium", }]}>
-              Streak
-            </Text>
-
-            <View style={[styles.divider, { backgroundColor: colors.text }]} />
-
-            <View style={[styles.streak]}>
-              <Text
-                style={[
-                  styles.streakText, {
-                    color: colors.text
-                  }
-                ]}
-              >
-                {streakCount}
-              </Text>
-
-              <Ionicons
-                name="flame"
-                color={streakCount === 0 ? colors.accent : colors.orange}
-                size={40}
-                style={{
-                  transform: [{ translateY: 1 }]
-                }}
-              />
-            </View>
-            <Text style={[styles.habitTitle, {
-              color: colors.muted,
-            }]}>
-              {firstHabit.title}
-            </Text>
+          <View>
+            <WidgetPercentCard
+              title={`${firstHabit.title}`}
+              percent={20}
+              ringSize={140}
+              strokeWidth={14}
+              textSize={26}
+            />
           </View>
         )}
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -111,23 +85,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 24
   },
-  card: {
-    borderWidth: 1,
-    borderRadius: 14,
-    padding: 12,
-    gap: 10,
-    marginHorizontal: 8,
 
-    shadowColor: "#000",
-    shadowOpacity: 0.18,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 5 },
-    
-    elevation: 2,
-
-    justifyContent: "center",
-    alignItems: "center",
-  },
   title: {
     flex: 1,
     fontSize: 16,
