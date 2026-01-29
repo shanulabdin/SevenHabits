@@ -52,7 +52,7 @@ export default function WidgetStreakCard({
             name="flame"
             size={iconSize}
             color={colors.orange}
-            style={{ marginLeft: 4, marginTop: 2, marginBottom: 4 }}
+            style={{ marginLeft: 6, marginTop: 2, marginBottom: 3 }}
           />
         </View>
 
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     lineHeight: 40,
   },
   title: {
-    fontSize: 14,
+    fontSize: 15,
     fontFamily: "Poppins_500Medium",
   },
 });

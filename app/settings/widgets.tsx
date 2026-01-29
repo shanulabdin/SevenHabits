@@ -86,8 +86,8 @@ export default function WidgetsScreen() {
             <WidgetStreakCard
               title={firstHabit.title}
               streak={streakCount}
-              numberSize={32}
-              iconSize={34}
+              numberSize={35}
+              iconSize={35}
             />
 
             <Text style={[styles.desc, { color: colors.muted }]}>
