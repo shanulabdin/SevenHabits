@@ -20,9 +20,24 @@ type HabitsContextValue = {
 
 const HabitsContext = createContext<HabitsContextValue | null>(null);
 
+function generateFakeHistory(days: number): Record<string, boolean> {
+  const history: Record<string, boolean> = {};
+  const today = new Date();
+
+  for (let i = 0; i < days; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() - i);
+
+    const key = d.toISOString().split("T")[0]; // YYYY-MM-DD
+    history[key] = Math.random() > 0.25; // ~75% filled
+  }
+
+  return history;
+}
+
 function buildDefaultHabits(todayKey: string): Habit[] {
   return [
-    { id: "1", title: "Example", history: { [todayKey]: false }, showGrid: true, showStreak: true },
+    { id: "1", title: "Example", history: generateFakeHistory(150), showGrid: true, showStreak: true },
     { id: "2", title: "Long Press to edit", history: { [todayKey]: false }, showGrid: false, showStreak: true },
   ];
 }

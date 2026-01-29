@@ -58,7 +58,7 @@
           ],
           "widgets": [
             {
-              "name": "StreakOnly",
+              "name": "Streak",
               "label": "Streak",
               "description": "Shows streak only",
               "minWidth": "110dp",
@@ -69,9 +69,9 @@
               "updatePeriodMillis": 0
             },
             {
-              "name": "PercentCard",
+              "name": "Score",
               "label": "Score",
-              "description": "Overall completion percentage",
+              "description": "Last 10 days completion percentage",
               "minWidth": "110dp",
               "minHeight": "110dp",
               "targetCellWidth": 2,
@@ -80,9 +80,9 @@
               "updatePeriodMillis": 0
             },
             {
-              "name": "GridWidget",
-              "label": "Grid View",
-              "description": "GitHub-style habit grid",
+              "name": "Grid",
+              "label": "Grid",
+              "description": "Habit completion grid View",
               "minWidth": "250dp",
               "minHeight": "110dp",
               "targetCellWidth": 4,
