@@ -1,12 +1,11 @@
 import type { Habit } from "@/types/habit"; // <-- adjust path
-import { getDateKey, getLastNDays } from "@/utils/date"; // <-- adjust path to where your getDateKey is
-import { getHabitStreakWithGrace } from "@/utils/streaks";
+import { getDateKey } from "@/utils/date"; // <-- adjust path to where your getDateKey is
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { requestWidgetUpdate } from "react-native-android-widget";
-import { GridWidget } from "../widgets/GridWidget";
-import { PercentWidget } from "../widgets/PercentWidget";
-import { StreakOnlyWidget } from "../widgets/StreakOnlyWidget";
+// import { requestWidgetUpdate } from "react-native-android-widget";
+// import { GridWidget } from "../widgets/GridWidget";
+// import { PercentWidget } from "../widgets/PercentWidget";
+// import { StreakOnlyWidget } from "../widgets/StreakOnlyWidget";
 
 const STORAGE_KEY = "@forge/habits_v1";
 
@@ -34,147 +33,147 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
   const [habits, setHabits] = useState<Habit[]>(() => buildDefaultHabits(todayKey));
 
   // Push real data to the "StreakOnly" widget whenever habits change
-  useEffect(() => {
-    if (!habits || habits.length === 0) return;
+  // useEffect(() => {
+  //   if (!habits || habits.length === 0) return;
 
-    const first = habits[0];
-    const streak = getHabitStreakWithGrace(first, todayKey, todayKey);
+  //   const first = habits[0];
+  //   const streak = getHabitStreakWithGrace(first, todayKey, todayKey);
 
-    const LIGHT = {
-      bg: "#FFFFFF" as const,
-      text: "#111111" as const,
-      muted: "#11111199" as const,
-    };
+  //   const LIGHT = {
+  //     bg: "#FFFFFF" as const,
+  //     text: "#111111" as const,
+  //     muted: "#11111199" as const,
+  //   };
 
-    const DARK = {
-      bg: "#151515" as const,
-      text: "#FFFFFF" as const,
-      muted: "#FFFFFFB3" as const,
-    };
+  //   const DARK = {
+  //     bg: "#151515" as const,
+  //     text: "#FFFFFF" as const,
+  //     muted: "#FFFFFFB3" as const,
+  //   };
 
-    requestWidgetUpdate({
-      widgetName: "StreakOnly",
-      renderWidget: () => ({
-        light: (
-          <StreakOnlyWidget
-            title={first.title || "Forge"}
-            streak={typeof streak === "number" ? streak : 0}
-            {...LIGHT}
-          />
-        ),
-        dark: (
-          <StreakOnlyWidget
-            title={first.title || "Forge"}
-            streak={typeof streak === "number" ? streak : 0}
-            {...DARK}
-          />
-        ),
-      }),
-      widgetNotFound: () => {
-        // No widget placed on home screen yet — ignore
-      },
-    });
-  }, [habits, todayKey]);
+  //   requestWidgetUpdate({
+  //     widgetName: "StreakOnly",
+  //     renderWidget: () => ({
+  //       light: (
+  //         <StreakOnlyWidget
+  //           title={first.title || "Forge"}
+  //           streak={typeof streak === "number" ? streak : 0}
+  //           {...LIGHT}
+  //         />
+  //       ),
+  //       dark: (
+  //         <StreakOnlyWidget
+  //           title={first.title || "Forge"}
+  //           streak={typeof streak === "number" ? streak : 0}
+  //           {...DARK}
+  //         />
+  //       ),
+  //     }),
+  //     widgetNotFound: () => {
+  //       // No widget placed on home screen yet — ignore
+  //     },
+  //   });
+  // }, [habits, todayKey]);
 
-  // Update Overall % widget (last 10 days)
-  useEffect(() => {
-    if (!habits || habits.length === 0) return;
+  // // Update Overall % widget (last 10 days)
+  // useEffect(() => {
+  //   if (!habits || habits.length === 0) return;
 
-    const TEN_DAYS = 10;
-    const lastDays = getLastNDays(TEN_DAYS);
-    const dateKeys = lastDays.map((d) => getDateKey(d));
+  //   const TEN_DAYS = 10;
+  //   const lastDays = getLastNDays(TEN_DAYS);
+  //   const dateKeys = lastDays.map((d) => getDateKey(d));
 
-    const first = habits[0];
+  //   const first = habits[0];
 
-    const possible = dateKeys.length;
-    let done = 0;
+  //   const possible = dateKeys.length;
+  //   let done = 0;
 
-    for (const key of dateKeys) {
-      if (first.history?.[key] === true) done += 1;
-    }
+  //   for (const key of dateKeys) {
+  //     if (first.history?.[key] === true) done += 1;
+  //   }
 
-    const percent = possible ? Math.round((done / possible) * 100) : 0;
+  //   const percent = possible ? Math.round((done / possible) * 100) : 0;
 
-    const LIGHT = {
-      bg: "#FFFFFF" as const,
-      text: "#111111" as const,
-      muted: "#11111199" as const,
-    };
+  //   const LIGHT = {
+  //     bg: "#FFFFFF" as const,
+  //     text: "#111111" as const,
+  //     muted: "#11111199" as const,
+  //   };
 
-    const DARK = {
-      bg: "#151515" as const,
-      text: "#FFFFFF" as const,
-      muted: "#FFFFFFB3" as const,
-    };
+  //   const DARK = {
+  //     bg: "#151515" as const,
+  //     text: "#FFFFFF" as const,
+  //     muted: "#FFFFFFB3" as const,
+  //   };
 
 
-    requestWidgetUpdate({
-      widgetName: "PercentCard",
-      renderWidget: () => ({
-        light: (
-          <PercentWidget
-            title={`${first.title}`}
-            percent={percent}
-            subtitle={`${done}/${possible}`}
-            {...LIGHT}
-          />
-        ),
-        dark: (
-          <PercentWidget
-            title={`${first.title}`}
-            percent={percent}
-            subtitle={`${done}/${possible}`}
-            {...DARK}
-          />
-        ),
-      }),
-      widgetNotFound: () => { },
-    });
+  //   requestWidgetUpdate({
+  //     widgetName: "PercentCard",
+  //     renderWidget: () => ({
+  //       light: (
+  //         <PercentWidget
+  //           title={`${first.title}`}
+  //           percent={percent}
+  //           subtitle={`${done}/${possible}`}
+  //           {...LIGHT}
+  //         />
+  //       ),
+  //       dark: (
+  //         <PercentWidget
+  //           title={`${first.title}`}
+  //           percent={percent}
+  //           subtitle={`${done}/${possible}`}
+  //           {...DARK}
+  //         />
+  //       ),
+  //     }),
+  //     widgetNotFound: () => { },
+  //   });
 
-  }, [habits]);
+  // }, [habits]);
 
-  // Grid Widget
-  useEffect(() => {
-    if (!habits || habits.length === 0) return;
+  // // Grid Widget
+  // useEffect(() => {
+  //   if (!habits || habits.length === 0) return;
 
-    const first = habits[0];
-    const todayKey = getDateKey(new Date());
+  //   const first = habits[0];
+  //   const todayKey = getDateKey(new Date());
 
-    const LIGHT = {
-      bg: "#FFFFFF",
-      orange: "#FF6D1F",
-      muted: "#a1a1a14d",
-      border: "#00000033",
-    } as const;
+  //   const LIGHT = {
+  //     bg: "#FFFFFF",
+  //     orange: "#FF6D1F",
+  //     muted: "#a1a1a14d",
+  //     border: "#00000033",
+  //   } as const;
 
-    const DARK = {
-      bg: "#151515",
-      orange: "#FF6D1F",
-      muted: "#a1a1a14d",
-      border: "#FFFFFF33",
-    } as const;
+  //   const DARK = {
+  //     bg: "#151515",
+  //     orange: "#FF6D1F",
+  //     muted: "#a1a1a14d",
+  //     border: "#FFFFFF33",
+  //   } as const;
 
-    requestWidgetUpdate({
-      widgetName: "GridWidget",
-      renderWidget: () => ({
-        light: (
-          <GridWidget
-            history={first.history ?? {}}
-            endDateKey={todayKey}
-            {...LIGHT}
-          />
-        ),
-        dark: (
-          <GridWidget
-            history={first.history ?? {}}
-            endDateKey={todayKey}
-            {...DARK}
-          />
-        ),
-      }),
-      widgetNotFound: () => { },
-    });
-  }, [habits]);
+  //   requestWidgetUpdate({
+  //     widgetName: "GridWidget",
+  //     renderWidget: () => ({
+  //       light: (
+  //         <GridWidget
+  //           history={first.history ?? {}}
+  //           endDateKey={todayKey}
+  //           {...LIGHT}
+  //         />
+  //       ),
+  //       dark: (
+  //         <GridWidget
+  //           history={first.history ?? {}}
+  //           endDateKey={todayKey}
+  //           {...DARK}
+  //         />
+  //       ),
+  //     }),
+  //     widgetNotFound: () => { },
+  //   });
+  // }, [habits]);
 
 
   // Show grid and streak

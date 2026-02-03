@@ -45,53 +45,18 @@
           "backgroundColor": "#000000"
         }
       ],
-      "expo-font",
       [
-        "react-native-android-widget",
+        "expo-build-properties",
         {
-          "fonts": [
-            "./assets/fonts/Poppins-Regular.ttf",
-            "./assets/fonts/Poppins-Medium.ttf",
-            "./assets/fonts/Poppins-SemiBold.ttf",
-            "./assets/fonts/Poppins-Bold.ttf"
-          ],
-          "widgets": [
-            {
-              "name": "Streak",
-              "label": "Streak",
-              "description": "Shows streak only",
-              "minWidth": "110dp",
-              "minHeight": "110dp",
-              "targetCellWidth": 2,
-              "targetCellHeight": 2,
-              "previewImage": "./assets/images/Streak.png",
-              "updatePeriodMillis": 0
-            },
-            {
-              "name": "Score",
-              "label": "Score",
-              "description": "Last 10 days completion percentage",
-              "minWidth": "110dp",
-              "minHeight": "110dp",
-              "targetCellWidth": 2,
-              "targetCellHeight": 2,
-              "previewImage": "./assets/images/Score.png",
-              "updatePeriodMillis": 0
-            },
-            {
-              "name": "Grid",
-              "label": "Grid",
-              "description": "Habit completion grid View",
-              "minWidth": "250dp",
-              "minHeight": "110dp",
-              "targetCellWidth": 4,
-              "targetCellHeight": 2,
-              "previewImage": "./assets/images/Grid.png",
-              "updatePeriodMillis": 0
-            }
-          ]
+          "android": {
+            "newArchEnabled": true
+          },
+          "ios": {
+            "newArchEnabled": true
+          }
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true,
