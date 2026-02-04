@@ -56,7 +56,23 @@
           }
         }
       ],
-      "expo-font"
+      "expo-font",
+      [
+        "react-native-android-widget",
+        {
+          widgets: [
+            {
+              name: "Grid",
+              taskHandler: "./widget-task-handler",
+              label: "Forge Grid",
+              description: "Habit grid widget",
+              resizeMode: "horizontal|vertical",
+              minWidth: 180,
+              minHeight: 120,
+            },
+          ],
+        },
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
