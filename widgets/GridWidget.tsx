@@ -1,27 +1,25 @@
-import {
-  FlexWidget,
-  TextWidget,
-} from "react-native-android-widget";
+import { FlexWidget, TextWidget } from "react-native-android-widget";
 
-export function GridWidget() {
+export function GridWidget({ widgetId }: { 
+  widgetId: number | string; 
+  event?: any;
+  }) {
   return (
     <FlexWidget
       style={{
-        width: "match_parent",
-        height: "match_parent",
+        width: 180,
+        height: 120,
         padding: 12,
-        backgroundColor: "#111",
-        borderRadius: 16,
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: "#111111",
       }}
     >
       <TextWidget
-        text="Forge Widget"
+        text="Forge Grid"
         style={{
+          color: "#ffffff",
           fontSize: 16,
-          color: "#fff",
-          fontWeight: "600",
         }}
       />
     </FlexWidget>
