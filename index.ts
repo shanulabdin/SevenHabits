@@ -2,7 +2,6 @@
 // on web.
 import '@expo/metro-runtime';
 
-import { registerRootComponent } from 'expo';
 import { registerWidgetTaskHandler } from 'react-native-android-widget';
 
 import { App } from 'expo-router/build/qualified-entry';

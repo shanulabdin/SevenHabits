@@ -46,14 +46,21 @@
         }
       ],
       [
-        "expo-build-properties",
+        "react-native-android-widget",
         {
-          "android": {
-            "newArchEnabled": true
-          },
-          "ios": {
-            "newArchEnabled": true
-          }
+          "widgets": [
+            {
+              "name": "Hello",
+              "label": "My Hello Widget",
+              "minWidth": "320dp",
+              "minHeight": "120dp",
+              "targetCellWidth": 5,
+              "targetCellHeight": 2,
+              "description": "This is my first widget",
+              "previewImage": "./assets/images/hello.png",
+              "updatePeriodMillis": 1800000
+            }
+          ]
         }
       ],
       "expo-font"

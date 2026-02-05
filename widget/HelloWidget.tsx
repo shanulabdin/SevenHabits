@@ -1,5 +1,4 @@
 'use no memo';
-import React from 'react';
 import { FlexWidget, TextWidget } from 'react-native-android-widget';
 
 export function HelloWidget() {
@@ -16,7 +15,7 @@ export function HelloWidget() {
       accessibilityLabel="Hello world widget"
     >
       <TextWidget
-        text="Hello"
+        text="Meow"
         style={{
           fontSize: 32,
           fontFamily: 'Inter',
