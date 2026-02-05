@@ -27,6 +27,8 @@ import { hapticHeavy, hapticLight, hapticSelect } from '@/utils/haptics';
 import { getPercentForDate, getWeeklyPercent } from '@/utils/stats';
 import { getHabitStreakWithGrace } from '@/utils/streaks';
 import { Ionicons } from '@expo/vector-icons';
+import { WidgetPreview } from 'react-native-android-widget';
+import { HelloWidget } from '@/widget/HelloWidget';
 
 
 export default function Index() {
@@ -415,6 +417,12 @@ export default function Index() {
         </View>
       </KeyboardAvoidingView>
       {DeleteHabitConfirmModal}
+
+      <WidgetPreview
+        renderWidget={() => <HelloWidget />}
+        width={320}
+        height={200}
+      />
     </SafeAreaView>
 
   );
