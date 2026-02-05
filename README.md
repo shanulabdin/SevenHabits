@@ -1,1 +1,1 @@
-Trying to fix the widget error, I can't figure out why they are not appearing on the home screen.
+finally the widget is showing
