@@ -30,7 +30,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
   const widgetInfo = props.widgetInfo;
   const Widget =
     nameToWidget[
-      widgetInfo.widgetName as keyof typeof nameToWidget
+    widgetInfo.widgetName as keyof typeof nameToWidget
     ] as any;
 
   switch (props.widgetAction) {
@@ -61,10 +61,23 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
       // Not needed for now
       break;
 
-    case 'WIDGET_CLICK':{
-      if (props.clickAction === "OPEN_APP"){
-        Linking.openURL("androidwidgetapp://home")
+    case 'WIDGET_CLICK': {
+      if (props.clickAction === "OPEN_APP") {
+        Linking.openURL("forge://home")
+        break;
       }
+
+      if (widgetInfo.widgetName === "Counter") {
+        const currentValue = Number(props.clickActionData?.value) || 0;
+        const backgroundColor = (props.clickActionData?.backgroundColor || getStoredBackgroundColor()) as ColorProp;
+
+        const count = currentValue + (props.clickAction === "INCREMENT" ? 1 : -1);
+
+        props.renderWidget(<Widget count={count} backgroundColor={backgroundColor} />);
+
+        Storage.setItemSync(COUNTER_STORAGE_KEY, `${count}`)
+      }
+
       break;
     }
 

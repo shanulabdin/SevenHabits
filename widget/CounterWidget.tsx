@@ -11,31 +11,6 @@ export function CounterWidget({
   backgroundColor
 }: CounterWidgetProps) {
 
-//   #FFFFFF
-//   #FF6D1F
-// #00000026
-
-// #000000
-//   #FF6D1F
-//   #ffffff26
-
-  const isDarkBackground = backgroundColor === "#1F2937" || "#EC4899";
-
-  const textColor = isDarkBackground ? "#FFFFFF" : "#00000026";
-  const subtitleColor = isDarkBackground ? "#FFFFFF" : "#000000";
-
-  const buttonColors: Record<string, ColorProp> = {
-    '#4ade80': '#059669',
-    '#38bdf8': '#1d4ed8',
-    '#fbbf24': '#b45309',
-    '#fb7185': '#be123c',
-    '#818cf8': '#4338ca',
-    '#c084fc': '#7e22ce',
-    '#22d3ee': '#0f766e',
-  };
-
-  const buttonBg: ColorProp = buttonColors[backgroundColor as string] || '#5e5e5eff';
-
   return (
     <FlexWidget
       style={{
@@ -68,7 +43,7 @@ export function CounterWidget({
           text="Powered by Expo"
           style={{
             fontSize: 10,
-            color: subtitleColor,
+            color: "#FFFFFF",
             fontWeight: "500",
             marginLeft: 4,
           }}
@@ -92,7 +67,7 @@ export function CounterWidget({
             width: 44,
             height: 44,
             borderRadius: 22,
-            backgroundColor: buttonBg,
+            backgroundColor: "#FFFFFF",
             alignItems: "center",
             justifyContent: "center",
           }}
@@ -103,7 +78,7 @@ export function CounterWidget({
             text="-"
             style={{
               fontSize: 24,
-              color: textColor,
+              color: "#000000",
               fontWeight: "300",
             }}
           />
@@ -114,7 +89,7 @@ export function CounterWidget({
           text={`${count}`}
           style={{
             fontSize: 48,
-            color: textColor,
+            color: "#000000",
             fontWeight: "200",
             fontFamily: "sans-serif-light",
           }}
@@ -126,7 +101,7 @@ export function CounterWidget({
             width: 44,
             height: 44,
             borderRadius: 22,
-            backgroundColor: buttonBg,
+            backgroundColor: "#F6F6F6",
             alignItems: "center",
             justifyContent: "center",
           }}
@@ -137,7 +112,7 @@ export function CounterWidget({
             text="+"
             style={{
               fontSize: 24,
-              color: textColor,
+              color: "#000000",
               fontWeight: "300",
             }}
           />
@@ -157,7 +132,7 @@ export function CounterWidget({
           text="COUNTER"
           style={{
             fontSize: 9,
-            color: subtitleColor,
+            color: "#F6F6F6",
             fontWeight: "600",
             letterSpacing: 2,
           }}
