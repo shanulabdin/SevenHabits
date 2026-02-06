@@ -59,6 +59,19 @@
               "description": "This is my first widget",
               "previewImage": "./assets/images/hello.png",
               "updatePeriodMillis": 1800000
+            },
+            {
+              "name": "Counter",
+              "label": "My Counter Widget",
+              "minWidth": "180dp",
+              "minHeight": "180dp",
+              "targetCellWidth": 3,
+              "targetCellHeight": 2,
+              "description": "This is my second widget",
+              "previewImage": "./assets/images/logo.png",
+              "updatePeriodMillis": 1800000,
+              
+              "resizeMode": "horizontal|vertical"
             }
           ]
         }

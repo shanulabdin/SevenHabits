@@ -1,10 +1,12 @@
 import React from 'react';
 import type { WidgetTaskHandlerProps } from 'react-native-android-widget';
 import { HelloWidget } from './HelloWidget';
+import { CounterWidget } from './CounterWidget';
 
 const nameToWidget = {
   // Hello will be the **name** with which we will reference our widget.
   Hello: HelloWidget,
+  Counter: CounterWidget
 };
 
 export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
