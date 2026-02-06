@@ -70,13 +70,13 @@
               "description": "This is my second widget",
               "previewImage": "./assets/images/logo.png",
               "updatePeriodMillis": 1800000,
-              
               "resizeMode": "horizontal|vertical"
             }
           ]
         }
       ],
-      "expo-font"
+      "expo-font",
+      "expo-sqlite"
     ],
     "experiments": {
       "typedRoutes": true,
