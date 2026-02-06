@@ -42,9 +42,15 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
       }
       break;
     }
-    case 'WIDGET_UPDATE':
-      // Not needed for now
+    case 'WIDGET_UPDATE': {
+      if (widgetInfo.widgetName === "Counter") {
+        const { count, backgroundColor } = getStorageData();
+        props.renderWidget(<Widget count={count} backgroundColor={backgroundColor} />);
+      } else {
+        props.renderWidget(<Widget />);
+      }
       break;
+    }
 
     case 'WIDGET_RESIZED':
       // Not needed for now
