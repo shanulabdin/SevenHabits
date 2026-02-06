@@ -41,15 +41,22 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
         const { count, backgroundColor } = getStorageData();
         props.renderWidget(<Widget count={count} backgroundColor={backgroundColor} />);
       } else if (widgetInfo.widgetName === "Streak") {
-        props.renderWidget(
-          <Widget
+        props.renderWidget({
+          light: <Widget
             title="Forge"
             streak={12}
             bg={"#FFFFFF"}
             text={"#111111"}
             muted={"#11111199"}
-          />
-        );
+          />,
+          dark: <Widget
+            title="Forge"
+            streak={12}
+            bg={"#000000"}
+            text={"#FFFFFF"}
+            muted={"#FFFFFFB3"}
+          />,
+        });
       } else {
         props.renderWidget(<Widget />);
       }
