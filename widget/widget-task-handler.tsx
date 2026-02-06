@@ -1,4 +1,5 @@
 import Storage from 'expo-sqlite/kv-store';
+import { Linking } from 'react-native';
 import type { ColorProp, WidgetTaskHandlerProps } from 'react-native-android-widget';
 import { CounterWidget } from './CounterWidget';
 import { HelloWidget } from './HelloWidget';
@@ -60,9 +61,12 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
       // Not needed for now
       break;
 
-    case 'WIDGET_CLICK':
-      // Not needed for now
+    case 'WIDGET_CLICK':{
+      if (props.clickAction === "OPEN_APP"){
+        Linking.openURL("androidwidgetapp://home")
+      }
       break;
+    }
 
     default:
       break;
