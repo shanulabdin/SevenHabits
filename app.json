@@ -71,6 +71,17 @@
               "previewImage": "./assets/images/logo.png",
               "updatePeriodMillis": 1800000,
               "resizeMode": "horizontal|vertical"
+            },
+            {
+              "name": "Streak",
+              "label": "Forge Streak Widget",
+              "minWidth": "120dp",
+              "minHeight": "120dp",
+              "targetCellWidth": 2,
+              "targetCellHeight": 2,
+              "description": "This is my second widget",
+              "previewImage": "./assets/images/Streak.png",
+              "updatePeriodMillis": 1800000
             }
           ]
         }

@@ -3,11 +3,13 @@ import { Linking } from 'react-native';
 import type { ColorProp, WidgetTaskHandlerProps } from 'react-native-android-widget';
 import { CounterWidget } from './CounterWidget';
 import { HelloWidget } from './HelloWidget';
+import { StreakWidget } from './StreakWidget';
 
 const nameToWidget = {
   // Hello will be the **name** with which we will reference our widget.
   Hello: HelloWidget,
-  Counter: CounterWidget
+  Counter: CounterWidget,
+  Streak: StreakWidget,
 };
 
 export const COUNTER_STORAGE_KEY = "CounterWidget:count";
@@ -38,6 +40,16 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
       if (widgetInfo.widgetName === "Counter") {
         const { count, backgroundColor } = getStorageData();
         props.renderWidget(<Widget count={count} backgroundColor={backgroundColor} />);
+      } else if (widgetInfo.widgetName === "Streak") {
+        props.renderWidget(
+          <Widget
+            title="Forge"
+            streak={12}
+            bg={"#FFFFFF"}
+            text={"#111111"}
+            muted={"#11111199"}
+          />
+        );
       } else {
         props.renderWidget(<Widget />);
       }
@@ -47,6 +59,8 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
       if (widgetInfo.widgetName === "Counter") {
         const { count, backgroundColor } = getStorageData();
         props.renderWidget(<Widget count={count} backgroundColor={backgroundColor} />);
+      } else if (widgetInfo.widgetName === "Streak") {
+        props.renderWidget(<Widget title="Forge" streak={12} bg={"#FFFFFF"} text={"#111111"} muted={"#11111199"} />);
       } else {
         props.renderWidget(<Widget />);
       }
@@ -62,6 +76,11 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
       break;
 
     case 'WIDGET_CLICK': {
+      if (props.clickAction === "OPEN_APP") {
+        Linking.openURL("forge://home")
+        break;
+      }
+
       if (props.clickAction === "OPEN_APP") {
         Linking.openURL("forge://home")
         break;
