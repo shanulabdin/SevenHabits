@@ -8,9 +8,10 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import WidgetPercentCard from "@/components/WidgetPercentCard";
-import WidgetStreakCard from "@/components/WidgetStreakCard";
 import { getDateKey, getLastNDays } from '@/utils/date';
 import { getHabitStreak } from "@/utils/streaks";
+import { StreakWidget } from "@/widget/StreakWidget";
+import { WidgetPreview } from "react-native-android-widget";
 
 export default function WidgetsScreen() {
   const router = useRouter();
@@ -65,7 +66,7 @@ export default function WidgetsScreen() {
 
         {firstHabit && (
           <View style={{ width: "100%", alignItems: "center", marginBottom: 10, }}>
-            <Text style={[styles.widgetTitle, {color: colors.text}]}>Streak</Text>
+            <Text style={[styles.widgetTitle, { color: colors.text }]}>Streak</Text>
             <WidgetPercentCard
               title={firstHabit.title}
               percent={firstHabit10Day.percent}
@@ -81,24 +82,24 @@ export default function WidgetsScreen() {
         )}
 
         {firstHabit && (
-          <View style={{ width: "100%", alignItems: "center", marginBottom: 10, }}>
-            <Text style={[styles.widgetTitle, {color: colors.text}]}>Streak</Text>
-            <WidgetStreakCard
-              title={firstHabit.title}
-              streak={streakCount}
-              numberSize={35}
-              iconSize={35}
-            />
+          <View
+            style={[styles.widgetContainer, {
+              borderColor: colors.border,
+              backgroundColor: colors.background
 
-            <Text style={[styles.desc, { color: colors.muted }]}>
-              Current streak for your top habit.
-            </Text>
+            }]}
+          >
+            <WidgetPreview
+              renderWidget={() => <StreakWidget title="Forge" streak={12} bg={"#FFFFFF"} text={"#111111"} muted={"#11111199"} />}
+              width={200}
+              height={200}
+            />
           </View>
         )}
 
         {firstHabit && (
           <View style={{ width: "100%", alignItems: "center", marginVertical: 10, }}>
-            <Text style={[styles.widgetTitle, {color: colors.text}]}>Grid View</Text>
+            <Text style={[styles.widgetTitle, { color: colors.text }]}>Grid View</Text>
             <WidgetHabitCard
               title={firstHabit.title}
               streak={streakCount}
@@ -195,7 +196,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Poppins_500Medium",
   },
-
+  widgetContainer: {
+    elevation: 3,
+    borderWidth: 1,
+    borderRadius: 16,
+    padding: 10,
+    marginBottom: 10,
+  },
   howToBox: {
     borderWidth: 1,
     borderRadius: 16,

@@ -445,12 +445,6 @@ export default function Index() {
         </View>
       </KeyboardAvoidingView>
       {DeleteHabitConfirmModal}
-
-      <WidgetPreview
-        renderWidget={() => <StreakWidget title="Forge" streak={12} bg={"#FFFFFF"} text={"#111111"} muted={"#11111199"} />}
-        width={320}
-        height={200}
-      />
     </SafeAreaView>
 
   );
