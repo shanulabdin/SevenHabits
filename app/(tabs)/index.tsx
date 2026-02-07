@@ -244,19 +244,61 @@ export default function Index() {
 
     Storage.setItemSync("@forge/widget_streak", String(streak));
     Storage.setItemSync("@forge/widget_title", firstHabit.title);
+    Storage.setItemSync("@forge/widget_score", String());
 
     requestWidgetUpdate({
       widgetName: "Streak",
-      renderWidget: () => <StreakWidget
-        title={firstHabit.title}
-        streak={streak}
-        bg={"#FFFFFF"}
-        text={"#111111"}
-        muted={"#11111199"}
-      />
+      renderWidget: () => {
+        const title = firstHabit.title ? firstHabit.title : "Forge";
+
+        return {
+          light: (
+            <StreakWidget
+              title={title}
+              streak={streak ? streak : 0}
+              bg={"#FFFFFF"}
+              text={"#111111"}
+              muted={"#11111199"}
+            />
+          ),
+          dark: (
+            <StreakWidget
+              title={title}
+              streak={streak ? streak : 0}
+              bg={"#000000"}
+              text={"#FFFFFF"}
+              muted={"#FFFFFFB3"}
+            />
+          ),
+        };
+      }
     });
 
   }, [habits, todayKey]);
+
+  const perHabitStats = useMemo(() => {
+    const lastDays = getLastNDays(30);
+    const dateKeys = lastDays.map((d) => getDateKey(d));
+
+    return habits.map((h) => {
+      let done = 0;
+
+      for (const key of dateKeys) {
+        if (h.history?.[key] === true) done += 1;
+      }
+
+      const possible = dateKeys.length;
+      const percent = possible ? Math.round((done / possible) * 100) : 0;
+
+      return {
+        id: h.id,
+        title: h.title,
+        done,
+        possible,
+        percent,
+      };
+    });
+  }, [habits]);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
