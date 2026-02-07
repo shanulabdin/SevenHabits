@@ -29,7 +29,7 @@ export default function WidgetHabitCard({
       <View
         style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
       >
-        <View style={[styles.gridWrap, { borderColor: colors.borderMuted }]}>
+        <View style={[styles.gridWrap, { borderColor: colors.border }]}>
           <ContributionGrid
             history={history}
             endDateKey={todayKey}

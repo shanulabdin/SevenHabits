@@ -60,7 +60,7 @@ export default function ConfirmModal({
           <Text style={[styles.modalTitle, { color: colors.text }]}>{title}</Text>
 
           {typeof message === "string" ? (
-            <Text style={[styles.modalText, { color: colors.mutedText }]}>{message}</Text>
+            <Text style={[styles.modalText, { color: colors.text }]}>{message}</Text>
           ) : (
             message
           )}
@@ -89,7 +89,7 @@ export default function ConfirmModal({
                 { backgroundColor: colors.orange, opacity: disabled ? 0.6 : 1, borderColor: colors.orange },
               ]}
             >
-              <Text style={[styles.confirmText, { color: colors.inverseText }]}>{confirmLabel}</Text>
+              <Text style={[styles.confirmText, { color: colors.background }]}>{confirmLabel}</Text>
             </Pressable>
           </View>
         </View>
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 22,
     marginBottom: 20,
-    fontFamily: "Poppins_500Medium",
+    fontFamily: "Poppins_400Regular",
   },
   actions: {
     flexDirection: "row",

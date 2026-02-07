@@ -12,14 +12,8 @@ const DARK = {
   surface: "#000000ff",
   card: "#111111ff",
   text: "#FFFFFF",
-  mutedText: "rgba(255,255,255,0.7)",
-
-  inverseBackground: "#FFFFFF", // 👈 opposite
-  inverseSurface: "#F2F2F2",
-  inverseText: "#000000",
 
   border: "#5a5a5a4d",
-  borderMuted: "#a1a1a1",
 
   orange: "#FF6D1F",
 
@@ -34,14 +28,8 @@ const LIGHT = {
   surface: "#F6F6F6",
   card: "#f5f5f5ff",
   text: "#000000",
-  mutedText: "rgba(0,0,0,0.7)",
-
-  inverseBackground: "#0B0B0B", // 👈 opposite
-  inverseSurface: "#151515",
-  inverseText: "#FFFFFF",
 
   border: "rgba(0, 0, 0, 0.1)",
-  borderMuted: "rgba(0, 0, 0, 0.25)",
 
   orange: "#FF6D1F",
 
