@@ -2,8 +2,8 @@ import Storage from 'expo-sqlite/kv-store';
 import { Linking } from 'react-native';
 import type { ColorProp, WidgetTaskHandlerProps } from 'react-native-android-widget';
 import { CounterWidget } from './CounterWidget';
-import { StreakWidget } from './StreakWidget';
 import { ScoreWidget } from './ScoreWidget';
+import { StreakWidget } from './StreakWidget';
 
 const nameToWidget = {
   // Hello will be the **name** with which we will reference our widget.
@@ -75,16 +75,26 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
         });
 
       } else if (widgetInfo.widgetName === "Score") {
-        props.renderWidget(
-          <Widget
-            title={"forge"}
-            percent={64} 
-            subtitle="32/50" 
-            bg={"#FFFFFF"} 
-            text={"#111111"} 
-            muted={"#11111199"}
-          />
-        );
+        props.renderWidget({
+          light:
+            <Widget
+              title={"forge"}
+              percent={80}
+              subtitle="32/50"
+              bg={"#FFFFFF"}
+              text={"#111111"}
+              muted={"#11111199"}
+            />,
+          dark:
+            <Widget
+              title={"forge"}
+              percent={80}
+              subtitle="32/50"
+              bg={"#000000"}
+              text={"#FFFFFF"}
+              muted={"#FFFFFFB3"}
+            />
+        });
       }
       break;
     }
@@ -95,18 +105,47 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
 
       } else if (widgetInfo.widgetName === "Streak") {
         const { streak, title } = getStoredStreakData();
-        props.renderWidget(
-          <Widget
-            title={title}
-            streak={streak}
-            bg={"#FFFFFF"}
-            text={"#111111"}
-            muted={"#11111199"}
-          />
-        );
 
-      } else {
-        props.renderWidget(<Widget />);
+        props.renderWidget({
+          light:
+            <Widget
+              title={title}
+              streak={streak}
+              bg={"#FFFFFF"}
+              text={"#111111"}
+              muted={"#11111199"}
+            />,
+          dark:
+            <Widget
+              title={title}
+              streak={streak}
+              bg={"#000000"}
+              text={"#FFFFFF"}
+              muted={"#FFFFFFB3"}
+            />,
+        });
+
+      } else if (widgetInfo.widgetName === "Score") {
+        props.renderWidget({
+          light:
+            <Widget
+              title={"forge"}
+              percent={80}
+              subtitle="32/50"
+              bg={"#FFFFFF"}
+              text={"#111111"}
+              muted={"#11111199"}
+            />,
+          dark:
+            <Widget
+              title={"forge"}
+              percent={80}
+              subtitle="32/50"
+              bg={"#000000"}
+              text={"#FFFFFF"}
+              muted={"#FFFFFFB3"}
+            />
+        });
       }
       break;
     }
