@@ -1,6 +1,6 @@
 import Heading from "@/components/Heading";
 import { Ionicons } from "@expo/vector-icons";
-import { Linking, Platform, Pressable, ScrollView, Share, StyleSheet, Text, View } from "react-native";
+import { Linking, Pressable, ScrollView, Share, StyleSheet, Text, View } from "react-native";
 
 import { useThemeColors } from '@/constants/theme';
 import { useHabits } from "@/src/context/HabitsProvider";
@@ -9,7 +9,6 @@ import { useConfirmModal } from "@/src/hooks/useConfirmModal";
 import { hapticError, hapticLight, hapticSelect } from "@/utils/haptics";
 import Constants from "expo-constants";
 import { router } from "expo-router";
-import * as StoreReview from "expo-store-review";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 
@@ -33,20 +32,6 @@ const shareApp = async () => {
   await Share.share({ message });
 };
 
-
-const rateApp = async () => {
-  const available = await StoreReview.isAvailableAsync();
-  if (available) {
-    await StoreReview.requestReview();
-    return;
-  }
-
-  const iosUrl = "itms-apps://itunes.apple.com/app/idAPP_ID?action=write-review";
-  const androidUrl = "market://details?id=com.shanulabdin.Forge";
-
-  const url = Platform.OS === "ios" ? iosUrl : androidUrl;
-  await Linking.openURL(url);
-};
 
 export const sendFeedback = async () => {
   const to = "forgehabits.app@gmail.com";

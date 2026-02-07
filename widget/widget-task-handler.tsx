@@ -1,6 +1,6 @@
 import Storage from 'expo-sqlite/kv-store';
 import { Linking } from 'react-native';
-import type { ColorProp, WidgetTaskHandlerProps } from 'react-native-android-widget';
+import type { WidgetTaskHandlerProps } from 'react-native-android-widget';
 import { GridWidget } from './GridWidget';
 import { ScoreWidget } from './ScoreWidget';
 import { StreakWidget } from './StreakWidget';
@@ -11,21 +11,6 @@ const nameToWidget = {
   Score: ScoreWidget,
 };
 
-export const COUNTER_STORAGE_KEY = "CounterWidget:count";
-export const COUNTER_BACKGROUND_KEY = "CounterWidget:backgroundColor";
-
-export function getStoredBackgroundColor(): ColorProp {
-  return (Storage.getItemSync(COUNTER_BACKGROUND_KEY) ||
-    "#1F2937") as ColorProp
-}
-
-function getStorageData(): { count: number; backgroundColor: ColorProp } {
-  const stored = Storage.getItemSync(COUNTER_STORAGE_KEY);
-  const count = stored ? Number(stored) : 0;
-  const backgroundColor = getStoredBackgroundColor();
-
-  return { count, backgroundColor };
-}
 
 const STREAK_STORAGE_KEY = "@forge/widget_streak";
 const STREAK_TITLE_KEY = "@forge/widget_title";
