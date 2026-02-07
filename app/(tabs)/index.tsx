@@ -231,7 +231,7 @@ export default function Index() {
       deleteHabit(selectedHabitId);
     },
   });
-  
+
   // Update Streak Widget
   useEffect(() => {
     if (!habits.length) return;
@@ -284,52 +284,41 @@ export default function Index() {
     const firstHabit = habits[0];
     const DAYS = 30;
 
-    const firstHabit10Day = (() => {
-      if (!firstHabit) return { percent: 0, done: 0, possible: DAYS };
+    const keys = getLastNDays(DAYS).map(d => getDateKey(d));
+    let done = 0;
 
-      const keys = getLastNDays(DAYS).map((d) => getDateKey(d));
-      let done = 0;
+    for (const key of keys) {
+      if (firstHabit.history?.[key]) done++;
+    }
 
-      for (const k of keys) {
-        if (firstHabit.history?.[k] === true) done += 1;
-      }
+    const percent = Math.round((done / keys.length) * 100);
 
-      const possible = keys.length;
-      const percent = possible ? Math.round((done / possible) * 100) : 0;
-
-      return { percent };
-    })();
-
-    Storage.setItemSync("@forge/widget_score", String(firstHabit10Day.percent));
-    console.log((firstHabit10Day.percent))
+    // Persist for widget task handler
+    Storage.setItemSync("@forge/widget_score_percent", String(percent));
+    Storage.setItemSync("@forge/widget_score_title", firstHabit.title ?? "Forge");
 
     requestWidgetUpdate({
       widgetName: "Score",
-      renderWidget: () => {
-        const title = firstHabit.title ? firstHabit.title : "Forge";
-        const percent = Number(Storage.getItemSync("@forge/widget_score")) || 0;
-
-        return {
-          light: (
-            <ScoreWidget
-              title={title}
-              percent={percent}
-              bg={"#FFFFFF"}
-              text={"#111111"}
-              muted={"#11111199"}
-            />
-          ),
-          dark: (
-            <ScoreWidget
-              title={title}
-              percent={percent}
-              bg={"#000000"}
-              text={"#FFFFFF"}
-              muted={"#FFFFFFB3"}
-            />
-          ),
-        };
-      }
+      renderWidget: () => ({
+        light: (
+          <ScoreWidget
+            title={firstHabit.title ?? "Forge"}
+            percent={percent}
+            bg="#FFFFFF"
+            text="#111111"
+            muted="#11111199"
+          />
+        ),
+        dark: (
+          <ScoreWidget
+            title={firstHabit.title ?? "Forge"}
+            percent={percent}
+            bg="#000000"
+            text="#FFFFFF"
+            muted="#FFFFFFB3"
+          />
+        ),
+      }),
     });
   }, [habits]);
 
