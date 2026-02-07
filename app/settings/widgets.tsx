@@ -7,11 +7,11 @@ import { useRouter } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import WidgetPercentCard from "@/components/WidgetPercentCard";
 import { getDateKey, getLastNDays } from '@/utils/date';
 import { getHabitStreak } from "@/utils/streaks";
+import { ScoreWidget } from "@/widget/ScoreWidget";
 import { StreakWidget } from "@/widget/StreakWidget";
-import { WidgetPreview } from "react-native-android-widget";
+import { ColorProp, WidgetPreview } from "react-native-android-widget";
 
 export default function WidgetsScreen() {
   const router = useRouter();
@@ -55,7 +55,7 @@ export default function WidgetsScreen() {
         showsVerticalScrollIndicator={false}
       >
 
-        <View style={{ width: "100%", alignItems: "center", marginBottom: 30 }}>
+        <View style={{ width: "100%", alignItems: "center", marginBottom: 10 }}>
           <Heading
             title="Widgets"
             iconTitle="Back"
@@ -64,33 +64,54 @@ export default function WidgetsScreen() {
           />
         </View>
 
+        <Text style={[styles.widgetTitle, { color: colors.text }]}>Score Widget</Text>
         {firstHabit && (
-          <View style={{ width: "100%", alignItems: "center", marginBottom: 10, }}>
-            <Text style={[styles.widgetTitle, { color: colors.text }]}>Streak</Text>
-            <WidgetPercentCard
-              title={firstHabit.title}
-              percent={firstHabit10Day.percent}
-              ringSize={140}
-              strokeWidth={14}
-              textSize={26}
+          <View
+            style={[
+              styles.widgetContainer,
+              {
+                borderColor: colors.border,
+                backgroundColor: colors.background,
+              },
+            ]}
+          >
+            <WidgetPreview
+              renderWidget={() => (
+                <ScoreWidget
+                  title="Forge"
+                  percent={80}
+                  bg={colors.background as ColorProp}
+                  text={colors.text as ColorProp}    
+                  muted={colors.muted as ColorProp}  
+                />
+              )}
+              width={200}
+              height={200}
             />
-
-            <Text style={[styles.desc, { color: colors.muted }]}>
-              Last 10 days: {firstHabit10Day.done}/{firstHabit10Day.possible} completed.
-            </Text>
           </View>
         )}
 
+        <Text style={[styles.widgetTitle, { color: colors.text }]}>Streak Widget</Text>
         {firstHabit && (
           <View
-            style={[styles.widgetContainer, {
-              borderColor: colors.border,
-              backgroundColor: colors.background
-
-            }]}
+            style={[
+              styles.widgetContainer,
+              {
+                borderColor: colors.border,
+                backgroundColor: colors.background,
+              },
+            ]}
           >
             <WidgetPreview
-              renderWidget={() => <StreakWidget title="Forge" streak={12} bg={"#FFFFFF"} text={"#111111"} muted={"#11111199"} />}
+              renderWidget={() => (
+                <StreakWidget
+                  title="Forge"
+                  streak={12}
+                  bg={colors.background as ColorProp} // dynamic
+                  text={colors.text as ColorProp}     // dynamic
+                  muted={colors.muted as ColorProp}   // dynamic
+                />
+              )}
               width={200}
               height={200}
             />
@@ -157,8 +178,8 @@ const styles = StyleSheet.create({
   widgetTitle: {
     fontSize: 20,
     opacity: 0.75,
-    marginBottom: 5,
     marginHorizontal: 10,
+    marginTop: 10,
     width: 200,
     textAlign: "center",
     fontFamily: "Poppins_600SemiBold",
