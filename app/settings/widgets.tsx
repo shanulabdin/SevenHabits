@@ -7,7 +7,7 @@ import { useRouter } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { getDateKey, getLastNDays } from '@/utils/date';
+import { getDateKey } from '@/utils/date';
 import { getHabitStreak } from "@/utils/streaks";
 import { ScoreWidget } from "@/widget/ScoreWidget";
 import { StreakWidget } from "@/widget/StreakWidget";
@@ -23,25 +23,6 @@ export default function WidgetsScreen() {
   const todayKey = getDateKey();
 
   const streakCount = firstHabit ? getHabitStreak(firstHabit, todayKey) : 0;
-
-
-  // const TEN_DAYS = 10;
-
-  // const firstHabit10Day = (() => {
-  //   if (!firstHabit) return { percent: 0, done: 0, possible: TEN_DAYS };
-
-  //   const keys = getLastNDays(TEN_DAYS).map((d) => getDateKey(d));
-  //   let done = 0;
-
-  //   for (const k of keys) {
-  //     if (firstHabit.history?.[k] === true) done += 1;
-  //   }
-
-  //   const possible = keys.length;
-  //   const percent = possible ? Math.round((done / possible) * 100) : 0;
-
-  //   return { percent, done, possible };
-  // })();
 
 
   return (
@@ -70,7 +51,7 @@ export default function WidgetsScreen() {
             styles.widgetContainer,
             {
               borderColor: colors.border,
-              backgroundColor: colors.background,
+              backgroundColor: colors.card,
             },
           ]}
         >
@@ -79,7 +60,7 @@ export default function WidgetsScreen() {
               <ScoreWidget
                 title="Forge"
                 percent={80}
-                bg={colors.background as ColorProp}
+                bg={colors.card as ColorProp}
                 text={colors.text as ColorProp}
                 muted={colors.muted as ColorProp}
               />
@@ -89,26 +70,13 @@ export default function WidgetsScreen() {
           />
         </View>
         
-        {/* <View style={{ width: "100%", alignItems: "center", marginBottom: 10, }}>
-          <WidgetPercentCard
-            title={firstHabit.title}
-            percent={firstHabit10Day.percent}
-            ringSize={140}
-            strokeWidth={14}
-            textSize={26}
-          />
-
-          <Text style={[styles.desc, { color: colors.muted }]}>
-            Last 10 days: {firstHabit10Day.done}/{firstHabit10Day.possible} completed.
-          </Text>
-        </View> */}
         <Text style={[styles.widgetTitle, { color: colors.text }]}>Streak Widget</Text>
         <View
           style={[
             styles.widgetContainer,
             {
               borderColor: colors.border,
-              backgroundColor: colors.background,
+              backgroundColor: colors.card,
             },
           ]}
         >
@@ -117,7 +85,7 @@ export default function WidgetsScreen() {
               <StreakWidget
                 title="Forge"
                 streak={12}
-                bg={colors.background as ColorProp}
+                bg={colors.card as ColorProp}
                 text={colors.text as ColorProp}
                 muted={colors.muted as ColorProp}
               />
@@ -143,7 +111,7 @@ export default function WidgetsScreen() {
           </View>
         )}
 
-        <View style={[styles.howToBox, { backgroundColor: colors.background, borderColor: colors.border }]}>
+        <View style={[styles.howToBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <Text style={[styles.howToTitle, { color: colors.text }]}>Add widgets to your home screen</Text>
 
           <Text style={[styles.howToText, { color: colors.muted }]}>

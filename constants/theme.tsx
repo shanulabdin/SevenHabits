@@ -10,7 +10,7 @@ const THEME_KEY = "@forge/theme_v1";
 const DARK = {
   background: "#000000ff",
   surface: "#000000ff",
-  card: "#070707ff",
+  card: "#111111ff",
   text: "#FFFFFF",
   mutedText: "rgba(255,255,255,0.7)",
 
@@ -32,7 +32,7 @@ const DARK = {
 const LIGHT = {
   background: "#FFFFFF",
   surface: "#F6F6F6",
-  card: "#FAFAFA",
+  card: "#f5f5f5ff",
   text: "#000000",
   mutedText: "rgba(0,0,0,0.7)",
 

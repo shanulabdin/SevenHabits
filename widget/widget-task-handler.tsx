@@ -60,7 +60,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             <Widget
               title={title ? title : "Forge"}
               streak={streak ? streak : 0}
-              bg={"#FFFFFF"}
+              bg={"#f5f5f5ff"}
               text={"#111111"}
               muted={"#11111199"}
             />,
@@ -68,7 +68,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             <Widget
               title={title ? title : "Forge"}
               streak={streak ? streak : 0}
-              bg={"#000000"}
+              bg={"#111111ff"}
               text={"#FFFFFF"}
               muted={"#FFFFFFB3"}
             />,
@@ -82,7 +82,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             <Widget
               title={title ? title : "Forge"}
               percent={70}
-              bg={"#FFFFFF"}
+              bg={"#f5f5f5ff"}
               text={"#111111"}
               muted={"#11111199"}
             />,
@@ -90,7 +90,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             <Widget
               title={title ? title : "Forge"}
               percent={70}
-              bg={"#000000"}
+              bg={"#111111ff"}
               text={"#FFFFFF"}
               muted={"#FFFFFFB3"}
             />
@@ -111,7 +111,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             <Widget
               title={title ? title : "Forge"}
               streak={streak ? streak : "Forge"}
-              bg={"#FFFFFF"}
+              bg={"#f5f5f5ff"}
               text={"#111111"}
               muted={"#11111199"}
             />,
@@ -119,7 +119,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             <Widget
               title={title}
               streak={streak ? streak : 0}
-              bg={"#000000"}
+              bg={"#000111111ff000"}
               text={"#FFFFFF"}
               muted={"#FFFFFFB3"}
             />,
@@ -134,7 +134,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
               title={title ? title : "Forge"}
               percent={70}
               subtitle="32/50"
-              bg={"#FFFFFF"}
+              bg={"#f5f5f5ff"}
               text={"#111111"}
               muted={"#11111199"}
             />,
@@ -143,7 +143,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
               title={title ? title : "Forge"}
               percent={70}
               subtitle="32/50"
-              bg={"#000000"}
+              bg={"#111111ff"}
               text={"#FFFFFF"}
               muted={"#FFFFFFB3"}
             />

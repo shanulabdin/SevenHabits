@@ -257,7 +257,7 @@ export default function Index() {
             <StreakWidget
               title={title}
               streak={streak ? streak : 0}
-              bg={"#FFFFFF"}
+              bg={"#f5f5f5ff"}
               text={"#111111"}
               muted={"#11111199"}
             />
@@ -266,7 +266,7 @@ export default function Index() {
             <StreakWidget
               title={title}
               streak={streak ? streak : 0}
-              bg={"#000000"}
+              bg={"#111111ff"}
               text={"#FFFFFF"}
               muted={"#FFFFFFB3"}
             />
@@ -304,7 +304,7 @@ export default function Index() {
           <ScoreWidget
             title={firstHabit.title ?? "Forge"}
             percent={percent}
-            bg="#FFFFFF"
+            bg="#f5f5f5ff"
             text="#111111"
             muted="#11111199"
           />
@@ -313,7 +313,7 @@ export default function Index() {
           <ScoreWidget
             title={firstHabit.title ?? "Forge"}
             percent={percent}
-            bg="#000000"
+            bg="#111111ff"
             text="#FFFFFF"
             muted="#FFFFFFB3"
           />
