@@ -29,7 +29,7 @@ import { getHabitStreakWithGrace } from '@/utils/streaks';
 import { StreakWidget } from '@/widget/StreakWidget';
 import { Ionicons } from '@expo/vector-icons';
 import { Storage } from 'expo-sqlite/kv-store';
-import { requestWidgetUpdate, WidgetPreview } from 'react-native-android-widget';
+import { requestWidgetUpdate } from 'react-native-android-widget';
 
 
 export default function Index() {
