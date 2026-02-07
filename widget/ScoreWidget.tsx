@@ -23,6 +23,7 @@ export function ScoreWidget({ title, percent, bg, text, muted }: Props) {
 
   const RINGS = {
     0: require("@/assets/rings/ring-0.svg"),
+    5: require("@/assets/rings/ring-05.svg"),
     10: require("@/assets/rings/ring-1.svg"),
     20: require("@/assets/rings/ring-2.svg"),
     30: require("@/assets/rings/ring-3.svg"),
@@ -38,6 +39,11 @@ export function ScoreWidget({ title, percent, bg, text, muted }: Props) {
 
   function ringFor(percent: number) {
     const clamped = Math.max(0, Math.min(100, percent));
+
+    if (clamped > 0 && clamped < 10) {
+      return RINGS[5];
+    }
+
     const bucket = Math.floor(clamped / 10) * 10;
     return RINGS[bucket as keyof typeof RINGS];
   }
