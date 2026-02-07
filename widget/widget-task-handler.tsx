@@ -58,8 +58,8 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
         props.renderWidget({
           light:
             <Widget
-              title={title}
-              streak={streak}
+              title={title ? title : "Forge"}
+              streak={streak ? streak : 0}
               bg={"#FFFFFF"}
               text={"#111111"}
               muted={"#11111199"}
@@ -67,7 +67,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
           dark:
             <Widget
               title={title}
-              streak={streak}
+              streak={streak ? streak : 0}
               bg={"#000000"}
               text={"#FFFFFF"}
               muted={"#FFFFFFB3"}
@@ -75,11 +75,13 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
         });
 
       } else if (widgetInfo.widgetName === "Score") {
+        const { title } = getStoredStreakData();
+
         props.renderWidget({
           light:
             <Widget
-              title={"forge"}
-              percent={80}
+              title={title ? title : "Forge"}
+              percent={0}
               subtitle="32/50"
               bg={"#FFFFFF"}
               text={"#111111"}
@@ -87,8 +89,8 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             />,
           dark:
             <Widget
-              title={"forge"}
-              percent={80}
+              title={title ? title : "Forge"}
+              percent={0}
               subtitle="32/50"
               bg={"#000000"}
               text={"#FFFFFF"}
@@ -109,8 +111,8 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
         props.renderWidget({
           light:
             <Widget
-              title={title}
-              streak={streak}
+              title={title ? title : "Forge"}
+              streak={streak ? streak : "Forge"}
               bg={"#FFFFFF"}
               text={"#111111"}
               muted={"#11111199"}
@@ -118,7 +120,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
           dark:
             <Widget
               title={title}
-              streak={streak}
+              streak={streak ? streak : 0}
               bg={"#000000"}
               text={"#FFFFFF"}
               muted={"#FFFFFFB3"}
@@ -126,10 +128,12 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
         });
 
       } else if (widgetInfo.widgetName === "Score") {
+        const { title } = getStoredStreakData();
+
         props.renderWidget({
           light:
             <Widget
-              title={"forge"}
+              title={title ? title : "Forge"}
               percent={80}
               subtitle="32/50"
               bg={"#FFFFFF"}
@@ -138,7 +142,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             />,
           dark:
             <Widget
-              title={"forge"}
+              title={title ? title : "Forge"}
               percent={80}
               subtitle="32/50"
               bg={"#000000"}

@@ -65,58 +65,54 @@ export default function WidgetsScreen() {
         </View>
 
         <Text style={[styles.widgetTitle, { color: colors.text }]}>Score Widget</Text>
-        {firstHabit && (
-          <View
-            style={[
-              styles.widgetContainer,
-              {
-                borderColor: colors.border,
-                backgroundColor: colors.background,
-              },
-            ]}
-          >
-            <WidgetPreview
-              renderWidget={() => (
-                <ScoreWidget
-                  title="Forge"
-                  percent={80}
-                  bg={colors.background as ColorProp}
-                  text={colors.text as ColorProp}    
-                  muted={colors.muted as ColorProp}  
-                />
-              )}
-              width={200}
-              height={200}
-            />
-          </View>
-        )}
+        <View
+          style={[
+            styles.widgetContainer,
+            {
+              borderColor: colors.border,
+              backgroundColor: colors.background,
+            },
+          ]}
+        >
+          <WidgetPreview
+            renderWidget={() => (
+              <ScoreWidget
+                title="Forge"
+                percent={80}
+                bg={colors.background as ColorProp}
+                text={colors.text as ColorProp}
+                muted={colors.muted as ColorProp}
+              />
+            )}
+            width={200}
+            height={200}
+          />
+        </View>
 
         <Text style={[styles.widgetTitle, { color: colors.text }]}>Streak Widget</Text>
-        {firstHabit && (
-          <View
-            style={[
-              styles.widgetContainer,
-              {
-                borderColor: colors.border,
-                backgroundColor: colors.background,
-              },
-            ]}
-          >
-            <WidgetPreview
-              renderWidget={() => (
-                <StreakWidget
-                  title="Forge"
-                  streak={12}
-                  bg={colors.background as ColorProp} // dynamic
-                  text={colors.text as ColorProp}     // dynamic
-                  muted={colors.muted as ColorProp}   // dynamic
-                />
-              )}
-              width={200}
-              height={200}
-            />
-          </View>
-        )}
+        <View
+          style={[
+            styles.widgetContainer,
+            {
+              borderColor: colors.border,
+              backgroundColor: colors.background,
+            },
+          ]}
+        >
+          <WidgetPreview
+            renderWidget={() => (
+              <StreakWidget
+                title="Forge"
+                streak={12}
+                bg={colors.background as ColorProp}
+                text={colors.text as ColorProp} 
+                muted={colors.muted as ColorProp}  
+              />
+            )}
+            width={200}
+            height={200}
+          />
+        </View>
 
         {firstHabit && (
           <View style={{ width: "100%", alignItems: "center", marginVertical: 10, }}>
