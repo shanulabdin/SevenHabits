@@ -2,14 +2,14 @@ import Storage from 'expo-sqlite/kv-store';
 import { Linking } from 'react-native';
 import type { ColorProp, WidgetTaskHandlerProps } from 'react-native-android-widget';
 import { CounterWidget } from './CounterWidget';
-import { HelloWidget } from './HelloWidget';
 import { StreakWidget } from './StreakWidget';
+import { ScoreWidget } from './ScoreWidget';
 
 const nameToWidget = {
   // Hello will be the **name** with which we will reference our widget.
-  Hello: HelloWidget,
   Counter: CounterWidget,
   Streak: StreakWidget,
+  Score: ScoreWidget,
 };
 
 export const COUNTER_STORAGE_KEY = "CounterWidget:count";
@@ -74,8 +74,17 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             />,
         });
 
-      } else {
-        props.renderWidget(<Widget />);
+      } else if (widgetInfo.widgetName === "Score") {
+        props.renderWidget(
+          <Widget
+            title={"forge"}
+            percent={64} 
+            subtitle="32/50" 
+            bg={"#FFFFFF"} 
+            text={"#111111"} 
+            muted={"#11111199"}
+          />
+        );
       }
       break;
     }
@@ -87,12 +96,12 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
       } else if (widgetInfo.widgetName === "Streak") {
         const { streak, title } = getStoredStreakData();
         props.renderWidget(
-          <Widget 
-            title={title} 
-            streak={streak} 
-            bg={"#FFFFFF"} 
-            text={"#111111"} 
-            muted={"#11111199"} 
+          <Widget
+            title={title}
+            streak={streak}
+            bg={"#FFFFFF"}
+            text={"#111111"}
+            muted={"#11111199"}
           />
         );
 
