@@ -28,6 +28,17 @@ function getStorageData(): { count: number; backgroundColor: ColorProp } {
   return { count, backgroundColor };
 }
 
+const STREAK_STORAGE_KEY = "@forge/widget_streak";
+const STREAK_TITLE_KEY = "@forge/widget_title";
+
+function getStoredStreakData() {
+  const streak = Number(Storage.getItemSync(STREAK_STORAGE_KEY)) || 0;
+  const title = Storage.getItemSync(STREAK_TITLE_KEY) || "Forge";
+
+  return { streak, title };
+}
+
+
 export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
   const widgetInfo = props.widgetInfo;
   const Widget =
@@ -40,23 +51,29 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
       if (widgetInfo.widgetName === "Counter") {
         const { count, backgroundColor } = getStorageData();
         props.renderWidget(<Widget count={count} backgroundColor={backgroundColor} />);
+
       } else if (widgetInfo.widgetName === "Streak") {
+        const { streak, title } = getStoredStreakData();
+
         props.renderWidget({
-          light: <Widget
-            title="Forge"
-            streak={12}
-            bg={"#FFFFFF"}
-            text={"#111111"}
-            muted={"#11111199"}
-          />,
-          dark: <Widget
-            title="Forge"
-            streak={12}
-            bg={"#000000"}
-            text={"#FFFFFF"}
-            muted={"#FFFFFFB3"}
-          />,
+          light:
+            <Widget
+              title={title}
+              streak={streak}
+              bg={"#FFFFFF"}
+              text={"#111111"}
+              muted={"#11111199"}
+            />,
+          dark:
+            <Widget
+              title={title}
+              streak={streak}
+              bg={"#000000"}
+              text={"#FFFFFF"}
+              muted={"#FFFFFFB3"}
+            />,
         });
+
       } else {
         props.renderWidget(<Widget />);
       }
@@ -66,8 +83,19 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
       if (widgetInfo.widgetName === "Counter") {
         const { count, backgroundColor } = getStorageData();
         props.renderWidget(<Widget count={count} backgroundColor={backgroundColor} />);
+
       } else if (widgetInfo.widgetName === "Streak") {
-        props.renderWidget(<Widget title="Forge" streak={12} bg={"#FFFFFF"} text={"#111111"} muted={"#11111199"} />);
+        const { streak, title } = getStoredStreakData();
+        props.renderWidget(
+          <Widget 
+            title={title} 
+            streak={streak} 
+            bg={"#FFFFFF"} 
+            text={"#111111"} 
+            muted={"#11111199"} 
+          />
+        );
+
       } else {
         props.renderWidget(<Widget />);
       }

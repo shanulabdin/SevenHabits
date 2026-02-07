@@ -10,5 +10,5 @@ import { widgetTaskHandler } from './widget/widget-task-handler';
 
 // This file should only import and register the root. No components or exports
 // should be added here.
-renderRootComponent(App);
 registerWidgetTaskHandler(widgetTaskHandler);
+renderRootComponent(App);

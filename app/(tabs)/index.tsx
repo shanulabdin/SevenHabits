@@ -26,9 +26,10 @@ import { getDateKey, getLastNDays } from '@/utils/date';
 import { hapticHeavy, hapticLight, hapticSelect } from '@/utils/haptics';
 import { getPercentForDate, getWeeklyPercent } from '@/utils/stats';
 import { getHabitStreakWithGrace } from '@/utils/streaks';
+import { StreakWidget } from '@/widget/StreakWidget';
 import { Ionicons } from '@expo/vector-icons';
-import { WidgetPreview } from 'react-native-android-widget';
-import { HelloWidget } from '@/widget/HelloWidget';
+import { Storage } from 'expo-sqlite/kv-store';
+import { requestWidgetUpdate, WidgetPreview } from 'react-native-android-widget';
 
 
 export default function Index() {
@@ -230,6 +231,33 @@ export default function Index() {
     },
   });
 
+  useEffect(() => {
+    if (!habits.length) return;
+
+    const firstHabit = habits[0];
+
+    const streak = getHabitStreakWithGrace(
+      firstHabit,
+      todayKey,
+      todayKey
+    );
+
+    Storage.setItemSync("@forge/widget_streak", String(streak));
+    Storage.setItemSync("@forge/widget_title", firstHabit.title);
+
+    requestWidgetUpdate({
+      widgetName: "Streak",
+      renderWidget: () => <StreakWidget
+        title={firstHabit.title}
+        streak={streak}
+        bg={"#FFFFFF"}
+        text={"#111111"}
+        muted={"#11111199"}
+      />
+    });
+
+  }, [habits, todayKey]);
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
 
@@ -419,7 +447,7 @@ export default function Index() {
       {DeleteHabitConfirmModal}
 
       <WidgetPreview
-        renderWidget={() => <HelloWidget />}
+        renderWidget={() => <StreakWidget title="Forge" streak={12} bg={"#FFFFFF"} text={"#111111"} muted={"#11111199"} />}
         width={320}
         height={200}
       />
