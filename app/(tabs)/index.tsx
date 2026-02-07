@@ -26,6 +26,7 @@ import { getDateKey, getLastNDays } from '@/utils/date';
 import { hapticHeavy, hapticLight, hapticSelect } from '@/utils/haptics';
 import { getPercentForDate, getWeeklyPercent } from '@/utils/stats';
 import { getHabitStreakWithGrace } from '@/utils/streaks';
+import { ScoreWidget } from '@/widget/ScoreWidget';
 import { StreakWidget } from '@/widget/StreakWidget';
 import { Ionicons } from '@expo/vector-icons';
 import { Storage } from 'expo-sqlite/kv-store';
@@ -230,7 +231,8 @@ export default function Index() {
       deleteHabit(selectedHabitId);
     },
   });
-
+  
+  // Update Streak Widget
   useEffect(() => {
     if (!habits.length) return;
 
@@ -244,7 +246,6 @@ export default function Index() {
 
     Storage.setItemSync("@forge/widget_streak", String(streak));
     Storage.setItemSync("@forge/widget_title", firstHabit.title);
-    Storage.setItemSync("@forge/widget_score", String());
 
     requestWidgetUpdate({
       widgetName: "Streak",
@@ -276,27 +277,59 @@ export default function Index() {
 
   }, [habits, todayKey]);
 
-  const perHabitStats = useMemo(() => {
-    const lastDays = getLastNDays(30);
-    const dateKeys = lastDays.map((d) => getDateKey(d));
+  // Update Score Widget
+  useEffect(() => {
+    if (!habits.length) return;
 
-    return habits.map((h) => {
+    const firstHabit = habits[0];
+    const DAYS = 30;
+
+    const firstHabit10Day = (() => {
+      if (!firstHabit) return { percent: 0, done: 0, possible: DAYS };
+
+      const keys = getLastNDays(DAYS).map((d) => getDateKey(d));
       let done = 0;
 
-      for (const key of dateKeys) {
-        if (h.history?.[key] === true) done += 1;
+      for (const k of keys) {
+        if (firstHabit.history?.[k] === true) done += 1;
       }
 
-      const possible = dateKeys.length;
+      const possible = keys.length;
       const percent = possible ? Math.round((done / possible) * 100) : 0;
 
-      return {
-        id: h.id,
-        title: h.title,
-        done,
-        possible,
-        percent,
-      };
+      return { percent };
+    })();
+
+    Storage.setItemSync("@forge/widget_score", String(firstHabit10Day.percent));
+    console.log((firstHabit10Day.percent))
+
+    requestWidgetUpdate({
+      widgetName: "Score",
+      renderWidget: () => {
+        const title = firstHabit.title ? firstHabit.title : "Forge";
+        const percent = Number(Storage.getItemSync("@forge/widget_score")) || 0;
+
+        return {
+          light: (
+            <ScoreWidget
+              title={title}
+              percent={percent}
+              bg={"#FFFFFF"}
+              text={"#111111"}
+              muted={"#11111199"}
+            />
+          ),
+          dark: (
+            <ScoreWidget
+              title={title}
+              percent={percent}
+              bg={"#000000"}
+              text={"#FFFFFF"}
+              muted={"#FFFFFFB3"}
+            />
+          ),
+        };
+      }
     });
   }, [habits]);
 

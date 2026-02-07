@@ -25,23 +25,23 @@ export default function WidgetsScreen() {
   const streakCount = firstHabit ? getHabitStreak(firstHabit, todayKey) : 0;
 
 
-  const TEN_DAYS = 10;
+  // const TEN_DAYS = 10;
 
-  const firstHabit10Day = (() => {
-    if (!firstHabit) return { percent: 0, done: 0, possible: TEN_DAYS };
+  // const firstHabit10Day = (() => {
+  //   if (!firstHabit) return { percent: 0, done: 0, possible: TEN_DAYS };
 
-    const keys = getLastNDays(TEN_DAYS).map((d) => getDateKey(d));
-    let done = 0;
+  //   const keys = getLastNDays(TEN_DAYS).map((d) => getDateKey(d));
+  //   let done = 0;
 
-    for (const k of keys) {
-      if (firstHabit.history?.[k] === true) done += 1;
-    }
+  //   for (const k of keys) {
+  //     if (firstHabit.history?.[k] === true) done += 1;
+  //   }
 
-    const possible = keys.length;
-    const percent = possible ? Math.round((done / possible) * 100) : 0;
+  //   const possible = keys.length;
+  //   const percent = possible ? Math.round((done / possible) * 100) : 0;
 
-    return { percent, done, possible };
-  })();
+  //   return { percent, done, possible };
+  // })();
 
 
   return (
@@ -88,7 +88,20 @@ export default function WidgetsScreen() {
             height={200}
           />
         </View>
+        
+        {/* <View style={{ width: "100%", alignItems: "center", marginBottom: 10, }}>
+          <WidgetPercentCard
+            title={firstHabit.title}
+            percent={firstHabit10Day.percent}
+            ringSize={140}
+            strokeWidth={14}
+            textSize={26}
+          />
 
+          <Text style={[styles.desc, { color: colors.muted }]}>
+            Last 10 days: {firstHabit10Day.done}/{firstHabit10Day.possible} completed.
+          </Text>
+        </View> */}
         <Text style={[styles.widgetTitle, { color: colors.text }]}>Streak Widget</Text>
         <View
           style={[
@@ -105,8 +118,8 @@ export default function WidgetsScreen() {
                 title="Forge"
                 streak={12}
                 bg={colors.background as ColorProp}
-                text={colors.text as ColorProp} 
-                muted={colors.muted as ColorProp}  
+                text={colors.text as ColorProp}
+                muted={colors.muted as ColorProp}
               />
             )}
             width={200}

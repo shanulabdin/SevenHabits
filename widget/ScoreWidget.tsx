@@ -5,13 +5,12 @@ import { ColorProp, FlexWidget, OverlapWidget, SvgWidget, TextWidget, type FlexW
 type Props = {
   title: string;
   percent: number;
-  subtitle?: string;
   bg: ColorProp;
   text: ColorProp;
   muted: ColorProp;
 };
 
-export function ScoreWidget({ title, percent, subtitle, bg, text, muted }: Props) {
+export function ScoreWidget({ title, percent, bg, text, muted }: Props) {
   const container: FlexWidgetProps["style"] = {
     width: "match_parent",
     height: "match_parent",
