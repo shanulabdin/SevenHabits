@@ -69,7 +69,10 @@ export default function WidgetsScreen() {
             height={200}
           />
         </View>
-        
+        <Text style={[styles.desc, { color: colors.muted }]}>
+          Displays your monthly completion score (%) for the first habit.
+        </Text>
+
         <Text style={[styles.widgetTitle, { color: colors.text }]}>Streak Widget</Text>
         <View
           style={[
@@ -94,6 +97,9 @@ export default function WidgetsScreen() {
             height={200}
           />
         </View>
+        <Text style={[styles.desc, { color: colors.muted }]}>
+          Shows your current streak for the first habit in your list.
+        </Text>
 
         {firstHabit && (
           <View style={{ width: "100%", alignItems: "center", marginVertical: 10, }}>
@@ -106,7 +112,7 @@ export default function WidgetsScreen() {
               showStreak={true}
             />
             <Text style={[styles.desc, { color: colors.muted }]}>
-              GitHub-style grid showing which days you completed the habit.
+              Visualizes your habit consistency with a contribution graph.
             </Text>
           </View>
         )}
@@ -164,10 +170,10 @@ const styles = StyleSheet.create({
   desc: {
     fontSize: 13,
     opacity: 0.75,
-    marginTop: -10,
+    marginTop: 0,
     marginBottom: 14,
     marginHorizontal: 10,
-    width: 250,
+    width: 280,
     textAlign: "center",
     fontFamily: "Poppins_500Medium",
   },

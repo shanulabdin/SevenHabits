@@ -1,13 +1,12 @@
 import Storage from 'expo-sqlite/kv-store';
 import { Linking } from 'react-native';
 import type { ColorProp, WidgetTaskHandlerProps } from 'react-native-android-widget';
-import { CounterWidget } from './CounterWidget';
+import { GridWidget } from './GridWidget';
 import { ScoreWidget } from './ScoreWidget';
 import { StreakWidget } from './StreakWidget';
 
 const nameToWidget = {
-  // Hello will be the **name** with which we will reference our widget.
-  Counter: CounterWidget,
+  Grid: GridWidget,
   Streak: StreakWidget,
   Score: ScoreWidget,
 };
@@ -48,9 +47,28 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
 
   switch (props.widgetAction) {
     case 'WIDGET_ADDED': {
-      if (widgetInfo.widgetName === "Counter") {
-        const { count, backgroundColor } = getStorageData();
-        props.renderWidget(<Widget count={count} backgroundColor={backgroundColor} />);
+      if (widgetInfo.widgetName === "Grid") {
+        const todayKey = new Date().toISOString().slice(0, 10);
+        props.renderWidget({
+          light: (
+            <Widget
+              history={{}}
+              endDateKey={todayKey}
+              bg={"#FFFFFF"}
+              orange={"#FF6D1F"}
+              muted={"#00000026"}
+            />
+          ),
+          dark: (
+            <Widget
+              history={{}}
+              endDateKey={todayKey}
+              bg={"#000000"}
+              orange={"#FF6D1F"}
+              muted={"#ffffff26"}
+            />
+          ),
+        });
 
       } else if (widgetInfo.widgetName === "Streak") {
         const { streak, title } = getStoredStreakData();
@@ -99,9 +117,28 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
       break;
     }
     case 'WIDGET_UPDATE': {
-      if (widgetInfo.widgetName === "Counter") {
-        const { count, backgroundColor } = getStorageData();
-        props.renderWidget(<Widget count={count} backgroundColor={backgroundColor} />);
+      if (widgetInfo.widgetName === "Grid") {
+        const todayKey = new Date().toISOString().slice(0, 10);
+        props.renderWidget({
+          light: (
+            <Widget
+              history={{}}
+              endDateKey={todayKey}
+              bg={"#FFFFFF"}
+              orange={"#FF6D1F"}
+              muted={"#00000026"}
+            />
+          ),
+          dark: (
+            <Widget
+              history={{}}
+              endDateKey={todayKey}
+              bg={"#000000"}
+              orange={"#FF6D1F"}
+              muted={"#ffffff26"}
+            />
+          ),
+        });
 
       } else if (widgetInfo.widgetName === "Streak") {
         const { streak, title } = getStoredStreakData();
@@ -164,22 +201,6 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
       if (props.clickAction === "OPEN_APP") {
         Linking.openURL("forge://home")
         break;
-      }
-
-      if (props.clickAction === "OPEN_APP") {
-        Linking.openURL("forge://home")
-        break;
-      }
-
-      if (widgetInfo.widgetName === "Counter") {
-        const currentValue = Number(props.clickActionData?.value) || 0;
-        const backgroundColor = (props.clickActionData?.backgroundColor || getStoredBackgroundColor()) as ColorProp;
-
-        const count = currentValue + (props.clickAction === "INCREMENT" ? 1 : -1);
-
-        props.renderWidget(<Widget count={count} backgroundColor={backgroundColor} />);
-
-        Storage.setItemSync(COUNTER_STORAGE_KEY, `${count}`)
       }
 
       break;

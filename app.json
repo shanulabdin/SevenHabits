@@ -50,21 +50,20 @@
         {
           "widgets": [
             {
-              "name": "Counter",
-              "label": "My Counter Widget",
-              "minWidth": "180dp",
-              "minHeight": "180dp",
-              "targetCellWidth": 3,
+              "name": "Grid",
+              "label": "Grid",
+              "minWidth": "250dp",
+              "minHeight": "120dp",
+              "targetCellWidth": 5,
               "targetCellHeight": 2,
-              "description": "This is my second widget",
-              "previewImage": "./assets/images/logo.png",
-              "updatePeriodMillis": 1800000,
-              "resizeMode": "horizontal|vertical"
+              "description": "Visualizes your habit consistency with a contribution graph.",
+              "previewImage": "./assets/images/Grid.png",
+              "updatePeriodMillis": 1800000
             },
             {
               "name": "Score",
-              "label": "Forge Score Widget",
-              "description": "Overall completion percentage",
+              "label": "Score",
+              "description": "Displays your monthly completion score (%) for the first habit.",
               "minWidth": "120dp",
               "minHeight": "120dp",
               "targetCellWidth": 2,
@@ -74,12 +73,12 @@
             },
             {
               "name": "Streak",
-              "label": "Forge Streak Widget",
+              "label": "Streak",
               "minWidth": "120dp",
               "minHeight": "120dp",
               "targetCellWidth": 2,
               "targetCellHeight": 2,
-              "description": "This is my second widget",
+              "description": "Shows your current streak for the first habit in your list.",
               "previewImage": "./assets/images/Streak.png",
               "updatePeriodMillis": 1800000
             }

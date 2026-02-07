@@ -54,7 +54,7 @@ export function ScoreWidget({ title, percent, bg, text, muted }: Props) {
         style={{
           width: 170,
           height: 170,
-          marginBottom: 40,
+          marginBottom: 20,
         }}
       >
         {/* Ring */}
