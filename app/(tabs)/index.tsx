@@ -233,78 +233,6 @@ export default function Index() {
   });
 
   // Update Streak Widget
-  // useEffect(() => {
-  //   if (!habits.length) {
-  //     Storage.setItemSync("@forge/widget_streak", "0");
-  //     Storage.setItemSync("@forge/widget_title", "Forge");
-
-  //     requestWidgetUpdate({
-  //       widgetName: "Streak",
-  //       renderWidget: () => ({
-  //         light: (
-  //           <StreakWidget
-  //             title="Forge"
-  //             streak={0}
-  //             bg="#ffffffff"
-  //             text="#111111"
-  //             muted="#11111199"
-  //           />
-  //         ),
-  //         dark: (
-  //           <StreakWidget
-  //             title="Forge"
-  //             streak={0}
-  //             bg="#111111ff"
-  //             text="#FFFFFF"
-  //             muted="#FFFFFFB3"
-  //           />
-  //         ),
-  //       }),
-  //     });
-
-  //     return;
-  //   }
-
-  //   const firstHabit = habits[0];
-
-  //   const streak = getHabitStreakWithGrace(
-  //     firstHabit,
-  //     todayKey,
-  //     todayKey
-  //   );
-
-  //   Storage.setItemSync("@forge/widget_streak", String(streak));
-  //   Storage.setItemSync("@forge/widget_title", firstHabit.title);
-
-  //   requestWidgetUpdate({
-  //     widgetName: "Streak",
-  //     renderWidget: () => {
-  //       const title = firstHabit.title ? firstHabit.title : "Forge";
-
-  //       return {
-  //         light: (
-  //           <StreakWidget
-  //             title={title}
-  //             streak={streak ? streak : 0}
-  //             bg={"#ffffffff"}
-  //             text={"#111111"}
-  //             muted={"#11111199"}
-  //           />
-  //         ),
-  //         dark: (
-  //           <StreakWidget
-  //             title={title}
-  //             streak={streak ? streak : 0}
-  //             bg={"#111111ff"}
-  //             text={"#FFFFFF"}
-  //             muted={"#FFFFFFB3"}
-  //           />
-  //         ),
-  //       };
-  //     }
-  //   });
-
-  // }, [habits, todayKey]);
   function updateStreakWidget(title: string, streak: number) {
     requestWidgetUpdate({
       widgetName: "Streak",
@@ -333,10 +261,10 @@ export default function Index() {
 
   useEffect(() => {
     if (!habits.length) {
-      Storage.setItemSync("@forge/widget_streak", "0");
+      Storage.setItemSync("@forge/widget_streak", "7");
       Storage.setItemSync("@forge/widget_title", "Forge");
 
-      updateStreakWidget("Forge", 0);
+      updateStreakWidget("Forge", 7);
       return;
     }
 
@@ -351,10 +279,43 @@ export default function Index() {
   }, [habits, todayKey]);
 
   // Update Score Widget
+  function updateScoreWidget(title: string, percent: number) {
+    requestWidgetUpdate({
+      widgetName: "Score",
+      renderWidget: () => ({
+        light: (
+          <ScoreWidget
+            title={title}
+            percent={percent}
+            bg="#ffffffff"
+            text="#111111"
+            muted="#11111199"
+          />
+        ),
+        dark: (
+          <ScoreWidget
+            title={title}
+            percent={percent}
+            bg="#111111ff"
+            text="#FFFFFF"
+            muted="#FFFFFFB3"
+          />
+        ),
+      }),
+    });
+  }
   useEffect(() => {
-    if (!habits.length) return;
+    if (!habits.length) {
+      Storage.setItemSync("@forge/widget_score_percent", "75");
+      Storage.setItemSync("@forge/widget_score_title", "Forge");
+
+      updateScoreWidget("Forge", 75);
+      return;
+    }
 
     const firstHabit = habits[0];
+    const title = firstHabit.title || "Forge";
+
     const DAYS = 30;
 
     const keys = getLastNDays(DAYS).map(d => getDateKey(d));
@@ -366,34 +327,11 @@ export default function Index() {
 
     const percent = Math.round((done / keys.length) * 100);
 
-    // Persist for widget task handler
     Storage.setItemSync("@forge/widget_score_percent", String(percent));
     Storage.setItemSync("@forge/widget_score_title", firstHabit.title ?? "Forge");
 
-    requestWidgetUpdate({
-      widgetName: "Score",
-      renderWidget: () => ({
-        light: (
-          <ScoreWidget
-            title={firstHabit.title ?? "Forge"}
-            percent={percent}
-            bg="#ffffffff"
-            text="#111111"
-            muted="#11111199"
-          />
-        ),
-        dark: (
-          <ScoreWidget
-            title={firstHabit.title ?? "Forge"}
-            percent={percent}
-            bg="#111111ff"
-            text="#FFFFFF"
-            muted="#FFFFFFB3"
-          />
-        ),
-      }),
-    });
-  }, [habits]);
+    updateScoreWidget(title, percent);
+  }, [habits, todayKey]);
 
   // Update Grid Widget
   useEffect(() => {
