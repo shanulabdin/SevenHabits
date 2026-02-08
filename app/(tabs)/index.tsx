@@ -334,41 +334,6 @@ export default function Index() {
   }, [habits, todayKey]);
 
   // Update Grid Widget
-  useEffect(() => {
-    if (!habits || habits.length === 0) return;
-
-    const firstHabit = habits[0];
-    const habitHistory = firstHabit.history;
-    const todayKey = getDateKey(new Date());
-
-    Storage.setItemSync("@forge/widget_grid_history", JSON.stringify(habitHistory));
-
-    requestWidgetUpdate({
-      widgetName: "Grid",
-      renderWidget: () => ({
-        light: (
-          <GridWidget
-            history={habitHistory ?? {}}
-            endDateKey={todayKey}
-            bg={"#ffffffff"}
-            orange={"#FF6D1F"}
-            muted={"#00000026"}
-          />
-        ),
-        dark: (
-          <GridWidget
-            history={habitHistory ?? {}}
-            endDateKey={todayKey}
-            bg={"#111111ff"}
-            orange={"#FF6D1F"}
-            muted={"#ffffff26"}
-          />
-        ),
-      }),
-      widgetNotFound: () => { },
-    });
-  }, [habits]);
-
   function updateGridWidget(history: Record<string, boolean>, todayKey: string) {
     requestWidgetUpdate({
       widgetName: "Grid",
@@ -398,7 +363,7 @@ export default function Index() {
 
   useEffect(() => {
     if (!habits || habits.length === 0) {
-      const fakeHistory = generateFakeHistory(98)
+      const fakeHistory = generateFakeHistory(98);
       Storage.setItemSync("@forge/widget_grid_history", JSON.stringify(fakeHistory));
 
       updateGridWidget(fakeHistory, getDateKey(new Date()));
