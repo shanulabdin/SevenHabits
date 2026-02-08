@@ -11,7 +11,7 @@ const nameToWidget = {
   Score: ScoreWidget,
 };
 
-
+// Get Streak widget data 
 const STREAK_STORAGE_KEY = "@forge/widget_streak";
 const STREAK_TITLE_KEY = "@forge/widget_title";
 
@@ -20,6 +20,17 @@ function getStoredStreakData() {
   const title = Storage.getItemSync(STREAK_TITLE_KEY) || "Forge";
 
   return { streak, title };
+}
+
+// Get SCORE widget data 
+const SCORE_STORAGE_KEY = "@forge/widget_score_percent";
+const SCORE_TITLE_KEY = "@forge/widget_score_title";
+
+function getStoredScoreData() {
+  const score = Number(Storage.getItemSync(SCORE_STORAGE_KEY)) || 0;
+  const title = Storage.getItemSync(SCORE_TITLE_KEY) || "Forge";
+
+  return { score, title };
 }
 
 
@@ -78,13 +89,13 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
         });
 
       } else if (widgetInfo.widgetName === "Score") {
-        const { title } = getStoredStreakData();
+        const { score, title } = getStoredScoreData();
 
         props.renderWidget({
           light:
             <Widget
               title={title ? title : "Forge"}
-              percent={70}
+              percent={score ? score : 0}
               bg={"#f5f5f5ff"}
               text={"#111111"}
               muted={"#11111199"}
@@ -92,7 +103,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
           dark:
             <Widget
               title={title ? title : "Forge"}
-              percent={70}
+              percent={score ? score : 0}
               bg={"#111111ff"}
               text={"#FFFFFF"}
               muted={"#FFFFFFB3"}
@@ -148,13 +159,13 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
         });
 
       } else if (widgetInfo.widgetName === "Score") {
-        const { title } = getStoredStreakData();
+        const { score, title } = getStoredScoreData();
 
         props.renderWidget({
           light:
             <Widget
               title={title ? title : "Forge"}
-              percent={70}
+              percent={score ? score : 0}
               subtitle="32/50"
               bg={"#f5f5f5ff"}
               text={"#111111"}
@@ -163,7 +174,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
           dark:
             <Widget
               title={title ? title : "Forge"}
-              percent={70}
+              percent={score ? score : 0}
               subtitle="32/50"
               bg={"#111111ff"}
               text={"#FFFFFF"}
