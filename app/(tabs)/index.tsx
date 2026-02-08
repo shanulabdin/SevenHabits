@@ -26,6 +26,7 @@ import { getDateKey, getLastNDays } from '@/utils/date';
 import { hapticHeavy, hapticLight, hapticSelect } from '@/utils/haptics';
 import { getPercentForDate, getWeeklyPercent } from '@/utils/stats';
 import { getHabitStreakWithGrace } from '@/utils/streaks';
+import { GridWidget } from '@/widget/GridWidget';
 import { ScoreWidget } from '@/widget/ScoreWidget';
 import { StreakWidget } from '@/widget/StreakWidget';
 import { Ionicons } from '@expo/vector-icons';
@@ -319,6 +320,39 @@ export default function Index() {
           />
         ),
       }),
+    });
+  }, [habits]);
+
+  // Update Score Widget
+  useEffect(() => {
+    if (!habits || habits.length === 0) return;
+
+    const first = habits[0];
+    const todayKey = getDateKey(new Date());
+
+    requestWidgetUpdate({
+      widgetName: "Grid",
+      renderWidget: () => ({
+        light: (
+          <GridWidget
+            history={first.history ?? {}}
+            endDateKey={todayKey}
+            bg={"#f5f5f5ff"}
+            orange={"#FF6D1F"}
+            muted={"#00000026"}
+          />
+        ),
+        dark: (
+          <GridWidget
+            history={first.history ?? {}}
+            endDateKey={todayKey}
+            bg={"#111111ff"}
+            orange={"#FF6D1F"}
+            muted={"#ffffff26"}
+          />
+        ),
+      }),
+      widgetNotFound: () => { },
     });
   }, [habits]);
 
