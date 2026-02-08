@@ -234,7 +234,36 @@ export default function Index() {
 
   // Update Streak Widget
   useEffect(() => {
-    if (!habits.length) return;
+    if (!habits.length) {
+      Storage.setItemSync("@forge/widget_streak", "0");
+      Storage.setItemSync("@forge/widget_title", "Forge");
+
+      requestWidgetUpdate({
+        widgetName: "Streak",
+        renderWidget: () => ({
+          light: (
+            <StreakWidget
+              title="Forge"
+              streak={0}
+              bg="#ffffffff"
+              text="#111111"
+              muted="#11111199"
+            />
+          ),
+          dark: (
+            <StreakWidget
+              title="Forge"
+              streak={0}
+              bg="#111111ff"
+              text="#FFFFFF"
+              muted="#FFFFFFB3"
+            />
+          ),
+        }),
+      });
+
+      return;
+    }
 
     const firstHabit = habits[0];
 
@@ -357,6 +386,88 @@ export default function Index() {
       widgetNotFound: () => { },
     });
   }, [habits]);
+
+  // useEffect(() => {
+  //   if (habits.length > 0) return;
+
+  //   Storage.setItemSync("@forge/widget_streak", "0");
+  //   Storage.setItemSync("@forge/widget_title", "Forge");
+  //   Storage.setItemSync("@forge/widget_score", "0");
+  //   Storage.setItemSync("@forge/widget_grid_history", JSON.stringify({}));
+
+  //   requestWidgetUpdate({
+  //     widgetName: "Streak",
+  //     renderWidget: () => ({
+  //       light: (
+  //         <StreakWidget
+  //           title="Forge"
+  //           streak={0}
+  //           bg="#FFFFFF"
+  //           text="#111111"
+  //           muted="#11111199"
+  //         />
+  //       ),
+  //       dark: (
+  //         <StreakWidget
+  //           title="Forge"
+  //           streak={0}
+  //           bg="#000000"
+  //           text="#FFFFFF"
+  //           muted="#FFFFFFB3"
+  //         />
+  //       ),
+  //     }),
+  //   });
+
+  //   requestWidgetUpdate({
+  //     widgetName: "Score",
+  //     renderWidget: () => ({
+  //       light: (
+  //         <ScoreWidget
+  //           title="Forge"
+  //           percent={0}
+  //           bg="#FFFFFF"
+  //           text="#111111"
+  //           muted="#11111199"
+  //         />
+  //       ),
+  //       dark: (
+  //         <ScoreWidget
+  //           title="Forge"
+  //           percent={0}
+  //           bg="#000000"
+  //           text="#FFFFFF"
+  //           muted="#FFFFFFB3"
+  //         />
+  //       ),
+  //     }),
+  //   });
+
+  //   requestWidgetUpdate({
+  //     widgetName: "Grid",
+  //     renderWidget: () => ({
+  //       light: (
+  //         <GridWidget
+  //           history={{}}
+  //           endDateKey={getDateKey(new Date())}
+  //           bg="#ffffffff"
+  //           orange="#FF6D1F"
+  //           muted="#00000026"
+  //         />
+  //       ),
+  //       dark: (
+  //         <GridWidget
+  //           history={{}}
+  //           endDateKey={getDateKey(new Date())}
+  //           bg="#111111ff"
+  //           orange="#FF6D1F"
+  //           muted="#ffffff26"
+  //         />
+  //       ),
+  //     }),
+  //   });
+  // }, [habits.length]);
+
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
