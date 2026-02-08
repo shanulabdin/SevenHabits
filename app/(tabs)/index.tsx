@@ -233,77 +233,121 @@ export default function Index() {
   });
 
   // Update Streak Widget
+  // useEffect(() => {
+  //   if (!habits.length) {
+  //     Storage.setItemSync("@forge/widget_streak", "0");
+  //     Storage.setItemSync("@forge/widget_title", "Forge");
+
+  //     requestWidgetUpdate({
+  //       widgetName: "Streak",
+  //       renderWidget: () => ({
+  //         light: (
+  //           <StreakWidget
+  //             title="Forge"
+  //             streak={0}
+  //             bg="#ffffffff"
+  //             text="#111111"
+  //             muted="#11111199"
+  //           />
+  //         ),
+  //         dark: (
+  //           <StreakWidget
+  //             title="Forge"
+  //             streak={0}
+  //             bg="#111111ff"
+  //             text="#FFFFFF"
+  //             muted="#FFFFFFB3"
+  //           />
+  //         ),
+  //       }),
+  //     });
+
+  //     return;
+  //   }
+
+  //   const firstHabit = habits[0];
+
+  //   const streak = getHabitStreakWithGrace(
+  //     firstHabit,
+  //     todayKey,
+  //     todayKey
+  //   );
+
+  //   Storage.setItemSync("@forge/widget_streak", String(streak));
+  //   Storage.setItemSync("@forge/widget_title", firstHabit.title);
+
+  //   requestWidgetUpdate({
+  //     widgetName: "Streak",
+  //     renderWidget: () => {
+  //       const title = firstHabit.title ? firstHabit.title : "Forge";
+
+  //       return {
+  //         light: (
+  //           <StreakWidget
+  //             title={title}
+  //             streak={streak ? streak : 0}
+  //             bg={"#ffffffff"}
+  //             text={"#111111"}
+  //             muted={"#11111199"}
+  //           />
+  //         ),
+  //         dark: (
+  //           <StreakWidget
+  //             title={title}
+  //             streak={streak ? streak : 0}
+  //             bg={"#111111ff"}
+  //             text={"#FFFFFF"}
+  //             muted={"#FFFFFFB3"}
+  //           />
+  //         ),
+  //       };
+  //     }
+  //   });
+
+  // }, [habits, todayKey]);
+  function updateStreakWidget(title: string, streak: number) {
+    requestWidgetUpdate({
+      widgetName: "Streak",
+      renderWidget: () => ({
+        light: (
+          <StreakWidget
+            title={title}
+            streak={streak}
+            bg="#ffffffff"
+            text="#111111"
+            muted="#11111199"
+          />
+        ),
+        dark: (
+          <StreakWidget
+            title={title}
+            streak={streak}
+            bg="#111111ff"
+            text="#FFFFFF"
+            muted="#FFFFFFB3"
+          />
+        ),
+      }),
+    });
+  }
+
   useEffect(() => {
     if (!habits.length) {
       Storage.setItemSync("@forge/widget_streak", "0");
       Storage.setItemSync("@forge/widget_title", "Forge");
 
-      requestWidgetUpdate({
-        widgetName: "Streak",
-        renderWidget: () => ({
-          light: (
-            <StreakWidget
-              title="Forge"
-              streak={0}
-              bg="#ffffffff"
-              text="#111111"
-              muted="#11111199"
-            />
-          ),
-          dark: (
-            <StreakWidget
-              title="Forge"
-              streak={0}
-              bg="#111111ff"
-              text="#FFFFFF"
-              muted="#FFFFFFB3"
-            />
-          ),
-        }),
-      });
-
+      updateStreakWidget("Forge", 0);
       return;
     }
 
     const firstHabit = habits[0];
-
-    const streak = getHabitStreakWithGrace(
-      firstHabit,
-      todayKey,
-      todayKey
-    );
+    const streak = getHabitStreakWithGrace(firstHabit, todayKey, todayKey);
+    const title = firstHabit.title || "Forge";
 
     Storage.setItemSync("@forge/widget_streak", String(streak));
-    Storage.setItemSync("@forge/widget_title", firstHabit.title);
+    Storage.setItemSync("@forge/widget_title", title);
 
-    requestWidgetUpdate({
-      widgetName: "Streak",
-      renderWidget: () => {
-        const title = firstHabit.title ? firstHabit.title : "Forge";
-
-        return {
-          light: (
-            <StreakWidget
-              title={title}
-              streak={streak ? streak : 0}
-              bg={"#ffffffff"}
-              text={"#111111"}
-              muted={"#11111199"}
-            />
-          ),
-          dark: (
-            <StreakWidget
-              title={title}
-              streak={streak ? streak : 0}
-              bg={"#111111ff"}
-              text={"#FFFFFF"}
-              muted={"#FFFFFFB3"}
-            />
-          ),
-        };
-      }
-    });
-
+    updateStreakWidget(title, streak);
   }, [habits, todayKey]);
 
   // Update Score Widget
