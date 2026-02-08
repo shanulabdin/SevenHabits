@@ -322,16 +322,15 @@ export default function Index() {
     });
   }, [habits]);
 
-  // Update Score Widget
+  // Update Grid Widget
   useEffect(() => {
     if (!habits || habits.length === 0) return;
 
     const firstHabit = habits[0];
     const habitHistory = firstHabit.history;
+    const todayKey = getDateKey(new Date());
 
     Storage.setItemSync("@forge/widget_grid_history", JSON.stringify(habitHistory));
-
-    const todayKey = getDateKey(new Date());
 
     requestWidgetUpdate({
       widgetName: "Grid",
