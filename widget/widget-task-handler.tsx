@@ -34,9 +34,9 @@ function getStoredScoreData() {
 }
 
 // Get Grid widget data 
-const GRID_HISTORY_KEY = "@forge/widget_score_title";
+const GRID_HISTORY_KEY = "@forge/widget_grid_history";
 function getGridHistory() {
-  const stored = Storage.getItemSync(GRID_HISTORY_KEY);
+  const stored = Storage.getItemSync(GRID_HISTORY_KEY) || null;
   const firstHistory = stored ? JSON.parse(stored) : {}
 
   return firstHistory;

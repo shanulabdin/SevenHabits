@@ -86,7 +86,7 @@ export default function ConfirmModal({
               }}
               style={[
                 styles.confirmBtn,
-                { backgroundColor: colors.orange, opacity: disabled ? 0.6 : 1, borderColor: colors.orange },
+                { backgroundColor: colors.orange, opacity: disabled ? 0.6 : 1,  },
               ]}
             >
               <Text style={[styles.confirmText, { color: colors.background }]}>{confirmLabel}</Text>
