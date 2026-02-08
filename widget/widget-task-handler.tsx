@@ -1,7 +1,7 @@
 import Storage from 'expo-sqlite/kv-store';
 import { Linking } from 'react-native';
 import type { WidgetTaskHandlerProps } from 'react-native-android-widget';
-import { GridWidget } from './GridWidget';
+import { GridWidget } from './GraphWidget';
 import { ScoreWidget } from './ScoreWidget';
 import { StreakWidget } from './StreakWidget';
 
@@ -45,6 +45,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
     case 'WIDGET_ADDED': {
       if (widgetInfo.widgetName === "Grid") {
         const todayKey = new Date().toISOString().slice(0, 10);
+        
         props.renderWidget({
           light: (
             <Widget

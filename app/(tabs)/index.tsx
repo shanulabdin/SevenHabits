@@ -26,13 +26,12 @@ import { getDateKey, getLastNDays } from '@/utils/date';
 import { hapticHeavy, hapticLight, hapticSelect } from '@/utils/haptics';
 import { getPercentForDate, getWeeklyPercent } from '@/utils/stats';
 import { getHabitStreakWithGrace } from '@/utils/streaks';
-import { GridWidget } from '@/widget/GridWidget';
+import { GridWidget } from '@/widget/GraphWidget';
 import { ScoreWidget } from '@/widget/ScoreWidget';
 import { StreakWidget } from '@/widget/StreakWidget';
 import { Ionicons } from '@expo/vector-icons';
 import { Storage } from 'expo-sqlite/kv-store';
 import { requestWidgetUpdate } from 'react-native-android-widget';
-
 
 export default function Index() {
   const { colors } = useThemeColors();
