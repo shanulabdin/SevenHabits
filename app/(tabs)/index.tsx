@@ -326,7 +326,12 @@ export default function Index() {
   useEffect(() => {
     if (!habits || habits.length === 0) return;
 
-    const first = habits[0];
+    const firstHabit = habits[0];
+    const habitHistory = firstHabit.history;
+
+    Storage.setItemSync("@forge/widget_grid_history", JSON.stringify(habitHistory));
+    console.log(habitHistory)
+
     const todayKey = getDateKey(new Date());
 
     requestWidgetUpdate({
@@ -334,7 +339,7 @@ export default function Index() {
       renderWidget: () => ({
         light: (
           <GridWidget
-            history={first.history ?? {}}
+            history={habitHistory ?? {}}
             endDateKey={todayKey}
             bg={"#f5f5f5ff"}
             orange={"#FF6D1F"}
@@ -343,7 +348,7 @@ export default function Index() {
         ),
         dark: (
           <GridWidget
-            history={first.history ?? {}}
+            history={habitHistory ?? {}}
             endDateKey={todayKey}
             bg={"#111111ff"}
             orange={"#FF6D1F"}

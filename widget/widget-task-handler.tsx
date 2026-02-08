@@ -45,7 +45,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
     case 'WIDGET_ADDED': {
       if (widgetInfo.widgetName === "Grid") {
         const todayKey = new Date().toISOString().slice(0, 10);
-        
+
         props.renderWidget({
           light: (
             <Widget
