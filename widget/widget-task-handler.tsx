@@ -33,6 +33,14 @@ function getStoredScoreData() {
   return { score, title };
 }
 
+// Get Grid widget data 
+const GRID_HISTORY_KEY = "@forge/widget_score_title";
+function getGridHistory() {
+  const stored = Storage.getItemSync(GRID_HISTORY_KEY);
+  const firstHistory = stored ? JSON.parse(stored) : {}
+
+  return firstHistory;
+}
 
 export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
   const widgetInfo = props.widgetInfo;
@@ -45,11 +53,12 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
     case 'WIDGET_ADDED': {
       if (widgetInfo.widgetName === "Grid") {
         const todayKey = new Date().toISOString().slice(0, 10);
+        const firstHistory = getGridHistory();
 
         props.renderWidget({
           light: (
             <Widget
-              history={{}}
+              history={firstHistory ? firstHistory : {}}
               endDateKey={todayKey}
               bg={"#f5f5f5ff"}
               orange={"#FF6D1F"}
@@ -58,7 +67,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
           ),
           dark: (
             <Widget
-              history={{}}
+              history={firstHistory ? firstHistory : {}}
               endDateKey={todayKey}
               bg={"#111111ff"}
               orange={"#FF6D1F"}
@@ -116,10 +125,12 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
     case 'WIDGET_UPDATE': {
       if (widgetInfo.widgetName === "Grid") {
         const todayKey = new Date().toISOString().slice(0, 10);
+        const firstHistory = getGridHistory();
+
         props.renderWidget({
           light: (
             <Widget
-              history={{}}
+              history={firstHistory ? firstHistory : {}}
               endDateKey={todayKey}
               bg={"#f5f5f5ff"}
               orange={"#FF6D1F"}
@@ -128,7 +139,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
           ),
           dark: (
             <Widget
-              history={{}}
+              history={firstHistory ? firstHistory : {}}
               endDateKey={todayKey}
               bg={"#111111ff"}
               orange={"#FF6D1F"}
@@ -167,7 +178,6 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             <Widget
               title={title ? title : "Forge"}
               percent={score ? score : 0}
-              subtitle="32/50"
               bg={"#f5f5f5ff"}
               text={"#111111"}
               muted={"#11111199"}
@@ -176,7 +186,6 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             <Widget
               title={title ? title : "Forge"}
               percent={score ? score : 0}
-              subtitle="32/50"
               bg={"#111111ff"}
               text={"#FFFFFF"}
               muted={"#FFFFFFB3"}
@@ -196,7 +205,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
 
     case 'WIDGET_CLICK': {
       if (props.clickAction === "OPEN_APP") {
-        Linking.openURL("forge://home")
+        Linking.openURL("expo-router://")
         break;
       }
 

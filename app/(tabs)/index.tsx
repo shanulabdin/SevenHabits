@@ -330,7 +330,6 @@ export default function Index() {
     const habitHistory = firstHabit.history;
 
     Storage.setItemSync("@forge/widget_grid_history", JSON.stringify(habitHistory));
-    console.log(habitHistory)
 
     const todayKey = getDateKey(new Date());
 
