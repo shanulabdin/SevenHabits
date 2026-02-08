@@ -1,13 +1,11 @@
 // app/settings/widgets.tsx
 import Heading from "@/components/Heading";
 import { useThemeColors } from "@/constants/theme";
-import { useHabits } from "@/src/context/HabitsProvider";
 import { useRouter } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { getDateKey } from '@/utils/date';
-import { getHabitStreak } from "@/utils/streaks";
 import { GridWidget } from "@/widget/GraphWidget";
 import { ScoreWidget } from "@/widget/ScoreWidget";
 import { StreakWidget } from "@/widget/StreakWidget";
@@ -17,13 +15,31 @@ export default function WidgetsScreen() {
   const router = useRouter();
   const { colors } = useThemeColors();
 
-  const { habits } = useHabits();
-  const firstHabit = habits[0];
-
   const todayKey = getDateKey();
 
-  const streakCount = firstHabit ? getHabitStreak(firstHabit, todayKey) : 0;
+  function generateFakeHistory(days = 98) {
+    const history: Record<string, boolean> = {};
+    let streak = 0;
+    const today = new Date();
 
+    for (let i = 0; i < days; i++) {
+      const d = new Date(today);
+      d.setDate(today.getDate() - i);
+      const key = d.toISOString().slice(0, 10);
+
+      const baseChance = 0.7;
+      const streakBonus = Math.min(streak * 0.03, 0.2);
+      const done = Math.random() < baseChance + streakBonus;
+
+      history[key] = done;
+      streak = done ? streak + 1 : 0;
+    }
+
+    return history;
+  }
+
+
+  const fakeHistory = generateFakeHistory(98);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
@@ -114,7 +130,7 @@ export default function WidgetsScreen() {
           <WidgetPreview
             renderWidget={() => (
               <GridWidget
-                history={firstHabit.history}
+                history={fakeHistory ? fakeHistory : {}}
                 endDateKey={todayKey}
                 bg={colors.card as ColorProp}
                 orange={colors.orange as ColorProp}
