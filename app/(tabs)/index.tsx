@@ -24,6 +24,7 @@ import { useThemeColors } from '@/constants/theme';
 import { useConfirmModal } from '@/src/hooks/useConfirmModal';
 import { getDateKey, getLastNDays } from '@/utils/date';
 import { hapticHeavy, hapticLight, hapticSelect } from '@/utils/haptics';
+import { generateFakeHistory } from '@/utils/history';
 import { getPercentForDate, getWeeklyPercent } from '@/utils/stats';
 import { getHabitStreakWithGrace } from '@/utils/streaks';
 import { GridWidget } from '@/widget/GraphWidget';
@@ -32,7 +33,6 @@ import { StreakWidget } from '@/widget/StreakWidget';
 import { Ionicons } from '@expo/vector-icons';
 import { Storage } from 'expo-sqlite/kv-store';
 import { requestWidgetUpdate } from 'react-native-android-widget';
-
 export default function Index() {
   const { colors } = useThemeColors();
 
@@ -398,9 +398,10 @@ export default function Index() {
 
   useEffect(() => {
     if (!habits || habits.length === 0) {
-      Storage.setItemSync("@forge/widget_grid_history", JSON.stringify(habitHistory));
-      
-      updateGridWidget({}, getDateKey(new Date()));
+      const fakeHistory = generateFakeHistory(98)
+      Storage.setItemSync("@forge/widget_grid_history", JSON.stringify(fakeHistory));
+
+      updateGridWidget(fakeHistory, getDateKey(new Date()));
       return;
     };
 
@@ -410,7 +411,7 @@ export default function Index() {
 
     Storage.setItemSync("@forge/widget_grid_history", JSON.stringify(habitHistory));
     updateGridWidget(habitHistory, todayKey);
-  })
+  }, [habits])
 
   // useEffect(() => {
   //   if (habits.length > 0) return;
