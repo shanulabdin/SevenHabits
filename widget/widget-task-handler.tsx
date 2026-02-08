@@ -50,7 +50,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             <Widget
               history={{}}
               endDateKey={todayKey}
-              bg={"#FFFFFF"}
+              bg={"#f5f5f5ff"}
               orange={"#FF6D1F"}
               muted={"#00000026"}
             />
@@ -59,7 +59,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             <Widget
               history={{}}
               endDateKey={todayKey}
-              bg={"#000000"}
+              bg={"#111111ff"}
               orange={"#FF6D1F"}
               muted={"#ffffff26"}
             />
@@ -120,7 +120,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             <Widget
               history={{}}
               endDateKey={todayKey}
-              bg={"#FFFFFF"}
+              bg={"#f5f5f5ff"}
               orange={"#FF6D1F"}
               muted={"#00000026"}
             />
@@ -129,7 +129,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             <Widget
               history={{}}
               endDateKey={todayKey}
-              bg={"#000000"}
+              bg={"#111111ff"}
               orange={"#FF6D1F"}
               muted={"#ffffff26"}
             />
@@ -152,7 +152,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             <Widget
               title={title}
               streak={streak ? streak : 0}
-              bg={"#000111111ff000"}
+              bg={"#111111ff"}
               text={"#FFFFFF"}
               muted={"#FFFFFFB3"}
             />,
