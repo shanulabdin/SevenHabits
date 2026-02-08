@@ -7,6 +7,22 @@ type ThemeMode = "dark" | "light";
 
 const THEME_KEY = "@forge/theme_v1";
 
+const LIGHT = {
+  background: "#FFFFFF",
+  surface: "#F6F6F6",
+  card: "#ffffffff",
+  text: "#000000",
+
+  border: "rgba(0, 0, 0, 0.1)",
+
+  orange: "#FF6D1F",
+
+  accent: "#000000ff",
+  accentMuted: "#00000026",
+
+  muted: "#11111199",
+};
+
 const DARK = {
   background: "#000000ff",
   surface: "#000000ff",
@@ -21,22 +37,6 @@ const DARK = {
   accentMuted: "#ffffff26",
 
   muted: "#FFFFFFB3",
-};
-
-const LIGHT = {
-  background: "#FFFFFF",
-  surface: "#F6F6F6",
-  card: "#f5f5f5ff",
-  text: "#000000",
-
-  border: "rgba(0, 0, 0, 0.1)",
-
-  orange: "#FF6D1F",
-
-  accent: "#000000ff",
-  accentMuted: "#00000026",
-
-  muted: "#11111199",
 };
 
 

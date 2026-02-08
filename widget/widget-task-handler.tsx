@@ -60,7 +60,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             <Widget
               history={firstHistory ? firstHistory : {}}
               endDateKey={todayKey}
-              bg={"#f5f5f5ff"}
+              bg={"#ffffffff"}
               orange={"#FF6D1F"}
               muted={"#00000026"}
             />
@@ -84,7 +84,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             <Widget
               title={title ? title : "Forge"}
               streak={streak ? streak : 0}
-              bg={"#f5f5f5ff"}
+              bg={"#ffffffff"}
               text={"#111111"}
               muted={"#11111199"}
             />,
@@ -106,7 +106,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             <Widget
               title={title ? title : "Forge"}
               percent={score ? score : 0}
-              bg={"#f5f5f5ff"}
+              bg={"#ffffffff"}
               text={"#111111"}
               muted={"#11111199"}
             />,
@@ -132,7 +132,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             <Widget
               history={firstHistory ? firstHistory : {}}
               endDateKey={todayKey}
-              bg={"#f5f5f5ff"}
+              bg={"#ffffffff"}
               orange={"#FF6D1F"}
               muted={"#00000026"}
             />
@@ -156,7 +156,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             <Widget
               title={title ? title : "Forge"}
               streak={streak ? streak : "Forge"}
-              bg={"#f5f5f5ff"}
+              bg={"#ffffffff"}
               text={"#111111"}
               muted={"#11111199"}
             />,
@@ -178,7 +178,7 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
             <Widget
               title={title ? title : "Forge"}
               percent={score ? score : 0}
-              bg={"#f5f5f5ff"}
+              bg={"#ffffffff"}
               text={"#111111"}
               muted={"#11111199"}
             />,

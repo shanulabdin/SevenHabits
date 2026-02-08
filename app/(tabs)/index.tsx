@@ -257,7 +257,7 @@ export default function Index() {
             <StreakWidget
               title={title}
               streak={streak ? streak : 0}
-              bg={"#f5f5f5ff"}
+              bg={"#ffffffff"}
               text={"#111111"}
               muted={"#11111199"}
             />
@@ -304,7 +304,7 @@ export default function Index() {
           <ScoreWidget
             title={firstHabit.title ?? "Forge"}
             percent={percent}
-            bg="#f5f5f5ff"
+            bg="#ffffffff"
             text="#111111"
             muted="#11111199"
           />
@@ -340,7 +340,7 @@ export default function Index() {
           <GridWidget
             history={habitHistory ?? {}}
             endDateKey={todayKey}
-            bg={"#f5f5f5ff"}
+            bg={"#ffffffff"}
             orange={"#FF6D1F"}
             muted={"#00000026"}
           />
