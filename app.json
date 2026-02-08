@@ -54,7 +54,7 @@
               "label": "Grid",
               "minWidth": "250dp",
               "minHeight": "120dp",
-              "targetCellWidth": 5,
+              "targetCellWidth": 4,
               "targetCellHeight": 2,
               "description": "Visualizes your habit consistency with a contribution graph.",
               "previewImage": "./assets/images/Grid.png",
