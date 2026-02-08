@@ -1,6 +1,5 @@
 // app/settings/widgets.tsx
 import Heading from "@/components/Heading";
-import WidgetHabitCard from "@/components/WidgetHabitCard";
 import { useThemeColors } from "@/constants/theme";
 import { useHabits } from "@/src/context/HabitsProvider";
 import { useRouter } from "expo-router";
@@ -9,6 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { getDateKey } from '@/utils/date';
 import { getHabitStreak } from "@/utils/streaks";
+import { GridWidget } from "@/widget/GraphWidget";
 import { ScoreWidget } from "@/widget/ScoreWidget";
 import { StreakWidget } from "@/widget/StreakWidget";
 import { ColorProp, WidgetPreview } from "react-native-android-widget";
@@ -101,21 +101,33 @@ export default function WidgetsScreen() {
           Shows your current streak for the first habit in your list.
         </Text>
 
-        {firstHabit && (
-          <View style={{ width: "100%", alignItems: "center", marginVertical: 10, }}>
-            <Text style={[styles.widgetTitle, { color: colors.text }]}>Grid View</Text>
-            <WidgetHabitCard
-              title={firstHabit.title}
-              streak={streakCount}
-              history={firstHabit.history}
-              todayKey={todayKey}
-              showStreak={true}
-            />
-            <Text style={[styles.desc, { color: colors.muted }]}>
-              Visualizes your habit consistency with a contribution graph.
-            </Text>
-          </View>
-        )}
+        <Text style={[styles.widgetTitle, { color: colors.text }]}>Streak Widget</Text>
+        <View
+          style={[
+            styles.widgetContainer,
+            {
+              borderColor: colors.border,
+              backgroundColor: colors.card,
+            },
+          ]}
+        >
+          <WidgetPreview
+            renderWidget={() => (
+              <GridWidget
+                history={firstHabit.history}
+                endDateKey={todayKey}
+                bg={colors.card as ColorProp}
+                orange={colors.orange as ColorProp}
+                muted={colors.accentMuted as ColorProp}
+              />
+            )}
+            width={365}
+            height={200}
+          />
+        </View>
+        <Text style={[styles.desc, { color: colors.muted }]}>
+          Visualizes your habit consistency with a contribution graph.
+        </Text>
 
         <View style={[styles.howToBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <Text style={[styles.howToTitle, { color: colors.text }]}>Add widgets to your home screen</Text>
@@ -204,7 +216,6 @@ const styles = StyleSheet.create({
     elevation: 3,
     borderWidth: 1,
     borderRadius: 16,
-    padding: 10,
     marginBottom: 10,
   },
   howToBox: {
