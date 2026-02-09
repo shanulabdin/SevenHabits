@@ -13,7 +13,6 @@ export default function AddHabit() {
 
   function submit(title: string) {
     if (typeof title !== "string") {
-      console.log("Not a string, ignoring submit");
       return;
     }
 

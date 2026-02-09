@@ -54,7 +54,7 @@ export default function WidgetsScreen() {
             renderWidget={() => (
               <ScoreWidget
                 title="Forge"
-                percent={80}
+                percent={75}
                 bg={colors.card as ColorProp}
                 text={colors.text as ColorProp}
                 muted={colors.muted as ColorProp}
@@ -82,7 +82,7 @@ export default function WidgetsScreen() {
             renderWidget={() => (
               <StreakWidget
                 title="Forge"
-                streak={12}
+                streak={7}
                 bg={colors.card as ColorProp}
                 text={colors.text as ColorProp}
                 muted={colors.muted as ColorProp}

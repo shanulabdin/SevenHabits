@@ -77,9 +77,7 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
 
 
         if (cleaned.length) setHabits(cleaned);
-      } catch (e) {
-        console.log("Failed to load habits:", e);
-      }
+      } catch { }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -89,9 +87,7 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
     (async () => {
       try {
         await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(habits));
-      } catch (e) {
-        console.log("Failed to save habits:", e);
-      }
+      } catch { }
     })();
   }, [habits]);
 
@@ -103,9 +99,7 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
       // Choose ONE:
       setHabits([]); // wipe completely
       // setHabits(buildDefaultHabits(getDateKey(new Date()))); // reset to defaults
-    } catch (e) {
-      console.log("Failed to reset storage:", e);
-    }
+    } catch { }
   }
 
   const value: HabitsContextValue = {
