@@ -1,5 +1,6 @@
 import type { Habit } from "@/types/habit";
 import { getDateKey } from "@/utils/date";
+import { generateFakeHistory } from "@/utils/history";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 
@@ -15,9 +16,11 @@ type HabitsContextValue = {
 
 const HabitsContext = createContext<HabitsContextValue | null>(null);
 
+const fakeHistory = generateFakeHistory(146);
+
 function buildDefaultHabits(todayKey: string): Habit[] {
   return [
-    { id: "1", title: "Example", history: { [todayKey]: false }, showGrid: true, showStreak: true },
+    { id: "1", title: "Example", history: fakeHistory, showGrid: true, showStreak: true },
     { id: "2", title: "Long Press to edit", history: { [todayKey]: false }, showGrid: false, showStreak: true },
   ];
 }

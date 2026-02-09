@@ -24,7 +24,8 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.shanulabdin.forge"
+      "package": "com.shanulabdin.forge",
+      "versionCode": 1
     },
     "androidStatusBar": {
       "barStyle": "light-content",
@@ -58,7 +59,7 @@
               "targetCellHeight": 2,
               "description": "Visualizes your habit consistency with a contribution graph.",
               "previewImage": "./assets/images/Grid.png",
-              "updatePeriodMillis": 1800000
+              "updatePeriodMillis": 10800000
             },
             {
               "name": "Score",
@@ -69,7 +70,7 @@
               "targetCellWidth": 2,
               "targetCellHeight": 2,
               "previewImage": "./assets/images/Score.png",
-              "updatePeriodMillis": 1800000
+              "updatePeriodMillis": 10800000
             },
             {
               "name": "Streak",
@@ -80,7 +81,7 @@
               "targetCellHeight": 2,
               "description": "Shows your current streak for the first habit in your list.",
               "previewImage": "./assets/images/Streak.png",
-              "updatePeriodMillis": 1800000
+              "updatePeriodMillis": 10800000
             }
           ]
         }
