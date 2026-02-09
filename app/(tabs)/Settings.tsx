@@ -44,7 +44,7 @@ export const sendFeedback = async () => {
 
   try {
     await Linking.openURL(mailto);
-  } catch (e) {
+  } catch {
     // fallback only if openURL actually fails
     await Linking.openURL("https://shanulabdin.github.io/forge-legal/");
   }

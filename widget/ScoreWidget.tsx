@@ -79,6 +79,7 @@ export function ScoreWidget({ title, percent, bg, text, muted }: Props) {
         />
         <TextWidget
           text={title}
+          maxLines={1}
           style={{
             width: "match_parent",
             fontSize: 14,

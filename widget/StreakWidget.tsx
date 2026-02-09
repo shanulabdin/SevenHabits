@@ -55,6 +55,7 @@ export function StreakWidget({ title, streak, bg, text, muted }: Props) {
 
       <TextWidget
         text={title}
+        maxLines={1}
         style={{
           fontSize: 14,
           fontFamily: "Poppins",
