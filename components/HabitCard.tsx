@@ -107,6 +107,8 @@ export default function HabitCard({
       {showGrid && (
         <View style={[styles.gridBox, { backgroundColor: colors.card, borderColor: colors.border, borderTopWidth: 0, overflow: 'hidden' }]}>
           <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
           >
             <ContributionGrid
               history={history}
