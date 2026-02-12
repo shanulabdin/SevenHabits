@@ -385,20 +385,30 @@ export default function Index() {
   }
 
   useEffect(() => {
-    if (!habits || habits.length === 0) {
-      const fakeHistory = generateFakeHistory(98);
-      Storage.setItemSync("@forge/widget_grid_history", JSON.stringify(fakeHistory));
+    const updateGridWidgetData = () => {
+      try {
+        const isAndroid = Platform.OS === "android";
 
-      updateGridWidget(fakeHistory, getDateKey(new Date()));
-      return;
-    };
+        if (!habits || habits.length === 0) {
+          const fakeHistory = generateFakeHistory(98);
+          Storage.setItem("@forge/widget_grid_history", JSON.stringify(fakeHistory));
 
-    const firstHabit = habits[0];
-    const habitHistory = firstHabit.history;
-    const todayKey = getDateKey(new Date());
+          if (isAndroid) updateGridWidget(fakeHistory, getDateKey(new Date()));
+          return;
+        };
 
-    Storage.setItemSync("@forge/widget_grid_history", JSON.stringify(habitHistory));
-    updateGridWidget(habitHistory, todayKey);
+        const firstHabit = habits[0];
+        const habitHistory = firstHabit.history;
+        const todayKey = getDateKey(new Date());
+
+        Storage.setItem("@forge/widget_grid_history", JSON.stringify(habitHistory));
+        if (isAndroid) updateGridWidget(habitHistory, todayKey);
+      } catch (e: any) {
+        console.error("updateGridWidgetData: ", e.message);
+      }
+    }
+
+    updateGridWidgetData();
   }, [habits])
 
   return (
