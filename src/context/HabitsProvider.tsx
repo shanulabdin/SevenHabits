@@ -16,7 +16,7 @@ type HabitsContextValue = {
 
 const HabitsContext = createContext<HabitsContextValue | null>(null);
 
-const fakeHistory = generateFakeHistory(146);
+const fakeHistory = generateFakeHistory(365);
 
 function buildDefaultHabits(todayKey: string): Habit[] {
   return [
