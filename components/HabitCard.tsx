@@ -2,6 +2,7 @@ import { colors } from "@/constants/colors";
 import { useThemeColors } from "@/constants/theme";
 import { hapticLight } from "@/utils/haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useRef } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import ContributionGrid from "./ContributionGrid";
 
@@ -30,6 +31,7 @@ export default function HabitCard({
 }: HabitCardProps) {
 
   const { colors } = useThemeColors();
+  const scrollRef = useRef<ScrollView>(null);
 
   return (
     <View style={styles.wrapper}>
@@ -107,8 +109,12 @@ export default function HabitCard({
       {showGrid && (
         <View style={[styles.gridBox, { backgroundColor: colors.card, borderColor: colors.border, borderTopWidth: 0, overflow: 'hidden' }]}>
           <ScrollView
+            ref={scrollRef}
             horizontal
             showsHorizontalScrollIndicator={false}
+            onContentSizeChange={() =>
+              scrollRef.current?.scrollToEnd({ animated: false })
+            }
           >
             <ContributionGrid
               history={history}
