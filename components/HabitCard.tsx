@@ -2,7 +2,7 @@ import { colors } from "@/constants/colors";
 import { useThemeColors } from "@/constants/theme";
 import { hapticLight } from "@/utils/haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import ContributionGrid from "./ContributionGrid";
 
 type HabitCardProps = {
@@ -56,7 +56,7 @@ export default function HabitCard({
           </Text>
 
           {showStreak && (
-            <View style={[styles.streak, {opacity: streak === 0 ? 0.25 : 1}]}>
+            <View style={[styles.streak, { opacity: streak === 0 ? 0.25 : 1 }]}>
               <Text
                 style={[
                   styles.streakText, {
@@ -105,12 +105,15 @@ export default function HabitCard({
 
       {/* CONTRIBUTION GRID */}
       {showGrid && (
-        <View style={[styles.gridBox, { backgroundColor: colors.card, borderColor: colors.border, borderTopWidth: 0 }]}>
-          <ContributionGrid
-            history={history}
-            endDateKey={todayKey}
-            weeks={19}
-          />
+        <View style={[styles.gridBox, { backgroundColor: colors.card, borderColor: colors.border, borderTopWidth: 0, overflow: 'hidden' }]}>
+          <ScrollView
+          >
+            <ContributionGrid
+              history={history}
+              endDateKey={todayKey}
+              weeks={52}
+            />
+          </ScrollView>
         </View>
       )}
     </View>
