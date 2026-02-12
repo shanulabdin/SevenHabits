@@ -318,32 +318,42 @@ export default function Index() {
     });
   }
   useEffect(() => {
-    if (!habits || habits.length === 0) {
-      Storage.setItemSync("@forge/widget_score_percent", "75");
-      Storage.setItemSync("@forge/widget_score_title", "Forge");
+    const updateScoreWidgetData = () => {
+      try {
+        const isAndroid = Platform.OS === 'android';
 
-      updateScoreWidget("Forge", 75);
-      return;
+        if (!habits || habits.length === 0) {
+          Storage.setItem("@forge/widget_score_percent", "75");
+          Storage.setItem("@forge/widget_score_title", "Forge");
+
+          if (isAndroid) updateScoreWidget("Forge", 75);
+          return;
+        }
+
+        const firstHabit = habits[0];
+        const title = firstHabit.title || "Forge";
+
+        const DAYS = 30;
+
+        const keys = getLastNDays(DAYS).map(d => getDateKey(d));
+        let done = 0;
+
+        for (const key of keys) {
+          if (firstHabit.history?.[key]) done++;
+        }
+
+        const percent = Math.round((done / keys.length) * 100);
+
+        Storage.setItem("@forge/widget_score_percent", String(percent));
+        Storage.setItem("@forge/widget_score_title", firstHabit.title ?? "Forge");
+
+        if (isAndroid) updateScoreWidget(title, percent);
+      } catch (e: any) {
+        console.log("updateScoreWidget:", e.message)
+      }
     }
 
-    const firstHabit = habits[0];
-    const title = firstHabit.title || "Forge";
-
-    const DAYS = 30;
-
-    const keys = getLastNDays(DAYS).map(d => getDateKey(d));
-    let done = 0;
-
-    for (const key of keys) {
-      if (firstHabit.history?.[key]) done++;
-    }
-
-    const percent = Math.round((done / keys.length) * 100);
-
-    Storage.setItemSync("@forge/widget_score_percent", String(percent));
-    Storage.setItemSync("@forge/widget_score_title", firstHabit.title ?? "Forge");
-
-    updateScoreWidget(title, percent);
+    updateScoreWidgetData();
   }, [habits, todayKey]);
 
   // Update Grid Widget
