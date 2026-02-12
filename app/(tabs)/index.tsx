@@ -260,22 +260,35 @@ export default function Index() {
   }
 
   useEffect(() => {
-    if (!habits || habits.length === 0) {
-      Storage.setItemSync("@forge/widget_streak", "7");
-      Storage.setItemSync("@forge/widget_title", "Forge");
+    const updateStreakWidgetData = async () => {
+      try {
+        const isAndroid = Platform.OS === 'android';
 
-      updateStreakWidget("Forge", 7);
-      return;
-    }
+        if (!habits || habits.length === 0) {
+          await Storage.setItem("@forge/widget_streak", "7");
+          await Storage.setItem("@forge/widget_title", "Forge");
 
-    const firstHabit = habits[0];
-    const streak = getHabitStreakWithGrace(firstHabit, todayKey, todayKey);
-    const title = firstHabit.title || "Forge";
+          // ONLY run widget native code on Android
+          if (isAndroid) updateStreakWidget("Forge", 7);
+          return;
+        }
 
-    Storage.setItemSync("@forge/widget_streak", String(streak));
-    Storage.setItemSync("@forge/widget_title", title);
+        const firstHabit = habits[0];
+        const streak = getHabitStreakWithGrace(firstHabit, todayKey, todayKey);
+        const title = firstHabit.title || "Forge";
 
-    updateStreakWidget(title, streak);
+        await Storage.setItem("@forge/widget_streak", String(streak));
+        await Storage.setItem("@forge/widget_title", title);
+
+        // ONLY run widget native code on Android
+        if (isAndroid) updateStreakWidget(title, streak);
+
+      } catch (e: any) {
+        console.warn("Storage/Widget update skipped:", e.message);
+      }
+    };
+
+    updateStreakWidgetData();
   }, [habits, todayKey]);
 
   // Update Score Widget
