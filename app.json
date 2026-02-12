@@ -33,7 +33,9 @@
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/logo.png"
+      "favicon": "./assets/images/logo.png",
+      "hostUri": "localhost",
+      "dangerous__experimental_crossOriginIsolated_dont_use_this": true
     },
     "plugins": [
       "expo-router",
