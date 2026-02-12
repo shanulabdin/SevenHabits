@@ -626,7 +626,7 @@ const styles = StyleSheet.create({
 
   weekRow: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     width: "100%",
     paddingHorizontal: 4,
     marginTop: 16,

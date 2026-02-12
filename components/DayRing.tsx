@@ -2,6 +2,9 @@ import { useThemeColors } from "@/constants/theme";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 
+
+
+// Inside your style:
 type DayRingProps = {
   dayNumber: string; // "11"
   dayLabel?: string; // "Sun"
@@ -28,7 +31,7 @@ export default function DayRing({
   onPress,
   size = 50,
   strokeWidth = 5,
-  textSize = 12,
+  textSize = 15,
   trackColor,
   progressColor,
   textColor,
@@ -93,6 +96,8 @@ export default function DayRing({
               lineHeight: textSize + 5,
               color: _text,
             }}
+          allowFontScaling={false}
+            numberOfLines={1}
           >
             {dayNumber}
           </Text>
@@ -106,11 +111,13 @@ export default function DayRing({
             styles.label,
             {
               fontFamily: "Poppins_500Medium",
+              fontSize: textSize,
               color: _label,
               opacity: selected ? 1 : 0.8,
             },
           ]}
           numberOfLines={1}
+          allowFontScaling={false}
         >
           {dayLabel}
         </Text>
