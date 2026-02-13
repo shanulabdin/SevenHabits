@@ -626,7 +626,7 @@ const styles = StyleSheet.create({
 
   weekRow: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     width: "100%",
     paddingHorizontal: 4,
     marginTop: 16,
@@ -645,7 +645,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
 
     paddingHorizontal: 16,
-    height: 64,          // feels like your card height
+    height: 64,
     marginBottom: 12,
 
     // iOS
@@ -661,12 +661,12 @@ const styles = StyleSheet.create({
   editInput: {
     flex: 1,
     fontSize: 20,
-    paddingVertical: 0,  // keep it vertically centered
+    paddingVertical: 0,
     paddingLeft: -2,
     marginRight: 12,
 
-    includeFontPadding: false, // Android
-    textAlignVertical: "center", // Android
+    includeFontPadding: false, 
+    textAlignVertical: "center",
   },
 
   editSubmitBtn: {
