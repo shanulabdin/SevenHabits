@@ -630,6 +630,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
     gap: 4,
     alignItems: "center",
+    justifyContent: "space-between",
     marginTop: 16,
     marginBottom: 16,
   },
