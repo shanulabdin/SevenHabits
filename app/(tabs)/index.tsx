@@ -626,9 +626,10 @@ const styles = StyleSheet.create({
 
   weekRow: {
     flexDirection: "row",
-    justifyContent: "space-between",
     width: "100%",
     paddingHorizontal: 4,
+    gap: 4,
+    alignItems: "center",
     marginTop: 16,
     marginBottom: 16,
   },
@@ -665,7 +666,7 @@ const styles = StyleSheet.create({
     paddingLeft: -2,
     marginRight: 12,
 
-    includeFontPadding: false, 
+    includeFontPadding: false,
     textAlignVertical: "center",
   },
 

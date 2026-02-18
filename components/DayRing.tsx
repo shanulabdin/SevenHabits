@@ -1,7 +1,7 @@
 import { useThemeColors } from "@/constants/theme";
+import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Svg, { Circle } from "react-native-svg";
-
 
 
 // Inside your style:
@@ -39,15 +39,25 @@ export default function DayRing({
 }: DayRingProps) {
   const { colors } = useThemeColors();
 
+  const [containerWidth, setContainerWidth] = useState(0);
+
+  const onLayout = (event: any) => {
+    const { width } = event.nativeEvent.layout;
+    setContainerWidth(width);
+  };
+
+  // Use the measured width if available, otherwise fallback to the size prop
+  const currentSize = containerWidth > 0 ? containerWidth : size;
+
   // Theme defaults (can be overridden by props)
   const _track = trackColor ?? colors.accentMuted;
   const _progress = progressColor ?? colors.orange;
   const _text = textColor ?? colors.text;
   const _label = labelColor ?? (selected ? colors.orange : colors.text);
 
-  const r = (size - strokeWidth) / 2;
-  const cx = size / 2;
-  const cy = size / 2;
+  const r = (currentSize - strokeWidth) / 2;
+  const cx = currentSize / 2;
+  const cy = currentSize / 2;
 
   const circumference = 2 * Math.PI * r;
   const clamped = Math.max(0, Math.min(100, percent));
@@ -58,34 +68,41 @@ export default function DayRing({
   const wrapperProps = onPress ? { onPress } : {};
 
   return (
-    <Wrapper style={styles.wrapper} {...wrapperProps}>
-      <View style={[styles.ringBox, { width: size, height: size }]}>
-        <Svg width={size} height={size}>
-          {/* Track */}
-          <Circle
-            cx={cx}
-            cy={cy}
-            r={r}
-            stroke={_track}
-            strokeWidth={strokeWidth}
-            fill="transparent"
-          />
+    <Wrapper
+      onLayout={onLayout}
+      style={[styles.wrapper, { flex: 1, maxWidth: 60 }]}
+      {...wrapperProps}
+    >
+      <View style={[styles.ringBox, { width: currentSize, height: currentSize }]}>
 
-          {/* Progress */}
-          <Circle
-            cx={cx}
-            cy={cy}
-            r={r}
-            stroke={_progress}
-            strokeWidth={strokeWidth}
-            fill="transparent"
-            strokeLinecap="round"
-            strokeDasharray={`${circumference} ${circumference}`}
-            strokeDashoffset={dashOffset}
-            rotation={-90}
-            origin={`${cx}, ${cy}`}
-          />
-        </Svg>
+        {currentSize > 0 && (
+          <Svg width={currentSize} height={currentSize}>
+            {/* Track */}
+            <Circle
+              cx={cx}
+              cy={cy}
+              r={r}
+              stroke={_track}
+              strokeWidth={strokeWidth}
+              fill="transparent"
+            />
+
+            {/* Progress */}
+            <Circle
+              cx={cx}
+              cy={cy}
+              r={r}
+              stroke={_progress}
+              strokeWidth={strokeWidth}
+              fill="transparent"
+              strokeLinecap="round"
+              strokeDasharray={`${circumference} ${circumference}`}
+              strokeDashoffset={dashOffset}
+              rotation={-90}
+              origin={`${cx}, ${cy}`}
+            />
+          </Svg>
+        )}
 
         {/* Center number */}
         <View style={styles.center}>
@@ -96,7 +113,7 @@ export default function DayRing({
               lineHeight: textSize + 5,
               color: _text,
             }}
-          allowFontScaling={false}
+            allowFontScaling={false}
             numberOfLines={1}
           >
             {dayNumber}
