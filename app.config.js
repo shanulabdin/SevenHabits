@@ -1,0 +1,126 @@
+export default () => {
+  const variant = process.env.APP_VARIANT;
+  const isDev = variant === "development";
+
+  return {
+    expo: {
+      name: isDev ? "Forge Dev" : "Forge",
+      slug: "forge",
+      version: "1.0.1",
+      orientation: "portrait",
+      icon: "./assets/images/logo.png",
+      scheme: "forge",
+      userInterfaceStyle: "automatic",
+      newArchEnabled: true,
+
+      ios: {
+        supportsTablet: true,
+      },
+
+      splash: {
+        image: "./assets/images/logo.png",
+        resizeMode: "contain",
+        backgroundColor: "#000000",
+      },
+
+      android: {
+        softwareKeyboardLayoutMode: "resize",
+        adaptiveIcon: {
+          foregroundImage: "./assets/images/logo-nobg.png",
+          backgroundColor: "#000000",
+        },
+        edgeToEdgeEnabled: true,
+        predictiveBackGestureEnabled: false,
+
+        // THIS is now dynamic
+        package: isDev
+          ? "com.shanulabdin.forge.dev"
+          : "com.shanulabdin.forge",
+
+        versionCode: 2,
+      },
+
+      androidStatusBar: {
+        barStyle: "light-content",
+        backgroundColor: "#000000",
+      },
+
+      web: {
+        output: "static",
+        favicon: "./assets/images/logo.png",
+        hostUri: "localhost",
+        dangerous__experimental_crossOriginIsolated_dont_use_this: true,
+      },
+
+      plugins: [
+        "expo-router",
+        [
+          "expo-splash-screen",
+          {
+            image: "./assets/images/logo.png",
+            imageWidth: 200,
+            resizeMode: "contain",
+            backgroundColor: "#000000",
+          },
+        ],
+        [
+          "react-native-android-widget",
+          {
+            widgets: [
+              {
+                name: "Grid",
+                label: "Grid",
+                minWidth: "250dp",
+                minHeight: "120dp",
+                targetCellWidth: 4,
+                targetCellHeight: 2,
+                description:
+                  "Visualizes your habit consistency with a contribution graph.",
+                previewImage: "./assets/images/Grid.png",
+                updatePeriodMillis: 10800000,
+              },
+              {
+                name: "Score",
+                label: "Score",
+                description:
+                  "Displays your monthly completion score (%) for the first habit.",
+                minWidth: "120dp",
+                minHeight: "120dp",
+                targetCellWidth: 2,
+                targetCellHeight: 2,
+                previewImage: "./assets/images/Score.png",
+                updatePeriodMillis: 10800000,
+              },
+              {
+                name: "Streak",
+                label: "Streak",
+                minWidth: "120dp",
+                minHeight: "120dp",
+                targetCellWidth: 2,
+                targetCellHeight: 2,
+                description:
+                  "Shows your current streak for the first habit in your list.",
+                previewImage: "./assets/images/Streak.png",
+                updatePeriodMillis: 10800000,
+              },
+            ],
+          },
+        ],
+        "expo-font",
+        "expo-sqlite",
+      ],
+
+      experiments: {
+        typedRoutes: true,
+        reactCompiler: false,
+      },
+
+      extra: {
+        router: {},
+        eas: {
+          projectId: "3da420b0-1a0d-4b37-95d2-0b748927dbc3",
+        },
+      },
+    },
+  };
+};
