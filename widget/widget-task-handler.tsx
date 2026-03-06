@@ -155,14 +155,14 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
           light:
             <Widget
               title={title ? title : "Forge"}
-              streak={streak ? streak : "Forge"}
+              streak={streak ? streak : 0}
               bg={"#ffffffff"}
               text={"#111111"}
               muted={"#11111199"}
             />,
           dark:
             <Widget
-              title={title}
+              title={title ? title : "Forge"}
               streak={streak ? streak : 0}
               bg={"#111111ff"}
               text={"#FFFFFF"}
