@@ -37,7 +37,7 @@ export default () => {
           ? "com.shanulabdin.forge.dev"
           : "com.shanulabdin.forge",
 
-        versionCode: 2,
+        versionCode: 10,
       },
 
       androidStatusBar: {
