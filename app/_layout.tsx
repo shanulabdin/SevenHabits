@@ -16,6 +16,9 @@ import {
   Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
 import { useFonts } from "expo-font";
+import { Platform } from 'react-native';
+import { useEffect } from 'react';
+import Purchases, { LOG_LEVEL } from 'react-native-purchases';
 
 function AppShell() {
   const { colors, isLoaded: themeLoaded } = useThemeColors();
@@ -52,6 +55,7 @@ function AppShell() {
   );
 }
 
+
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
@@ -59,6 +63,19 @@ export default function RootLayout() {
     Poppins_600SemiBold,
     Poppins_700Bold,
   });
+
+  useEffect(() => {
+    Purchases.setLogLevel(LOG_LEVEL.VERBOSE);
+
+    if (Platform.OS === 'android') {
+      const apiKey = process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY;
+      if (!apiKey) {
+        console.warn('RevenueCat Android API key is not set');
+        return;
+      }
+      Purchases.configure({ apiKey });
+    }
+  }, []);
 
   if (!fontsLoaded) {
     return <View style={{ flex: 1, backgroundColor: "#151515" }} />;
