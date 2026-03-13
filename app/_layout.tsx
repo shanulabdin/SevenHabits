@@ -65,17 +65,32 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    Purchases.setLogLevel(LOG_LEVEL.VERBOSE);
+    try {
+      Purchases.setLogLevel(LOG_LEVEL.VERBOSE);
 
-    if (Platform.OS === 'android') {
-      const apiKey = process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY;
-      if (!apiKey) {
-        console.warn('RevenueCat Android API key is not set');
-        return;
+      if (Platform.OS === 'android') {
+        const apiKey = process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY;
+        if (!apiKey) {
+          console.warn('RevenueCat Android API key is not set');
+          return;
+        }
+        Purchases.configure({ apiKey });
       }
-      Purchases.configure({ apiKey });
+
+      getCustomerInfo();
+    } catch (error) {
+      console.warn('RevenueCat initialization skipped:', error);
     }
   }, []);
+
+  async function getCustomerInfo() {
+    try {
+      const customerInfo = await Purchases.getCustomerInfo();
+      console.log('Customer Info:', customerInfo);
+    } catch (error) {
+      console.warn('Could not fetch customer info (products not ready yet):', error);
+    }
+  }
 
   if (!fontsLoaded) {
     return <View style={{ flex: 1, backgroundColor: "#151515" }} />;
