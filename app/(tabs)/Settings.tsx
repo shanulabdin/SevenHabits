@@ -164,6 +164,11 @@ export default function SettingsScreen() {
       icon: "chatbubble-ellipses-outline",
       onPress: withHaptic(sendFeedback, "light"),
     },
+    {
+      title: "ProScreen",
+      icon: "chatbubble-ellipses-outline",
+      onPress: withHaptic(() => router.push("/ProScreen"), "light"),
+    },
   ];
 
   const deleteData: Item[] = [
