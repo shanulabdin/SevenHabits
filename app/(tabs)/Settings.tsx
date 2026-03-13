@@ -12,7 +12,6 @@ import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 
-
 type Item = {
   title: string;
   icon: keyof typeof Ionicons.glyphMap;

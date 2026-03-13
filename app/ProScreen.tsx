@@ -1,3 +1,4 @@
+import { useThemeColors } from '@/constants/theme';
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -14,6 +15,8 @@ type Feature = {
 };
 
 const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
+  const { colors } = useThemeColors();
+
   const [selectedPackage, setSelectedPackage] = useState<'yearly' | 'lifetime' | null>(null);
 
   const features: Feature[] = [
@@ -39,7 +42,7 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
     }
   };
   return (
-    <View style={styles.container}>
+    <View style={[ styles.container, { backgroundColor: colors.background }]}>
       {/* Header */}
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Ionicons name="close" size={28} color="#fff" />
@@ -47,19 +50,19 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.headerArea}>
-          <View style={styles.iconCircle}>
-            <Ionicons name="flash" size={50} color="#FFD700" />
+          <View style={[styles.iconCircle, { backgroundColor: colors.background }]}>
+            <Ionicons name="flash" size={50} color={colors.orange} />
           </View>
-          <Text style={styles.title}>Forge Pro</Text>
-          <Text style={styles.subtitle}>Build the best version of yourself.</Text>
+          <Text style={[styles.title, { color: colors.text }]}>Forge Pro</Text>
+          <Text style={[styles.subtitle, { color: colors.text }]}>Build the best version of yourself.</Text>
         </View>
 
         {/* Features */}
         <View style={styles.featuresList}>
           {features.map((f, i) => (
             <View key={i} style={styles.featureItem}>
-              <Ionicons name={f.icon} size={20} color="#FFD700" />
-              <Text style={styles.featureText}>{f.text}</Text>
+              <Ionicons name={f.icon} size={20} color={colors.orange} />
+              <Text style={[styles.featureText, { color: colors.text }]}>{f.text}</Text>
             </View>
           ))}
         </View>
@@ -68,40 +71,40 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
         <View style={styles.plansContainer}>
           {/* Example of a Plan Card - You'll eventually map these from RevenueCat offerings */}
           <TouchableOpacity
-            style={[styles.planCard, selectedPackage === 'yearly' && styles.selectedCard]}
+            style={[styles.planCard, selectedPackage === 'yearly' && styles.selectedCard, { borderColor: colors.orange, backgroundColor: '#252210' }]}
             onPress={() => setSelectedPackage('yearly')}
           >
             <View>
-              <Text style={styles.planTitle}>Yearly</Text>
-              <Text style={styles.planPrice}>1,500 PKR / year</Text>
+              <Text style={[styles.planTitle, { color: colors.text }]}>Yearly</Text>
+              <Text style={[styles.planPrice, { color: colors.text }]}>1,500 PKR / year</Text>
             </View>
-            <View style={styles.badge}>
-              <Text style={styles.badgeText}>BEST VALUE</Text>
+            <View style={[styles.badge, {backgroundColor: colors.orange}]}>
+              <Text style={[styles.badgeText, { color: colors.text }]}>BEST VALUE</Text>
             </View>
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.planCard, selectedPackage === 'lifetime' && styles.selectedCard]}
+            style={[styles.planCard, { backgroundColor: colors.card }, selectedPackage === 'lifetime' && styles.selectedCard, { backgroundColor: '#252210' }]}
             onPress={() => setSelectedPackage('lifetime')}
           >
-            <Text style={styles.planTitle}>Lifetime</Text>
-            <Text style={styles.planPrice}>3,000 PKR once</Text>
+            <Text style={[styles.planTitle, { color: colors.text }]}>Lifetime</Text>
+            <Text style={[styles.planPrice, { color: colors.text }]}>3,000 PKR once</Text>
           </TouchableOpacity>
         </View>
 
         {/* Action Button */}
         <TouchableOpacity
-          style={[styles.purchaseButton, !selectedPackage && styles.buttonDisabled]}
+          style={[styles.purchaseButton, !selectedPackage && styles.buttonDisabled, {  backgroundColor: colors.orange }]}
           onPress={handlePurchase}
           disabled={!selectedPackage}
         >
-          <Text style={styles.purchaseButtonText}>
+          <Text style={[  styles.purchaseButtonText, { color: colors.text, backgroundColor: colors.card }]}>
             {selectedPackage ? 'Upgrade Now' : 'Select a Package'}
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.restoreBtn}>
-          <Text style={styles.restoreText}>Restore Purchases</Text>
+          <Text style={[styles.restoreText, { color: colors.text }]}>Restore Purchases</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -109,19 +112,19 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#121212' },
+  container: { flex: 1 },
   closeButton: { position: 'absolute', top: 50, left: 20, zIndex: 10 },
   scrollContent: { padding: 20, paddingTop: 100 },
   headerArea: { alignItems: 'center', marginBottom: 40 },
-  iconCircle: { width: 100, height: 100, borderRadius: 50, backgroundColor: '#252525', justifyContent: 'center', alignItems: 'center', marginBottom: 15 },
-  title: { fontSize: 32, fontWeight: '700', color: '#fff' },
-  subtitle: { color: '#aaa', fontSize: 16 },
+  iconCircle: { width: 100, height: 100, borderRadius: 50, justifyContent: 'center', alignItems: 'center', marginBottom: 15 },
+  title: { fontSize: 32, fontWeight: '700' },
+  subtitle: { fontSize: 16 },
   featuresList: { marginBottom: 40 },
   featureItem: { flexDirection: 'row', alignItems: 'center', marginBottom: 15 },
-  featureText: { color: '#eee', marginLeft: 15, fontSize: 16 },
+  featureText: { marginLeft: 15, fontSize: 16 },
   plansContainer: { gap: 15, marginBottom: 30 },
   planCard: {
-    backgroundColor: '#1E1E1E',
+
     padding: 20,
     borderRadius: 15,
     flexDirection: 'row',
@@ -130,16 +133,16 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: 'transparent'
   },
-  selectedCard: { borderColor: '#FFD700', backgroundColor: '#252210' },
-  planTitle: { color: '#fff', fontSize: 18, fontWeight: '600' },
-  planPrice: { color: '#aaa', fontSize: 14 },
-  badge: { backgroundColor: '#FFD700', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8 },
-  badgeText: { color: '#000', fontSize: 10, fontWeight: '800' },
-  purchaseButton: { backgroundColor: '#FFD700', padding: 18, borderRadius: 15, alignItems: 'center' },
-  purchaseButtonText: { color: '#000', fontSize: 18, fontWeight: '700' },
-  buttonDisabled: { backgroundColor: '#333' },
+  selectedCard: {  },
+  planTitle: {  fontSize: 18, fontWeight: '600' },
+  planPrice: {  fontSize: 14 },
+  badge: {  paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8 },
+  badgeText: {  fontSize: 10, fontWeight: '800' },
+  purchaseButton: { padding: 18, borderRadius: 15, alignItems: 'center' },
+  purchaseButtonText: { fontSize: 18, fontWeight: '700' },
+  buttonDisabled: {  },
   restoreBtn: { marginTop: 20, alignItems: 'center' },
-  restoreText: { color: '#666', fontSize: 12 }
+  restoreText: { fontSize: 12 }
 });
 
 export default ProScreen;
