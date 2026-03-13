@@ -17,7 +17,7 @@ type Feature = {
 const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
   const { colors } = useThemeColors();
 
-  const [selectedPackage, setSelectedPackage] = useState<'yearly' | 'lifetime' | null>(null);
+  const [selectedPackage, setSelectedPackage] = useState<'monthly' | 'yearly' | 'lifetime' | null>(null);
 
   const features: Feature[] = [
     { icon: 'infinite', text: 'Unlimited Habits' },
@@ -25,7 +25,7 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
     { icon: 'cloud-upload', text: 'Cloud Sync & Backups' },
     { icon: 'color-palette', text: 'Exclusive Premium Themes' },
   ];
-  
+
   const handlePurchase = async () => {
     if (!selectedPackage) {
       Alert.alert('No Package Selected', 'Please select a subscription package.');
@@ -42,7 +42,7 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
     }
   };
   return (
-    <View style={[ styles.container, { backgroundColor: colors.background }]}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       {/* Header */}
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Ionicons name="close" size={28} color="#fff" />
@@ -69,36 +69,63 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
 
         {/* Plan Selection */}
         <View style={styles.plansContainer}>
-          {/* Example of a Plan Card - You'll eventually map these from RevenueCat offerings */}
+
+          {/* 1. Monthly Plan */}
           <TouchableOpacity
-            style={[styles.planCard, selectedPackage === 'yearly' && styles.selectedCard, { borderColor: colors.orange, backgroundColor: '#252210' }]}
+            style={[
+              styles.planCard,
+              { backgroundColor: colors.card, borderColor: 'transparent' },
+              selectedPackage === 'monthly' && { borderColor: colors.orange, backgroundColor: colors.orange + '10' } // + '10' adds 10% transparency
+            ]}
+            onPress={() => setSelectedPackage('monthly')}
+          >
+            <View>
+              <Text style={[styles.planTitle, { color: colors.text }]}>Monthly</Text>
+              <Text style={[styles.planPrice, { color: colors.text, opacity: 0.7 }]}>350 PKR / month</Text>
+            </View>
+          </TouchableOpacity>
+
+          {/* 2. Yearly Plan (Best Value) */}
+          <TouchableOpacity
+            style={[
+              styles.planCard,
+              { backgroundColor: colors.card, borderColor: 'transparent' },
+              selectedPackage === 'yearly' && { borderColor: colors.orange, backgroundColor: colors.orange + '10' }
+            ]}
             onPress={() => setSelectedPackage('yearly')}
           >
             <View>
               <Text style={[styles.planTitle, { color: colors.text }]}>Yearly</Text>
-              <Text style={[styles.planPrice, { color: colors.text }]}>1,500 PKR / year</Text>
+              <Text style={[styles.planPrice, { color: colors.text, opacity: 0.7 }]}>1,500 PKR / year</Text>
             </View>
-            <View style={[styles.badge, {backgroundColor: colors.orange}]}>
-              <Text style={[styles.badgeText, { color: colors.text }]}>BEST VALUE</Text>
+            <View style={[styles.badge, { backgroundColor: colors.orange }]}>
+              <Text style={[styles.badgeText, { color: '#000' }]}>BEST VALUE</Text>
             </View>
           </TouchableOpacity>
 
+          {/* 3. Lifetime Plan */}
           <TouchableOpacity
-            style={[styles.planCard, { backgroundColor: colors.card }, selectedPackage === 'lifetime' && styles.selectedCard, { backgroundColor: '#252210' }]}
+            style={[
+              styles.planCard,
+              { backgroundColor: colors.card, borderColor: 'transparent' },
+              selectedPackage === 'lifetime' && { borderColor: colors.orange, backgroundColor: colors.orange + '10' }
+            ]}
             onPress={() => setSelectedPackage('lifetime')}
           >
-            <Text style={[styles.planTitle, { color: colors.text }]}>Lifetime</Text>
-            <Text style={[styles.planPrice, { color: colors.text }]}>3,000 PKR once</Text>
+            <View>
+              <Text style={[styles.planTitle, { color: colors.text }]}>Lifetime</Text>
+              <Text style={[styles.planPrice, { color: colors.text, opacity: 0.7 }]}>3,000 PKR once</Text>
+            </View>
           </TouchableOpacity>
         </View>
 
         {/* Action Button */}
         <TouchableOpacity
-          style={[styles.purchaseButton, !selectedPackage && styles.buttonDisabled, {  backgroundColor: colors.orange }]}
+          style={[styles.purchaseButton, !selectedPackage && styles.buttonDisabled, { backgroundColor: colors.orange }]}
           onPress={handlePurchase}
           disabled={!selectedPackage}
         >
-          <Text style={[  styles.purchaseButtonText, { color: colors.text, backgroundColor: colors.card }]}>
+          <Text style={[styles.purchaseButtonText, { color: colors.text, backgroundColor: colors.card }]}>
             {selectedPackage ? 'Upgrade Now' : 'Select a Package'}
           </Text>
         </TouchableOpacity>
@@ -133,14 +160,14 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: 'transparent'
   },
-  selectedCard: {  },
-  planTitle: {  fontSize: 18, fontWeight: '600' },
-  planPrice: {  fontSize: 14 },
-  badge: {  paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8 },
-  badgeText: {  fontSize: 10, fontWeight: '800' },
+  selectedCard: {},
+  planTitle: { fontSize: 18, fontWeight: '600' },
+  planPrice: { fontSize: 14 },
+  badge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8 },
+  badgeText: { fontSize: 10, fontWeight: '800' },
   purchaseButton: { padding: 18, borderRadius: 15, alignItems: 'center' },
   purchaseButtonText: { fontSize: 18, fontWeight: '700' },
-  buttonDisabled: {  },
+  buttonDisabled: {},
   restoreBtn: { marginTop: 20, alignItems: 'center' },
   restoreText: { fontSize: 12 }
 });
