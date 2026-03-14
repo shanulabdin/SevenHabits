@@ -1,5 +1,7 @@
+import Heading from '@/components/Heading';
 import { useThemeColors } from '@/constants/theme';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from "expo-router";
 import { useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Purchases from 'react-native-purchases/dist/purchases';
@@ -13,21 +15,20 @@ type ProScreenProps = {
 type Feature = {
   icon: 'infinite' | 'stats-chart' | 'cloud-upload' | 'color-palette' | 'cube' | 'download' | 'share';
   text: string;
+  description: string;
 };
 
 const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
   const { colors } = useThemeColors();
-
+  const router = useRouter();
+  
   const [selectedPackage, setSelectedPackage] = useState<'monthly' | 'yearly' | 'lifetime' | null>('lifetime');
-
   const features: Feature[] = [
-    { icon: 'infinite', text: 'Unlimited Habits' },
-    // { icon: 'stats-chart', text: 'Advanced Analytics & Heatmaps' },
-    // { icon: 'cloud-upload', text: 'Cloud Sync & Backups' },
-    { icon: 'color-palette', text: 'Custom Themes' },
-    { icon: 'cube', text: 'Widgets' },
-    { icon: 'download', text: 'Export your Data' },
-    { icon: 'share', text: 'Import your Data' },
+    { icon: 'infinite', text: 'Unlimited Habits', description: 'Create and track unlimited habits.' },
+    { icon: 'color-palette', text: 'Custom Themes', description: 'Personalize app colors and accents.' },
+    { icon: 'cube', text: 'Widgets', description: 'Home-screen widgets for quick glances.' },
+    { icon: 'download', text: 'Export your Data', description: 'Export habit history as CSV or JSON.' },
+    { icon: 'share', text: 'Import your Data', description: 'Import backups or migrate data.' },
   ];
 
   const handlePurchase = async () => {
@@ -46,19 +47,21 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
     }
   };
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background, padding: 12, }]}>
       {/* Header */}
-      <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-        <Ionicons name="close" size={28} color="#fff" />
-      </TouchableOpacity>
+
+      <Heading title="Forge Pro" iconTitle="" icon="close" onIconPress={() =>
+        router.canGoBack() ? router.back() : router.replace("/(tabs)")
+      } />
+
 
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.headerArea}>
-          <View style={[styles.iconCircle, { backgroundColor: colors.background }]}>
-            <Ionicons name="flash" size={50} color={colors.orange} />
+          <View style={[styles.iconCircle, { backgroundColor: colors.orangeMuted }]}>
+            <Ionicons name="flash" size={100} color={colors.orange} />
           </View>
-          <Text style={[styles.title, { color: colors.text }]}>Forge Pro</Text>
-          <Text style={[styles.subtitle, { color: colors.text }]}>Build the best version of yourself.</Text>
+          <Text style={[styles.subtitle, { color: colors.text }]}>Limited time Offer, 50% OFF.</Text>
+          <Text style={[styles.title, { color: colors.text }]}>Pay Once, own forever</Text>
         </View>
 
         {/* Plan Selection */}
@@ -81,7 +84,7 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
               <Text style={[styles.planTitle, { color: colors.text }]}>Lifetime</Text>
 
               <View style={{ alignItems: 'flex-end' }}>
-                <Text style={[styles.planPriceDiscount, { color: colors.text }]}>4,500 PKR</Text>
+                <Text style={[styles.planPriceDiscount, { color: colors.text }]}>4,000 PKR</Text>
                 <Text style={[styles.planPrice, { color: colors.orange }]}>2,000 PKR</Text>
               </View>
             </View>
@@ -90,21 +93,6 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
           <View style={styles.planSeparator}>
             <Text style={[styles.planSeparatorText, { color: colors.text }]}>Other Plans</Text>
           </View>
-
-          {/* 1. Monthly Plan */}
-          <TouchableOpacity
-            style={[
-              styles.planCard, styles.cardShadow,
-              { backgroundColor: colors.card, borderColor: colors.border },
-              selectedPackage === 'monthly' && { borderWidth: 2, borderColor: colors.orange }
-            ]}
-            onPress={() => setSelectedPackage('monthly')}
-          >
-            <View style={styles.planCardText}>
-              <Text style={[styles.planTitle, { color: colors.text }]}>Monthly</Text>
-              <Text style={[styles.planPrice, { color: colors.text }]}>200 PKR / month</Text>
-            </View>
-          </TouchableOpacity>
 
           {/* 2. Yearly Plan (Best Value) */}
           <TouchableOpacity
@@ -121,14 +109,33 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
             </View>
           </TouchableOpacity>
 
+          {/* 1. Monthly Plan */}
+          <TouchableOpacity
+            style={[
+              styles.planCard, styles.cardShadow,
+              { backgroundColor: colors.card, borderColor: colors.border },
+              selectedPackage === 'monthly' && { borderWidth: 2, borderColor: colors.orange }
+            ]}
+            onPress={() => setSelectedPackage('monthly')}
+          >
+            <View style={styles.planCardText}>
+              <Text style={[styles.planTitle, { color: colors.text }]}>Monthly</Text>
+              <Text style={[styles.planPrice, { color: colors.text }]}>200 PKR / month</Text>
+            </View>
+          </TouchableOpacity>
         </View>
 
         {/* Features */}
         <View style={styles.featuresList}>
           {features.map((f, i) => (
             <View key={i} style={styles.featureItem}>
-              <Ionicons name={f.icon} size={20} color={colors.orange} />
-              <Text style={[styles.featureText, { color: colors.text }]}>{f.text}</Text>
+              <View style={{ backgroundColor: colors.orange + '25', width: 36, height: 36, borderRadius: 2, justifyContent: 'center', alignItems: 'center' }}>
+                <Ionicons name={f.icon} size={20} style={{ color: colors.orange }} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.featureText, { color: colors.text }]}>{f.text}</Text>
+                <Text style={[styles.featureDes, { color: colors.text }]}>{f.description}</Text>
+              </View>
             </View>
           ))}
         </View>
@@ -157,17 +164,18 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   closeButton: { position: 'absolute', top: 50, left: 20, zIndex: 10 },
-  scrollContent: { padding: 20},
+  scrollContent: { padding: 10, paddingTop: 50 },
   headerArea: { alignItems: 'center', marginBottom: 40 },
-  iconCircle: { width: 100, height: 100, borderRadius: 50, justifyContent: 'center', alignItems: 'center', marginBottom: 15 },
-  title: { fontSize: 32, fontWeight: '700' },
+  iconCircle: { width: 150, height: 150, borderRadius: 50, justifyContent: 'center', alignItems: 'center', marginBottom: 25 },
+  title: { fontSize: 28, fontWeight: '700', textAlign: 'center' },
   subtitle: { fontSize: 16 },
   featuresList: { marginBottom: 40 },
-  featureItem: { flexDirection: 'row', alignItems: 'center', marginBottom: 15 },
-  featureText: { marginLeft: 15, fontSize: 16 },
+  featureItem: { flexDirection: 'row', alignItems: 'center', marginBottom: 20 },
+  featureText: { marginLeft: 15, fontSize: 16, marginBottom: 1 },
+  featureDes: { marginLeft: 15, fontSize: 12, opacity: 0.8 },
   plansContainer: { gap: 15, marginBottom: 30 },
   planCard: {
-    padding: 20,
+    padding: 16,
     borderRadius: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -201,12 +209,12 @@ const styles = StyleSheet.create({
   planPriceDiscount: { fontSize: 12, fontWeight: '600', textDecorationLine: 'line-through' },
   badge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8 },
   badgeText: { fontSize: 10, fontWeight: '800' },
-  purchaseButton: { padding: 18, borderRadius: 10, alignItems: 'center' },
+  purchaseButton: { padding: 18, borderRadius: 10, alignItems: 'center', },
   purchaseButtonText: { fontSize: 18, fontWeight: '700' },
   buttonDisabled: {},
-  restoreBtn: { marginTop: 20, alignItems: 'center' },
+  restoreBtn: { marginTop: 15, alignItems: 'center' },
   restoreText: { fontSize: 12 },
-  purchaseButtonContainer: { paddingBottom: 22, paddingHorizontal: 20 },
+  purchaseButtonContainer: { paddingBottom: 22, paddingHorizontal: 16, paddingTop: 10, borderRadius: 10 },
   planSeparator: { alignItems: 'center' },
   planSeparatorText: { fontSize: 12, fontWeight: '400', opacity: 0.7, marginTop: 6 },
 });
