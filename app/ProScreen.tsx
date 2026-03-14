@@ -3,7 +3,7 @@ import { useThemeColors } from '@/constants/theme';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from "expo-router";
 import { useState } from 'react';
-import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Purchases from 'react-native-purchases/dist/purchases';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -27,7 +27,7 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
     { icon: 'infinite', text: 'Unlimited Habits', description: 'Create and track unlimited habits.' },
     { icon: 'color-palette', text: 'Custom Themes', description: 'Personalize app colors and accents.' },
     { icon: 'cube', text: 'Widgets', description: 'Home-screen widgets for quick glances.' },
-    { icon: 'download', text: 'Export your Data', description: 'Export habit history as CSV or JSON.' },
+    { icon: 'download', text: 'Export your Data', description: 'Export habit history as JSON.' },
     { icon: 'share', text: 'Import your Data', description: 'Import backups or migrate data.' },
   ];
 
@@ -54,9 +54,8 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
         router.canGoBack() ? router.back() : router.replace("/(tabs)")
       } />
 
-
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        <View style={styles.headerArea}>
+        {/* <View style={styles.headerArea}>
           <View style={styles.imageContainer}>
             <Image
               source={require('@/assets/images/3d1.png')} // Use require for local images
@@ -65,35 +64,40 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
           </View>
           <Text style={[styles.subtitle, { color: colors.text }]}>Limited time Offer, 50% OFF.</Text>
           <Text style={[styles.title, { color: colors.text }]}>Pay Once, own forever</Text>
+        </View> */}
+
+        <View style={styles.headerArea}>
+          <View style={[styles.iconCircle, { backgroundColor: colors.orangeMuted }]}>
+            <Ionicons name="flash" size={100} color={colors.orange} />
+          </View>
+          <Text style={[styles.subtitle, { color: colors.text }]}>Limited time Offer, 50% OFF.</Text>
+          <Text style={[styles.title, { color: colors.text }]}>Pay Once, own forever</Text>
         </View>
 
         {/* Plan Selection */}
         <View style={styles.plansContainer}>
 
-          {/* <View style={[styles.badge, { backgroundColor: colors.orange }]}>
-              <Text style={[styles.badgeText, { color: '#000' }]}>BEST VALUE</Text>
-            </View> */}
-
           {/* 3. Lifetime Plan */}
-          <View style={styles.cardShadow}>
-            <TouchableOpacity
-              style={[
-                styles.planCard,
-                { backgroundColor: colors.orangeMuted, borderColor: colors.border },
-                selectedPackage === 'lifetime' && { borderWidth: 2, borderColor: colors.orange }
-              ]}
-              onPress={() => setSelectedPackage('lifetime')}
-            >
-              <View style={styles.planCardText}>
-                <Text style={[styles.planTitle, { color: colors.text }]}>Lifetime</Text>
-
-                <View style={{ alignItems: 'flex-end' }}>
-                  <Text style={[styles.planPriceDiscount, { color: colors.text }]}>4,000 PKR</Text>
-                  <Text style={[styles.planPrice, { color: colors.orange }]}>2,000 PKR</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
+          <View style={[styles.badge, { backgroundColor: colors.orange }]}>
+            <Text style={[styles.badgeText, { color: '#000' }]}>BEST VALUE</Text>
           </View>
+          <TouchableOpacity
+            style={[
+              styles.planCard, styles.cardShadow,
+              { backgroundColor: colors.orangeMuted, borderColor: colors.border },
+              selectedPackage === 'lifetime' && { borderWidth: 2, borderColor: colors.orange }
+            ]}
+            onPress={() => setSelectedPackage('lifetime')}
+          >
+            <View style={styles.planCardText}>
+              <Text style={[styles.planTitle, { color: colors.text }]}>Lifetime</Text>
+
+              <View style={{ alignItems: 'flex-end' }}>
+                <Text style={[styles.planPriceDiscount, { color: colors.text }]}>4,000 PKR</Text>
+                <Text style={[styles.planPrice, { color: colors.orange }]}>2,000 PKR</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
 
 
           <View style={styles.planSeparator}>
@@ -169,6 +173,7 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
+
   closeButton: { position: 'absolute', top: 50, left: 20, zIndex: 10 },
   scrollContent: { padding: 10, paddingTop: 20 },
   headerArea: { alignItems: 'center', marginBottom: 40 },
@@ -187,7 +192,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderWidth: 1,
-    overflow: 'visible', 
+    overflow: 'visible',
   },
   planCardText: {
     flex: 1,
@@ -214,8 +219,8 @@ const styles = StyleSheet.create({
   planTitle: { fontSize: 18, fontWeight: '600' },
   planPrice: { fontSize: 14, fontWeight: '600' },
   planPriceDiscount: { fontSize: 12, fontWeight: '600', textDecorationLine: 'line-through' },
-  badge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8 },
-  badgeText: { fontSize: 10, fontWeight: '800' },
+  badge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 4, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: -10, zIndex: 1, width: 100, alignSelf: 'center' },
+  badgeText: { fontSize: 11, fontWeight: '800' },
   purchaseButton: { padding: 18, borderRadius: 10, alignItems: 'center', },
   purchaseButtonText: { fontSize: 18, fontWeight: '700' },
   buttonDisabled: {},
