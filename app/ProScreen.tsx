@@ -3,7 +3,7 @@ import { useThemeColors } from '@/constants/theme';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from "expo-router";
 import { useState } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Purchases from 'react-native-purchases/dist/purchases';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -21,7 +21,7 @@ type Feature = {
 const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
   const { colors } = useThemeColors();
   const router = useRouter();
-  
+
   const [selectedPackage, setSelectedPackage] = useState<'monthly' | 'yearly' | 'lifetime' | null>('lifetime');
   const features: Feature[] = [
     { icon: 'infinite', text: 'Unlimited Habits', description: 'Create and track unlimited habits.' },
@@ -57,8 +57,11 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
 
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.headerArea}>
-          <View style={[styles.iconCircle, { backgroundColor: colors.orangeMuted }]}>
-            <Ionicons name="flash" size={100} color={colors.orange} />
+          <View style={styles.imageContainer}>
+            <Image
+              source={require('@/assets/images/3d1.png')} // Use require for local images
+              style={styles.image}
+            />
           </View>
           <Text style={[styles.subtitle, { color: colors.text }]}>Limited time Offer, 50% OFF.</Text>
           <Text style={[styles.title, { color: colors.text }]}>Pay Once, own forever</Text>
@@ -72,23 +75,26 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
             </View> */}
 
           {/* 3. Lifetime Plan */}
-          <TouchableOpacity
-            style={[
-              styles.planCard, styles.cardShadow,
-              { backgroundColor: colors.orangeMuted, borderColor: colors.border },
-              selectedPackage === 'lifetime' && { borderWidth: 2, borderColor: colors.orange }
-            ]}
-            onPress={() => setSelectedPackage('lifetime')}
-          >
-            <View style={styles.planCardText}>
-              <Text style={[styles.planTitle, { color: colors.text }]}>Lifetime</Text>
+          <View style={styles.cardShadow}>
+            <TouchableOpacity
+              style={[
+                styles.planCard,
+                { backgroundColor: colors.orangeMuted, borderColor: colors.border },
+                selectedPackage === 'lifetime' && { borderWidth: 2, borderColor: colors.orange }
+              ]}
+              onPress={() => setSelectedPackage('lifetime')}
+            >
+              <View style={styles.planCardText}>
+                <Text style={[styles.planTitle, { color: colors.text }]}>Lifetime</Text>
 
-              <View style={{ alignItems: 'flex-end' }}>
-                <Text style={[styles.planPriceDiscount, { color: colors.text }]}>4,000 PKR</Text>
-                <Text style={[styles.planPrice, { color: colors.orange }]}>2,000 PKR</Text>
+                <View style={{ alignItems: 'flex-end' }}>
+                  <Text style={[styles.planPriceDiscount, { color: colors.text }]}>4,000 PKR</Text>
+                  <Text style={[styles.planPrice, { color: colors.orange }]}>2,000 PKR</Text>
+                </View>
               </View>
-            </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
+
 
           <View style={styles.planSeparator}>
             <Text style={[styles.planSeparatorText, { color: colors.text }]}>Other Plans</Text>
@@ -129,7 +135,7 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
         <View style={styles.featuresList}>
           {features.map((f, i) => (
             <View key={i} style={styles.featureItem}>
-              <View style={{ backgroundColor: colors.orange + '25', width: 36, height: 36, borderRadius: 2, justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ backgroundColor: colors.orange + '25', width: 36, height: 36, borderRadius: 6, justifyContent: 'center', alignItems: 'center' }}>
                 <Ionicons name={f.icon} size={20} style={{ color: colors.orange }} />
               </View>
               <View style={{ flex: 1 }}>
@@ -164,7 +170,7 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   closeButton: { position: 'absolute', top: 50, left: 20, zIndex: 10 },
-  scrollContent: { padding: 10, paddingTop: 50 },
+  scrollContent: { padding: 10, paddingTop: 20 },
   headerArea: { alignItems: 'center', marginBottom: 40 },
   iconCircle: { width: 150, height: 150, borderRadius: 50, justifyContent: 'center', alignItems: 'center', marginBottom: 25 },
   title: { fontSize: 28, fontWeight: '700', textAlign: 'center' },
@@ -181,6 +187,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderWidth: 1,
+    overflow: 'visible', 
   },
   planCardText: {
     flex: 1,
@@ -217,6 +224,13 @@ const styles = StyleSheet.create({
   purchaseButtonContainer: { paddingBottom: 22, paddingHorizontal: 16, paddingTop: 10, borderRadius: 10 },
   planSeparator: { alignItems: 'center' },
   planSeparatorText: { fontSize: 12, fontWeight: '400', opacity: 0.7, marginTop: 6 },
+  imageContainer: {
+    marginBottom: 20,
+  },
+  image: {
+    width: 350,
+    height: 350,
+  },
 });
 
 export default ProScreen;

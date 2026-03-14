@@ -18,7 +18,7 @@ const LIGHT = {
   border: "rgba(0, 0, 0, 0)",
 
   orange: "#FF6D1F",
-  orangeMuted: "#ff6d1f1a",
+  orangeMuted: "#fff1e9ff",
 
   accent: "#000000ff",
   accentMuted: "#00000026",
@@ -37,7 +37,7 @@ const DARK = {
   border: "#000000",
 
   orange: "#FF6D1F",
-  orangeMuted: "#ff6d1f1a",
+  orangeMuted: "#1d0a00ff",
 
   accent: "#ffffffff",
   accentMuted: "#ffffff26",
