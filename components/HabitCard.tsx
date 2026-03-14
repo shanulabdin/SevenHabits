@@ -130,7 +130,7 @@ export default function HabitCard({
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginBottom: 12,
+    marginBottom: 8,
     alignItems: "center",
     width: "100%",
   },

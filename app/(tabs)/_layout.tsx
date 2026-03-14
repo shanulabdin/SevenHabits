@@ -25,43 +25,49 @@ export default function TabLayout() {
       <Tabs
         screenOptions={{
           headerShown: false,
-          sceneStyle: { backgroundColor: colors.card },
 
           // ✅ haptics on ALL tab presses
           tabBarButton: (props) => <HapticTabButton {...props} />,
 
           tabBarStyle: {
-            backgroundColor: colors.card,
+            backgroundColor: colors.tabbar,
             width: "100%",
+            height: 80,
             paddingBottom: 10,
-            paddingTop: 10,
+            paddingTop: 12,
             marginTop: -23,
-            borderTopWidth: 1,
-            borderTopColor: colors.border,
-            elevation: 0, // ANDROID
-            shadowColor: "transparent", // iOS
-          },
-          tabBarShowLabel: false,
-          tabBarActiveTintColor: colors.orange,
-          tabBarInactiveTintColor: colors.text,
-        }}
-      >
-        <Tabs.Screen
-          name="index"
-          options={{
+            borderTopWidth: 0, // Remove default top border
+            
+            // iOS shadow (top shadow)
+            shadowColor: "#000",
+            
+            // stronger top shadow
+            shadowOffset: { width: 0, height: -10 }, // increase negative height to raise the shadow
+            shadowOpacity: 0.18,
+            shadowRadius: 18,
+            elevation: 5,
+            },
+            tabBarShowLabel: false,
+            tabBarActiveTintColor: colors.orange,
+            tabBarInactiveTintColor: colors.text,
+          }}
+          >
+          <Tabs.Screen
+            name="index"
+            options={{
             tabBarIcon: ({ color, size, focused }) => (
               <Ionicons
-                name={focused ? "home" : "home-outline"}
-                size={focused ? size + 3 : size}
-                color={color}
+              name={focused ? "home" : "home-outline"}
+              size={focused ? size + 3 : size}
+              color={color}
               />
             ),
-          }}
-        />
+            }}
+          />
 
-        <Tabs.Screen
-          name="AddHabit"
-          options={{
+          <Tabs.Screen
+            name="AddHabit"
+            options={{
             tabBarIcon: ({ focused, size }) => (
               <View
                 style={[

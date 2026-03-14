@@ -16,8 +16,8 @@ import {
   Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
 import { useFonts } from "expo-font";
-import { Platform } from 'react-native';
 import { useEffect } from 'react';
+import { Platform } from 'react-native';
 import Purchases, { LOG_LEVEL } from 'react-native-purchases';
 
 function AppShell() {
@@ -41,7 +41,7 @@ function AppShell() {
   const isDark = colors.text === "#FFFFFF";
   return (
     <NavThemeProvider value={navTheme}>
-      <View style={{ flex: 1, backgroundColor: colors.card }}>
+      <View style={{ flex: 1, backgroundColor: colors.card + '10' }}>
         <StatusBar style={isDark ? "light" : "dark"} />
         <Stack
           screenOptions={{

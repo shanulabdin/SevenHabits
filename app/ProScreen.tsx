@@ -75,7 +75,7 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
           <TouchableOpacity
             style={[
               styles.planCard, styles.cardShadow,
-              { backgroundColor: colors.card, borderColor: colors.border },
+              { backgroundColor: colors.orangeMuted, borderColor: colors.border },
               selectedPackage === 'lifetime' && { borderWidth: 2, borderColor: colors.orange }
             ]}
             onPress={() => setSelectedPackage('lifetime')}
@@ -98,7 +98,7 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
           <TouchableOpacity
             style={[
               styles.planCard, styles.cardShadow,
-              { backgroundColor: colors.card, borderColor: colors.border },
+              { backgroundColor: colors.orangeMuted, borderColor: colors.border },
               selectedPackage === 'yearly' && { borderWidth: 2, borderColor: colors.orange }
             ]}
             onPress={() => setSelectedPackage('yearly')}
@@ -113,7 +113,7 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
           <TouchableOpacity
             style={[
               styles.planCard, styles.cardShadow,
-              { backgroundColor: colors.card, borderColor: colors.border },
+              { backgroundColor: colors.orangeMuted, borderColor: colors.border },
               selectedPackage === 'monthly' && { borderWidth: 2, borderColor: colors.orange }
             ]}
             onPress={() => setSelectedPackage('monthly')}
