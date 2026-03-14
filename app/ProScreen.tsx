@@ -3,6 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Purchases from 'react-native-purchases/dist/purchases';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type ProScreenProps = {
   onPurchase: (packageId: string) => void;
@@ -10,7 +11,7 @@ type ProScreenProps = {
 };
 
 type Feature = {
-  icon: 'infinite' | 'stats-chart' | 'cloud-upload' | 'color-palette' | 'cube';
+  icon: 'infinite' | 'stats-chart' | 'cloud-upload' | 'color-palette' | 'cube' | 'download' | 'share';
   text: string;
 };
 
@@ -25,6 +26,8 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
     // { icon: 'cloud-upload', text: 'Cloud Sync & Backups' },
     { icon: 'color-palette', text: 'Custom Themes' },
     { icon: 'cube', text: 'Widgets' },
+    { icon: 'download', text: 'Export your Data' },
+    { icon: 'share', text: 'Import your Data' },
   ];
 
   const handlePurchase = async () => {
@@ -43,7 +46,7 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
     }
   };
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       {/* Header */}
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Ionicons name="close" size={28} color="#fff" />
@@ -60,38 +63,46 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
 
         {/* Plan Selection */}
         <View style={styles.plansContainer}>
-          {/* 3. Lifetime Plan */}
-                      
-            {/* <View style={[styles.badge, { backgroundColor: colors.orange }]}>
+
+          {/* <View style={[styles.badge, { backgroundColor: colors.orange }]}>
               <Text style={[styles.badgeText, { color: '#000' }]}>BEST VALUE</Text>
             </View> */}
+
+          {/* 3. Lifetime Plan */}
           <TouchableOpacity
             style={[
               styles.planCard, styles.cardShadow,
-              { backgroundColor: colors.card, borderColor: 'transparent' },
-              selectedPackage === 'lifetime' && { borderColor: colors.orange }
+              { backgroundColor: colors.card, borderColor: colors.border },
+              selectedPackage === 'lifetime' && { borderWidth: 2, borderColor: colors.orange }
             ]}
             onPress={() => setSelectedPackage('lifetime')}
           >
             <View style={styles.planCardText}>
               <Text style={[styles.planTitle, { color: colors.text }]}>Lifetime</Text>
-              <Text style={[styles.planPrice, { color: colors.text, opacity: 0.7 }]}>2,000 PKR once</Text>
-            </View>
 
+              <View style={{ alignItems: 'flex-end' }}>
+                <Text style={[styles.planPriceDiscount, { color: colors.text }]}>4,500 PKR</Text>
+                <Text style={[styles.planPrice, { color: colors.orange }]}>2,000 PKR</Text>
+              </View>
+            </View>
           </TouchableOpacity>
+
+          <View style={styles.planSeparator}>
+            <Text style={[styles.planSeparatorText, { color: colors.text }]}>Other Plans</Text>
+          </View>
 
           {/* 1. Monthly Plan */}
           <TouchableOpacity
             style={[
               styles.planCard, styles.cardShadow,
-              { backgroundColor: colors.card, borderColor: 'transparent' },
-              selectedPackage === 'monthly' && { borderColor: colors.orange } // 1A = 10% opacity in hex
+              { backgroundColor: colors.card, borderColor: colors.border },
+              selectedPackage === 'monthly' && { borderWidth: 2, borderColor: colors.orange }
             ]}
             onPress={() => setSelectedPackage('monthly')}
           >
             <View style={styles.planCardText}>
               <Text style={[styles.planTitle, { color: colors.text }]}>Monthly</Text>
-              <Text style={[styles.planPrice, { color: colors.text, opacity: 0.7 }]}>200 PKR / month</Text>
+              <Text style={[styles.planPrice, { color: colors.text }]}>200 PKR / month</Text>
             </View>
           </TouchableOpacity>
 
@@ -99,14 +110,14 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
           <TouchableOpacity
             style={[
               styles.planCard, styles.cardShadow,
-              { backgroundColor: colors.card, borderColor: 'transparent' },
-              selectedPackage === 'yearly' && { borderColor: colors.orange }
+              { backgroundColor: colors.card, borderColor: colors.border },
+              selectedPackage === 'yearly' && { borderWidth: 2, borderColor: colors.orange }
             ]}
             onPress={() => setSelectedPackage('yearly')}
           >
             <View style={styles.planCardText}>
               <Text style={[styles.planTitle, { color: colors.text }]}>Yearly</Text>
-              <Text style={[styles.planPrice, { color: colors.text, opacity: 0.7 }]}>1,000 PKR / year</Text>
+              <Text style={[styles.planPrice, { color: colors.text }]}>1,000 PKR / year</Text>
             </View>
           </TouchableOpacity>
 
@@ -139,14 +150,14 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
           <Text style={[styles.restoreText, { color: colors.text }]}>Restore Purchases</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
   closeButton: { position: 'absolute', top: 50, left: 20, zIndex: 10 },
-  scrollContent: { padding: 20, paddingTop: 100 },
+  scrollContent: { padding: 20},
   headerArea: { alignItems: 'center', marginBottom: 40 },
   iconCircle: { width: 100, height: 100, borderRadius: 50, justifyContent: 'center', alignItems: 'center', marginBottom: 15 },
   title: { fontSize: 32, fontWeight: '700' },
@@ -157,19 +168,18 @@ const styles = StyleSheet.create({
   plansContainer: { gap: 15, marginBottom: 30 },
   planCard: {
     padding: 20,
-    borderRadius: 15,
+    borderRadius: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderWidth: 2,
-    borderColor: 'transparent',
+    borderWidth: 1,
   },
   planCardText: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-     alignItems: 'center',
-     gap: 10,
+    alignItems: 'center',
+    gap: 10,
   },
   PluginArray: {
     padding: 10,
@@ -187,15 +197,18 @@ const styles = StyleSheet.create({
   },
   selectedCard: {},
   planTitle: { fontSize: 18, fontWeight: '600' },
-  planPrice: { fontSize: 14 },
+  planPrice: { fontSize: 14, fontWeight: '600' },
+  planPriceDiscount: { fontSize: 12, fontWeight: '600', textDecorationLine: 'line-through' },
   badge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8 },
   badgeText: { fontSize: 10, fontWeight: '800' },
-  purchaseButton: { padding: 18, borderRadius: 15, alignItems: 'center' },
+  purchaseButton: { padding: 18, borderRadius: 10, alignItems: 'center' },
   purchaseButtonText: { fontSize: 18, fontWeight: '700' },
   buttonDisabled: {},
   restoreBtn: { marginTop: 20, alignItems: 'center' },
   restoreText: { fontSize: 12 },
   purchaseButtonContainer: { paddingBottom: 22, paddingHorizontal: 20 },
+  planSeparator: { alignItems: 'center' },
+  planSeparatorText: { fontSize: 12, fontWeight: '400', opacity: 0.7, marginTop: 6 },
 });
 
 export default ProScreen;
