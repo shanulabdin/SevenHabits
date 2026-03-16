@@ -56,3 +56,5 @@ The core experience will always remain fast, minimal, and distraction free.
 
 Consistency beats motivation.
 Forge your habits.
+
+Made the reminder with copilot Claude Opus 4.6, cant check what it made rn because i dont have my phone rn, 
