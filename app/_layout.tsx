@@ -9,6 +9,7 @@ import { View } from "react-native";
 
 import { HabitsProvider } from "@/src/context/HabitsProvider";
 import { SettingsProvider } from "@/src/context/SettingsProvider";
+import { requestNotificationPermission } from '@/utils/notifications';
 import {
   Poppins_400Regular,
   Poppins_500Medium,
@@ -81,6 +82,11 @@ export default function RootLayout() {
     } catch (error) {
       console.warn('RevenueCat initialization skipped:', error);
     }
+  }, []);
+
+  // Request notification permission on app start
+  useEffect(() => {
+    requestNotificationPermission();
   }, []);
 
   async function getCustomerInfo() {

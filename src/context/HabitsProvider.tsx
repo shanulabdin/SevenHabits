@@ -1,8 +1,9 @@
 import type { Habit } from "@/types/habit";
 import { getDateKey } from "@/utils/date";
 import { generateFakeHistory } from "@/utils/history";
+import { cancelHabitReminders, scheduleHabitReminders } from "@/utils/notifications";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 
 const STORAGE_KEY = "@forge/habits_v1";
 
@@ -70,6 +71,7 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
                 history: h.history as Record<string, boolean>,
                 showGrid: typeof h.showGrid === "boolean" ? h.showGrid : true,
                 showStreak: typeof h.showStreak === "boolean" ? h.showStreak : false,
+                reminder: h.reminder ?? null,
               };
               return habit;
             }
@@ -85,6 +87,23 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Re-schedule all notifications on app start (they may be cleared after reboot)
+  const hasScheduledRef = useRef(false);
+  useEffect(() => {
+    if (hasScheduledRef.current) return;
+    // Wait until habits are loaded from storage (not defaults)
+    if (habits.length === 0) return;
+
+    hasScheduledRef.current = true;
+    (async () => {
+      for (const habit of habits) {
+        if (habit.reminder && habit.reminder.days.length > 0) {
+          await scheduleHabitReminders(habit.id, habit.title, habit.reminder);
+        }
+      }
+    })();
+  }, [habits]);
+
   // 3) SAVE on change (moved from index)
   useEffect(() => {
     (async () => {
@@ -97,6 +116,10 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
   // 4) RESET (moved from index)
   async function resetAllData() {
     try {
+      // Cancel all habit reminders
+      for (const habit of habits) {
+        await cancelHabitReminders(habit.id);
+      }
       await AsyncStorage.removeItem(STORAGE_KEY);
 
       // Choose ONE:

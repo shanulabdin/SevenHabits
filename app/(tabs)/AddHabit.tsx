@@ -1,15 +1,18 @@
 import CreateHabit from "@/components/CreateHabit";
 import Heading from "@/components/Heading";
+import ReminderPicker from "@/components/ReminderPicker";
 import { useThemeColors } from "@/constants/theme";
+import type { Reminder } from "@/types/habit";
 import { hapticLight } from "@/utils/haptics";
 import { router } from "expo-router";
 import { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AddHabit() {
   const { colors } = useThemeColors();
   const [newHabitTitle, setNewHabitTitle] = useState("");
+  const [reminder, setReminder] = useState<Reminder | null>(null);
 
   function submit(title: string) {
     if (typeof title !== "string") {
@@ -19,8 +22,15 @@ export default function AddHabit() {
     const trimmed = title.trim();
     if (!trimmed) return;
 
-    router.push({ pathname: "/", params: { newHabit: trimmed } });
+    router.push({
+      pathname: "/",
+      params: {
+        newHabit: trimmed,
+        reminder: reminder ? JSON.stringify(reminder) : undefined,
+      },
+    });
     setNewHabitTitle("");
+    setReminder(null);
   }
 
   return (
@@ -35,11 +45,14 @@ export default function AddHabit() {
             submit(newHabitTitle)
           }}
         />
-        <CreateHabit
-          newHabitTitle={newHabitTitle}
-          setNewHabitTitle={setNewHabitTitle}
-          createHabit={submit}
-        />
+        <ScrollView style={{ width: "100%" }} showsVerticalScrollIndicator={false}>
+          <CreateHabit
+            newHabitTitle={newHabitTitle}
+            setNewHabitTitle={setNewHabitTitle}
+            createHabit={submit}
+          />
+          <ReminderPicker reminder={reminder} onChange={setReminder} />
+        </ScrollView>
       </View>
     </SafeAreaView>
   );

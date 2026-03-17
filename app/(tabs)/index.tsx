@@ -1,8 +1,10 @@
 import DayRing from '@/components/DayRing';
 import HabitCard from '@/components/HabitCard';
 import Heading from '@/components/Heading';
+import ReminderPicker from '@/components/ReminderPicker';
 import { useHabits } from '@/src/context/HabitsProvider';
-import { Habit } from '@/types/habit';
+import { Habit, Reminder } from '@/types/habit';
+import { cancelHabitReminders, scheduleHabitReminders } from '@/utils/notifications';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -81,9 +83,14 @@ export default function Index() {
   const [editingHabitId, setEditingHabitId] = useState<string | null>(null);
   const [editingHabitTitle, setEditingHabitTitle] = useState<string>('');
 
+  // Reminder editing state
+  const [reminderModalVisible, setReminderModalVisible] = useState(false);
+  const [reminderEditHabitId, setReminderEditHabitId] = useState<string | null>(null);
+  const [reminderEditValue, setReminderEditValue] = useState<Reminder | null>(null);
+
   const scrollRef = useRef<ScrollView>(null)
 
-  const { newHabit } = useLocalSearchParams<{ newHabit?: string }>();
+  const { newHabit, reminder: reminderParam } = useLocalSearchParams<{ newHabit?: string; reminder?: string }>();
 
 
 
@@ -108,7 +115,7 @@ export default function Index() {
     );
   }
 
-  const createHabit = useCallback((title: string) => {
+  const createHabit = useCallback((title: string, reminder?: Reminder | null) => {
     if (title.trim() === '') return;
 
     const newHabit: Habit = {
@@ -118,10 +125,16 @@ export default function Index() {
         [selectedDateKey]: false,
       },
       showGrid: true,
-      showStreak: true
+      showStreak: true,
+      reminder: reminder ?? null,
     };
 
     setHabits(prev => [...prev, newHabit]);
+
+    // Schedule notifications if reminder is set
+    if (reminder && reminder.days.length > 0) {
+      scheduleHabitReminders(newHabit.id, newHabit.title, reminder);
+    }
   }, [selectedDateKey, setHabits]);
 
 
@@ -132,8 +145,17 @@ export default function Index() {
     if (consumedRef.current === newHabit) return;
 
     consumedRef.current = newHabit;
-    createHabit(newHabit);
-    router.setParams({ newHabit: undefined });
+
+    // Parse reminder if provided
+    let parsedReminder: Reminder | null = null;
+    if (reminderParam) {
+      try {
+        parsedReminder = JSON.parse(reminderParam) as Reminder;
+      } catch { }
+    }
+
+    createHabit(newHabit, parsedReminder);
+    router.setParams({ newHabit: undefined, reminder: undefined });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newHabit]);
 
@@ -155,6 +177,7 @@ export default function Index() {
   }, [todayKey]);
 
   function deleteHabit(id: string) {
+    cancelHabitReminders(id); // Cancel any scheduled notifications
     setHabits(prev => prev.filter(habit => habit.id !== id));
     setIsModalVisible(false);
     setSelectedHabitId(null);
@@ -210,12 +233,50 @@ export default function Index() {
     );
   }
 
+  // Open reminder editor for a habit
+  function openReminderEditor(id: string) {
+    const habit = habits.find(h => h.id === id);
+    if (!habit) return;
+    setIsModalVisible(false);
+    setSelectedHabitId(null);
+    setTimeout(() => {
+      setReminderEditHabitId(id);
+      setReminderEditValue(habit.reminder ?? null);
+      setReminderModalVisible(true);
+    }, 50);
+  }
+
+  // Save reminder changes
+  function saveReminder() {
+    if (!reminderEditHabitId) return;
+    const habit = habits.find(h => h.id === reminderEditHabitId);
+    if (!habit) return;
+
+    setHabits(prev =>
+      prev.map(h =>
+        h.id === reminderEditHabitId ? { ...h, reminder: reminderEditValue } : h
+      )
+    );
+
+    // Schedule or cancel notifications
+    if (reminderEditValue && reminderEditValue.days.length > 0) {
+      scheduleHabitReminders(reminderEditHabitId, habit.title, reminderEditValue);
+    } else {
+      cancelHabitReminders(reminderEditHabitId);
+    }
+
+    setReminderModalVisible(false);
+    setReminderEditHabitId(null);
+    setReminderEditValue(null);
+  }
+
   const selectedHabit = selectedHabitId
     ? habits.find(h => h.id === selectedHabitId)
     : null;
 
   const gridLabel = selectedHabit?.showGrid ?? true ? "Hide Grid" : "Show Grid";
   const streakLabel = selectedHabit?.showStreak ?? true ? "Hide Streak" : "Show Streak";
+  const reminderLabel = selectedHabit?.reminder ? "Edit Reminder" : "Set Reminder";
 
   const {
     openConfirm: openDeleteHabitConfirm,
@@ -580,6 +641,19 @@ export default function Index() {
                   </Text>
                 </Pressable>
 
+                {/* Reminder */}
+                <Pressable
+                  onPress={() => {
+                    hapticSelect();
+                    if (!selectedHabitId) return;
+                    openReminderEditor(selectedHabitId);
+                  }}
+                >
+                  <Text style={[styles.modalItem, styles.modalItemBorder, { color: colors.text, borderBottomColor: colors.border, fontFamily: "Poppins_500Medium" }]}>
+                    {reminderLabel}
+                  </Text>
+                </Pressable>
+
                 {/* Delete */}
                 <Pressable
                   onPress={() => {
@@ -598,6 +672,52 @@ export default function Index() {
         </View>
       </KeyboardAvoidingView>
       {DeleteHabitConfirmModal}
+
+      {/* Reminder editing modal */}
+      <Modal visible={reminderModalVisible} transparent animationType="fade">
+        <Pressable
+          style={styles.modalOverlay}
+          onPress={() => {
+            setReminderModalVisible(false);
+            setReminderEditHabitId(null);
+          }}
+        >
+          <Pressable
+            style={[styles.reminderModalCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+            onPress={(e) => e.stopPropagation()}
+          >
+            <Text style={[styles.reminderModalTitle, { color: colors.text }]}>
+              Reminder
+            </Text>
+
+            <ReminderPicker
+              reminder={reminderEditValue}
+              onChange={setReminderEditValue}
+            />
+
+            <View style={styles.reminderModalButtons}>
+              <Pressable
+                onPress={() => {
+                  setReminderModalVisible(false);
+                  setReminderEditHabitId(null);
+                }}
+                style={[styles.reminderBtn, { borderColor: colors.border }]}
+              >
+                <Text style={[styles.reminderBtnText, { color: colors.text }]}>Cancel</Text>
+              </Pressable>
+              <Pressable
+                onPress={() => {
+                  hapticLight();
+                  saveReminder();
+                }}
+                style={[styles.reminderBtn, { backgroundColor: colors.orange }]}
+              >
+                <Text style={[styles.reminderBtnText, { color: "#000" }]}>Save</Text>
+              </Pressable>
+            </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
     </SafeAreaView>
 
   );
@@ -706,5 +826,34 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     fontSize: 16,
     lineHeight: 36
+  },
+  reminderModalCard: {
+    width: "85%",
+    maxWidth: 360,
+    borderRadius: 12,
+    borderWidth: 1,
+    padding: 20,
+  },
+  reminderModalTitle: {
+    fontSize: 18,
+    fontFamily: "Poppins_500Medium",
+    marginBottom: 4,
+  },
+  reminderModalButtons: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    gap: 12,
+    marginTop: 20,
+  },
+  reminderBtn: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "transparent",
+  },
+  reminderBtnText: {
+    fontSize: 15,
+    fontFamily: "Poppins_500Medium",
   },
 });

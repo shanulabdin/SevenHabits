@@ -108,6 +108,8 @@ export default () => {
         ],
         "expo-font",
         "expo-sqlite",
+        "expo-notifications",
+        "@react-native-community/datetimepicker",
       ],
 
       experiments: {
