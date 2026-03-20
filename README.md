@@ -57,4 +57,40 @@ The core experience will always remain fast, minimal, and distraction free.
 Consistency beats motivation.
 Forge your habits.
 
-Made the reminder with copilot Claude Opus 4.6, cant check what it made rn because i dont have my phone rn, 
+Forge v2.0.0.1 - Planned Updates
+#### Home Screen:
+- add progress bar to habit
+- Add reordering to habits list
+#### Ui Bugs:
+- orange dot bug on second last day on week
+- clipping of rings in week view
+- make the font size consistent on all devices
+- Fix stats page layout
+#### Creating:
+- add reminders and notifications
+- Separate screen for editing the habit
+- user be able to choose frequency of days the habit should be done
+#### Settings
+- add import and exporting of data
+- make the haptics be haptics not a vibrate
+- update privacy policy
+#### Screens
+- Add subscriptions
+- currency codes according to the country
+- make a seperate stats screen for each page
+- remove long press modal
+- open stats screen on long press
+- move the grid to stats screen
+- add percentage card to stats screen
+- current streak and best streak
+#### Design
+- add animations
+- smooth transition between screens
+- animation to progress bar
+- animation to rings
+
+Widgets:
+- grid widget 
+- resizeable
+- make it responsive
+- user be able to choose the widget for the habit
