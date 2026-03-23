@@ -33,9 +33,7 @@ export default () => {
         predictiveBackGestureEnabled: false,
 
         // THIS is now dynamic
-        package: isDev
-          ? "com.shanulabdin.forge.dev"
-          : "com.shanulabdin.forge",
+        package: "com.shanulabdin.forge",
 
         versionCode: 10,
       },
