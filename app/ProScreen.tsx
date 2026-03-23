@@ -31,6 +31,12 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
     { icon: 'share', text: 'Import your Data', description: 'Import backups or migrate data.' },
   ];
 
+  const toProductId = (plan: 'monthly' | 'yearly' | 'lifetime') => {
+    if (plan === 'monthly') return 'forge_monthly';
+    if (plan === 'yearly') return 'forge_yearly_2';
+    return 'forge_lifetime';
+  };
+
   const handlePurchase = async () => {
     if (!selectedPackage) {
       Alert.alert('No Package Selected', 'Please select a subscription package.');
@@ -38,12 +44,10 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
     }
 
     try {
-      // Now selectedPackage is guaranteed to be string (not null)
-      // use purchaseProduct when you have a product identifier string
-      await Purchases.purchaseProduct(selectedPackage);
-      // ...existing code...
+      const productId = toProductId(selectedPackage);
+      await Purchases.purchaseProduct(productId);
     } catch (error) {
-      // ...existing code...
+      console.warn('Purchase failed:', error);
     }
   };
   return (

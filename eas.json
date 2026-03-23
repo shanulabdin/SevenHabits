@@ -6,20 +6,15 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal",
-      "env": {
-        "APP_VARIANT": "development"
-      }
+      "distribution": "internal"
     },
-
     "production": {
       "autoIncrement": true,
-      "env": {
-        "APP_VARIANT": "production"
+      "android": {
+        "buildType": "app-bundle"
       }
     }
   },
-
   "submit": {
     "production": {}
   }

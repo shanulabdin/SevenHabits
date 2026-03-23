@@ -3,7 +3,7 @@ export default () => {
     expo: {
       name: "Forge",
       slug: "forge",
-      version: "1.0.1",
+      version: "2.0.1",
       orientation: "portrait",
       icon: "./assets/images/logo.png",
       scheme: "forge",
@@ -29,7 +29,7 @@ export default () => {
         edgeToEdgeEnabled: true,
         predictiveBackGestureEnabled: false,
         package: "com.shanulabdin.forge",
-        versionCode: 10,
+        versionCode: 20,
       },
 
       androidStatusBar: {
