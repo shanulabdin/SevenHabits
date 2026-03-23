@@ -1,10 +1,7 @@
 export default () => {
-  const variant = process.env.APP_VARIANT;
-  const isDev = variant === "development";
-
   return {
     expo: {
-      name: isDev ? "Forge Dev" : "Forge",
+      name: "Forge",
       slug: "forge",
       version: "1.0.1",
       orientation: "portrait",
@@ -31,10 +28,7 @@ export default () => {
         },
         edgeToEdgeEnabled: true,
         predictiveBackGestureEnabled: false,
-
-        // THIS is now dynamic
         package: "com.shanulabdin.forge",
-
         versionCode: 10,
       },
 
