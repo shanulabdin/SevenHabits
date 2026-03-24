@@ -78,7 +78,8 @@ export default function RootLayout() {
         Purchases.configure({ apiKey });
       }
 
-      getCustomerInfo();
+      // getCustomerInfo();
+      // getOfferings();
     } catch (error) {
       console.warn('RevenueCat initialization skipped:', error);
     }
@@ -90,13 +91,15 @@ export default function RootLayout() {
   }, []);
 
   async function getCustomerInfo() {
-    try {
-      const customerInfo = await Purchases.getCustomerInfo();
-      console.log('Customer Info:', customerInfo);
-    } catch (error) {
-      console.warn('Could not fetch customer info (products not ready yet):', error);
-    }
+    // try {
+    const customerInfo = await Purchases.getCustomerInfo();
+    console.log('🔈 Customer Info:', JSON.stringify(customerInfo, null, 2));
+    // } catch (error) {
+    //   console.warn('Could not fetch customer info (products not ready yet):', error);
+    // }
   }
+
+
 
   if (!fontsLoaded) {
     return <View style={{ flex: 1, backgroundColor: "#151515" }} />;
