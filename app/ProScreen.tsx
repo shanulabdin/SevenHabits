@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from "expo-router";
 import { useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Purchases from 'react-native-purchases/dist/purchases';
+import Purchases, { PURCHASE_TYPE } from 'react-native-purchases';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type ProScreenProps = {
@@ -45,7 +45,10 @@ const ProScreen = ({ onPurchase, onClose }: ProScreenProps) => {
 
     try {
       const productId = toProductId(selectedPackage);
-      await Purchases.purchaseProduct(productId);
+      const purchaseType =
+        selectedPackage === 'lifetime' ? PURCHASE_TYPE.INAPP : PURCHASE_TYPE.SUBS;
+
+      await Purchases.purchaseProduct(productId, undefined, purchaseType);
     } catch (error) {
       console.warn('Purchase failed:', error);
     }

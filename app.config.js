@@ -29,7 +29,7 @@ export default () => {
         edgeToEdgeEnabled: true,
         predictiveBackGestureEnabled: false,
         package: "com.shanulabdin.forge",
-        versionCode: 20,
+        versionCode: 21,
       },
 
       androidStatusBar: {
@@ -114,6 +114,12 @@ export default () => {
         eas: {
           projectId: "3da420b0-1a0d-4b37-95d2-0b748927dbc3",
         },
+      },
+      runtimeVersion: {
+        policy: "appVersion",
+      },
+      updates: {
+        url: "https://u.expo.dev/3da420b0-1a0d-4b37-95d2-0b748927dbc3",
       },
     },
   };
